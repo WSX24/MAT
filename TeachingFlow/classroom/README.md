@@ -59,6 +59,22 @@
 > ⚠ `python run.py --help` **不是帮助**：`main()` 里没有 `--help` 分支，未知的第一个参数会落到默认的 `serve`。
 > 查子命令看上面这张表。
 
+#### 两个"生成物"：`mcp-access-prompt.md` 与 `mcp-config.json`（不入库）
+
+| 文件 | 是什么 | 谁写、什么时候写 |
+|---|---|---|
+| `mcp-access-prompt.md` | 一整段自然语言接入提示词，**整份发给 Claude Code / Codex**，对方照着自己接好 HTTP MCP | `run.py` 起服务时调用 `mcp_server.build_access_prompt()` 重写（`python run.py mcp-prompt` 只生成不起服务） |
+| `mcp-config.json` | 现成的 `mcpServers` 片段：`classroom`（HTTP 直连）+ `classroom-stdio`（本机 stdio 桥接，免装 Node） | 同上，与提示词一起写盘 |
+
+**为什么不入库**：两者都是按**本机现况**现算的 —— 提示词里写死了本次的 `http://<HOST>:<PORT>/mcp`，
+配置片段的 `args` 指向本机 `TeachingFlow\classroom\run.py` 的绝对路径。入库会带来两个毛病：
+① 任何人跑一次服务 `git status` 就脏；② 提交里那份路径/端口只对作者那台机器有效，对新用户是错的
+（`.gitignore` 已按运行产物忽略它们）。
+
+**想固定端口**：改 `.env` 的 `PORT`（`HOST` 同理），再起一次服务，两个文件会按新端点重新生成。
+**想固定解释器**：`mcp-config.json` 里 `classroom-stdio.command` 有意写成 `python`（交给 PATH），
+要指定某个解释器就把本地这份改成那个 `python.exe` 的绝对路径 —— 改生成物即可，别再提交回来。
+
 ### 首次配置：`.env` 与 `DECK_ID`
 
 `web.py` 在**导入期**就按 `DECK_ID` 载课，所以配置不全时测试会先红一批（不是代码坏了）：
@@ -71,8 +87,11 @@ Copy-Item .env.example .env      # setup.ps1 第 5 步已经生成过；手工�
 
 | 状态 | 结果 |
 |---|---|
-| 没有 `classroom/.env` | **10 failed / 440 passed / 5 skipped** |
-| 有 `.env`（`DECK_ID` 指向示例课件） | **453 passed / 2 failed**（2 条是历史失败用例，见 §11） |
+| 没有 `classroom/.env`（全新克隆，直接跑） | **9 failed / 495 passed / 5 skipped** |
+| 有 `.env`（`DECK_ID` 指向 `decks/` 里的示例课件） | **507 passed / 2 failed**（2 条是历史失败用例，见 §11） |
+
+口径：**在 classroom 目录里跑**，共 509 条用例（44 个 `test_*.py`）；「有 `.env`」那行是
+`cp .env.example .env` 之后把 `DECK_ID` 指到 `decks/` 里已有的那份课件。
 
 `.env` 里最常动的是这几项（其余项都有默认值）：
 
@@ -199,7 +218,7 @@ python run.py          # → http://127.0.0.1:8000
 ```powershell
 python run.py audit    # 脚本体检：单元长度是否超限、锚点是否存在
 python run.py test     # 内置离线自检：状态机 / 净化层 / 消息契约 / 语音缓存 / 思考模式 / 课件 / 备课 / MCP …
-python -m pytest -q    # 完整 455 条用例（要 .env，见下一节）
+python -m pytest -q    # 完整 509 条用例（要 .env，见下一节）
 python run.py check    # 服务商连通性
 ```
 
@@ -432,7 +451,7 @@ TeachingFlow/classroom/          ← 本目录就是模块根（保持扁平，�
 ├─ tools/shot_ops.py  ★ 逐个施加每一种课件操作并截图，量"到底有没有变化"
 ├─ tools/compare_plans.py A/B 两份备课计划（改提示词/换模型前后比数字）
 ├─ tools/show_paras.py 打印某一页的段落锚点 id（手工核对某个 id 是谁）
-├─ tests/            37 个文件 / 455 条离线用例：状态机 · 净化层 · 消息契约 · 语音缓存 ·
+├─ tests/            44 个文件 / 509 条离线用例：状态机 · 净化层 · 消息契约 · 语音缓存 ·
 │                    思考模式 · 课件解析 · 课件操作 · 备课 · 预处理 · MCP · 导演/分支
 ├─ web/index.html    上课页（课件重绘 + 字幕 + 快捷反馈 + 指标面板 + 「在思考」指示）
 ├─ web/hub.html      启动台：各页面入口 + 课件列表
@@ -832,7 +851,8 @@ python run.py decks
 
 ### 11.1 测试基线：两条历史失败用例（与 MAT 合并无关）
 
-配好 `.env` 后 `python -m pytest -q` 实测 **453 passed / 2 failed**。失败的这两条是原原型就有的历史用例，
+在 classroom 目录里、配好 `.env`（`DECK_ID` 指向 `decks/` 里的示例课件）后
+`python -m pytest -q` 实测 **507 passed / 2 failed**（共 509 条）。失败的这两条是原原型就有的历史用例，
 钉的是**作者那份 42 页课件**的常量，跟仓库里换过的示例课件对不上：
 
 | 失败用例 | 断言 | 实际 |

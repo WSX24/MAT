@@ -116,7 +116,8 @@ powershell -ExecutionPolicy Bypass -File .\start-classroom.ps1 decks     # 参�
 - `decks/*/media/` 与源 `.pptx` 不入库 → 仓库里那两份示例课件预览图 404、`run.py decks` 显示「媒体 0」。
   自备源 pptx 放进 `classroom/pptx/` 重跑一次预处理即可。
 - `_probe.mp3` 不入库 → 页面上 ASR 的「测试」按钮会提示找不到样本音频。
-- 课堂测试基线：配好 `.env` 时 `453 passed / 2 failed`（两条历史失败用例：真实课件页数 38 vs 42）。
+- 课堂测试基线：配好 `.env` 时 `507 passed / 2 failed`（共 509 条；两条历史失败用例：真实课件页数 38 vs 42）。
+  没有 `.env` 的全新克隆是 `9 failed / 495 passed / 5 skipped`；口径见 classroom README 第 11 节。
 
 ## 自检（不花 token）
 
@@ -133,7 +134,7 @@ python flow.py "…" --mock --to plan
 powershell -ExecutionPolicy Bypass -File .\start-classroom.ps1 test   # 内置离线自检（10 个模块，不是 pytest）
 ```
 
-完整用例（37 个文件 / 455 条）要直接跑 pytest：
+完整用例（44 个文件 / 509 条）要直接跑 pytest；从仓库根跑也一样（根目录 `pytest.ini` 已把收集范围钉在课堂测试上，不会扫进 `ppt-master/`）：
 
 ```powershell
 cd TeachingFlow\classroom
