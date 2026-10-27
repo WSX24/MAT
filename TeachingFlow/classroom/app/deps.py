@@ -20,6 +20,7 @@ import importlib
 import inspect
 import logging
 import os
+import re
 from pathlib import Path
 from typing import Any, Iterator
 
@@ -354,6 +355,38 @@ def _fallback_unit_from_pptx(pptx: Path, *, course_id: str, title: str, chapter:
     }
 
 
+#: 绝对路径 token（Windows 盘符 / POSIX 根）。警告里带路径是排障需要，
+#: 但把本机路径原样甩到界面上既不可读、也把作者机器的目录结构泄给了学生。
+_ABS_PATH = re.compile(r"(?:[A-Za-z]:[\\/]|[\\/])[^\s，。；）」'\"、]+")
+#: URL 也是"带 //": 必须先在替换前保护起来，否则 `http://127.0.0.1:11434/v1`
+#: 会被压成 `httpv1` —— 警告里那句"哪个地址连不上"就废了。
+_URL_TOKEN = re.compile(r"[A-Za-z][A-Za-z0-9+.-]*://[^\s，。；）」'\"、]+")
+
+
+def _shorten_paths(text: str) -> str:
+    """把警告里的绝对路径压成文件名（"C:\\a\\b\\第一课.pptx" → "第一课.pptx"）。"""
+    raw = str(text or "")
+    if not raw:
+        return raw
+    stashed: dict[str, str] = {}
+
+    def _stash(match: "re.Match[str]") -> str:
+        key = f"\x00{len(stashed)}\x00"
+        stashed[key] = match.group(0)
+        return key
+
+    protected = _URL_TOKEN.sub(_stash, raw)
+
+    def _name(match: "re.Match[str]") -> str:
+        token = match.group(0).replace("/", "\\").rstrip("\\")
+        return token.rsplit("\\", 1)[-1] or match.group(0)
+
+    out = _ABS_PATH.sub(_name, protected)
+    for key, url in stashed.items():
+        out = out.replace(key, url)
+    return out
+
+
 def prepare_unit(unit_row: dict) -> dict:
     """准备一个单元（解析 deck + 备课）。契约要求的五个字段一定都在。"""
     empty = {"ok": False, "deck_ready": False, "plan_ready": False,
@@ -364,7 +397,7 @@ def prepare_unit(unit_row: dict) -> dict:
         empty["warnings"] = ["内容管线未就绪（studio/materialize.py 缺失）：这个单元还没有准备"]
         return empty
     if not str(pptx) or not pptx.is_file():
-        empty["warnings"] = [f"课件文件不存在：{pptx or '（空路径）'}"]
+        empty["warnings"] = [_shorten_paths(f"课件文件不存在：{pptx or '（空路径）'}")]
         return empty
     values = {"_default": pptx, "pptx_path": pptx, "pptx": pptx,
               "unit_row": unit_row, "row": unit_row}
@@ -372,7 +405,7 @@ def prepare_unit(unit_row: dict) -> dict:
         result = _obj_fields(_adapt_call(fn, values))
     except Exception as e:
         log.exception("prepare_unit 失败")
-        empty["warnings"] = [f"准备失败：{type(e).__name__}: {e}"]
+        empty["warnings"] = [_shorten_paths(f"准备失败：{type(e).__name__}: {e}")]
         # 失败也要给得出数值：盘上可能已经有上一次的 deck/plan（"备过，但这次没跑"）
         empty["slides"], empty["est_sec"] = deck_totals(unit_row)
         return empty
@@ -382,7 +415,9 @@ def prepare_unit(unit_row: dict) -> dict:
         "plan_ready": bool(result.get("plan_ready", False)),
         "plan_source": str(result.get("plan_source") or ""),
         "degraded": bool(result.get("degraded", False)),
-        "warnings": list(result.get("warnings") or []),
+        # 内容管线的警告里几乎必然带绝对路径（"课件不在盘上：C:\…"），
+        # 它会被前端原样显示在单元页上 —— 压成文件名就够读了。
+        "warnings": [_shorten_paths(w) for w in (result.get("warnings") or [])],
     }
     if "deck_id" in result:
         out["deck_id"] = result["deck_id"]

@@ -29,6 +29,7 @@ import base64
 import dataclasses
 import json
 import logging
+import re
 import time
 from datetime import datetime
 from typing import Any, Awaitable, Callable
@@ -48,6 +49,41 @@ FLUSH_INTERVAL = 2.0
 EVENT_BATCH = 20
 #: 语速档位（设计文档 §4：0.8 | 1 | 1.2）
 RATE_CHOICES = (0.8, 1.0, 1.2)
+
+#: 内部标识的样子：`import-981b1da75b2f`、`run-…`、`s-…`、`u-…`。
+#: 用来判断"这个名字能不能念给学生听" —— 学生不该在字幕里读到 deck_id。
+_INTERNAL_NAME = re.compile(r"^(?:import|run|deck)-[0-9a-z_.-]{4,}$|^[uspr]-[0-9a-f]{6,}$", re.I)
+#: 绝对路径（Windows 盘符或 POSIX 根）。学生看到的句子不该带本机路径。
+_PATH_TOKEN = re.compile(r"(?:[A-Za-z]:[\\/]|[\\/])[^\s，。；）」'\"、]+")
+#: URL 要先保护：`http://host:11434/v1` 里的 "//" 会被路径规则误伤成 "httpv1"。
+_URL_TOKEN = re.compile(r"[A-Za-z][A-Za-z0-9+.-]*://[^\s，。；）」'\"、]+")
+
+
+def _basename(token: str) -> str:
+    return token.replace("/", "\\").rstrip("\\").rsplit("\\", 1)[-1] or token
+
+
+def shorten_paths(text: str) -> str:
+    """把文本里的绝对路径压成文件名（"C:\a\b\第一课.pptx" → "第一课.pptx"）。
+
+    为什么需要它：异常消息、内容管线的 warnings 里几乎必然带路径，
+    而这些句子会经 notify / 字幕原样出现在学生面前。
+    """
+    raw = str(text or "")
+    if not raw:
+        return raw
+    stashed: dict[str, str] = {}
+
+    def _stash(match):
+        key = f"\x00{len(stashed)}\x00"      # 先换成一个不会出现在文案里的占位符
+        stashed[key] = match.group(0)
+        return key
+
+    protected = _URL_TOKEN.sub(_stash, raw)   # URL 原样留到最后
+    out = _PATH_TOKEN.sub(lambda m: _basename(m.group(0)), protected)
+    for key, url in stashed.items():
+        out = out.replace(key, url)
+    return out
 
 
 def rate_string(value: float) -> str:
@@ -102,6 +138,11 @@ class SessionRunner:
 
         # -- 运行期 ------------------------------------------------------
         self.script: LessonScript | None = None
+        #: 学生看到的课程名（单元标题 → 课程标题 → 课件标题，见 _resolve_display_title）
+        self.display_title = ""
+        #: 改写前的课件标题（通常就是 deck 目录名/文件名）。出口兜底时把它也换掉 ——
+        #: 引擎侧任何一处回显旧标题（notify/字幕）都因此到不了学生面前。
+        self._initial_title = ""
         self.state = ClassroomState(course_id=str(self.unit.get("course_id") or ""))
         self.state.slide_index = max(0, self._start_slide)
         self.state.seg_index = max(0, self._start_unit)
@@ -166,6 +207,16 @@ class SessionRunner:
             return
         self._course = self._course or self._build_course()
         self.script = self._course.script
+        # 标题必须是**人能读的名字**：`script.title` 来自 deck 标题，而 deck 标题由
+        # **文件名**派生 —— 导入的课件文件名是 `import-<hash>.pptx`，于是字幕第一行
+        # 会变成「开始上课：《import-981b1da75b2f》」。学生不该看见 deck_id。
+        # 只在显示层改写：单元/课程/课件都不变，下一次装配还是原来的 id。
+        self._initial_title = str(self.script.title or "")
+        self.display_title = self._resolve_display_title()
+        if self.display_title and self.display_title != str(self.script.title):
+            log.info("课堂标题改用可见名 session=%s title=%s（课件标题 %s）",
+                     self.session_id, self.display_title, self.script.title)
+            self.script.title = self.display_title
         self.state.course_id = self.script.course_id or self.state.course_id
         self.state.student_id = self.profile_id or self.state.student_id
         # 续学位置要对齐脚本：上次的页数可能比这份脚本多（课件换了），越界就从头讲
@@ -188,6 +239,60 @@ class SessionRunner:
         self._task = asyncio.create_task(self._run_task(), name=f"classroom-{self.session_id}")
         log.info("课堂开始 session=%s unit=%s pos=%s/%s",
                  self.session_id, self.unit_id, self.state.slide_index, self.state.seg_index)
+
+    def _resolve_display_title(self) -> str:
+        """学生看到的课程名：**单元标题 → 课程标题 → 课件标题**。
+
+        这个顺序不是随便定的：单元标题是学生刚才点进去的那一行，最贴近"我在上什么"；
+        课程标题次之（换单元时字幕会换名字，反而更准确）；课件标题是最后回落 ——
+        它可能就是个文件名（甚至 deck_id），所以排在最后。
+        三个候选都像内部标识时，退回"这节课"：宁可平淡，也不泄漏。
+        """
+        candidates: list[str] = [str(self.unit.get("title") or "").strip()]
+        course_id = str(self.unit.get("course_id") or "")
+        if course_id:
+            try:
+                course = repo.get_course(self.conn, course_id) or {}
+                candidates.append(str(course.get("title") or "").strip())
+            except Exception as e:      # 读库失败不该影响开课
+                log.warning("读课程标题失败 session=%s: %s", self.session_id, e)
+        candidates.append(str(getattr(self.script, "title", "") or "").strip())
+        for name in candidates:
+            if self._looks_user_facing(name):
+                return name
+        return "这节课"
+
+    def _looks_user_facing(self, name: str) -> bool:
+        if not name:
+            return False
+        internal = {self.unit_id, self.session_id, self.profile_id,
+                    str(self.unit.get("course_id") or ""),
+                    str(self.unit.get("pptx_path") or "")}
+        if name in internal:
+            return False
+        return _INTERNAL_NAME.match(name) is None
+
+    def _user_text(self, text: str) -> str:
+        """出口兜底：把内部标识从**面向学生**的文本里摘掉。
+
+        为什么在出口兜一层，而不是逐处改文案：这些句子来自状态机/内容管线，
+        它们的每一行都不归我改；但学生看到的每一帧都经过这里。兜住这一层之后，
+        任何一处往 notify 里拼 deck_id / 会话 id / 绝对路径的改动都会被挡住。
+        """
+        out = str(text or "")
+        if not out:
+            return out
+        deck = getattr(self._course, "deck", None) if self._course is not None else None
+        human = self.display_title or "本课课件"
+        internal = [
+            (str(getattr(deck, "deck_id", "") or ""), human),   # deck 目录名
+            (self._initial_title, human),                       # 改写前的课件标题
+            (self.session_id, "本节课"),
+        ]
+        for token, word in internal:
+            if token and token != word:
+                out = out.replace(token, word)
+        return shorten_paths(out)
 
     def _handlers(self) -> PhaseHandlers:
         return PhaseHandlers(
@@ -256,8 +361,11 @@ class SessionRunner:
 
     def _fallback_course(self, reason: str) -> Any:
         """兜底课件：这节课至少能开起来（一页、一段话），并明确告诉学生哪里不对。"""
-        title = str(self.unit.get("title") or "这节课")
-        text = (f"《{title}》的课件还没有准备好（{reason}）。"
+        title = self._user_text(str(self.unit.get("title") or "这节课"))
+        # 技术原因（异常消息/路径）只写日志：这句话会**念给学生听**，
+        # 里面出现 "FileNotFoundError: C:\…" 只会让人以为课堂坏了。
+        log.warning("课件不可用，改用占位讲解 session=%s: %s", self.session_id, reason)
+        text = (f"《{title}》的课件还没有准备好。"
                 f"先把这段占位讲解读完，再去单元页点一次「准备课件」。")
         slide = Slide(index=0, title=title,
                       elements=[SlideElement(element_id="s01-t1", kind="text", text=text,
@@ -340,6 +448,7 @@ class SessionRunner:
         # 过闸门：暂停期间"暂停了还在弹提示"同样是一种没停住。
         # 代价是状态机里一条通知会等续播才发出 —— 可以接受，close() 会放行它。
         await self._wait_running()
+        text = self._user_text(text)
         await self.send("notify", level=level, text=text)
         self._event("notify", level=level, text=text)
 
@@ -363,8 +472,9 @@ class SessionRunner:
 
     async def _transcript(self, u: Utterance) -> None:
         await self._wait_running()
-        await self.send("transcript", speaker=u.speaker, text=u.text)
-        self._event("transcript", speaker=u.speaker, text=(u.text or "")[:120])
+        text = self._user_text(u.text)
+        await self.send("transcript", speaker=u.speaker, text=text)
+        self._event("transcript", speaker=u.speaker, text=text[:120])
 
     async def _page_changed(self, slide_index: int) -> None:
         reveal_all = self._manual_nav
@@ -486,7 +596,8 @@ class SessionRunner:
             return
         self._no_audio_warned.add(reason)
         asyncio.create_task(self.send(
-            "notify", level="warn", text=f"这一段只有字幕、没有语音：{reason}"))
+            "notify", level="warn",
+            text=self._user_text(f"这一段只有字幕、没有语音：{reason}")))
 
     # ---- 课件载荷 -------------------------------------------------------
     def _slide_payload(self, slide_index: int, *, reveal_all: bool = False) -> dict | None:

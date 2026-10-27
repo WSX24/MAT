@@ -160,7 +160,7 @@ class _StubLLM:
         return False
 
 
-def _stub_course(slides: int = 2, units_per_slide: int = 2):
+def _stub_course(slides: int = 2, units_per_slide: int = 2, *, title: str = "假课件"):
     from course import Course
     from models import LessonScript, Slide, SlideElement
     from state import LectureUnit
@@ -174,19 +174,23 @@ def _stub_course(slides: int = 2, units_per_slide: int = 2):
                 unit_id=f"u{i + 1}-{j + 1}", slide=i, index_in_slide=j,
                 text=f"第{i + 1}页第{j + 1}段。第二句话。",
                 is_page_end=(j == units_per_slide - 1), kp=[]))
-    script = LessonScript(course_id="stub", title="假课件", session_goals=[],
+    script = LessonScript(course_id="stub", title=title, session_goals=[],
                           slides=slide_list, units=units)
     return Course(script=script, mode="simple")
 
 
-def _install_stub_engine(monkeypatch, *, slides: int = 4, speech_timeout: float = 0.3):
+def _install_stub_engine(monkeypatch, *, slides: int = 4, speech_timeout: float = 0.3,
+                        title: str = "假课件", unit_title: str | None = None):
     from app import ws as ws_mod
     from studio.runner import SessionRunner
 
     def fake_build_runner(*, session, unit, profile, send, conn):
+        if unit_title is not None:
+            unit = {**unit, "title": unit_title}
         return SessionRunner(
             session=session, unit=unit, profile=profile, send=send, conn=conn,
-            settings=_mini_settings(), tts=None, course=_stub_course(slides),
+            settings=_mini_settings(), tts=None,
+            course=_stub_course(slides, title=title),
             llm=_StubLLM(), speech_timeout=speech_timeout)
 
     monkeypatch.setattr(ws_mod, "build_runner", fake_build_runner)
@@ -705,6 +709,79 @@ def test_prepare_reuse_path_returns_numbers(client, monkeypatch, tmp_path):
     assert client.get(f"/api/v1/units/{unit_id}").json()["slides"] == 4
 
 
+def test_prepare_warnings_strip_absolute_paths(client, monkeypatch, tmp_path):
+    """warnings 会直接显示在单元页上，所以里面不许有本机绝对路径。
+
+    内容管线的警告天然带路径（"课件不在盘上：C:\…\第一课.pptx"），
+    但界面上只需要文件名：路径既不可读，也把作者机器的目录结构泄给了学生。
+    """
+    import studio.materialize as materialize
+
+    pptx = tmp_path / "第一课.pptx"
+    pptx.write_bytes(b"x")
+
+    def fake_prepare(pptx_path, *, deck_root=None, force=False, settings=None):
+        return {"ok": False, "deck_id": "", "deck_ready": False, "plan_ready": False,
+                "plan_source": "", "degraded": True, "slides": 0, "est_sec": 0.0,
+                "warnings": [f"课件不在盘上：{pptx} —— 先确认出片那一步落了盘"]}
+
+    monkeypatch.setattr(materialize, "prepare_unit", fake_prepare)
+    unit_id = "c-path-u1"
+    conn = _conn()
+    try:
+        repo.upsert_course(conn, {"id": "c-path", "title": "路径课", "source": "import"})
+        repo.upsert_unit(conn, {"id": unit_id, "course_id": "c-path", "title": "路径单元",
+                                "order_index": 0, "pptx_path": str(pptx)})
+    finally:
+        conn.close()
+
+    body = client.post(f"/api/v1/units/{unit_id}/prepare").json()
+    assert body["ok"] is False
+    warning = body["warnings"][0]
+    assert "第一课.pptx" in warning             # 文件名留下来（排障够用）
+    assert str(tmp_path) not in warning         # 目录结构不出去
+
+    # 早退分支（课件不存在）同样不许带路径
+    seeded = _seed_course(1)[0]                 # pptx_path = /tmp/c1/u1.pptx（不存在）
+    early = client.post(f"/api/v1/units/{seeded}/prepare").json()
+    assert early["warnings"]
+    assert "/tmp" not in early["warnings"][0] and "u1.pptx" in early["warnings"][0]
+
+
+def test_prepare_warnings_keep_urls_but_drop_paths(client, monkeypatch, tmp_path):
+    """回归护栏：压缩路径时**不许**把 URL 一起压掉。
+
+    这条是实测抓出来的：第一版 `_shorten_paths` 把
+    「ollama 连不上（http://127.0.0.1:11434/v1）」改成了「（httv1）」——
+    警告从此读不出"哪个地址连不上"。
+    """
+    import studio.materialize as materialize
+
+    pptx = tmp_path / "第二课.pptx"
+    pptx.write_bytes(b"x")
+    url = "http://127.0.0.1:11434/v1"
+
+    def fake_prepare(pptx_path, *, deck_root=None, force=False, settings=None):
+        return {"ok": False, "deck_id": "", "deck_ready": False, "plan_ready": False,
+                "plan_source": "", "degraded": True, "slides": 0, "est_sec": 0.0,
+                "warnings": [f"ollama 连不上（{url}）→ 规则兜底；课件 {pptx} 已跳过"]}
+
+    monkeypatch.setattr(materialize, "prepare_unit", fake_prepare)
+    unit_id = "c-url-u1"
+    conn = _conn()
+    try:
+        repo.upsert_course(conn, {"id": "c-url", "title": "URL 课", "source": "import"})
+        repo.upsert_unit(conn, {"id": unit_id, "course_id": "c-url", "title": "URL 单元",
+                                "order_index": 0, "pptx_path": str(pptx)})
+    finally:
+        conn.close()
+
+    warning = client.post(f"/api/v1/units/{unit_id}/prepare").json()["warnings"][0]
+    assert url in warning                       # URL 一个字都不许改
+    assert str(tmp_path) not in warning          # 目录结构不出去
+    assert "第二课.pptx" in warning              # 文件名留下
+
+
 # ===========================================================================
 # 会话
 # ===========================================================================
@@ -935,6 +1012,34 @@ def test_ws_hello_page_and_segments(client, monkeypatch):
         # 没有 TTS → 绝不该收到 audio 帧
         assert "audio" not in [f["kind"] for f in frames]
 
+def test_ws_notify_never_shows_deck_id(client, monkeypatch):
+    """字幕第一行「开始上课：《…》」必须是**人能读的名字**，不许出现 deck_id。
+
+    实测缺陷：导入课件的文件名是 `import-<hash>.pptx`，而 deck 标题由文件名派生 ——
+    于是学生看到「开始上课：《import-981b1da75b2f》」。这里把 stub 课件的标题设成
+    那个内部标识（复刻 deck_id 与标题不同的场景），单元标题给它一个真名字。
+    """
+    _install_stub_engine(monkeypatch, title="import-981b1da75b2f",
+                         unit_title="第一课_运动的描述")
+    unit_id = _seed_course(1)[0]
+    sid = _session_via_api(client, unit_id)["session_id"]
+
+    with client.websocket_connect(f"/ws/classroom/{sid}") as ws:
+        frames = _frame_reader(ws)
+        notify = None
+        deadline = time.monotonic() + 10.0
+        while time.monotonic() < deadline:
+            frame = _next_frame(frames, deadline - time.monotonic())
+            if frame is None:
+                break
+            if frame["kind"] == "notify" and "开始上课" in (frame.get("text") or ""):
+                notify = frame
+                break
+    assert notify is not None, "没收到「开始上课」的 notify"
+    assert "第一课_运动的描述" in notify["text"]     # 单元标题（学生点进去的那一行）
+    assert "import-981b1da75b2f" not in notify["text"]   # deck_id 绝不许出现
+
+
 def test_ws_pause_and_resume(client, monkeypatch):
     _install_stub_engine(monkeypatch)
     unit_id = _seed_course(1)[0]
@@ -1116,18 +1221,20 @@ def test_ws_unknown_session_reports_and_closes(client):
 # 运行器（不经 WS：暂停真的停住、落库、recap）
 # ===========================================================================
 
-async def _new_runner(*, slides: int = 4, speech_timeout: float = 0.5):
+async def _new_runner(*, slides: int = 4, speech_timeout: float = 0.5,
+                     title: str = "假课件", unit_title: str = "运行器单元"):
     from studio.runner import SessionRunner
 
     conn = _conn()
-    unit = {"id": "u-run", "course_id": "c-run", "title": "运行器单元",
+    unit = {"id": "u-run", "course_id": "c-run", "title": unit_title,
             "slides": slides, "pptx_path": ""}
     session = repo.create_session(conn, "u-run", "p-run")
     collector = _Collector()
     runner = SessionRunner(
         session=session, unit=unit, profile={"id": "p-run", "name": "测试"}, send=collector,
-        conn=conn, settings=_mini_settings(), tts=None, course=_stub_course(slides),
-        llm=_StubLLM(), speech_timeout=speech_timeout)
+        conn=conn, settings=_mini_settings(), tts=None,
+        course=_stub_course(slides, title=title), llm=_StubLLM(),
+        speech_timeout=speech_timeout)
     return runner, collector, conn
 
 
@@ -1195,6 +1302,35 @@ async def test_runner_close_marks_paused_for_resume():
         assert row["status"] == "paused"          # 断线 = 暂停，可续学
         assert repo.resumable_session(conn, "p-run", "u-run") is not None
     finally:
+        conn.close()
+
+
+async def test_runner_hides_internal_ids_in_user_text():
+    """学生看到的文字里不许有 deck_id / 会话 id / 绝对路径。
+
+    两个层次都要成立：
+      ① 标题解析：`script.title`（= deck 标题 = 文件名）被换成单元标题；
+      ② 出口兜底：就算上游文案里拼进了内部标识/路径，`_user_text` 也会兜掉。
+    """
+    runner, collector, conn = await _new_runner(title="import-981b1da75b2f",
+                                               unit_title="第一课_运动的描述")
+    try:
+        await runner.start()
+        assert runner.display_title == "第一课_运动的描述"
+        assert await _await_until(
+            lambda: any("开始上课" in (f.get("text") or "") for f in collector.frames))
+        blob = json.dumps(collector.frames, ensure_ascii=False)
+        assert "第一课_运动的描述" in blob
+        assert "import-981b1da75b2f" not in blob
+
+        # 出口兜底（直接打 _user_text，模拟引擎/内容管线自己拼文案的情况）
+        assert runner._user_text("开始上课：《import-981b1da75b2f》")             == "开始上课：《第一课_运动的描述》"
+        assert "本节课" in runner._user_text(f"会话 {runner.session_id} 已结束")
+        scrubbed = runner._user_text("课件读不出来：C:" + chr(92) + "Users" + chr(92)
+                                     + "1631" + chr(92) + "第一课.pptx 坏了")
+        assert "Users" not in scrubbed and "第一课.pptx" in scrubbed
+    finally:
+        await runner.close()
         conn.close()
 
 
