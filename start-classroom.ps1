@@ -35,6 +35,11 @@ if (-not (Test-Path $envFile)) {
 $argv = @()
 if ($RunArgs) { $argv = $RunArgs }
 
+# 中文 Windows 的控制台默认是 GBK，而课堂会打印 ✅❌⚠️ 这类字符：不开 UTF-8 模式，
+# python 在**导入期**就 UnicodeEncodeError，服务连 bind 的机会都没有（实测）。
+# 代码侧 config.ensure_utf8_console() 也兜了一层，这里从源头把解释器设对。
+$env:PYTHONUTF8 = "1"
+
 # run.py 必须在本目录跑：它按自身位置找 web/、decks/、.env
 Push-Location $classroom
 try {

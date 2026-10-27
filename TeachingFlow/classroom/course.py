@@ -22,7 +22,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from agent.variants import attach_variants
-from config import ROOT, Settings
+from config import ROOT, Settings, ensure_utf8_console
 from deck.schema import DeckDoc
 from deck.store import deck_dir, deck_json, load_deck, media_dir, plan_json
 from director.route import Route
@@ -245,6 +245,9 @@ def load_course(settings: Settings, *, allow_rule_fallback: bool = True) -> Cour
 
 
 def print_course_notes(course: Course) -> None:
+    # 再兜一次编码不是重复劳动：本函数会被**单独调用**（web.py 导入期、测试里手写），
+    # 调用方在此之前完全可能已经把 stdout 换成 GBK 流。幂等，无副作用。
+    ensure_utf8_console()
     for n in course.notes:
         print(f"[course] {n}")
     print(f"[course] 本节课件：{course.describe()}")

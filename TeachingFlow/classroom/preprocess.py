@@ -35,6 +35,7 @@ import asyncio
 import json
 import re
 import uuid
+import zipfile
 from collections import deque
 from datetime import datetime
 from pathlib import Path
@@ -61,8 +62,17 @@ _ACTIONS = ("full", "plan", "ingest", "summarize")
 #: 文件名里不许出现的字符：Windows 的 \/:*?"<>| 与控制字符
 _BAD_NAME = re.compile(r'[\\/:*?"<>|\x00-\x1f]+')
 
+#: 作业被取消/超时后落的 error：这句话会显示在 /preprocess 的作业行上，
+#: 所以要说清"为什么没了"和"接下来还能做什么"，而不是只写"cancelled"。
+CANCELLED = "作业被取消（服务停止或超时）—— 重新点一次即可"
+
 #: 模块级作业表：id → 内部记录（对外只经 _public 暴露契约里的字段）
 _jobs: dict[str, dict] = {}
+
+#: 「这份文件根本打不开」那一类异常名：zip 容器坏了，或 pptx 包里缺了必备部件。
+#: 按名字比对而不是 isinstance：这些类来自 python-pptx，而 preprocess 是被 web.py
+#: 在启动路径上 import 的，能少拖一个第三方库就少拖一个。
+_UNOPENABLE = {"BadZipFile", "LargeZipFile", "PackageNotFoundError", "InvalidXmlError"}
 
 
 # ===========================================================================
@@ -162,6 +172,35 @@ def save_upload(filename: str, data: bytes) -> dict:
     return row
 
 
+class IngestError(RuntimeError):
+    """解析失败，且 message 本身就是给用户看的那一句（repr 也是它）。
+
+    为什么单单为它改 repr：作业的 error 字段是 repr(e) 存下来的（这样维护者能一眼看出
+    异常类型）。坏文件的异常类型（BadZipFile）恰恰是**不该**出现在用户眼前的那部分，
+    所以这里让 repr 直接等于人话，而不是在作业层再写一次"哪些异常要抄近路"。
+    """
+
+    def __repr__(self) -> str:
+        return str(self)
+
+
+def explain_ingest_error(src, exc: BaseException) -> str:
+    """把解析阶段抛出来的原始异常翻成人话（作业 error、run.py pptx 子命令共用这一句）。
+
+    两档，因为用户要做的动作完全不同：
+      - 打不开（zip 容器坏了 / 包里缺必备部件）：解析器只会说 "File is not a zip file"，
+        用户既看不懂也猜不到该干什么。唯一有用的动作是"在 PowerPoint 里另存一次再传"，
+        所以那句话里一个技术名词都不留。
+      - 其它异常：保留类型名（维护者要拿它去搜 issue），但补一句上下文说明先查什么。
+    """
+    name = Path(src).name if src else "这份文件"
+    if isinstance(exc, zipfile.BadZipFile) or type(exc).__name__ in _UNOPENABLE:
+        return (f"这份 pptx 打不开（不是有效的 pptx/zip）：{name}"
+                " —— 请在 PowerPoint 里另存一次再传")
+    return (f"解析 {name} 时出错：{type(exc).__name__}: {exc}"
+            " —— 先确认路径对不对、文件没坏、不是加密的，也没被别的程序占着")
+
+
 # ===========================================================================
 # 对外：作业
 # ===========================================================================
@@ -170,7 +209,7 @@ async def start_job(name: str, *, action: str = "full",
                     slides: list[int] | None = None,
                     force: bool = False,
                     source_path: Path | None = None,
-                    settings=None) -> dict:
+                    settings=None, rule_only: bool = False) -> dict:
     """开一个后台预处理作业，**立刻**返回作业快照；进度靠 get_job 轮询。
 
     为什么是 async：作业要挂在调用方的事件循环上再 create_task —— Web 层就是在循环里
@@ -191,6 +230,9 @@ async def start_job(name: str, *, action: str = "full",
         只认路径、不复制（解析产物照样落 decks/<deck_id>/）。
       - settings：本次作业用哪份配置。主 provider 连不上时 bridge 会临时换一家
         （deepseek），而不是去改 os.environ —— 那个进程里可能正上着课。
+      - rule_only：不碰模型，备课那段直接用 plan_rule（照读课件）。只在"连一份可用
+        配置都没有"时由 bridge 传 True —— 那种情况下 plan_llm 会逐页等模型超时再回退，
+        白等几十分钟换来的正是同一份规则计划。
     """
     action = str(action or "full").strip().lower()
     slides = [int(s) for s in slides] if slides else None
@@ -226,7 +268,8 @@ async def start_job(name: str, *, action: str = "full",
     # 任务的引用必须留住（存在记录里）。create_task 的返回值一旦被回收，任务可能在
     # 跑一半时被 GC 掉 —— asyncio 文档对这一点有明确警告。
     rec["task"] = asyncio.create_task(
-        _run_job(rec, src=src, slides=slides, force=bool(force), settings=settings))
+        _run_job(rec, src=src, slides=slides, force=bool(force), settings=settings,
+                 rule_only=bool(rule_only)))
     return _public(rec)
 
 
@@ -245,6 +288,33 @@ def list_jobs(limit: int = 20) -> list[dict]:
     return [_public(r) for r in recs[:max(0, int(limit))]]
 
 
+async def cancel_job(job_id: str, *, reason: str = "") -> dict | None:
+    """取消一个作业，并且**等它真正收尾**之后才返回快照。
+
+    为什么必须等：状态归一写在 _run_job 的 finally 里。cancel() 只是"请求取消"，
+    立刻返回快照读到的还是 status="running" —— 调用方拿它判断"到底停没停"会永远判错，
+    单飞也还没解开。所以这里 cancel 之后 await 一次任务结束（asyncio.wait 不会把任务的
+    异常抛给调用方，CancelledError 也一样）。
+    """
+    rec = _jobs.get(str(job_id or ""))
+    if rec is None:
+        return None
+    task = rec.get("task")
+    if task is not None and not task.done():
+        if reason:
+            _log(rec, f"取消请求：{reason}")
+        task.cancel()
+        await asyncio.wait({task})
+    if rec["status"] == "running":
+        # 任务还没被调度就被取消时，协程体一次都没执行过 —— _run_job 的 finally 不会跑。
+        # 这一档只靠 finally 兜不住，所以在这里补一次同样的归一。
+        rec["stage"], rec["status"] = "failed", "failed"
+        rec["error"] = rec["error"] or CANCELLED
+        rec["finished_at"] = rec["finished_at"] or _now()
+        _log(rec, f"❌ {rec['error']}")
+    return _public(rec)
+
+
 async def wait_job(job_id: str, *, timeout: float | None = None) -> dict | None:
     """等某个作业结束（测试与脚本用；Web 层走 get_job 轮询，不需要它）。"""
     rec = _jobs.get(str(job_id or ""))
@@ -261,13 +331,16 @@ async def wait_job(job_id: str, *, timeout: float | None = None) -> dict | None:
 # ===========================================================================
 
 async def _run_job(rec: dict, *, src: Path | None, slides: list[int] | None,
-              force: bool = False, settings=None) -> None:
+              force: bool = False, settings=None, rule_only: bool = False) -> None:
     """作业主体。任何异常都收进 job["error"]，绝不往外冒。
 
     为什么最外层必须有 try：这是 create_task 起的后台任务，异常没人 await，
     只会被 asyncio 记一句 "Task exception was never retrieved"，而 job 永远停在
-    running —— 前端一直转圈，也没人知道为什么。CancelledError 例外：取消不是失败，
-    原样抛回去让循环按自己的规矩收尾。
+    running —— 前端一直转圈，也没人知道为什么。
+
+    CancelledError 照样往上抛（取消是调用方的决定，不该被这里吞成"失败"），
+    但 finally 里会把仍是 running 的记录归一成 failed：留一条永远 running 的记录，
+    后果不是"页面难看"，而是这份源被单飞永久锁死。
 
     settings 不传就照旧 load_settings()（Web 层的每一条路都不传）；传了就用它，
     且**只在这一条作业里**有效 —— 配置是作业自己的事，不写回 os.environ。
@@ -292,19 +365,27 @@ async def _run_job(rec: dict, *, src: Path | None, slides: list[int] | None,
                 from config import load_settings
 
                 cfg = settings or load_settings()
-                plan = await _stage_plan(rec, deck, cfg, slides)
-                await _stage_routes(rec, plan, deck, cfg)
+                plan = await _stage_plan(rec, deck, cfg, slides, rule_only=rule_only)
+                await _stage_routes(rec, plan, deck, cfg, rule_only=rule_only)
         rec["stage"], rec["status"] = "done", "done"
         rec["progress"]["label"] = "完成"
         _log(rec, "✅ 作业完成")
     except asyncio.CancelledError:
-        _log(rec, "作业被取消")
+        _log(rec, f"❌ {CANCELLED}")
         raise
     except Exception as e:
         rec["stage"], rec["status"] = "failed", "failed"
         rec["error"] = repr(e)
         _log(rec, f"❌ 失败：{rec['error']}")
     finally:
+        # 取消/超时不会走上面任何一条分支：CancelledError 从某个 await 点冒出来时
+        # status 还是 running，而 _running_for 只认 running、_prune 又拒绝删 running ——
+        # 不在这里归一，这份源就永远"正在预处理"，之后的每个作业都被单飞拒掉。
+        # 落成 failed（而不是新造一个 cancelled）：契约里 stage/status 没有第三个值。
+        if rec["status"] == "running":
+            rec["stage"], rec["status"] = "failed", "failed"
+            rec["error"] = rec["error"] or CANCELLED
+            _log(rec, f"❌ {rec['error']}")
         rec["finished_at"] = _now()
 
 
@@ -315,7 +396,12 @@ async def _stage_ingest(rec: dict, src: Path | None, deck_id: str):
     _enter(rec, "ingest", "解析课件（大课件要几十秒）")
     # 解析拿不到逐页回调（ingest_pptx 没有 on_progress），所以这一段的进度条是
     # 不确定态的，只有 label；但**不能**直接在协程里跑，见模块 docstring 第 1 点。
-    deck = await asyncio.to_thread(ingest_pptx, src, deck_id=deck_id)
+    try:
+        deck = await asyncio.to_thread(ingest_pptx, src, deck_id=deck_id)
+    except Exception as exc:
+        # 坏文件的原始异常（"File is not a zip file"）等于没说：翻译成人话再往上抛，
+        # 作业 error 与 /preprocess 页面看到的就是同一句。from exc 留住原始 traceback。
+        raise IngestError(explain_ingest_error(src, exc)) from exc
     _progress(rec, deck.slide_count, deck.slide_count, f"解析完成：{deck.slide_count} 页")
     _log(rec, f"解析完成：{deck.slide_count} 页 · 媒体 {len(deck.media)}"
               f" · 告警 {len(deck.warnings)}")
@@ -332,19 +418,33 @@ async def _stage_load(rec: dict, deck_id: str):
     return deck
 
 
-async def _stage_plan(rec: dict, deck, settings, slides: list[int] | None):
-    """备课：逐页调模型（plan_llm 自己会做"这一页失败了用规则兜底"）。"""
-    from llm import LLM
-    from script_gen import plan_llm
+async def _stage_plan(rec: dict, deck, settings, slides: list[int] | None, *,
+                     rule_only: bool = False):
+    """备课：逐页调模型（plan_llm 自己会做"这一页失败了用规则兜底"）。
 
-    _enter(rec, "plan", "模型备课")
-    llm = LLM(settings)
+    rule_only=True 时整段不碰模型，直接 plan_rule —— 这就是直连入口
+    （run.py plan --rule / 页面上的"规则兜底"）产出的同一种计划。留着这一档，
+    是因为没有可用模型时 plan_llm 会**逐页**等模型超时再回退，白等几十分钟，
+    最后落到的还是同一份规则计划。
+    """
+    from script_gen import plan_llm, plan_rule
 
-    def _on_progress(done: int, total: int, slide) -> None:
-        _progress(rec, done, total, f"备课：第 {slide.index + 1} 页")
-        _log(rec, f"第 {done}/{total} 页 {slide.title or '（无标题）'}")
+    if rule_only:
+        _enter(rec, "plan", "规则兜底备课（照读课件，不调模型）")
+        # 纯本地 CPU 活，但 42 页也要几秒 —— 同步跑会把轮询请求一起堵住。
+        plan = await asyncio.to_thread(plan_rule, deck, slides=slides)
+        _log(rec, f"规则兜底：{len(plan.units)} 个单元（照读课件，未调模型）")
+    else:
+        from llm import LLM
 
-    plan = await plan_llm(deck, llm, slides=slides, on_progress=_on_progress)
+        _enter(rec, "plan", "模型备课")
+        llm = LLM(settings)
+
+        def _on_progress(done: int, total: int, slide) -> None:
+            _progress(rec, done, total, f"备课：第 {slide.index + 1} 页")
+            _log(rec, f"第 {done}/{total} 页 {slide.title or '（无标题）'}")
+
+        plan = await plan_llm(deck, llm, slides=slides, on_progress=_on_progress)
     if not plan.units:
         # 空计划写下去等于把用户上一版好好的计划换成空的，这里必须停。
         raise RuntimeError("备课没有产出任何单元 —— 检查模型服务后重试")
@@ -353,7 +453,8 @@ async def _stage_plan(rec: dict, deck, settings, slides: list[int] | None):
     return plan
 
 
-async def _stage_routes(rec: dict, plan, deck, settings) -> None:
+async def _stage_routes(rec: dict, plan, deck, settings, *,
+                         rule_only: bool = False) -> None:
     """预置路线 + 备份 + 写盘（顺序不能换：备份必须在覆盖写之前）。"""
     from agent.routes import plan_routes, route_entry
     from run import _route_polisher, _save_plan
@@ -361,7 +462,9 @@ async def _stage_routes(rec: dict, plan, deck, settings) -> None:
     _enter(rec, "routes", "预置路线")
     # 润色复用 run._route_polisher：拿不到模型时它自己降级成 None（= 只用规则文案）。
     # 那段降级逻辑（"润色只是加分项，不该让备课失败"）抄一遍就会分叉。
-    polisher = _route_polisher(settings, tag="preprocess")
+    # rule_only 时直接给 None，连"试一次润色"都不试：没有模型，每次试都是一个完整超时，
+    # 十几条路线就是一串白等（run.py plan --rule 的口径也是 llm=None）。
+    polisher = None if rule_only else _route_polisher(settings, tag="preprocess")
     # to_thread 不只是为了不堵事件循环：_route_polisher 内部是 asyncio.run(...)，
     # 在正在运行的循环里直接调它会 RuntimeError。
     routes = await asyncio.to_thread(

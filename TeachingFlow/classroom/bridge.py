@@ -24,11 +24,18 @@ flow 能直接写进 manifest 的形状。
 3. **不写 os.environ**：要临时换服务商就换 Settings，不改进程环境 —— 同一个进程里
    可能正上着课（课堂 Web 服务是常驻的）。
 
-没有可用模型时怎么办（有意的降级，不是失败）
--------------------------------------------
-备课要模型，解析不要。所以拿不到可用模型时 action="full" **降级成只解析**：
-deck.json 照样落盘（课堂端能先看到解析结果），返回 ok=True + degraded=True +
-一句可读的 note；配好 key 之后再跑一次 action="plan" 就只补备课，不必重新解析。
+没有可用模型时怎么办（规则兜底，与直连入口同一口径）
+---------------------------------------------------
+备课要模型，解析不要。所以拿不到可用模型时 action="full" 走**规则兜底**：
+解析完用 script_gen.plan_rule 本地切单元（照读课件、秒级、不联网），plan.json
+照常落盘，返回 ok=True + degraded=True + 一句可读的 note。
+
+为什么不是"只解析就收工"（这一版改口径的原因）：直连入口（run.py plan /
+/api/preprocess/start action=plan）在模型不可用时本来就是按页回退成规则计划，
+bridge 若停在只有 deck.json，同一份 pptx 走出片链路和走网页会得到两份不同的产物 ——
+而"照读课件"至少是一节能上的课。配好 key 后再跑一次 action="plan" 就换成正式备课，
+不必重新解析。
+
 反过来 action="plan"/"summarize" 本来就只有模型那一段活儿，没模型就如实
 ok=False —— 那种情况报"成功"是骗人。
 """
@@ -119,7 +126,7 @@ def pick_settings(settings=None):
       - 显式传了 settings：只用它。调用方点了名，不替它改；
       - 否则看 LLM_PROVIDER 那家；它连不上而仓库根 .env 里有 DEEPSEEK_API_KEY，
         就临时用 deepseek（"课堂共享 MAT 那份 key"的落点，且不动 os.environ）；
-      - 都没有 → None，调用方降级成只解析。
+      - 都没有 → None，调用方走规则兜底（plan_rule，不调模型）。
     """
     if settings is not None:
         ok, why = model_ready(settings)
@@ -207,7 +214,7 @@ async def preprocess_pptx(src, *, action: str = "full", settings=None, log=None,
     **任何情况都不抛异常**（见模块 docstring 纪律 1）。
 
     action 与 preprocess.start_job 同义：full 全链 / ingest 只解析 / plan 只备课 /
-    summarize 只补总结。没可用模型时 full 会降级成 ingest（degraded=True）。
+    summarize 只补总结。没可用模型时 full 走规则兜底（degraded=True，照读课件不调模型）。
     """
     action = str(action or "full").strip().lower()
     out = _blank(src, action)
@@ -224,15 +231,18 @@ async def preprocess_pptx(src, *, action: str = "full", settings=None, log=None,
             return out
 
         # 只有真要调模型的那几档才看模型：只解析的作业不该因为一份坏 .env 而失败
+        rule_only = False
         if action != "ingest":
             chosen, why = pick_settings(settings)
             if chosen is None:
                 if action == "full":
-                    action = "ingest"
-                    out["action"] = action
+                    # 不放进 plan 阶段去"逐页试模型再回退"：那要按页等超时，
+                    # 换来的还是同一份规则计划（见模块 docstring）。
+                    rule_only = True
                     out["degraded"] = True
-                    out["note"] = (f"未配置可用模型（{why}）→ 只解析不备课；"
-                                   "配好 key 后再跑 action='plan' 即可，不必重新解析")
+                    out["note"] = (f"未配置可用模型（{why}）→ 规则兜底（照读课件）："
+                                   "解析与本地切单元照跑，plan.json 已落盘；"
+                                   "配好 key 后再跑 action='plan' 可换正式备课")
                     _say(log, out["note"])
                 else:
                     out["error"] = (f"未配置可用模型（{why}）—— "
@@ -241,9 +251,11 @@ async def preprocess_pptx(src, *, action: str = "full", settings=None, log=None,
             else:
                 settings = chosen
 
-        _say(log, f"交作业：{path.name}（action={action}）")
+        _say(log, f"交作业：{path.name}（action={action}"
+                  + ("，规则兜底" if rule_only else "") + "）")
         job = await preprocess.start_job(path.name, action=action,
-                                        source_path=path, settings=settings)
+                                        source_path=path, settings=settings,
+                                        rule_only=rule_only)
         out["deck_id"] = str(job.get("deck_id") or "")
         if job.get("status") == "failed":
             # 被拒也是作业记录的一种（源不存在/单飞/缺 deck.json…），原因在 error
@@ -261,7 +273,15 @@ async def preprocess_pptx(src, *, action: str = "full", settings=None, log=None,
             return out
         out["deck_id"] = str(snap.get("deck_id") or out["deck_id"])
         if timed_out:
-            out["error"] = f"等待超时（>{timeout}s，最后阶段 {snap.get('stage')}）"
+            # 超时不能只报一句错就走：作业还在后台跑，而它会把这份源的单飞一直占着
+            # （之后每个作业都被"正在预处理"拒掉）。显式取消，并等它把状态收尾。
+            last = await preprocess.cancel_job(
+                job["id"], reason=f"bridge 等待超时（>{timeout}s）")
+            if last is not None:
+                stages = _stage_timeline(last, stages)
+                out["stages"] = stages
+            out["error"] = (f"等待超时（>{timeout}s，最后阶段 {(last or snap).get('stage')}）"
+                            "—— 作业已取消，重跑一次即可")
             return out
         if snap.get("status") != "done":
             out["error"] = str(snap.get("error")

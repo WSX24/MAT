@@ -110,8 +110,16 @@ def cmd_pptx(argv: list[str]) -> int:
             return 2
     from deck.pptx_ingest import ingest_pptx
     from deck.schema import deck_overview
+    from preprocess import explain_ingest_error
 
-    deck = ingest_pptx(src, max_slides=max_slides or None, download_external=download)
+    try:
+        deck = ingest_pptx(src, max_slides=max_slides or None, download_external=download)
+    except Exception as exc:
+        # 坏文件以前是把 BadZipFile 的 traceback 甩到终端：命令行用户看到的是
+        # "File is not a zip file" 加十几行栈，既不知道哪份文件坏了，也不知道该干什么。
+        # 这里只说人话并返回 2（与参数错同一个码：这次调用什么也没产出）。
+        print(f"[pptx] ❌ {explain_ingest_error(src, exc)}")
+        return 2
     print(deck_overview(deck, limit=12))
     print(f"\n[pptx] 已解析 → decks/{deck.deck_id}/deck.json"
           f"（元素 {deck.stats.get('elements', '?')} · 媒体 {len(deck.media)}"
@@ -873,8 +881,15 @@ def ensure_access_files(s) -> Path | None:
                             "type": "http",
                             "url": endpoint,
                         },
+                        # command 交给 PATH 上的 python，不写 sys.executable：这份配置是
+                        # 给**外部 MCP 客户端照着敲**的，绝对解释器路径只对生成它的那台机器
+                        # 有效（还经常指向临时原型 venv），换人换机器直接报"找不到文件"。
+                        # args 里的 run.py 反过来保留绝对路径：MCP 客户端是在**自己的**
+                        # cwd 下 spawn 这条命令的，写相对路径必然找不到脚本。
+                        # （mcp-stdio 只用到 urllib + config，不需要装课堂依赖，PATH 上的
+                        #  python 就够跑。）
                         "classroom-stdio": {
-                            "command": sys.executable,
+                            "command": "python",
                             "args": [str(ROOT / "run.py"), "mcp-stdio", endpoint],
                         },
                     }

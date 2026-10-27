@@ -166,16 +166,23 @@ def test_model_ready_needs_a_key_for_remote_providers() -> None:
     assert "api_key" in why, why
 
 
-def test_full_without_model_degrades_to_ingest(tmp_path, decks) -> None:
-    """full 但没模型：降级成只解析，deck.json 照样落盘，并且把原因说清楚。"""
-    src = make_pptx(tmp_path / "没模型也能解析.pptx")
+def test_full_without_model_falls_back_to_rule_plan(tmp_path, decks) -> None:
+    """full 但没模型：不碰模型，直接规则兜底 —— 与直连入口（run.py plan --rule）同一口径。
+
+    这条以前钉的是"降级成只解析"：同一份 pptx 走出片链路只有 deck.json、走网页却有
+    一份规则计划，两条入口给出两份不同的产物（P2-2）。现在两处都落到规则兜底，
+    所以断言翻过来：plan.json 要在，而且 clarify 原因的 note 照样在。
+    """
+    src = make_pptx(tmp_path / "没模型也能备课.pptx")
     res = asyncio.run(bridge.preprocess_pptx(src, action="full", settings=_dead_settings()))
     assert res["degraded"] is True, res["note"]
-    assert res["action"] == "ingest", "实际执行的应是只解析"
+    assert res["action"] == "full", "规则兜底是 full 里的一段，不是另一档 action"
     assert res["ok"] is True, res["error"]
     assert res["stats"]["has_deck"] is True
-    assert "plan" not in res["stages"], "没模型就不该走到备课那一段"
+    assert res["stats"]["has_plan"] is True, "无模型时也要落 plan.json"
+    assert "plan" in res["stages"], "备课那一段照跑，只是不调模型"
     assert "未配置可用模型" in res["note"], res["note"]
+    assert "规则兜底" in res["note"], res["note"]
 
 
 def test_plan_without_model_is_an_honest_failure(tmp_path, decks) -> None:

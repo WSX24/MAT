@@ -22,3 +22,11 @@ TeachingFlow/classroom/.pytest_cache/
 TeachingFlow/classroom/decks/*/media/
 TeachingFlow/classroom/pptx/*.pptx
 TeachingFlow/classroom/*.log
+# 这两个是**运行期生成物**：run.py 每次起服务都按本机 host:port 与解释器重写一遍。
+# 入库的后果是"任何人跑一次服务 git status 就脏"，而提交里那份路径/端口只对作者那台
+# 机器有效 —— 新用户拿去用只会指向不存在的解释器。
+TeachingFlow/classroom/mcp-access-prompt.md
+TeachingFlow/classroom/mcp-config.json
+# 首次本地备课写出的中间产物：内含机器绝对路径，同样不该入库
+TeachingFlow/classroom/decks/*/source.txt
+TeachingFlow/classroom/decks/*/plan.bak.json

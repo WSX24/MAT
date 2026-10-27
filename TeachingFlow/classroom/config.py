@@ -4,9 +4,38 @@ from __future__ import annotations
 
 import os
 import re
+import sys
 import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
+
+
+def ensure_utf8_console() -> None:
+    """把 stdout/stderr 切到 UTF-8，让中文 Windows（GBK 控制台）打得出 emoji。
+
+    为什么必须由代码兜底，不能只靠启动脚本：控制台编码是 GBK 时，
+    `print("✅ …")` 直接抛 UnicodeEncodeError —— 而课堂的课程笔记、自检报告里
+    全是 ✅❌⚠️，于是 `import web` 在导入期就炸，服务连 bind 的机会都没有
+    （实测事故）；`python run.py test/check/audit` 的输出被管道/重定向接走时
+    同样会崩，而那条路径上根本没有 powershell 脚本来设 PYTHONUTF8。
+
+    用 errors="replace" 而不是默认的 strict：个别编码不了的字符宁可在输出里变成
+    "?"，也不要再抛 —— 报告里少一个符号，远好过整个进程起不来。
+
+    幂等、且**绝不抛**：流被换成没有 reconfigure 的对象（pytest 捕获、宿主重定向）
+    时直接跳过；任何异常都吞掉，配置打印不该成为启动拦路虎。
+    """
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            if hasattr(stream, "reconfigure"):
+                stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:  # pragma: no cover - 换流/已关闭都可能抛，一律放过
+            pass
+
+
+# 在**模块导入期**就修好控制台编码：config 是所有模块的公共依赖（web.py / course.py /
+# run.py 都先 import 它），这一步先执行，后面的 emoji 打印就天然安全。
+ensure_utf8_console()
 
 try:  # python-dotenv 可选
     from dotenv import load_dotenv
@@ -39,8 +68,18 @@ def repo_env_file() -> Path:
     return REPO_ENV_FILE
 
 
+def _env_is_set(key: str) -> bool:
+    """环境变量"真的配了"才算配置：空串 / 纯空白一律视为没配。
+
+    为什么单独判一次：dotenv 读 `DEEPSEEK_API_KEY=`（.env.example 里就长这样）
+    写进来的是**空串**，`k in os.environ` 会为真 —— 于是仓库根那份真 key
+    永远补不进来，深集成静默退化成"只解析"（实测踩过）。
+    """
+    return bool(os.environ.get(key, "").strip())
+
+
 def load_repo_env(path: Path | None = None) -> Path | None:
-    """把仓库根的 PPT-Agent/.env **补缺**地读进环境变量：已有的键一个都不覆盖。
+    """把仓库根的 PPT-Agent/.env **补缺**地读进环境变量：已有的**非空**值一个都不覆盖。
 
     为什么自己解析、不用 load_dotenv(override=False)：规则必须与
     TeachingFlow/core/config.py::load_env_file 一模一样 —— 同一份文件被两边读，
@@ -59,7 +98,9 @@ def load_repo_env(path: Path | None = None) -> Path | None:
                 continue
             k, _, v = line.partition("=")
             k, v = k.strip(), v.strip().strip('"').strip("'")
-            if k and v and k not in os.environ:
+            # 空串/纯空白当成"没配"（见 _env_is_set）：否则一份带 `KEY=` 的
+            # .env 就能把仓库根那份真 key 挡在门外。
+            if k and v and not _env_is_set(k):
                 os.environ[k] = v
     except OSError as exc:
         print(f"[config] ⚠ 仓库根 .env 读取失败：{exc}")
