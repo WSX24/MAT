@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>课堂交互原型 · 个人自学</title>
+<link rel="stylesheet" href="/static/classroom.css">
+</head>
+<body>
+
+<header>
+  <span class="title" id="course">课堂交互原型</span>
+  <a class="meta" href="/hub" title="所有页面入口">启动台</a>
+  <a class="meta" href="/graph" title="主线 + 支线分叉/汇回，只读">课堂走向图</a>
+  <span class="meta" id="prov">连接中…</span>
+  <button id="modelcfg" title="模型配置（会写回 .env）">⚙ 模型配置</button>
+  <span class="meta" id="ui" title="页面版本（用来一眼分辨"新页面"和"浏览器缓存的旧页面"）"></span>
+  <span class="phase">
+    <span class="thinking" id="thinking"><span class="dot"></span><span id="thinklabel">老师在思考…</span></span>
+    <span class="badge" id="phase">—</span>
+    <span id="slideidx" class="meta"></span>
+    <span id="probe" class="winning"></span>
+  </span>
+</header>
+
+<main>
+  <section>
+    <div class="card">
+      <h2><span>课件</span><span class="right meta" id="slideTitle"></span></h2>
+      <div class="body">
+        <!-- 全屏播放的宿主。requestFullscreen(这个节点) 之后只有它和它的子树可见 ——
+             所以"全屏里还要看得见的东西"（字幕、翻页、提问工具）都必须放进来；
+             它们在非全屏时 display:none（见 classroom.css），普通布局不受影响。 -->
+        <div id="fsroot">
+          <div id="stagewrap">
+            <div id="stage">
+              <div id="zoomlayer">
+                <div id="slide" style="position:absolute;inset:0"></div>
+              </div>
+              <div id="pageflip"></div>
+            </div>
+            <!-- 指示器（老师"指"到哪）：两种版式共用 -->
+            <div id="pointer"></div>
+            <!-- 重点提示光圈：由 segment_start.marker 驱动，同一时刻只留一个 -->
+            <div id="marker"></div>
+            <!-- 旧版式（手写演示课件）的宿主 -->
+            <div id="simplehost" style="display:none"></div>
+          </div>
+          <!-- 全屏叠加字幕：和页面里那份逐字一致（只在 paintSub 里写） -->
+          <div id="fssub"><span class="placeholder">等待上课…</span></div>
+          <!-- 右下角悬浮工具：设置面板与提问面板分离，提问按钮内整合语音输入开关 -->
+          <div id="fsfab">
+            <!-- 独立弹出层 A：课堂演示设置面板（点击设置按钮或页码打开） -->
+            <div id="fabsetpanel">
+              <div class="fab-head">
+                <span class="fab-head-title" id="fabtitle">课堂演示设置</span>
+                <button type="button" class="fab-close" id="fabsetclose" title="收起设置">×</button>
+              </div>
+
+              <!-- 1. 换页与播放控制 -->
+              <div class="fab-sec">
+                <div class="fab-sec-label">
+                  <span>课件翻页与控制</span>
+                  <span id="fabpageinfo">第 1 页</span>
+                </div>
+                <div class="fab-nav-grid">
+                  <button type="button" class="fab-btn" data-cmd="prev" title="上一页（← 键）">‹ 上一页</button>
+                  <button type="button" class="fab-btn" data-cmd="repeat" title="重新讲解本页">↻ 重讲本页</button>
+                  <button type="button" class="fab-btn" data-cmd="next" title="下一页（→ 键）">下一页 ›</button>
+                  <button type="button" class="fab-btn" id="fabpause" title="暂停/继续当前语音">⏸ 暂停</button>
+                </div>
+              </div>
+
+              <!-- 2. 字幕设置 -->
+              <div class="fab-sec">
+                <div class="fab-sec-label">
+                  <span>字幕设置（无黑底直显）</span>
+                  <button type="button" class="fab-btn active" id="subToggleBtn" style="padding:2px 9px;font-size:11px">已开启</button>
+                </div>
+                <div class="fab-ctrl-row">
+                  <span class="lbl">字号</span>
+                  <div class="fab-seg" id="subSizeSeg" style="flex:1">
+                    <button type="button" data-sub-size="18px">小</button>
+                    <button type="button" data-sub-size="22px" class="active">标准</button>
+                    <button type="button" data-sub-size="27px">大</button>
+                    <button type="button" data-sub-size="32px">特大</button>
+                  </div>
+                </div>
+                <div class="fab-ctrl-row">
+                  <span class="lbl">位置与颜色</span>
+                  <div class="fab-seg" id="subPosSeg">
+                    <button type="button" data-sub-pos="bottom" class="active">底部</button>
+                    <button type="button" data-sub-pos="top">顶部</button>
+                  </div>
+                  <div class="fab-colors" id="subColorSeg">
+                    <button type="button" class="fab-swatch active" data-sub-color="#111827" style="background:#111827" title="纯黑字幕（默认）"></button>
+                    <button type="button" class="fab-swatch" data-sub-color="#334155" style="background:#334155" title="深灰字幕"></button>
+                    <button type="button" class="fab-swatch" data-sub-color="#1e3a8a" style="background:#1e3a8a" title="深蓝字幕"></button>
+                    <button type="button" class="fab-swatch" data-sub-color="#991b1b" style="background:#991b1b" title="醒目暗红"></button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 3. 音量与语速 -->
+              <div class="fab-sec">
+                <div class="fab-sec-label">
+                  <span>音量与播报语速</span>
+                  <span id="volVal" class="fab-vol-val">100%</span>
+                </div>
+                <div class="fab-vol-row">
+                  <button type="button" class="fab-icon-btn" id="volMuteBtn" title="静音 / 取消静音" style="width:28px;height:28px">
+                    <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                  </button>
+                  <input type="range" class="fab-slider" id="volSlider" min="0" max="100" value="100">
+                </div>
+                <div class="fab-ctrl-row">
+                  <span class="lbl">语速</span>
+                  <div class="fab-seg" id="rateSeg" style="flex:1">
+                    <button type="button" data-rate="0.8">0.8x</button>
+                    <button type="button" data-rate="1" class="active">1.0x</button>
+                    <button type="button" data-rate="1.25">1.25x</button>
+                    <button type="button" data-rate="1.5">1.5x</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 独立弹出层 B：简洁提问面板（点击提问或语音按钮打开） -->
+            <div id="fabpanel">
+              <div class="fab-head">
+                <span class="fab-head-title">向老师提问</span>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <button type="button" class="fab-close" id="fabclose" title="收起提问面板">×</button>
+                </div>
+              </div>
+              <div class="quick">
+                <button type="button" data-say="没听懂">🤔 没听懂</button>
+                <button type="button" data-say="举个例">💡 举个例</button>
+                <button type="button" data-say="再说一遍">🔄 再说一遍</button>
+                <button type="button" data-say="明白了，继续">✅ 明白了，继续</button>
+              </div>
+              <div class="row">
+                <input type="text" id="fsinput" placeholder="输入问题或点右侧麦克风语音输入，可修改后发送…" autocomplete="off">
+                <button type="button" class="mic-btn" id="fsinmic" title="点击开始/停止语音输入（转写至输入框供修改）">
+                  <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                </button>
+                <button type="button" class="primary" id="fssend">发送</button>
+              </div>
+              <div class="voice-status" id="voicestatus">
+                <span style="display:inline-flex;align-items:center;gap:6px">
+                  <span class="vdot"></span>
+                  <span id="voicestatustext">准备语音输入…</span>
+                </span>
+                <button type="button" class="fab-btn" id="voicestopbtn" style="padding:2px 8px;font-size:11px">完成识别</button>
+              </div>
+            </div>
+
+            <!-- 独立弹出层 C：全屏/浮窗历史对话回看面板 -->
+            <div id="fabhistpanel">
+              <div class="fab-head">
+                <span class="fab-head-title">课堂历史对话回看</span>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <span style="font-size:11px;color:#64748b" id="fabhistcount">0 条</span>
+                  <button type="button" class="fab-close" id="fabhistclose" title="收起历史对话">×</button>
+                </div>
+              </div>
+              <div id="fabhistlist">
+                <div style="font-size:12px;color:#64748b;text-align:center;padding:18px 0">暂无课堂对话记录…</div>
+              </div>
+            </div>
+
+            <!-- 底部常驻精致胶囊栏：左侧控制与设置，右侧独立简洁的「提问 | 语音」双模胶囊 -->
+            <div id="fabdock">
+              <button type="button" class="fab-icon-btn" id="fabmin" title="折叠 / 展开快捷控制栏">
+                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <div class="fab-collapsible" style="display:inline-flex;align-items:center;gap:3px">
+                <button type="button" class="fab-icon-btn" data-cmd="prev" title="上一页（← 键）">
+                  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button type="button" class="fab-page-pill" id="fabpage" title="当前页码（点击打开设置面板）">1 / 1</button>
+                <button type="button" class="fab-icon-btn" data-cmd="next" title="下一页（→ 键）">
+                  <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+                <span class="fab-divider"></span>
+                <button type="button" class="fab-icon-btn active" id="dockSubBtn" title="开关字幕">
+                  <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"></rect><path d="M7 12h4m-4 4h6m4-4h2m-4 4h4"></path></svg>
+                </button>
+                <button type="button" class="fab-icon-btn" id="dockMuteBtn" title="静音 / 开启声音">
+                  <svg viewBox="0 0 24 24" id="dockVolIcon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                </button>
+                <button type="button" class="fab-icon-btn" id="dockHistBtn" title="回看历史对话（含老师所讲、学生所问及PPT页码）">
+                  <svg viewBox="0 0 24 24"><path d="M12 8v4l3 3"></path><circle cx="12" cy="12" r="9"></circle></svg>
+                </button>
+                <button type="button" class="fab-icon-btn" id="dockSetBtn" title="打开课堂设置（翻页/字幕/音量/语音模型）">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+                <button type="button" class="fab-icon-btn" id="fsexit" title="切换全屏演示（F / Esc）">
+                  <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                </button>
+                <span class="fab-divider"></span>
+              </div>
+              <!-- 简洁提问按钮 + 整合式语音输入开关 -->
+              <div id="fabaskgroup">
+                <button type="button" id="fabtoggle" title="打开简洁提问框">
+                  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                  <span id="fabtoggleText">提问</span>
+                </button>
+                <button type="button" id="fabvoicebtn" title="点击直接进入语音输入模式（识别文字填入提问框供修改）">
+                  <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                  <span id="fabvoiceText">语音</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 统一模型配置弹窗（挂在 #fsroot 内，全屏与常规模式均可见）——
+               原来服务商、千问 ASR 各一个弹窗，小模型散在开发者卡片里，改一个模型要跑三处；
+               现在一个弹窗四个分区，共用同一套「测试 / 保存」。 -->
+          <div id="modelmodal" class="modal">
+            <div class="sheet" style="width:min(620px,100%)">
+              <h3>模型配置 <span class="hint" id="modelcfgenv"></span></h3>
+              <div class="fab-seg" id="modelcfgSeg">
+                <button type="button" data-msec="main" class="active">主模型</button>
+                <button type="button" data-msec="small">小模型</button>
+                <button type="button" data-msec="asr">语音识别 ASR</button>
+                <button type="button" data-msec="tts">语音合成 TTS</button>
+              </div>
+
+              <!-- 分区 1：主模型（讲解/答疑用的那个） -->
+              <div class="msec active" id="msec-main">
+                <label>服务商
+                  <select id="provname"></select>
+                </label>
+                <p class="hint" id="provhint"></p>
+                <label>Base URL
+                  <input type="text" id="provbase" placeholder="https://…" autocomplete="off">
+                </label>
+                <label>模型
+                  <input type="text" id="provmodel" placeholder="模型 id" autocomplete="off">
+                </label>
+                <label>API Key
+                  <input type="password" id="provkey" placeholder="留空 = 不修改" autocomplete="new-password">
+                </label>
+                <div class="row">
+                  <button type="button" id="provtest">测试</button>
+                  <button type="button" class="primary" id="provsave">保存</button>
+                </div>
+                <p id="provmsg" class="hint"></p>
+                <p class="hint">保存写回 <code id="provenvfile">.env</code>，只改受管的那几个键，注释与其它配置原样保留。
+                  新开的课堂立即使用新服务商；正在上的这一节不打断，刷新页面后生效。</p>
+              </div>
+
+              <!-- 分区 2：小模型（快速意图预判用，规则未命中时才调用） -->
+              <div class="msec" id="msec-small">
+                <label class="chk">
+                  <input type="checkbox" id="smallenabled"> 启用快速意图预判
+                </label>
+                <label class="chk">
+                  <input type="checkbox" id="smalluse"> 规则未命中时走小模型
+                </label>
+                <label>模型 ID
+                  <input type="text" id="smallmodel" placeholder="如 qwen2.5:1.5b / deepseek-v4.1-flash" autocomplete="off">
+                </label>
+                <label>Base URL
+                  <input type="text" id="smallbase" placeholder="留空 = 沿用主模型服务商" autocomplete="off">
+                </label>
+                <label>API Key
+                  <input type="password" id="smallkey" placeholder="留空 = 不修改" autocomplete="new-password">
+                </label>
+                <p class="hint" id="smallenv"></p>
+                <div class="row">
+                  <button type="button" id="smalltest">测试</button>
+                  <button type="button" class="primary" id="smallsave">保存</button>
+                </div>
+                <p id="smallmsg" class="hint"></p>
+              </div>
+
+              <!-- 分区 3：语音识别（语音提问 → 文字） -->
+              <div class="msec" id="msec-asr">
+                <label>推荐千问语音模型预设
+                  <select id="asrpreset"></select>
+                </label>
+                <p class="hint" id="asrhint"></p>
+                <label>Base URL（阿里云百炼 DashScope 兼容端点）
+                  <input type="text" id="asrbase" placeholder="https://dashscope.aliyuncs.com/compatible-mode/v1" autocomplete="off">
+                </label>
+                <label>模型 ID（Model）
+                  <input type="text" id="asrmodel" placeholder="qwen3-asr-flash" autocomplete="off">
+                </label>
+                <label>API Key
+                  <input type="password" id="asrkey" placeholder="留空 = 不修改" autocomplete="new-password">
+                </label>
+                <p class="hint" id="asrenv"></p>
+                <div class="row">
+                  <button type="button" id="asrtest">测试</button>
+                  <button type="button" class="primary" id="asrsave">保存</button>
+                </div>
+                <p id="asrmsg" class="hint"></p>
+                <p class="hint">未配 Key 时语音提问自动退回浏览器识别；配好后识别结果会填进提问框，可改再发。</p>
+              </div>
+
+              <!-- 分区 4：语音合成（老师说话的声音） -->
+              <div class="msec" id="msec-tts">
+                <label>音色
+                  <select id="ttsvoice"></select>
+                </label>
+                <label id="ttsvoicecustomwrap" style="display:none">自定义音色 ID（下拉选「自定义」时用）
+                  <input type="text" id="ttsvoicecustom" placeholder="如 zh-CN-YunxiNeural" autocomplete="off">
+                </label>
+                <label>语速（+0% 为原速）
+                  <input type="text" id="ttsrate" placeholder="+0%" autocomplete="off">
+                </label>
+                <label class="chk">
+                  <input type="checkbox" id="ttsenabled"> 启用语音合成（关掉后只出字幕）
+                </label>
+                <p class="hint" id="ttsstate"></p>
+                <div class="row">
+                  <button type="button" id="ttstest">测试并播放</button>
+                  <button type="button" class="primary" id="ttssave">保存</button>
+                </div>
+                <p id="ttsmsg" class="hint"></p>
+              </div>
+
+              <div class="row" style="margin-top:16px;border-top:1px solid var(--line);padding-top:12px">
+                <button type="button" id="modelcfgall">全部测试</button>
+                <button type="button" id="modelcfgclose">关闭</button>
+              </div>
+              <p class="hint" id="modelcfgallmsg"></p>
+              <div id="modelcfgallresults"></div>
+            </div>
+          </div>
+        </div>
+        <div id="deckbar">
+          <span id="deckmeta"></span>
+          <button id="fsenter" title="全屏播放课件（F 键）">⛶ 全屏播放</button>
+          <button id="zoomout">复位缩放</button>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2><span>字幕</span><span class="right meta">与语音逐字一致</span></h2>
+      <div class="body">
+        <div id="subtitle"><span class="placeholder">等待上课…</span></div>
+        <div class="hand" id="hand">老师正在等你回应 —— 可以直接说「没听懂」，或点下面的按钮</div>
+      </div>
+    </div>
+
+    <!-- 1. 历史对话回看卡片（包含老师说了什么、学生问了什么、在哪页 PPT） -->
+    <div class="card" style="margin-top:14px">
+      <h2>
+        <span>历史对话回看</span>
+        <span class="right meta" id="histSummary">记录老师讲授、学生提问及所在 PPT 页码（点击页码可跳页）</span>
+      </h2>
+      <div class="body">
+        <div class="hist-toolbar">
+          <button type="button" class="active" data-hfilter="all">全部对话</button>
+          <button type="button" data-hfilter="qa">仅看问答与让位互动</button>
+          <button type="button" data-hfilter="student">仅看学生提问</button>
+          <button type="button" data-hfilter="page">仅看当前 PPT 页</button>
+          <input type="text" id="histSearch" placeholder="搜索对话内容或页码…" style="max-width:190px;padding:4px 9px;font-size:12px;margin-left:auto">
+        </div>
+        <div class="hist-list" id="histList">
+          <div class="hint">等待课堂开始后自动记录每一句对话…</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. 快速意图预判与小模型路由探索（枚举直通 + 小模型预判） -->
+    <div class="card" style="margin-top:14px">
+      <h2>
+        <span>开发者探索 · 快速意图预判与小模型路由</span>
+        <span class="right meta">枚举直通 / 小模型预判 → 省去主模型思考开销</span>
+      </h2>
+      <div class="body">
+        <div class="intent-stats">
+          <div class="istat-box"><div class="num" id="stIntentTotal">0</div><div class="lbl">总意图判定</div></div>
+          <div class="istat-box"><div class="num" id="stIntentRule">0</div><div class="lbl">枚举规则秒判(&lt;1ms)</div></div>
+          <div class="istat-box"><div class="num" id="stIntentSmall">0</div><div class="lbl">轻量小模型命中</div></div>
+          <div class="istat-box"><div class="num" id="stIntentDirect">0</div><div class="lbl">直接继续讲课</div></div>
+          <div class="istat-box"><div class="num" id="stIntentSaved">0</div><div class="lbl">省下主模型调用</div></div>
+        </div>
+        <div class="dev-bar">
+          <span class="hint" id="intentSmallSummary" style="margin:0;flex:1;min-width:200px">当前小模型：读取中…</span>
+          <button type="button" id="intentGoCfg">⚙ 去配置</button>
+        </div>
+        <div class="row" style="margin-bottom:8px">
+          <input type="text" id="intentTestInput" placeholder="沙盒测试学生输入，例如：老师我听懂了，继续讲吧 / 刚才第3页那个词怎么读？" style="padding:6px 10px;font-size:12px">
+          <button type="button" class="primary" id="intentTestBtn" style="padding:6px 12px;font-size:12px">测试意图判定</button>
+        </div>
+        <div class="quick" id="intentQuickSamples" style="margin-bottom:6px">
+          <button type="button" data-itest="老师我听懂了，继续讲吧" style="padding:3px 9px;font-size:11px">测：「老师我听懂了，继续讲吧」</button>
+          <button type="button" data-itest="完全明白了，没问题" style="padding:3px 9px;font-size:11px">测：「完全明白了，没问题」</button>
+          <button type="button" data-itest="翻到下一页" style="padding:3px 9px;font-size:11px">测：「翻到下一页」</button>
+          <button type="button" data-itest="刚才第3页那个公式怎么来的？" style="padding:3px 9px;font-size:11px">测：「刚才第3页那个公式怎么来的？」</button>
+          <button type="button" data-itest="太难了记不住啊" style="padding:3px 9px;font-size:11px">测：「太难了记不住啊」</button>
+        </div>
+        <div id="intentTestResult" class="hint" style="margin-bottom:8px"></div>
+        <details>
+          <summary style="cursor:pointer;font-size:12px;color:var(--dim)">查看预定义学生意图枚举表（11 类固定枚举）与最近路由日志</summary>
+          <div class="enum-table" id="intentEnumTable"></div>
+          <div id="intentRecentList" style="margin-top:8px;font-size:12px"></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2><span>学生</span><span class="right meta">输入字数少也没关系，系统会推断你在说哪一句</span></h2>
+      <div class="body">
+        <div class="quick">
+          <button data-say="没听懂">没听懂</button>
+          <button data-say="举个例">举个例</button>
+          <button data-say="再说一遍">再说一遍</button>
+          <button data-say="明白了，继续">明白了，继续</button>
+        </div>
+        <div class="row">
+          <input type="text" id="input" placeholder="也可以自由提问，或点右侧语音输入后修改再发送…" autocomplete="off">
+          <button type="button" id="sidevoicebtn" title="点击开始/结束语音输入（识别文字填入输入框供修改）">🎤 语音</button>
+          <button class="primary" id="send">发送</button>
+        </div>
+        <!-- 侧栏没有弹出面板，状态行得挂在输入框下面，四种失败原因才有地方显示 -->
+        <div class="voice-status" id="sidevoicestatus">
+          <span style="display:inline-flex;align-items:center;gap:6px">
+            <span class="vdot"></span>
+            <span id="sidevoicestatustext">准备语音输入…</span>
+          </span>
+        </div>
+        <div class="quick" style="margin-top:10px">
+          <button data-cmd="prev">← 上一页</button>
+          <button data-cmd="repeat">↻ 重复本页</button>
+          <button data-cmd="next">下一页 →</button>
+        </div>
+        <p class="hint">课堂按「段末让位」推进：老师会先把当前这一段讲完，再回答你 ——
+          这是为了让语音永远停在完整句子之后。</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2><span>课堂状态</span><span class="right meta">实时</span></h2>
+      <div class="body">
+        <dl class="kv">
+          <dt>课件</dt><dd id="courseinfo">—</dd>
+          <dt>课堂目标</dt><dd id="goals"></dd>
+          <dt>当前单元</dt><dd id="unit"></dd>
+          <dt>单元进度</dt><dd><span id="unitprog"></span><div class="bar"><i id="unitbar"></i></div></dd>
+          <dt>让位点</dt><dd id="resume">—</dd>
+          <dt>待处理提问</dt><dd id="pending">—</dd>
+          <dt>已讲台账</dt><dd id="covered">—</dd>
+          <dt>待回看</dt><dd id="deferred">—</dd>
+          <dt>重讲轮次</dt><dd id="rounds">—</dd>
+          <dt>理解信号</dt><dd id="comp">—</dd>
+        </dl>
+        <p class="hint" id="params"></p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <h2><span>指标（《课堂交互设计》§7.6）</span>
+        <span class="right"><button id="dump" style="padding:3px 10px;font-size:12px">保存 JSON</button></span></h2>
+      <div class="body">
+        <dl class="kv">
+          <dt>让位延迟<span class="meta"> p50 / max</span></dt><dd id="mYield">—</dd>
+          <dt>探针 发出/回应</dt><dd id="mProbe">—</dd>
+          <dt>归位 成功/失败</dt><dd id="mResume">—</dd>
+          <dt>翻页 自动/手动</dt><dd id="mAdv">—</dd>
+          <dt>课件操作<span class="meta"> 下发/命中</span></dt><dd id="mOps">—</dd>
+          <dt>锚点命中率<span class="meta"> §8 V7</span></dt><dd id="mAnchor">—</dd>
+        </dl>
+        <div id="log"></div>
+      </div>
+    </div>
+
+    <!-- 3. 开发者模式：全部让位话术库展示与在线管理 + 课堂管理操作 -->
+    <div class="card" style="margin-top:14px">
+      <h2>
+        <span>开发者模式 · 让位话术库与课堂管理</span>
+        <span class="right" style="display:inline-flex;gap:6px">
+          <button type="button" id="phraseWarmupBtn" style="padding:3px 9px;font-size:11px">🔊 预合成话术语音</button>
+          <button type="button" id="phraseResetBtn" style="padding:3px 9px;font-size:11px">↺ 恢复默认话术</button>
+        </span>
+      </h2>
+      <div class="body">
+        <div class="dev-bar">
+          <span>课堂实时管理：</span>
+          <select id="devSlideSelect" title="直接跳转到指定 PPT 页"></select>
+          <button type="button" id="devGotoBtn">跳转页码</button>
+          <button type="button" id="devClearPendingBtn">清空待处理提问</button>
+          <button type="button" id="devClearDeferredBtn">清空待回看</button>
+          <button type="button" id="devResetRoundsBtn">重置重讲轮次</button>
+        </div>
+        <p class="hint" id="phraseNotice" style="margin:0 0 8px">
+          下方展示状态机在各阶段（回执 / 探针提问 / 段末让位过渡 / 跨页回顾 / 三步重入 / 重讲超限暂放 / 离线兜底）的全部预置让位话术，支持直接增删改、切换激活话术、以及切换「固定话术直出(0ms)」与「LLM实时生成」。
+        </p>
+        <div class="phrase-grid" id="phraseBankBox">
+          <div class="hint">正在加载让位话术库…</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- 抛物线示意图：对应手写课件第 2 页的 img 锚点（旧版式路径用） -->
+<template id="svg-img">
+  <figure class="svgwrap">
+    <svg viewBox="0 0 330 90" role="img" aria-label="三种抛物线与x轴的关系">
+      <g stroke="#5aa9ff" stroke-width="2" fill="none">
+        <path d="M10,24 Q32,84 54,24"/><path d="M8,62 Q32,4 56,62"/><path d="M6,78 Q32,52 58,78"/>
+      </g>
+      <line x1="2" y1="54" x2="62" y2="54" stroke="#9aa3b2" stroke-dasharray="3 3"/>
+      <g stroke="#5ad48a" stroke-width="2" fill="none">
+        <path d="M118,24 Q140,84 162,24"/><path d="M116,62 Q140,4 164,62"/><path d="M114,78 Q140,46 166,78"/>
+      </g>
+      <line x1="110" y1="54" x2="170" y2="54" stroke="#9aa3b2" stroke-dasharray="3 3"/>
+      <g stroke="#ffb454" stroke-width="2" fill="none">
+        <path d="M226,24 Q248,84 270,24"/><path d="M224,62 Q248,4 272,62"/><path d="M222,68 Q248,30 274,68"/>
+      </g>
+      <line x1="218" y1="54" x2="278" y2="54" stroke="#9aa3b2" stroke-dasharray="3 3"/>
+      <g fill="#9aa3b2" font-size="9">
+        <text x="14" y="16">Δ&gt;0</text><text x="122" y="16">Δ=0</text><text x="230" y="16">Δ&lt;0</text>
+      </g>
+    </svg>
+    <figcaption>Δ&gt;0 两交点 · Δ=0 相切 · Δ&lt;0 无交点</figcaption>
+  </figure>
+</template>
+
+
+<script src="/static/deck.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+let ws = null;
+let speaking = false, awaitingDone = false, queuedSeg = null, fallbackTimer = null, noAudioTimer = null;
+let curSeq = 0;
+let curAudio = null, audioPaused = false;
+let totalSlides = 1, curSlideIdx = 0;
+
+/* 课堂演示偏好（字幕样式、音量、倍速），持久化在 localStorage */
+const appPrefs = {
+  subOn: true,
+  subSize: '22px',
+  subPos: 'bottom',
+  subColor: '#111827',
+  volume: 1.0,
+  muted: false,
+  rate: 1.0,
+};
+try {
+  const saved = JSON.parse(localStorage.getItem('classroom_prefs') || '{}');
+  Object.assign(appPrefs, saved);
+} catch (e) {}
+function savePrefs() {
+  try { localStorage.setItem('classroom_prefs', JSON.stringify(appPrefs)); } catch (e) {}
+}
+
+function updateSlideBadges(idx, count, title) {
+  if (typeof idx === 'number') curSlideIdx = idx;
+  if (typeof count === 'number' && count > 0) totalSlides = count;
+  if (typeof title === 'string' && title) slideTitles[curSlideIdx] = title;
+  const pageText = `${curSlideIdx + 1} / ${totalSlides}`;
+  if ($('fabpage')) $('fabpage').textContent = pageText;
+  if ($('fabpageinfo')) $('fabpageinfo').textContent = `第 ${curSlideIdx + 1} / ${totalSlides} 页`;
+  if (title !== undefined && $('fabtitle')) {
+    $('fabtitle').textContent = `第 ${curSlideIdx + 1} 页 · ${title || '课堂演示'}`;
+  }
+  syncDevSlideSelect();
+  renderHistory();
+}
+
+let slideTitles = {};
+let waitingForStudent = false, curSegKind = '';
+
+function syncDevSlideSelect() {
+  const sel = $('devSlideSelect');
+  if (!sel) return;
+  if (sel.options.length !== totalSlides) {
+    sel.innerHTML = Array.from({length: totalSlides}, (_, i) => {
+      const t = slideTitles[i] ? ` · ${escapeHtml(slideTitles[i].slice(0, 18))}` : '';
+      return `<option value="${i}">第 ${i + 1} 页${t}</option>`;
+    }).join('');
+  }
+  sel.value = String(curSlideIdx);
+}
+
+DeckView.init({
+  stagewrap: $('stagewrap'), stage: $('stage'), zoomlayer: $('zoomlayer'),
+  slide: $('slide'), pointer: $('pointer'), pageflip: $('pageflip'),
+  simplehost: $('simplehost'), marker: $('marker'),
+}, {
+  onLog: (t, c) => addLog(t, c),
+  onOps: st => {
+    $('mOps').textContent = `${st.sent} 下发 / ${st.hit} 命中`
+      + (st.miss ? ` / ${st.miss} 未命中` : '');
+  },
+  onPageInfo: info => {
+    const idx = info.index | 0;
+    $('slideTitle').textContent = `第 ${idx + 1} 页 · ${info.title || ''}`;
+    updateSlideBadges(idx, totalSlides, info.title || '');
+    $('deckmeta').textContent = info.mode === 'deck'
+      ? `真实课件重绘 ${info.size} · 元素 ${info.elements}`
+        + (info.steps ? ` · 原稿分步 ${info.steps}` : '')
+      : '手写演示课件（堆叠版式）';
+  },
+});
+
+/* ---------------- 连接 ---------------- */
+function connect(){
+  ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.onopen = () => addLog('连接已建立','lok');
+  ws.onclose = () => { addLog('连接断开','lwarn'); setTimeout(connect, 1500); };
+  ws.onerror = () => addLog('连接错误','lerror');
+  ws.onmessage = ev => handle(JSON.parse(ev.data));
+}
+
+/* ---------------- 语音 ---------------- */
+/* 每一段带一个自增 seq，回 speech_done 时必须原样带回。
+   只看"有没有回"是不够的：一次错配就会让后端把"等播完"落到错误的段落上，
+   整节课会开始复读同一句话。 */
+function stopCurAudio(){
+  if (curAudio) {
+    try { curAudio.onended = null; curAudio.onerror = null; curAudio.pause(); } catch (e) {}
+    curAudio = null;
+  }
+  audioPaused = false;
+  if ($('fabpause')) $('fabpause').textContent = '⏸ 暂停';
+}
+
+function speak(msg){
+  stopCurAudio();
+  curSegKind = msg.seg_kind || 'unit';
+  // 老师提问（raise_hand / ask）时点亮等待回应颜色；切换回正常讲课或作答时才恢复平常颜色
+  if (msg.raise_hand || curSegKind === 'ask') {
+    waitingForStudent = true;
+    paintHand(true);
+  } else {
+    waitingForStudent = false;
+    paintHand(false);
+  }
+  const sIdx = (typeof msg.slide === 'number') ? msg.slide : curSlideIdx;
+  if (msg.slide_title) slideTitles[sIdx] = msg.slide_title;
+  recordHistory({
+    speaker: 'teacher',
+    kind: curSegKind,
+    text: msg.text,
+    slide: sIdx,
+    slideTitle: msg.slide_title || slideTitles[sIdx] || '',
+    unitId: msg.unit_id || '',
+  });
+  const cls = (msg.seg_kind==='unit') ? '' : msg.seg_kind;
+  paintSub(`<span class="${cls}">${escapeHtml(msg.text)}</span>`);
+  if (msg.anchors && msg.anchors.length) DeckView.highlight(msg.anchors);
+  // 课件操作与本句重点光标同步生效：若本句有精确 marker 则以 marker 落点为准
+  if (msg.ops && msg.ops.length) DeckView.applyOps(msg.ops);
+  if (msg.marker) DeckView.marker(msg.marker);
+  else if (!msg.ops || !msg.ops.length) DeckView.marker(null);
+  speaking = false; awaitingDone = true; queuedSeg = null; curSeq = msg.seq || 0;
+  clearTimeout(fallbackTimer); clearTimeout(noAudioTimer);
+}
+
+function finishSeg(){
+  stopCurAudio();
+  speaking = false; awaitingDone = false; queuedSeg = null;
+  clearTimeout(fallbackTimer); clearTimeout(noAudioTimer);
+  // 关键修复：探针提问话术（ask）播完后，老师正在 PAUSING 窗口等待学生回应，
+  // 此时浮窗必须保持「等你回应」的高亮颜色；直到学生回应或探针超时继续上课时再切回平常颜色。
+  if (!waitingForStudent && curSegKind !== 'ask') {
+    paintHand(false);
+  }
+  send({t:'speech_done', seq: curSeq});
+}
+
+function onSegmentEnd(msg){
+  if (msg.seq) curSeq = msg.seq;
+  if (msg.audio_url){            // 有音频：等它真的播完再推进（音频边界 = 让位边界）
+    clearTimeout(noAudioTimer);
+    queuedSeg = msg;
+    return;
+  }
+  // 没有音频（TTS 降级为纯文字）：按估算时长留出阅读时间
+  queuedSeg = msg;
+  const dur = Math.max(1500, msg.text.length * 200) / Math.max(0.5, appPrefs.rate || 1);
+  noAudioTimer = setTimeout(finishSeg, dur);
+}
+
+function audioMsg(msg){
+  clearTimeout(noAudioTimer);
+  stopCurAudio();
+  const q = queuedSeg;
+  const url = msg.url || '';
+  const est = Math.max(1200, (q ? q.text.length : 10) * 220) / Math.max(0.5, appPrefs.rate || 1);
+  try{
+    const audio = new Audio(url || `data:${msg.mime||'audio/mpeg'};base64,${msg.b64}`);
+    curAudio = audio;
+    audio.volume = appPrefs.muted ? 0 : Math.max(0, Math.min(1, appPrefs.volume));
+    audio.playbackRate = appPrefs.rate || 1.0;
+    audio.onended = finishSeg;
+    audio.onerror = () => { addLog('音频播放失败，按估算时长推进','lwarn'); fallbackTimer = setTimeout(finishSeg, est); };
+    const p = audio.play();
+    if (p && p.catch) p.catch(() => { addLog('自动播放被浏览器拦截，按估算时长推进','lwarn'); fallbackTimer = setTimeout(finishSeg, est); });
+  }catch(e){
+    addLog('音频初始化失败，按估算时长推进','lwarn');
+    fallbackTimer = setTimeout(finishSeg, est);
+  }
+}
+
+/* ---------------- 消息分发 ---------------- */
+function handle(m){
+  switch(m.kind){
+    case 'hello':
+      $('course').textContent = m.course;
+      $('prov').textContent = `${m.provider_label||''} · ${m.provider}`
+        + (m.tts && m.tts.enabled ? ` · TTS ${m.tts.voice}(${m.tts.cached} 条已缓存)` : ' · 纯文字(TTS 未启用)');
+      $('goals').innerHTML = (m.goals||[]).map(g=>`<span class="chip">${escapeHtml(g)}</span>`).join('');
+      $('params').textContent = `探针等待窗口 ${m.params.probe_window}s · 重讲上限 ${m.params.max_rephrase} 轮 · 单元长度告警 ${m.params.unit_char_warn} 字`;
+      const ci = m.course_info || {};
+      $('courseinfo').innerHTML = (m.deck
+        ? `<span class="chip">真实课件</span>《${escapeHtml(m.deck.title)}》${m.deck.slides} 页`
+          + ` · 脚本来源 <b>${escapeHtml(ci.plan_source || '?')}</b>`
+        : '<span class="chip">手写演示课件</span>');
+      if (m.slide_count) totalSlides = m.slide_count;
+      if (m.slide) DeckView.render(m.slide);
+      if (m.anchor_report && Object.keys(m.anchor_report).length) paintAnchorReport(m.anchor_report);
+      (ci.notes||[]).forEach(n => addLog(n, /^❌/.test(n) ? 'lerror' : 'lwarn'));
+      paintState(m);
+      addLog(`课堂开始 · ${m.units.length} 个讲解单元 · 预计 ${Math.round(m.total_est_sec)} 秒`,'lok');
+      break;
+    case 'page':
+      if (typeof m.slide_count === 'number' && m.slide_count) totalSlides = m.slide_count;
+      if (m.slide) DeckView.render(m.slide);
+      if (typeof m.slide_index === 'number' && m.slide_count) {
+        $('slideidx').textContent = `第 ${m.slide_index+1}/${m.slide_count} 页`;
+        updateSlideBadges(m.slide_index, m.slide_count, m.slide ? m.slide.title : undefined);
+      }
+      break;
+    case 'segment_start': speak(m); break;
+    case 'audio_delta': audioMsg(m); break;
+    case 'segment_end': onSegmentEnd(m); break;
+    case 'highlight': DeckView.highlight(m.anchors||[]); break;
+    case 'deck_op': DeckView.applyOps(m.ops||[]); break;
+    case 'phase':
+      addLog(`状态 → ${m.phase}`);
+      $('phase').textContent = m.phase;
+      if (m.phase === 'PAUSING' || m.phase === 'PAUSING_AUDIO') {
+        waitingForStudent = true;
+        paintHand(true);
+      } else if (waitingForStudent) {
+        waitingForStudent = false;
+        paintHand(false);
+      }
+      break;
+    // 思考中 / 想完了。只显示"在思考"这个状态，**不显示思考内容** ——
+    // 模型的自言自语不是老师要说的话，念出来或摆出来都会毁掉"老师"这个角色。
+    case 'thinking': setThinking(!!m.on, m.sec); break;
+    case 'state': paintState(m); break;
+    case 'transcript':
+      if (m.speaker==='student') {
+        addLog(`学生：${m.text}`,'lok');
+        const sIdx = (typeof m.slide === 'number') ? m.slide : curSlideIdx;
+        if (m.slide_title) slideTitles[sIdx] = m.slide_title;
+        recordHistory({
+          speaker: 'student',
+          kind: 'question',
+          text: m.text,
+          slide: sIdx,
+          slideTitle: m.slide_title || slideTitles[sIdx] || '',
+          unitId: m.unit_id || '',
+        });
+      }
+      break;
+    case 'notify': addLog(m.text, m.level==='error'?'lerror': m.level==='warn'?'lwarn':''); break;
+    case 'metrics_dump': download(m); break;
+  }
+}
+
+/* ---------------- 状态面板 ---------------- */
+let thinkTimer = 0;
+function setThinking(on, sec){
+  const el = $('thinking'), lab = $('thinklabel');
+  el.classList.toggle('on', !!on);
+  clearInterval(thinkTimer);
+  if (!on || !sec) { lab.textContent = '老师在思考…'; return; }
+  // 有秒表就显示秒数：等 30 秒和等 3 秒，学生该能分辨出来
+  const t0 = Date.now();
+  const tick = () => { lab.textContent = `老师在思考… ${((Date.now()-t0)/1000).toFixed(0)}s`; };
+  tick();
+  thinkTimer = setInterval(tick, 500);
+}
+function paintAnchorReport(r){
+  if (!r || !r.units) { $('mAnchor').textContent = '—'; return; }
+  $('mAnchor').textContent = `${r.anchor_hit}/${r.anchors} = `
+    + `${Math.round((r.anchor_hit_rate||0)*1000)/10}% · 段落级 ${r.para_level_anchors||0}`
+    + ` · 低置信 ${r.low_confidence_anchors||0}`;
+}
+function paintState(s){
+  $('phase').textContent = s.phase;
+  if (s.slide_index != null && s.slide_count) {
+    $('slideidx').textContent = `第 ${s.slide_index+1}/${s.slide_count} 页`;
+    updateSlideBadges(s.slide_index, s.slide_count);
+  }
+  $('probe').textContent = s.phase==='PAUSING' ? `等待回应 ${s.probe_window}s` : '';
+  if (s.phase === 'PAUSING' || s.phase === 'PAUSING_AUDIO') {
+    waitingForStudent = true;
+    paintHand(true);
+  } else if (waitingForStudent) {
+    waitingForStudent = false;
+    paintHand(false);
+  }
+  if (s.intent_router) updateIntentUI(s.intent_router);
+
+  const u = s.unit;
+  $('unit').textContent = u ? `${u.unit_id}${u.is_page_end?' · 页尾':''}${u.kp.length?' · '+u.kp.join(','):''}` : '—';
+  if (u){
+    $('unitprog').textContent = `${u.done}/${u.sentences.length} 句`;
+    $('unitbar').style.width = Math.round(100*u.done/Math.max(1,u.sentences.length))+'%';
+  } else { $('unitprog').textContent='—'; $('unitbar').style.width='0'; }
+
+  $('resume').textContent = s.resume_point
+    ? `${s.resume_point.unit_id} 第 ${s.resume_point.at_sentence} 句${s.resume_point.sentence_complete?'（完整句）':'（句中）'}`
+    : '—';
+  $('pending').textContent = s.pending.length ? s.pending.join(' ｜ ') : '—';
+  $('covered').innerHTML = s.covered.length
+    ? `${s.covered_count} 条 · ` + s.covered.slice(-8).map(k=>`<span class="chip">${escapeHtml(k)}</span>`).join('')
+    : '—';
+  $('deferred').innerHTML = s.deferred.length
+    ? s.deferred.map(k=>`<span class="chip vague">${escapeHtml(k)}</span>`).join('') : '—';
+  $('rounds').textContent = Object.keys(s.q_rounds).length
+    ? Object.entries(s.q_rounds).map(([k,v])=>`${k}: 第${v}轮`).join(' ｜ ') : '—';
+  $('comp').innerHTML = Object.keys(s.comprehension).length
+    ? Object.entries(s.comprehension).map(([k,v])=>`<span class="chip ${v}">${escapeHtml(k)} ${v}</span>`).join('')
+    : '<span class="meta">尚无（沉默不计为理解）</span>';
+
+  const yi = s.metrics.yield_latency_ms||[];
+  $('mYield').textContent = yi.length
+    ? `p50 ${median(yi).toFixed(0)}ms · max ${Math.max(...yi).toFixed(0)}ms · ${yi.length} 次`
+    : '（还没有提问）';
+  $('mProbe').textContent = `${s.metrics.probe.sent} 发出 / `
+    + `${s.metrics.probe.confirmed} 确认 / ${s.metrics.probe.interrupted} 打断 / ${s.metrics.probe.timeout} 超时`;
+  $('mResume').textContent = `${s.metrics.resume.ok} / ${s.metrics.resume.fail}`;
+  $('mAdv').textContent = `${s.metrics.advance.auto} / ${s.metrics.advance.manual}`;
+}
+
+/* ---------------- 交互与悬浮控制面板 ---------------- */
+function send(o){ if (ws && ws.readyState===1) ws.send(JSON.stringify(o)); }
+/* `from` 是这次输入用的框：侧栏一个、全屏悬浮工具里一个。
+   两边都能提问，但清空时必须清对地方 —— 否则全屏问完一句，
+   回到页面发现侧栏里还留着上一条。 */
+function say(t, from){
+  if (!t.trim()) return;
+  if (from) from.value = '';
+  // 学生已回应老师：将右下角浮窗等待颜色切回正常状态
+  waitingForStudent = false;
+  paintHand(false);
+  addLog(`你：${t}`);
+  send({t:'input', text:t});
+  $('fsfab').classList.remove('open');      // 问完就收起来，把课件让出来
+}
+$('send').onclick = () => say($('input').value, $('input'));
+$('input').addEventListener('keydown', e => { if (e.key==='Enter') say($('input').value, $('input')); });
+$('fssend').onclick = () => say($('fsinput').value, $('fsinput'));
+$('fsinput').addEventListener('keydown', e => { if (e.key==='Enter') say($('fsinput').value, $('fsinput')); });
+document.querySelectorAll('[data-say]').forEach(b => b.onclick = () => say(b.dataset.say));
+document.querySelectorAll('[data-cmd]').forEach(b => b.onclick = () => send({t:'cmd', cmd:b.dataset.cmd}));
+$('dump').onclick = () => send({t:'metrics'});
+$('zoomout').onclick = () => DeckView.applyOps([{op:'reset_zoom'},{op:'clear'}]);
+$('fsenter').onclick = () => toggleFs();
+$('fsexit').onclick = () => toggleFs();
+
+/* 设置面板、历史对话面板与提问面板分离控制 */
+function openAskPanel(forceOpen) {
+  const fab = $('fsfab');
+  fab.classList.remove('open-set', 'open-hist');
+  const next = (forceOpen !== undefined) ? !!forceOpen : !fab.classList.contains('open');
+  fab.classList.toggle('open', next);
+  if (next) setTimeout(() => $('fsinput').focus(), 30);
+}
+function openSetPanel(forceOpen) {
+  const fab = $('fsfab');
+  fab.classList.remove('open', 'open-hist');
+  const next = (forceOpen !== undefined) ? !!forceOpen : !fab.classList.contains('open-set');
+  fab.classList.toggle('open-set', next);
+}
+function openHistPanel(forceOpen) {
+  const fab = $('fsfab');
+  fab.classList.remove('open', 'open-set');
+  const next = (forceOpen !== undefined) ? !!forceOpen : !fab.classList.contains('open-hist');
+  fab.classList.toggle('open-hist', next);
+  if (next) renderHistory();
+}
+$('fabtoggle').onclick = () => openAskPanel();
+$('dockSetBtn').onclick = () => openSetPanel();
+$('fabpage').onclick = () => openSetPanel();
+$('dockHistBtn').onclick = () => openHistPanel();
+$('fabclose').onclick = () => $('fsfab').classList.remove('open');
+$('fabsetclose').onclick = () => $('fsfab').classList.remove('open-set');
+$('fabhistclose').onclick = () => $('fsfab').classList.remove('open-hist');
+$('fabmin').onclick = () => {
+  const min = $('fsfab').classList.toggle('minimized');
+  $('fabmin').innerHTML = min
+    ? '<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>'
+    : '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+};
+
+/* 暂停 / 继续语音 */
+$('fabpause').onclick = () => {
+  if (!curAudio) return;
+  if (curAudio.paused) {
+    curAudio.play().catch(() => {});
+    audioPaused = false;
+    $('fabpause').textContent = '⏸ 暂停';
+  } else {
+    curAudio.pause();
+    audioPaused = true;
+    $('fabpause').textContent = '▶ 继续';
+  }
+};
+
+/* 应用并同步字幕与音量设置 */
+function applyPrefsUI() {
+  const root = $('fsroot');
+  root.classList.toggle('sub-off', !appPrefs.subOn);
+  root.classList.toggle('sub-top', appPrefs.subPos === 'top');
+  root.style.setProperty('--sub-size', appPrefs.subSize || '22px');
+  root.style.setProperty('--sub-color', appPrefs.subColor || '#111827');
+
+  $('subToggleBtn').classList.toggle('active', !!appPrefs.subOn);
+  $('subToggleBtn').textContent = appPrefs.subOn ? '已开启' : '已关闭';
+  $('dockSubBtn').classList.toggle('active', !!appPrefs.subOn);
+  $('dockSubBtn').classList.toggle('muted', !appPrefs.subOn);
+
+  document.querySelectorAll('#subSizeSeg button').forEach(b => {
+    b.classList.toggle('active', b.dataset.subSize === appPrefs.subSize);
+  });
+  document.querySelectorAll('#subPosSeg button').forEach(b => {
+    b.classList.toggle('active', b.dataset.subPos === appPrefs.subPos);
+  });
+  document.querySelectorAll('#subColorSeg button').forEach(b => {
+    b.classList.toggle('active', b.dataset.subColor === appPrefs.subColor);
+  });
+
+  const effVol = appPrefs.muted ? 0 : Math.round((appPrefs.volume || 0) * 100);
+  $('volSlider').value = String(effVol);
+  $('volVal').textContent = appPrefs.muted ? '静音' : `${effVol}%`;
+  $('dockMuteBtn').classList.toggle('muted', appPrefs.muted || effVol === 0);
+  $('volMuteBtn').classList.toggle('muted', appPrefs.muted || effVol === 0);
+  const volSvg = (appPrefs.muted || effVol === 0)
+    ? '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>'
+    : '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>';
+  $('dockVolIcon').innerHTML = volSvg;
+  $('volMuteBtn').querySelector('svg').innerHTML = volSvg;
+
+  document.querySelectorAll('#rateSeg button').forEach(b => {
+    b.classList.toggle('active', parseFloat(b.dataset.rate) === (appPrefs.rate || 1));
+  });
+
+  if (curAudio) {
+    curAudio.volume = appPrefs.muted ? 0 : Math.max(0, Math.min(1, appPrefs.volume));
+    curAudio.playbackRate = appPrefs.rate || 1.0;
+  }
+  savePrefs();
+}
+
+function toggleSubtitles() {
+  appPrefs.subOn = !appPrefs.subOn;
+  applyPrefsUI();
+}
+$('subToggleBtn').onclick = toggleSubtitles;
+$('dockSubBtn').onclick = toggleSubtitles;
+
+document.querySelectorAll('#subSizeSeg button').forEach(b => {
+  b.onclick = () => { appPrefs.subSize = b.dataset.subSize; applyPrefsUI(); };
+});
+document.querySelectorAll('#subPosSeg button').forEach(b => {
+  b.onclick = () => { appPrefs.subPos = b.dataset.subPos; applyPrefsUI(); };
+});
+document.querySelectorAll('#subColorSeg button').forEach(b => {
+  b.onclick = () => { appPrefs.subColor = b.dataset.subColor; applyPrefsUI(); };
+});
+
+function toggleMute() {
+  appPrefs.muted = !appPrefs.muted;
+  if (!appPrefs.muted && appPrefs.volume <= 0.02) appPrefs.volume = 0.8;
+  applyPrefsUI();
+}
+$('volMuteBtn').onclick = toggleMute;
+$('dockMuteBtn').onclick = toggleMute;
+
+$('volSlider').addEventListener('input', e => {
+  const v = Math.max(0, Math.min(100, parseInt(e.target.value || '100', 10)));
+  appPrefs.volume = v / 100;
+  appPrefs.muted = (v === 0);
+  applyPrefsUI();
+});
+
+document.querySelectorAll('#rateSeg button').forEach(b => {
+  b.onclick = () => { appPrefs.rate = parseFloat(b.dataset.rate) || 1.0; applyPrefsUI(); };
+});
+
+applyPrefsUI();
+
+function download(m){
+  const blob = new Blob([JSON.stringify(m, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `classroom_metrics_${Date.now()}.json`;
+  a.click();
+  addLog('指标已导出（让位延迟 / 探针响应率 / 归位成功率 / 课件操作命中）','lok');
+}
+
+/* ---------------- 小工具 ---------------- */
+/* 字幕只有这一个写入口：页面里那份 + 全屏叠加那份必须逐字一致。
+   以前 speak() 直接写 $('subtitle')，加第二个显示位就会漏一处。 */
+function paintSub(html){
+  $('subtitle').innerHTML = html;
+  $('fssub').innerHTML = html;
+}
+/* 老师"举手等你回应"的状态：侧栏提示条 + 右下角悬浮按钮都跟着变，
+   这样学生全屏看课件时也不会漏掉"现在轮到你了"。 */
+function paintHand(on){
+  $('hand').classList.toggle('on', !!on);
+  if ($('fabaskgroup')) $('fabaskgroup').classList.toggle('wait', !!on);
+  $('fabtoggle').classList.toggle('wait', !!on);
+  if ($('fabtoggleText')) {
+    $('fabtoggleText').textContent = on ? '等你回应' : '提问';
+  }
+}
+function addLog(t, cls=''){
+  const d = document.createElement('div');
+  if (cls) d.className = cls;
+  const time = new Date().toLocaleTimeString('zh-CN',{hour12:false});
+  d.innerHTML = `<b>${time}</b> ${escapeHtml(t)}`;
+  const box = $('log');
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function median(xs){ const s=[...xs].sort((a,b)=>a-b); const n=s.length;
+  return n%2 ? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2; }
+
+/* ---------------- 全屏播放 ---------------- */
+/* 全屏用 Fullscreen API，而不是自己画一层遮罩：只有真全屏才能把地址栏/任务栏
+   一起吃掉，投屏时才像在放 PPT。画布仍由 DeckView 按宽高双约束缩放
+   （deck.js fit()），所以全屏只是"容器变大"—— 高亮、指示器、课件操作的坐标
+   全沿用同一套换算，不引入第二套逻辑。 */
+const fsroot = $('fsroot');
+let fsLayout = false;      // 布局态：浏览器不允许全屏（或 ?fs=1 预览）时退化成铺满
+let vpMuted = false;       // F11 全屏我们退不掉，用户按过"退出"就先按常规布局显示
+
+/* 浏览器 F11 / 系统级全屏**不会**触发 fullscreenchange，也拿不到"是谁全屏的"，
+   只能看视口是不是等于整块屏幕。少了这一步，按 F11 时页面仍按普通布局渲染 ——
+   字幕、翻页、悬浮助手全都不在，看起来就是"全屏模式下什么都没有"。 */
+function presentationByViewport(){
+  if (document.fullscreenElement || vpMuted) return false;
+  // 判据用"没有浏览器外框 + 视口顶满屏幕高度"：F11 时标题栏/地址栏消失，
+  // 外框高度差≈0。比"视口等于屏幕宽"稳 —— 后者会被滚动条那十几像素破坏。
+  const chrome = window.outerHeight - window.innerHeight;
+  return chrome < 60 && window.innerHeight >= screen.height - 2;
+}
+function fsOn(){ return fsroot.classList.contains('fs'); }
+function syncFs(){
+  const real = document.fullscreenElement === fsroot;
+  const on = real || fsLayout || presentationByViewport();
+  fsroot.classList.toggle('fs', on);
+  $('fsenter').textContent = (real || fsLayout) ? '⛶ 退出全屏' : '⛶ 全屏播放';
+  DeckView.setFullscreen(on);
+  if (on) $('fssub').innerHTML = $('subtitle').innerHTML;
+  setTimeout(() => DeckView.fit(), 60);   // 全屏后容器尺寸要等一帧才稳定
+}
+async function enterFs(){
+  fsLayout = false; vpMuted = false;
+  try {
+    await fsroot.requestFullscreen({navigationUI: 'hide'});
+  } catch (e) {
+    fsLayout = true;                      // 退化但功能不丢：仍然铺满屏幕
+    addLog('浏览器不允许全屏，已改为铺满页面', 'lwarn');
+  }
+  syncFs();
+}
+async function exitFs(){
+  if (!document.fullscreenElement && !fsLayout) {
+    vpMuted = true;                       // F11 状态：先退出"铺满"，恢复正常页面布局
+    syncFs();
+    addLog('浏览器自己处于全屏（F11），要按一次 F11 才能真正退出', 'lwarn');
+    return;
+  }
+  fsLayout = false;
+  try { if (document.fullscreenElement) await document.exitFullscreen(); } catch (e) {}
+  syncFs();
+}
+window.addEventListener('resize', () => { vpMuted = false; syncFs(); });
+function toggleFs(){ fsOn() ? exitFs() : enterFs(); }
+document.addEventListener('fullscreenchange', syncFs);
+
+document.addEventListener('keydown', e => {
+  // 语音优先：录音/转写中按 Esc 先撤掉这次语音，再轮到关弹窗、退全屏
+  if (e.key === 'Escape' && cancelVoiceInput()) { e.preventDefault(); return; }
+  if ($('modelmodal').classList.contains('open') && e.key === 'Escape') {
+    openModelCfg(false); return;   // 弹窗开着时，Esc 只关弹窗
+  }
+  if (/^(input|textarea)$/i.test(e.target.tagName || '')) return;   // 打字时不抢键
+  if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFs(); return; }
+  if (!fsOn()) return;
+  if (e.key === 'Escape') { exitFs(); return; }
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault(); send({t:'cmd', cmd:'next'});
+  } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault(); send({t:'cmd', cmd:'prev'});
+  }
+});
+
+// ?fs=1：不进真全屏，直接按全屏版式铺满（投屏核对 / 截图验收用）
+if (new URLSearchParams(location.search).has('fs')) { fsLayout = true; syncFs(); }
+
+/* ---------------- 统一模型配置（四个分区 → 一次快照） ---------------- */
+/* 以前换服务商、配千问 ASR、填小模型要跑三个地方，改错一个还得对着 README 找变量名。
+   现在收成一个弹窗：打开时 GET /api/modelcfg 拿全部快照（只打一次），切分区只重渲染；
+   每个分区共用「测试 / 保存」，测试带的是界面上还没保存的编辑值。
+   面板只显示 key 有没有配，**从不回显 key 明文**。 */
+const MODSECS = [
+  { id: 'main',  f: 'prov',  label: '主模型' },
+  { id: 'small', f: 'small', label: '小模型' },
+  { id: 'asr',   f: 'asr',   label: '语音识别 ASR' },
+  { id: 'tts',   f: 'tts',   label: '语音合成 TTS' },
+];
+let modCfg = null;         // 快照缓存：切分区不重复请求，关弹窗时丢掉
+let modCfgFetching = null; // 同一时刻只允许一个快照请求
+
+const modSecConf = id => MODSECS.find(s => s.id === id) || MODSECS[0];
+const secOf = (data, id) => ((data && data.sections && data.sections[id]) || {});
+
+function setSecMsg(sec, text, cls){
+  const el = $(modSecConf(sec).f + 'msg');
+  if (!el) return;
+  el.textContent = text || '';
+  el.className = 'hint ' + (cls || '');
+}
+
+function modCfgSwitch(sec){
+  const id = modSecConf(sec).id;
+  document.querySelectorAll('#modelcfgSeg button').forEach(b => {
+    b.classList.toggle('active', b.dataset.msec === id);
+  });
+  document.querySelectorAll('#modelmodal .msec').forEach(p => {
+    p.classList.toggle('active', p.id === 'msec-' + id);
+  });
+}
+
+function fillProvider(name){
+  const p = (secOf(modCfg, 'main').providers || []).find(x => x.name === name);
+  if (!p) return;
+  $('provbase').value = p.base_url || '';
+  $('provmodel').value = p.model || '';
+  $('provkey').value = '';
+  $('provkey').placeholder = p.key_set ? '已设置（留空 = 不修改）' : '未设置，填一把 key';
+  $('provhint').textContent = p.hint || '';
+}
+
+function modCfgRender(){
+  const snap = modCfg || {};
+  const main = secOf(snap, 'main'), small = secOf(snap, 'small');
+  const asr = secOf(snap, 'asr'), tts = secOf(snap, 'tts');
+  const envFile = snap.env_file || '.env';
+  $('modelcfgenv').textContent = '写回 ' + envFile;
+  $('provenvfile').textContent = envFile;
+
+  const provs = main.providers || [];
+  $('provname').innerHTML = provs.map(p =>
+    `<option value="${escapeHtml(p.name)}">${escapeHtml(p.label)}（${p.name}）`
+      + `${p.active ? ' · 当前' : ''}</option>`).join('');
+  $('provname').value = main.provider || snap.active_provider || '';
+  fillProvider($('provname').value);
+  setSecMsg('main', '');
+
+  $('smallenabled').checked = !!small.enabled;
+  $('smalluse').checked = !!small.use_small_llm;
+  $('smallmodel').value = small.model || '';
+  $('smallbase').value = small.base_url || '';
+  $('smallkey').value = '';
+  $('smallkey').placeholder = small.key_set ? '已设置（留空 = 不修改）' : '未设置，填小模型 API Key';
+  $('smallenv').textContent = small.env ? '写回 ' + Object.values(small.env).join(' / ') : '';
+  setSecMsg('small', '');
+
+  const presets = asr.presets || [];
+  $('asrpreset').innerHTML = presets.map(p =>
+    `<option value="${escapeHtml(p.id)}">${escapeHtml(p.label)}</option>`
+  ).join('') + '<option value="__custom__">自定义模型 ID…</option>';
+  const asrHit = presets.find(p => p.id === asr.model);
+  $('asrpreset').value = asrHit ? asrHit.id : '__custom__';
+  $('asrhint').textContent = asrHit ? asrHit.hint : '填写兼容的语音转文字模型 ID';
+  $('asrbase').value = asr.base_url || '';
+  $('asrmodel').value = asr.model || '';
+  $('asrkey').value = '';
+  $('asrkey').placeholder = asr.key_set ? '已设置（留空 = 不修改）' : '未设置，填 DashScope API Key';
+  setSecMsg('asr', '');
+
+  const voices = tts.voices || [];
+  $('ttsvoice').innerHTML = voices.map(v =>
+    `<option value="${escapeHtml(v.id)}">${escapeHtml(v.label)}</option>`
+  ).join('') + '<option value="__custom__">自定义音色 ID…</option>';
+  const ttsHit = voices.find(v => v.id === tts.voice);
+  $('ttsvoice').value = ttsHit ? ttsHit.id : '__custom__';
+  $('ttsvoicecustom').value = ttsHit ? '' : (tts.voice || '');
+  $('ttsvoicecustomwrap').style.display = ttsHit ? 'none' : '';   // label 与 input 一起进退
+  $('ttsrate').value = tts.rate || '+0%';
+  $('ttsenabled').checked = !!tts.enabled;
+  $('ttsstate').textContent = tts.available ? 'edge-tts 可用' : ('不可用：' + (tts.last_error || '未知原因'));
+  setSecMsg('tts', '');
+
+  $('modelcfgallmsg').textContent = '';
+  $('modelcfgallmsg').className = 'hint';
+  $('modelcfgallresults').innerHTML = '';
+}
+
+async function modCfgLoad(){
+  if (modCfgFetching) return modCfgFetching;   // 连点两下也只发一次
+  modCfgFetching = (async () => {
+    try {
+      const r = await fetch('/api/modelcfg');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      modCfg = await r.json();
+      modCfgRender();
+    } catch (e) {
+      // 端点没起来也别白屏：弹窗照开，每个分区的结果行写清楚原因
+      MODSECS.forEach(s => setSecMsg(s.id, '读取配置失败：' + ((e && e.message) || e), 'bad'));
+      $('modelcfgenv').textContent = '未能读取配置';
+    } finally { modCfgFetching = null; }
+  })();
+  return modCfgFetching;
+}
+
+function openModelCfg(sec){
+  if (sec === false) { modCfgClose(); return; }
+  $('modelmodal').classList.add('open');
+  modCfgSwitch(sec || 'main');
+  if (!modCfg) modCfgLoad();    // 已有快照就只切分区，不再打后端
+}
+function modCfgClose(){
+  $('modelmodal').classList.remove('open');
+  modCfg = null;                // 关掉即作废：下次打开重新拉，免得显示别的进程改之前的旧值
+}
+
+function ttsVoiceValue(){
+  const v = $('ttsvoice').value;
+  return v === '__custom__' ? $('ttsvoicecustom').value.trim() : v;
+}
+
+/* 测试与保存共用同一份字段：测试的语义是「界面上还没保存的值」，空串 = 沿用已保存值 */
+function modCfgBody(sec){
+  const id = modSecConf(sec).id;
+  if (id === 'main') return {
+    section: 'main', provider: $('provname').value,
+    base_url: $('provbase').value.trim(), model: $('provmodel').value.trim(),
+    api_key: $('provkey').value.trim(),
+  };
+  if (id === 'small') return {
+    section: 'small', enabled: $('smallenabled').checked, use_small_llm: $('smalluse').checked,
+    model: $('smallmodel').value.trim(), base_url: $('smallbase').value.trim(),
+    api_key: $('smallkey').value.trim(),
+  };
+  if (id === 'asr') return {
+    section: 'asr', base_url: $('asrbase').value.trim(),
+    model: $('asrmodel').value.trim(), api_key: $('asrkey').value.trim(),
+  };
+  return {
+    section: 'tts', enabled: $('ttsenabled').checked,
+    voice: ttsVoiceValue(), rate: $('ttsrate').value.trim() || '+0%',
+  };
+}
+
+async function postJson(url, body){
+  const r = await fetch(url, {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(body || {}),
+  });
+  let j = {};
+  try { j = await r.json(); } catch (e) { j = {}; }
+  if (!r.ok) throw new Error(j.message || j.error || j.detail || ('HTTP ' + r.status));
+  return j;
+}
+
+/* TTS 测试成功后直接出声，省得再开一节课才知道音色对不对 */
+function playTestAudio(url){
+  try {
+    const a = new Audio(url);
+    const p = a.play();
+    if (p && p.catch) p.catch(() => addLog('测试音频被浏览器拦截，再点一次「测试」即可出声', 'lwarn'));
+  } catch (e) { addLog('测试音频播放失败：' + e, 'lwarn'); }
+}
+
+function testLine(j){
+  const ok = !!j.ok;
+  const ms = (j.elapsed_ms === 0 || j.elapsed_ms) ? ' · 耗时 ' + j.elapsed_ms + 'ms' : '';
+  const msg = String(j.message || j.detail || (ok ? '成功' : '失败')).trim();
+  return { text: (ok ? '✅ ' : '❌ ') + msg + ms, ok: ok };
+}
+
+async function modCfgTest(sec){
+  const conf = modSecConf(sec), btn = $(conf.f + 'test');
+  setSecMsg(conf.id, '正在测试…');
+  if (btn) btn.disabled = true;
+  try {
+    const j = await postJson('/api/modelcfg/test', modCfgBody(conf.id));
+    const line = testLine(j);
+    setSecMsg(conf.id, line.text, line.ok ? 'ok' : 'bad');
+    if (j.audio_url) playTestAudio(j.audio_url);
+  } catch (e) {
+    setSecMsg(conf.id, '测试失败：' + ((e && e.message) || e), 'bad');
+  } finally { if (btn) btn.disabled = false; }
+}
+
+async function modCfgSave(sec){
+  const conf = modSecConf(sec), btn = $(conf.f + 'save');
+  const body = modCfgBody(conf.id);
+  setSecMsg(conf.id, '正在保存…');
+  if (btn) btn.disabled = true;
+  try {
+    const j = await postJson('/api/modelcfg/save', body);
+    setSecMsg(conf.id, '✅ 已保存' + (j.describe ? ' → ' + j.describe : '') + '（新开的课堂生效）', 'ok');
+    addLog(conf.label + '配置已更新' + (j.describe ? ' → ' + j.describe : ''), 'lok');
+    if (conf.id === 'main' && j.describe && $('prov')) $('prov').textContent = j.describe;
+    if (body.api_key) $(conf.f + 'key').placeholder = '已设置（留空 = 不修改）';
+    modCfg = null;   // 快照已过期：下次打开重新拉，界面上已填的值不动
+  } catch (e) {
+    setSecMsg(conf.id, '❌ 保存失败：' + ((e && e.message) || e), 'bad');
+  } finally { if (btn) btn.disabled = false; }
+}
+
+async function modCfgTestAll(){
+  const btn = $('modelcfgall');
+  $('modelcfgallmsg').textContent = '正在逐项测试（每项都可能真打一次模型，稍等）…';
+  $('modelcfgallmsg').className = 'hint';
+  $('modelcfgallresults').innerHTML = '';
+  if (btn) btn.disabled = true;
+  try {
+    const j = await postJson('/api/modelcfg/test_all', {});
+    const rs = j.results || [];
+    rs.forEach(x => {
+      const conf = MODSECS.find(s => s.id === x.section);
+      if (!conf) return;
+      const line = testLine(x);
+      setSecMsg(conf.id, line.text, line.ok ? 'ok' : 'bad');   // 顺手写回各自分区的结果行
+    });
+    $('modelcfgallresults').innerHTML = rs.map(x => {
+      const conf = MODSECS.find(s => s.id === x.section);
+      const line = testLine(x);
+      return `<div class="mres-item">${escapeHtml(conf ? conf.label : (x.section || ''))} · `
+        + `<span class="${line.ok ? 'ok' : 'bad'}">${escapeHtml(line.text)}</span></div>`;
+    }).join('');
+    const okCount = rs.filter(x => x.ok).length;
+    $('modelcfgallmsg').textContent = `共 ${rs.length} 项，通过 ${okCount} 项`
+      + ((j.elapsed_ms === 0 || j.elapsed_ms) ? ` · 总耗时 ${j.elapsed_ms}ms` : '');
+    $('modelcfgallmsg').className = 'hint ' + (rs.length && okCount === rs.length ? 'ok' : 'bad');
+    const ttsOk = rs.find(x => x.section === 'tts' && x.ok && x.audio_url);
+    if (ttsOk) playTestAudio(ttsOk.audio_url);
+  } catch (e) {
+    $('modelcfgallmsg').textContent = '全部测试失败：' + ((e && e.message) || e);
+    $('modelcfgallmsg').className = 'hint bad';
+  } finally { if (btn) btn.disabled = false; }
+}
+
+$('modelcfg').onclick = () => openModelCfg('main');
+$('modelcfgclose').onclick = () => modCfgClose();
+$('modelmodal').addEventListener('click', e => { if (e.target.id === 'modelmodal') modCfgClose(); });
+document.querySelectorAll('#modelcfgSeg button').forEach(b => {
+  b.onclick = () => modCfgSwitch(b.dataset.msec);
+});
+MODSECS.forEach(s => {
+  const t = $(s.f + 'test'), v = $(s.f + 'save');
+  if (t) t.onclick = () => modCfgTest(s.id);
+  if (v) v.onclick = () => modCfgSave(s.id);
+});
+$('modelcfgall').onclick = () => modCfgTestAll();
+$('provname').onchange = () => fillProvider($('provname').value);
+$('asrpreset').onchange = () => {
+  const val = $('asrpreset').value;
+  if (val === '__custom__') return;
+  $('asrmodel').value = val;
+  const hit = (secOf(modCfg, 'asr').presets || []).find(p => p.id === val);
+  if (hit) $('asrhint').textContent = hit.hint;
+};
+$('ttsvoice').onchange = () => {
+  const custom = $('ttsvoice').value === '__custom__';
+  $('ttsvoicecustomwrap').style.display = custom ? '' : 'none';
+  if (custom) $('ttsvoicecustom').focus();
+};
+
+// 点空白处收起悬浮助手（它是常驻的，得能关）
+document.addEventListener('click', e => {
+  if (!(e.target && e.target.closest && (e.target.closest('#fsfab') || e.target.closest('#modelmodal')))) {
+    $('fsfab').classList.remove('open');
+    $('fsfab').classList.remove('open-set');
+    $('fsfab').classList.remove('open-hist');
+  }
+});
+
+/* ---------------- 千问语音转文字（Qwen ASR）配置与语音输入模式 ---------------- */
+let voiceRec = {
+  active: false,        // 正在录音
+  transcribing: false,  // 音频已发出、等千问返回（状态行要和「聆听中」分开）
+  targetInput: null,
+  insertAt: 0,          // 语音段起点：语音文字只占 [insertAt, insertAt+语音长度)
+  voiceText: '',        // 上一次写进语音段的文字，用来定位并整段替换这一段
+  interimText: '',      // 当前语音段里的文字（旧脚本按这个名字读）
+  lastText: '',         // 最后一次识别文本
+  userEdited: false,    // 录音期间用户是否自己动过键盘
+  len: 0,               // 上一次看到的输入框长度，用来让锚点跟着手改平移
+  gen: 0,               // 会话代号：Esc / 新一次录音让在途回包失效
+  abortCtl: null,
+  chunks: [],
+  sampleRate: 16000,
+  speechRec: null,
+  audioCtx: null,
+  mediaStream: null,
+  processor: null,
+};
+// 峰值低于它按「没采到声音」处理：直接提示，不白跑一次识别请求
+const VOICE_SILENCE_PEAK = 0.005;
+// 转写最长等多久：连接被代理/SW/黑洞吞掉时 fetch 既不 resolve 也不 reject，
+// 只靠 abort 的副作用（reject）不够，得在状态行这一层兜住，否则界面永远停在「正在转写…」
+const VOICE_ASR_TIMEOUT_MS = 20000;
+
+/* 模型配置只在顶栏那个统一入口里改；页面上不再放第二、第三个语音模型入口 */
+function updateAsrBadges(data) {
+  if (!data) return;
+  if ($('asrenv')) $('asrenv').textContent = data.describe || '';
+}
+fetch('/api/asr/config').then(r => r.json()).then(updateAsrBadges).catch(() => {});
+
+/* 状态行跟着「这次语音的目标输入框」走：提问框的状态在面板里，侧栏没有面板，
+   所以两条状态条一起写 —— 四种失败原因才不会无处显示 */
+function setVoiceStatus(state, text) {
+  const stopBtn = $('voicestopbtn');
+  let cls = 'voice-status';
+  if (state) {
+    cls += ' on';
+    if (state === 'rec') cls += ' rec';
+    else if (state === 'ok') cls += ' ok';
+    else if (state === 'busy') cls += ' busy';
+    else if (state === 'warn') cls += ' warn';
+  }
+  [['voicestatus', 'voicestatustext'], ['sidevoicestatus', 'sidevoicestatustext']].forEach(ids => {
+    const bar = $(ids[0]), txt = $(ids[1]);
+    if (!bar || !txt) return;
+    bar.className = cls;
+    txt.textContent = (state && text) ? text : '';   // 收起时也要清文本，免得下次显示闪出上一句
+  });
+  if (stopBtn) stopBtn.style.display = (state === 'rec') ? 'inline-flex' : 'none';
+}
+
+function setRecordingUI(on) {
+  $('fabvoicebtn').classList.toggle('recording', !!on);
+  $('fsinmic').classList.toggle('recording', !!on);
+  $('sidevoicebtn').classList.toggle('recording', !!on);
+  if ($('fabvoiceText')) $('fabvoiceText').textContent = on ? '聆听中' : '语音';
+  $('sidevoicebtn').textContent = on ? '⏹ 完成语音' : '🎤 语音';
+}
+
+/* 峰值 / RMS：拿来判断「到底有没有采到声音」 */
+function analyzeVoiceLevel(chunks) {
+  let peak = 0, sum = 0, n = 0;
+  for (const c of chunks) {
+    for (let i = 0; i < c.length; i++) {
+      const v = Math.abs(c[i]);
+      if (v > peak) peak = v;
+      sum += c[i] * c[i];
+      n++;
+    }
+  }
+  return {peak, rms: n ? Math.sqrt(sum / n) : 0, samples: n};
+}
+
+/* 语音段还没有文字时，锚点要跟着用户的手改平移 ——
+   否则第一段语音会插进用户刚打的字中间（前后缀顺序就反了） */
+function trackVoiceAnchor(el) {
+  if (voiceRec.voiceText) return;            // 段里已有文字：交给 applyVoiceText 的 indexOf 定位
+  const len = el.value.length;
+  const oldLen = voiceRec.len;
+  voiceRec.len = len;
+  const delta = len - oldLen;
+  if (!delta) return;
+  const caret = el.selectionStart == null ? len : el.selectionStart;
+  const editStart = delta > 0 ? caret - delta : caret;   // 纯插入时的起点
+  if (editStart < voiceRec.insertAt) voiceRec.insertAt = Math.max(0, voiceRec.insertAt + delta);
+  else if (editStart === voiceRec.insertAt && oldLen === 0) voiceRec.insertAt = caret;  // 空框里先打的字排在语音段前面
+}
+
+/* 全文件唯一改目标输入框的地方：只改 [insertAt, insertAt+语音长度) 这一段。
+   段外的手改（前面、后面）原样保留；段内被手改过就只插入、不删除 ——
+   宁可多留几个字，也绝不吃掉用户打的字。 */
+function applyVoiceText(text) {
+  const inp = voiceRec.targetInput;
+  if (!inp) return;
+  const clean = String(text == null ? '' : text).trim();
+  const cur = String(inp.value == null ? '' : inp.value);
+  const prev = voiceRec.voiceText || '';
+  const at = Math.max(0, Math.min(voiceRec.insertAt | 0, cur.length));   // 用户删了前面的字，insertAt 会越界
+
+  let segStart = at, prefix = cur.slice(0, at), suffix = cur.slice(at), replaced = 0;
+  if (prev) {
+    const idx = cur.indexOf(prev, at);
+    if (idx >= 0) {
+      segStart = idx;                        // 段起点跟着实际位置走：用户在前面插字后它会右移
+      prefix = cur.slice(0, idx);
+      suffix = cur.slice(idx + prev.length);
+      replaced = prev.length;
+    }
+    // 找不到 = 用户手改了语音段内部：只在锚点插入，用户改过的字一个都不删
+  }
+
+  const next = prefix + clean + suffix;
+  voiceRec.insertAt = segStart;
+  voiceRec.voiceText = clean;
+  voiceRec.interimText = clean;
+  voiceRec.lastText = clean;
+  voiceRec.len = next.length;
+  if (cur === next) return;
+
+  // 不抢焦点、不动用户不在用的框
+  const focused = document.activeElement === inp;
+  const caretBefore = focused ? inp.selectionStart : null;
+  inp.value = next;
+  if (!focused) return;
+  let caret;
+  if (voiceRec.userEdited && caretBefore != null) {
+    if (caretBefore < segStart) caret = caretBefore;                                        // 段前打过字：光标原地
+    else if (caretBefore >= segStart + replaced) caret = caretBefore + (clean.length - replaced);  // 段后打过字：按段长平移
+    else caret = segStart + clean.length;
+  } else {
+    caret = segStart + clean.length;         // 纯语音、没动过键盘，才把光标留在语音段末尾
+  }
+  const pos = Math.max(0, Math.min(caret, next.length));
+  try { inp.setSelectionRange(pos, pos); } catch (e) {}
+}
+
+/* 兼容旧名：外部脚本可能还在调。语义改为「在光标处插入」，不再整段覆盖 */
+function putRecognizedText(inp, text) {
+  if (!inp) return;
+  const clean = (text || '').trim();
+  if (!clean) return;
+  const val = String(inp.value == null ? '' : inp.value);
+  const at = Math.max(0, Math.min(inp.selectionStart == null ? val.length : inp.selectionStart, val.length));
+  inp.value = val.slice(0, at) + clean + val.slice(at);
+}
+
+function encodeWavBase64(float32Chunks, inSampleRate, outSampleRate) {
+  let totalLen = 0;
+  for (const c of float32Chunks) totalLen += c.length;
+  if (!totalLen) return '';
+  const merged = new Float32Array(totalLen);
+  let offset = 0;
+  for (const c of float32Chunks) { merged.set(c, offset); offset += c.length; }
+
+  const ratio = inSampleRate / outSampleRate;
+  const outLen = Math.max(1, Math.round(totalLen / ratio));
+  const pcm16 = new Int16Array(outLen);
+  for (let i = 0; i < outLen; i++) {
+    const idx = Math.min(totalLen - 1, Math.floor(i * ratio));
+    const s = Math.max(-1, Math.min(1, merged[idx]));
+    pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+  }
+
+  const buffer = new ArrayBuffer(44 + pcm16.length * 2);
+  const view = new DataView(buffer);
+  const writeStr = (pos, str) => { for (let i = 0; i < str.length; i++) view.setUint8(pos + i, str.charCodeAt(i)); };
+  writeStr(0, 'RIFF');
+  view.setUint32(4, 36 + pcm16.length * 2, true);
+  writeStr(8, 'WAVE');
+  writeStr(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, outSampleRate, true);
+  view.setUint32(28, outSampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeStr(36, 'data');
+  view.setUint32(40, pcm16.length * 2, true);
+  for (let i = 0; i < pcm16.length; i++) view.setInt16(44 + i * 2, pcm16[i], true);
+
+  const bytes = new Uint8Array(buffer);
+  let binary = '';
+  const step = 0x8000;
+  for (let i = 0; i < bytes.length; i += step) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + step));
+  }
+  return btoa(binary);
+}
+
+/* 把这次录音的采集资源全部关掉：预览、PCM 采集、设备、AudioContext */
+function releaseVoiceCapture() {
+  if (voiceRec.speechRec) {
+    try { voiceRec.speechRec.stop(); } catch (e) {}
+    voiceRec.speechRec = null;
+  }
+  if (voiceRec.processor) {
+    try { voiceRec.processor.disconnect(); } catch (e) {}
+    voiceRec.processor = null;
+  }
+  if (voiceRec.mediaStream) {
+    try { voiceRec.mediaStream.getTracks().forEach(t => t.stop()); } catch (e) {}
+    voiceRec.mediaStream = null;
+  }
+  if (voiceRec.audioCtx) {
+    try { voiceRec.audioCtx.close(); } catch (e) {}
+    voiceRec.audioCtx = null;
+  }
+}
+
+async function startVoiceInput(targetInput) {
+  const inp = targetInput || $('fsinput');
+  // 一次只允许一条录音：切目标前先把上一次收尾（在途转写也算一次没收完的）
+  if (voiceRec.active) await stopVoiceInput();
+  else if (voiceRec.transcribing) cancelVoiceInput();
+
+  if (inp === $('fsinput')) openAskPanel(true);
+  const gen = ++voiceRec.gen;                 // 新一次录音：旧请求的回包从此失效
+  voiceRec.active = true;
+  voiceRec.transcribing = false;
+  voiceRec.abortCtl = null;
+  voiceRec.targetInput = inp;
+  // 开录瞬间的插入点。之后语音只往这里插，绝不整段重写输入框
+  voiceRec.insertAt = Math.max(0, Math.min(inp.selectionStart == null ? inp.value.length : inp.selectionStart, inp.value.length));
+  voiceRec.voiceText = '';
+  voiceRec.interimText = '';
+  voiceRec.userEdited = false;
+  voiceRec.len = inp.value.length;
+  voiceRec.chunks = [];
+  setRecordingUI(true);
+  setVoiceStatus('rec', '正在聆听… 说完点「完成识别」，Esc 取消本次');
+
+  // 暂停老师语音，避免把讲课声录进麦克风
+  if (curAudio && !curAudio.paused) {
+    curAudio.pause();
+    audioPaused = true;
+    if ($('fabpause')) $('fabpause').textContent = '▶ 继续';
+  }
+
+  // 1) 浏览器原生 SpeechRecognition 只当实时预览用：同样写语音段，不整段覆盖输入框
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SR) {
+    try {
+      const sr = new SR();
+      sr.lang = 'zh-CN';
+      sr.continuous = true;
+      sr.interimResults = true;
+      sr.onresult = ev => {
+        if (voiceRec.gen !== gen || !voiceRec.active) return;
+        let txt = '';
+        for (let i = 0; i < ev.results.length; i++) txt += ev.results[i][0].transcript;
+        txt = txt.trim();
+        if (txt) applyVoiceText(txt);      // 预览也走同一套「只改语音段」
+      };
+      sr.onerror = () => {};
+      sr.start();
+      voiceRec.speechRec = sr;
+    } catch (e) {}
+  }
+
+  // 2) 同时采 16k 单声道 PCM，给千问批量接口出终稿（没有 SpeechRecognition 的浏览器靠它也能用）
+  if (!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
+    voiceRec.active = false;
+    voiceRec.gen++;
+    releaseVoiceCapture();
+    setRecordingUI(false);
+    setVoiceStatus('warn', '这个浏览器拿不到麦克风（不支持录音），请改用键盘输入');
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+    if (!voiceRec.active || voiceRec.gen !== gen) {   // 等授权时用户已经取消/换了目标
+      stream.getTracks().forEach(t => t.stop());
+      return;
+    }
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+    voiceRec.sampleRate = ctx.sampleRate || 44100;
+    const src = ctx.createMediaStreamSource(stream);
+    const proc = ctx.createScriptProcessor(4096, 1, 1);
+    proc.onaudioprocess = e => {
+      if (!voiceRec.active || voiceRec.gen !== gen) return;
+      voiceRec.chunks.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+    };
+    src.connect(proc);
+    proc.connect(ctx.destination);
+    voiceRec.mediaStream = stream;
+    voiceRec.audioCtx = ctx;
+    voiceRec.processor = proc;
+  } catch (e) {
+    // 拿不到麦克风：说清原因就收工，别让状态行停在「聆听中」骗人
+    voiceRec.active = false;
+    voiceRec.gen++;
+    releaseVoiceCapture();
+    setRecordingUI(false);
+    setVoiceStatus('warn', '没拿到麦克风：请检查浏览器是否授权、设备是否被占用（' + ((e && e.name) || e) + '）');
+    addLog('无法访问麦克风：' + ((e && e.message) || e), 'lwarn');
+  }
+}
+
+async function stopVoiceInput() {
+  if (!voiceRec.active) return;               // 转写中再点一次不重复发请求
+  const gen = voiceRec.gen;
+  const inp = voiceRec.targetInput || $('fsinput');
+  voiceRec.active = false;
+  setRecordingUI(false);
+  releaseVoiceCapture();
+
+  const level = analyzeVoiceLevel(voiceRec.chunks);
+  const b64 = encodeWavBase64(voiceRec.chunks, voiceRec.sampleRate, 16000);
+  voiceRec.chunks = [];
+
+  if (!b64) {
+    setVoiceStatus('warn', '没采到音频数据：录音太短或麦克风没工作，请重试');
+    return;
+  }
+  // 近静音就别发了：麦克风静音/选错设备时发上去也是白跑一趟识别
+  if (level.peak < VOICE_SILENCE_PEAK) {
+    setVoiceStatus('warn', '没采到声音：检查麦克风是否静音或设备选错');
+    addLog('语音输入没采到声音（峰值 ' + level.peak.toFixed(4) + '，RMS ' + level.rms.toFixed(4) + '），未发送识别请求', 'lwarn');
+    return;
+  }
+
+  voiceRec.transcribing = true;
+  const waitSec = Math.round(VOICE_ASR_TIMEOUT_MS / 1000);
+  setVoiceStatus('busy', '正在转写… 千问语音模型处理中，最多等 ' + waitSec + ' 秒（Esc 取消）');
+  const ctl = (typeof AbortController === 'function') ? new AbortController() : null;
+  voiceRec.abortCtl = ctl;
+  // 超时由定时器自己把状态收干净，不依赖 abort 引发的 reject：请求被吞掉时可能连 reject 都等不到
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    try { if (ctl) ctl.abort(); } catch (e) {}
+    if (voiceRec.gen !== gen) return;        // 这期间用户已经 Esc 或换了目标，交给那条路径
+    voiceRec.transcribing = false;
+    voiceRec.abortCtl = null;
+    setVoiceStatus('warn', '转写超时（' + waitSec + ' 秒无响应）：检查网络后重试');   // 手改文字和已上屏的预览都不动
+    addLog('语音转写超时（' + waitSec + ' 秒无响应），已中止本次请求', 'lwarn');
+  }, VOICE_ASR_TIMEOUT_MS);
+  try {
+    const r = await fetch('/api/asr/transcribe', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({audio_b64: b64, format: 'wav', mime: 'audio/wav', language: 'zh'}),
+      signal: ctl ? ctl.signal : undefined,
+    });
+    let j = null;
+    try { j = await r.json(); } catch (e) { j = null; }
+    if (voiceRec.gen !== gen) return;        // 已 Esc 取消或被新一次录音顶掉：这次回包作废
+    if (timedOut) {                          // 超时后才赶到的回包：状态已经报过超时，不二次改写
+      addLog('转写超时后到达的迟到结果已忽略' + ((j && j.text) ? '：' + j.text : ''), 'lwarn');
+      return;
+    }
+    if (r.ok && j && j.ok && j.text) {
+      applyVoiceText(j.text);                // 整体替换本次的预览，同一句话不会叠加
+      // 识别成功不弹「已由某某模型识别」这类结果提示：字已经进了输入框，用户一眼就看得到；
+      // 状态行只留给需要用户动手的事（失败、超时、取消、正在听）。
+      setVoiceStatus('', '');
+      addLog('语音识别完成（' + (j.model || '千问ASR') + '）：' + j.text, 'lok');
+      return;
+    }
+    // 三种失败各说各的：未配 Key / 空音频 / 其它请求失败，别都叫「识别失败」
+    if (j && j.code === 'no_key') {
+      setVoiceStatus('warn', '千问语音转文字还没配 API Key：点「千问 Qwen3-ASR ⚙」配置后重试');
+    } else if (r.status === 400) {
+      setVoiceStatus('warn', '没采到音频数据（服务端没收到声音），请检查麦克风后重试');
+    } else {
+      setVoiceStatus('warn', '语音转写请求失败（HTTP ' + r.status + '）：' + ((j && j.error) || '服务无响应，请稍后重试'));
+    }
+    addLog('语音转写失败：' + ((j && (j.error || j.code)) || ('HTTP ' + r.status)), 'lwarn');
+  } catch (e) {
+    if (voiceRec.gen !== gen) return;        // Esc abort 掉的请求本来就会 reject
+    if (timedOut) return;                    // 超时那条已在定时器里报过，别再盖成「网络中断」
+    setVoiceStatus('warn', '语音转写请求失败（网络中断或服务不可达）：' + ((e && e.message) || e));
+    addLog('语音转写请求失败：' + ((e && e.message) || e), 'lwarn');
+  } finally {
+    clearTimeout(timer);                     // 成功/失败/取消/超时都要清，不留残留意
+    if (voiceRec.gen === gen) {
+      voiceRec.transcribing = false;
+      voiceRec.abortCtl = null;
+    }
+  }
+}
+
+/* Esc 取消：丢掉本次音频、撤掉语音段；用户手改过的文字原样留着 */
+function cancelVoiceInput() {
+  if (!voiceRec.active && !voiceRec.transcribing) return false;
+  const inp = voiceRec.targetInput;
+  voiceRec.gen++;                            // 在途请求的回包从此刻起作废
+  voiceRec.active = false;
+  voiceRec.transcribing = false;
+  if (voiceRec.abortCtl) {
+    try { voiceRec.abortCtl.abort(); } catch (e) {}
+    voiceRec.abortCtl = null;
+  }
+  releaseVoiceCapture();
+  voiceRec.chunks = [];
+  setRecordingUI(false);
+  if (inp) applyVoiceText('');               // 等价于清空语音段，绝不整段清输入框
+  setVoiceStatus('warn', '已取消本次语音（手改内容保留）');
+  addLog('已取消本次语音输入', 'lwarn');
+  return true;
+}
+
+function toggleVoiceInput(targetInput) {
+  const inp = targetInput || $('fsinput');
+  // 同一个框再点=结束；点另一个框=换目标 —— startVoiceInput 会先把旧那次收尾，两条录音绝不并存
+  if (voiceRec.active && voiceRec.targetInput === inp) stopVoiceInput();
+  else startVoiceInput(inp);
+}
+
+$('fabvoicebtn').onclick = () => {
+  openAskPanel(true);
+  toggleVoiceInput($('fsinput'));
+};
+$('fsinmic').onclick = () => toggleVoiceInput($('fsinput'));
+$('voicestopbtn').onclick = () => stopVoiceInput();
+$('sidevoicebtn').onclick = () => toggleVoiceInput($('input'));
+
+// 录音期间用户手改：只记「动过键盘」并让锚点跟着走，不打断录音、不抢光标
+['fsinput', 'input'].forEach(id => {
+  const el = $(id);
+  if (!el) return;
+  el.addEventListener('input', () => {
+    if (!voiceRec.active && !voiceRec.transcribing) return;
+    if (voiceRec.targetInput !== el) return;
+    voiceRec.userEdited = true;
+    trackVoiceAnchor(el);
+  });
+});
+
+/* ---------------- 1. 历史对话回看（老师讲授 / 学生提问 / 所在 PPT 页码） ---------------- */
+const KIND_LABELS = {
+  unit: '老师 · 讲授',
+  ask: '老师 · 探针提问',
+  ack: '老师 · 收到回执',
+  yield: '老师 · 让位过渡',
+  redirect: '老师 · 跳页回顾',
+  answer: '老师 · 答疑解答',
+  rephrase: '老师 · 换讲法重讲',
+  resume: '老师 · 三步重入',
+  question: '学生 · 提问/回应',
+};
+let chatHistory = [];
+let histFilter = 'all';
+
+function recordHistory(entry) {
+  if (!entry || !entry.text) return;
+  const time = new Date().toLocaleTimeString('zh-CN', {hour12: false});
+  // 防止完全相同的相邻重复记录
+  const last = chatHistory[chatHistory.length - 1];
+  if (last && last.speaker === entry.speaker && last.text === entry.text && last.slide === entry.slide) {
+    return;
+  }
+  chatHistory.push({
+    id: chatHistory.length + 1,
+    time,
+    speaker: entry.speaker,
+    kind: entry.kind || (entry.speaker === 'student' ? 'question' : 'unit'),
+    text: entry.text,
+    slide: typeof entry.slide === 'number' ? entry.slide : curSlideIdx,
+    slideTitle: entry.slideTitle || slideTitles[entry.slide] || '',
+    unitId: entry.unitId || '',
+  });
+  if (chatHistory.length > 300) chatHistory = chatHistory.slice(-300);
+  renderHistory();
+}
+
+function jumpToSlide(slideIdx) {
+  send({t: 'dev', action: 'goto_slide', slide: slideIdx});
+}
+
+function renderHistory() {
+  const q = (($('histSearch') && $('histSearch').value) || '').trim().toLowerCase();
+  const filtered = chatHistory.filter(item => {
+    if (histFilter === 'student' && item.speaker !== 'student') return false;
+    if (histFilter === 'qa' && item.speaker !== 'student' && item.kind === 'unit') return false;
+    if (histFilter === 'page' && item.slide !== curSlideIdx) return false;
+    if (q) {
+      const hay = `${item.text} 第${item.slide + 1}页 ${item.slideTitle} ${item.unitId}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  if ($('histSummary')) {
+    const stuCnt = chatHistory.filter(x => x.speaker === 'student').length;
+    $('histSummary').textContent = `共 ${chatHistory.length} 条对话（学生互动 ${stuCnt} 次）· 点击页码可跳回对应 PPT`;
+  }
+  if ($('fabhistcount')) $('fabhistcount').textContent = `${chatHistory.length} 条`;
+
+  const buildHtml = list => {
+    if (!list.length) {
+      return '<div class="hint" style="padding:10px 0">暂无匹配的对话记录…</div>';
+    }
+    return list.map(item => {
+      const isStu = item.speaker === 'student';
+      const isYieldKind = !isStu && item.kind !== 'unit';
+      const roleLabel = KIND_LABELS[item.kind] || (isStu ? '学生 · 提问' : '老师 · 发言');
+      const pageLabel = `第 ${item.slide + 1} 页` + (item.slideTitle ? ` · ${item.slideTitle.slice(0, 16)}` : '');
+      return `<div class="hist-item ${isStu ? 'student' : ''} ${isYieldKind ? 'yield-kind' : ''}">
+        <div class="hist-meta">
+          <span class="hist-role">${escapeHtml(roleLabel)}</span>
+          <span class="hist-slide" data-jump-slide="${item.slide}" title="点击跳转到该页 PPT">📄 ${escapeHtml(pageLabel)}</span>
+          ${item.unitId ? `<span>${escapeHtml(item.unitId)}</span>` : ''}
+          <span style="margin-left:auto">${escapeHtml(item.time)}</span>
+        </div>
+        <div>${escapeHtml(item.text)}</div>
+      </div>`;
+    }).join('');
+  };
+
+  const mainBox = $('histList');
+  if (mainBox) {
+    mainBox.innerHTML = buildHtml(filtered);
+    mainBox.scrollTop = mainBox.scrollHeight;
+    mainBox.querySelectorAll('[data-jump-slide]').forEach(el => {
+      el.onclick = () => jumpToSlide(parseInt(el.dataset.jumpSlide, 10));
+    });
+  }
+
+  const fabBox = $('fabhistlist');
+  if (fabBox) {
+    fabBox.innerHTML = buildHtml(chatHistory.slice(-60));
+    fabBox.scrollTop = fabBox.scrollHeight;
+    fabBox.querySelectorAll('[data-jump-slide]').forEach(el => {
+      el.onclick = () => jumpToSlide(parseInt(el.dataset.jumpSlide, 10));
+    });
+  }
+}
+
+document.querySelectorAll('[data-hfilter]').forEach(btn => {
+  btn.onclick = () => {
+    histFilter = btn.dataset.hfilter;
+    document.querySelectorAll('[data-hfilter]').forEach(b => b.classList.toggle('active', b === btn));
+    renderHistory();
+  };
+});
+if ($('histSearch')) $('histSearch').addEventListener('input', renderHistory);
+
+/* ---------------- 2. 开发者模式：让位话术库管理与课堂实时管理 ---------------- */
+let phraseCategories = [];
+
+async function loadPhrases() {
+  try {
+    const r = await fetch('/api/dev/phrases');
+    const j = await r.json();
+    phraseCategories = j.categories || [];
+    renderPhraseBank();
+  } catch (e) {
+    if ($('phraseBankBox')) $('phraseBankBox').innerHTML = `<div class="hint bad">加载让位话术失败：${escapeHtml(e)}</div>`;
+  }
+}
+
+function renderPhraseBank() {
+  const box = $('phraseBankBox');
+  if (!box) return;
+  box.innerHTML = phraseCategories.map(cat => {
+    const itemsHtml = (cat.items || []).map((txt, idx) => {
+      const isAct = idx === cat.active;
+      const cached = (cat.tts_cached && cat.tts_cached[idx]);
+      return `<div class="pitem-row" data-cat="${escapeHtml(cat.key)}" data-idx="${idx}">
+        <button type="button" class="${isAct ? 'active-pin' : ''}" data-act="pin" title="设为当前激活话术">
+          ${isAct ? '✓ 当前使用' : '设为使用'}
+        </button>
+        <input type="text" value="${escapeHtml(txt)}" data-role="pinput">
+        <span class="chip" style="margin:0;white-space:nowrap">${cached ? '🔊已缓存' : '待合成'}</span>
+        <button type="button" data-act="save">保存</button>
+        ${cat.items.length > 1 ? '<button type="button" data-act="del" title="删除此条">删</button>' : ''}
+      </div>`;
+    }).join('');
+
+    const modeSwitch = cat.supports_llm
+      ? `<button type="button" data-cat="${escapeHtml(cat.key)}" data-act="toggle-mode" style="padding:2px 8px;font-size:11px">
+           模式：${cat.mode === 'fixed' ? '⚡ 固定话术直出 (0ms)' : '🤖 LLM 实时生成'}
+         </button>`
+      : '<span class="chip" style="margin:0">⚡ 固定话术直出</span>';
+
+    return `<div class="pcat-card" data-cat-card="${escapeHtml(cat.key)}">
+      <div class="pcat-head">
+        <span class="pcat-title">${escapeHtml(cat.label)}</span>
+        <div style="display:flex;align-items:center;gap:6px">
+          ${modeSwitch}
+          <span class="pcat-phase">${escapeHtml(cat.phase)}</span>
+        </div>
+      </div>
+      <div class="pcat-desc">${escapeHtml(cat.desc)}</div>
+      ${itemsHtml}
+      <div class="pitem-row" style="margin-top:7px" data-cat="${escapeHtml(cat.key)}">
+        <input type="text" placeholder="新增一条「${escapeHtml(cat.label)}」候选话术…" data-role="newinput">
+        <button type="button" data-act="add">+ 新增话术</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  box.querySelectorAll('[data-act]').forEach(btn => {
+    btn.onclick = () => handlePhraseAction(btn);
+  });
+}
+
+async function handlePhraseAction(btn) {
+  const act = btn.dataset.act;
+  const row = btn.closest('[data-cat]');
+  const key = btn.dataset.cat || (row && row.dataset.cat);
+  const cat = phraseCategories.find(c => c.key === key);
+  if (!cat) return;
+
+  let body = {key};
+  if (act === 'pin') {
+    body.active = parseInt(row.dataset.idx, 10);
+  } else if (act === 'save') {
+    const idx = parseInt(row.dataset.idx, 10);
+    const val = row.querySelector('[data-role="pinput"]').value.trim();
+    if (!val) return;
+    const nextItems = [...cat.items];
+    nextItems[idx] = val;
+    body.items = nextItems;
+  } else if (act === 'del') {
+    const idx = parseInt(row.dataset.idx, 10);
+    body.items = cat.items.filter((_, i) => i !== idx);
+  } else if (act === 'add') {
+    const inp = row.querySelector('[data-role="newinput"]');
+    const val = (inp && inp.value || '').trim();
+    if (!val) return;
+    body.items = [...cat.items, val];
+    body.active = cat.items.length;
+  } else if (act === 'toggle-mode') {
+    body.mode = (cat.mode === 'fixed') ? 'llm' : 'fixed';
+  }
+
+  try {
+    const r = await fetch('/api/dev/phrases', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body),
+    });
+    const j = await r.json();
+    if (j.categories) {
+      phraseCategories = j.categories;
+      renderPhraseBank();
+      addLog(`让位话术库已更新：${cat.label}`, 'lok');
+    }
+  } catch (e) {
+    addLog('保存话术失败：' + e, 'lerror');
+  }
+}
+
+$('phraseWarmupBtn').onclick = async () => {
+  $('phraseWarmupBtn').disabled = true;
+  $('phraseNotice').textContent = '⏳ 正在批量预合成所有让位话术音频…';
+  try {
+    const r = await fetch('/api/dev/phrases', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'warmup'}),
+    });
+    const j = await r.json();
+    if (j.categories) {
+      phraseCategories = j.categories;
+      renderPhraseBank();
+    }
+    $('phraseNotice').textContent = '✅ ' + (j.message || '预合成完成');
+    addLog(j.message || '让位话术预合成完成', 'lok');
+  } catch (e) {
+    $('phraseNotice').textContent = '❌ 预合成失败：' + e;
+  } finally {
+    $('phraseWarmupBtn').disabled = false;
+  }
+};
+
+$('phraseResetBtn').onclick = async () => {
+  try {
+    const r = await fetch('/api/dev/phrases', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({action: 'reset'}),
+    });
+    const j = await r.json();
+    if (j.categories) {
+      phraseCategories = j.categories;
+      renderPhraseBank();
+    }
+    $('phraseNotice').textContent = '✅ 已恢复全部默认让位话术';
+    addLog('已恢复全部默认让位话术', 'lok');
+  } catch (e) {}
+};
+
+$('devGotoBtn').onclick = () => {
+  const idx = parseInt($('devSlideSelect').value || '0', 10);
+  jumpToSlide(idx);
+};
+$('devClearPendingBtn').onclick = () => send({t: 'dev', action: 'clear_pending'});
+$('devClearDeferredBtn').onclick = () => send({t: 'dev', action: 'clear_deferred'});
+$('devResetRoundsBtn').onclick = () => send({t: 'dev', action: 'reset_rounds'});
+
+/* ---------------- 3. 快速意图预判与小模型路由探索 ---------------- */
+function updateIntentUI(st) {
+  if (!st) return;
+  const s = st.stats || {};
+  if ($('stIntentTotal')) $('stIntentTotal').textContent = String(s.total || 0);
+  if ($('stIntentRule')) $('stIntentRule').textContent = String(s.rule_hits || 0);
+  if ($('stIntentSmall')) $('stIntentSmall').textContent = String(s.small_llm_hits || 0);
+  if ($('stIntentDirect')) $('stIntentDirect').textContent = String(s.direct_continues || 0);
+  if ($('stIntentSaved')) $('stIntentSaved').textContent = String(s.llm_calls_saved || 0);
+
+  // 小模型配置已收进「⚙ 模型配置 → 小模型」，这里只显示现状，改配置点「去配置」
+  if ($('intentSmallSummary')) {
+    const model = st.small_model || st.effective_model || '未配置';
+    $('intentSmallSummary').textContent = `当前小模型：${model}（${st.small_model ? '已落盘' : '未落盘，用默认'}）`
+      + ` · 意图预判${st.enabled ? '已启用' : '已关闭'}`
+      + ` · 规则未命中${st.use_small_llm ? '走小模型' : '直接继续'}`;
+  }
+
+  if (st.enums && $('intentEnumTable') && !$('intentEnumTable').innerHTML) {
+    $('intentEnumTable').innerHTML = st.enums.map(e => `
+      <div class="enum-row">
+        <span class="enum-code">${escapeHtml(e.intent)}</span>
+        <span class="enum-tag ${e.direct ? 'direct' : 'llm'}">${e.direct ? '⚡ 直接执行 (0 LLM)' : '🎯 免分流直达答疑'}</span>
+        <span><b>${escapeHtml(e.label)}</b> · ${escapeHtml(e.desc)}</span>
+      </div>
+    `).join('');
+  }
+
+  if (st.recent && $('intentRecentList')) {
+    $('intentRecentList').innerHTML = st.recent.length
+      ? st.recent.slice(0, 6).map(r =>
+          `<div style="padding:3px 0;border-bottom:1px dashed rgba(255,255,255,.06)">
+            <span class="chip" style="margin:0 4px 0 0">${escapeHtml(r.stage)} · ${r.latency_ms}ms</span>
+            <b style="color:var(--accent)">${escapeHtml(r.intent)}</b>
+            <span>「${escapeHtml(r.raw_input)}」→ ${escapeHtml(r.reason)}</span>
+            ${r.llm_saved ? '<span class="chip confirmed" style="margin-left:4px">省下大模型调用</span>' : ''}
+          </div>`
+        ).join('')
+      : '<div class="hint">尚无意图路由记录</div>';
+  }
+}
+
+async function loadIntentRouter() {
+  try {
+    const r = await fetch('/api/dev/intent');
+    const j = await r.json();
+    updateIntentUI(j);
+  } catch (e) {}
+}
+
+$('intentGoCfg').onclick = () => openModelCfg('small');
+
+async function runIntentSandbox(text) {
+  const inp = text || ($('intentTestInput').value || '').trim();
+  if (!inp) return;
+  $('intentTestInput').value = inp;
+  $('intentTestResult').textContent = '⏳ 正在判定意图…';
+  try {
+    const r = await fetch('/api/dev/intent', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        action: 'test',
+        text: inp,
+        slide_title: slideTitles[curSlideIdx] || '',
+      }),
+    });
+    const j = await r.json();
+    if (j.status) updateIntentUI(j.status);
+    if (j.decision) {
+      const d = j.decision;
+      $('intentTestResult').innerHTML =
+        `✅ 判定枚举：<b style="color:var(--ok)">${escapeHtml(d.intent)}（${escapeHtml(d.intent_label)}）</b>`
+        + ` · 阶段：<b>${escapeHtml(d.stage)}</b> · 耗时：<b>${d.latency_ms}ms</b>`
+        + ` · 说明：${escapeHtml(d.reason)}`
+        + (d.direct ? ' · <b style="color:var(--ok)">[老师直接继续讲课/执行，0 大模型开销]</b>'
+                    : (d.llm_saved ? ' · <b style="color:var(--accent)">[省去 LLM 分流调用]</b>' : ''));
+    }
+  } catch (e) {
+    $('intentTestResult').textContent = '测试失败：' + e;
+  }
+}
+
+$('intentTestBtn').onclick = () => runIntentSandbox();
+$('intentTestInput').addEventListener('keydown', e => { if (e.key === 'Enter') runIntentSandbox(); });
+document.querySelectorAll('[data-itest]').forEach(b => {
+  b.onclick = () => runIntentSandbox(b.dataset.itest);
+});
+
+loadPhrases();
+loadIntentRouter();
+
+// 页面版本：一眼分辨"新页面"和"浏览器缓存的旧页面"（排查过两次）
+fetch('/api/state').then(r => r.json()).then(s => {
+  if (s.ui) {
+    $('ui').textContent = s.ui;
+    addLog(`页面版本 ${s.ui}（若是旧版本，说明服务没重启或浏览器缓存了旧页面）`, 'lok');
+  }
+}).catch(() => {});
+
+connect();
+setInterval(() => DeckView.fit(), 800);   // 容器宽度变化时保持贴合
+</script>
+</body>
+</html>

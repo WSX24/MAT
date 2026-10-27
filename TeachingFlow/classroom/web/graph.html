@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>课堂走向图 · 双脑三体</title>
+<link rel="stylesheet" href="/static/classroom.css">
+<link rel="stylesheet" href="/static/graph.css">
+</head>
+<body>
+<div class="graph" id="graph">
+  <div class="ghead">
+    <h1>课堂走向图</h1>
+    <span class="gmeta" id="gmeta">加载中…</span>
+    <span class="grow"></span>
+    <span class="gmeta"><a href="/">上课页</a> · <a href="/hub">启动台</a></span>
+  </div>
+
+  <div class="gcounts">
+    <span class="gcnt">主线节点 <b id="cnMain">—</b></span>
+    <span class="gcnt gpreset" id="cnPresetPill" title="备课期预置路线（plan.json 的 routes）：跨格、有岔出格与汇回格">路线分支（预置）<b id="cnPreset">—</b></span>
+    <!-- 就地变体已停产：这一栏只在旧 plan.json 还带变体时出现（计数为 0 时整栏隐藏，
+         免得真实课件上留一个恒为 0 的栏位假装还有这么个东西） -->
+    <span class="gcnt" id="cnInlinePill" hidden title="旧 plan.json 的换说法/举例子：讲完这一句就回主线，不算路线分支">就地变体（旧计划）<b id="cnInline">0</b></span>
+    <span class="gcnt gcand" id="cnCandPill">运行期候选 <b id="cnCand">0</b>（变体 <b id="cnVar">0</b> · 路线 <b id="cnRoute">0</b>，alive <b id="cnAlive">0</b>）</span>
+    <span class="gcnt gsw">已切换 <b id="cnSwitch">0</b></span>
+    <span class="gcnt gend" id="cnTermPill" title="汇回课尾的支线（merge_node = 课程总格数）">课尾分支 <b id="cnTerm">0</b></span>
+    <span class="gcnt gcur" id="cnCur">课堂没在跑</span>
+  </div>
+
+  <div class="gtools">
+    <button id="gFit" type="button">适应全课</button>
+    <button id="g100" type="button">100%</button>
+    <button id="gHere" type="button">回到当前</button>
+    <label class="gchk"><input type="checkbox" id="gfollow" checked> 跟随当前</label>
+    <label class="gchk"><input type="checkbox" id="gshowbr"> 显示支线</label>
+    <span class="gzoom" id="gzoom">100%</span>
+    <span class="gstat" id="gstat">加载中…</span>
+  </div>
+
+  <div class="glegend">
+    <span class="glg"><i class="gcard"></i>主线卡片（第 N 页 · 单元 k + 摘要）</span>
+    <span class="glg"><i class="gentrylg"></i>路线出口（卡片右缘：本格有支线岔出）</span>
+    <span class="glg"><i class="gln"></i>预置路线（备课期 plan.json 的 routes，实线 —— 开课前就在图上）</span>
+    <span class="glg"><i class="gln gdash"></i>运行期路线（C 在课上现造，虚线；同样按载荷的 fork → merge 真实跨度画）</span>
+    <span class="glg"><i class="gdot galive"></i>alive 池内可用</span>
+    <span class="glg"><i class="gdot gconsumed"></i>consumed 已被选中</span>
+    <span class="glg"><i class="gdot gexpired"></i>expired 已作废</span>
+    <span class="glg"><i class="gln gok"></i>已切到这一支</span>
+    <span class="glg"><i class="gmv"></i>指针：你现在在这里</span>
+    <span class="glg"><i class="gvarlg"></i>「N 支」徽标：只有旧 plan.json 还带就地变体时才出现（不算路线分支）</span>
+    <span class="glg">答疑（ANSWERING/RESUMING/REDIRECTING）不画成分支</span>
+  </div>
+
+  <div class="gmm" id="gmm" title="点一下或按住拖到某个位置：主视图横向跳过去">
+    <div class="gmm-rail"></div>
+    <div class="gmm-view" id="gmmview" hidden></div>
+    <div class="gmm-now" id="gmmnow" hidden></div>
+  </div>
+
+  <div class="gempty" id="gempty" hidden></div>
+
+  <div class="gviewport" id="gviewport">
+    <div class="gcanvas" id="gcanvas">
+      <div class="gpages" id="gpages"></div>
+      <svg class="gmainline" id="gmainline"></svg>
+      <svg class="gwires" id="gwires"></svg>
+      <div class="gnodes" id="gnodes"></div>
+      <div class="gchips" id="gchips"></div>
+      <div class="gptr" id="gptr" hidden><div class="gbubble" id="gbubble"><b>你现在在这里</b></div></div>
+    </div>
+  </div>
+
+  <div class="gfree" id="gfree" hidden></div>
+
+  <div class="gdetail" id="gdetail" hidden>
+    <div class="gdh"><span class="gdt" id="gdt"></span><button class="gdx" id="gdx" type="button">关闭</button></div>
+    <div id="gdb"></div>
+  </div>
+
+  <p class="gfoot">这一页是<b>只读观测面</b>：不开课堂、不进状态机、不消费事件 ——
+    可以和上课页同时开着，互不影响。拖动平移、滚轮缩放；缩到 0.6× 以下卡片退化成光点，
+    主线本身保持屏幕 2px 粗，所以「适应全课」看到的是整门课的形状而不是一团灰。
+    勾掉「跟随当前」只是不再替你平移，指针照样高亮（别替我做决定 ≠ 别看当前在哪）。
+    学生答疑不是分支，它只是让指针临时离开主线 —— 所以气泡会写「答疑中 · 暂离主线」。</p>
+
+  <p class="gfoot">支线现在只有一种：<b>路线分支</b>（跳讲 / 补回头 / 提前收尾）。它跨格，
+    所以画的是载荷里的 fork_node → merge_node 真实跨度；chip 上写「跳讲 N 格 / 补回头 N 格 /
+    提前收尾 → 课尾」，点开是类型、岔出·汇回、跨格与跳过/重讲格数、时长（省·多）、理由与逐步的 steps。
+    路线有两个来源，<b>几何与文案完全一致、只靠线型分开</b>：<b>预置路线</b>来自备课期
+    （plan.json 的 routes，实线，开课前就画在这里 —— 于是这一页能回答"整门课有几条支线、
+    各从哪岔出、汇回哪里"），<b>运行期路线</b>由 C 在课上现造（虚线，选中之前还不是这门课的一部分）。
+    就地变体（换说法 / 举例子）<b>已经停产</b>（它与"学生没懂时状态机实时重讲"冲突）：
+    只有旧 plan.json 还带变体时，卡片角才会出现「N 支」徽标，那一栏计数也才会露出来。</p>
+
+  <p class="gfoot">备课与核对的两页在启动台「备课与核对」里，不在这一页的主入口：
+    <a href="/script">分支树（台账）</a> · <a href="/review">脚本审核</a>。</p>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const $ = function (id) { return document.getElementById(id); };
+  const POLL_MS = 1000;
+
+  // ---------------------------------------------------------------- 几何常量
+  // 全部集中在这里：卡片尺寸、步距、泳道、折线角度、缩放档位都只由这几个数决定。
+  const CW = 120;          // 主线卡片宽
+  const CH = 52;           // 主线卡片高
+  const BCW = 84;          // 支线卡片宽
+  const BCH = 34;          // 支线卡片高
+  const GAP = 140;         // 相邻两张主线卡片之间的间隙（放两段 45° 折线 + 一张支线卡片）
+  const ROW_H = 46;        // 一条支线泳道的行高（必须 > (CH+BCH)/2 = 43，否则下车道的卡片会压住主卡片）
+  const KNEE = 46;         // 进出泳道时的最大横向偏移；lane 1/2 的 |dy| = 46 ⇒ 精确 45°
+  const ENTRY = 8;         // 分支入口圆点直径
+  const PAD = 48;          // 画布左右留白
+  const BUBBLE_H = 34;     // 顶部「你现在在这里」气泡条
+  const PAGE_H = 30;       // 页标尺条
+  const CAND_SLOTS = 3;    // 同一节点最多画几条 C 现造候选
+  const SUMMARY = 18;      // 主线卡片**没有 summary 时**的正文回落后备截断长度
+  const BSUMMARY = 12;     // 支线卡片正文摘要字数
+
+  // 缩放下限 0.02：它存在的**唯一目的**是让「适应全课」真的装得下全课。
+  // 算式：177 张卡片 ⇒ 宽 = PAD*2 + 176*(CW+GAP) + CW + 课尾预留
+  //       = 96 + 176*260 + 120 + 110 = 46086 px；
+  //       1200px 视窗要装下它需要 k = 1200/46086 = 0.0260；
+  // 取 0.02 留两成余量，这样 900px 宽的窗口也能 k = 0.0195 一屏看完全课。
+  // 低于这一档节点内容本来就不存在可读性，看的是整门课的分叉/汇流形状。
+  const MIN_K = 0.02;
+  const MAX_K = 2.0;       // 缩放上限
+  const DOTS_K = 0.6;      // 低于它：卡片退化成光点
+  const COLLAPSE_K = 0.5;  // 低于它：再折叠支线（旧计划几百条变体全展开会糊成一片）
+  const ZOOM_PX = 0.0015;  // 滚轮每像素的指数缩放步长
+  const DRAG_THRESH = 4;   // 位移超过它才算拖动，否则算点击
+  const BW = 236;          // 指针气泡宽度（与 .gbubble 的 width 一致）
+
+  //: 学生答疑不是分支：这些 phase 下指针临时离开主线，只改气泡文案。
+  const OFF_MAIN = { ANSWERING: 1, RESUMING: 1, REDIRECTING: 1 };
+
+  //: 布局只由静态结构算一次；运行时只改变换矩阵、class 和文字。
+  //: routes / routeEls / routeGeom 是备课期预置路线的那一份：它们在 buildGraph 时一次画好，
+  //: 之后与运行期候选共用同一套渲染与泳道分配（见 buildRouteChip / presetRouteLane）。
+  const S = {
+    nodes: [], routes: [], G: null, lanesWidth: 2,
+    nodeEls: new Map(), nodeMap: new Map(), unitIndex: new Map(),
+    presetEls: new Map(), presetWire: new Map(),
+    routeEls: new Map(), routeGeom: new Map(), routeLaneUse: new Map(),
+    entryEls: new Map(),
+    varEls: new Map(), varState: new Map(), counts: null,
+    candEls: new Map(), candWire: new Map(), candGeom: new Map(),
+    mmTicks: new Map(), badges: [],
+    pool: [], switched: {},
+    tx: 0, ty: 0, k: 1, collapsed: null, dots: null,
+    timer: null, lastUnit: null, lastSw: null, curEl: null, curX: null,
+    freeSig: null, mmDrag: false, drag: null, suppressClick: false,
+  };
+
+  const ST_TEXT = {
+    alive: 'alive 池内可用', consumed: 'consumed 已被选中',
+    expired: 'expired 已作废', none: '未入池',
+  };
+
+  function esc(s) {
+    return String(s === null || s === undefined ? '' : s)
+      .split('&').join('&amp;').split('<').join('&lt;')
+      .split('>').join('&gt;').split('"').join('&quot;');
+  }
+  function clip(s, n) {
+    const t = String(s || '').split(/[ \t\r\n]+/).join(' ').trim();
+    return t.length > n ? t.slice(0, n) + '…' : t;
+  }
+  function fmtSec(v) {
+    const n = Number(v);
+    return isFinite(n) && n > 0 ? n.toFixed(1) + ' 秒' : '—';
+  }
+  // 路线的 est_sec 有符号约定（后端 Route：负数省时间 / 正数多花时间）。
+  // 所以这里不能复用 fmtSec —— 它会把"省 12 秒"画成"—"，而那正是 J 判断划不划算的那两个数。
+  function fmtDelta(v) {
+    const n = Number(v);
+    if (!isFinite(n) || !n) return '—';
+    return (n < 0 ? '省 ' : '多 ') + Math.round(Math.abs(n)) + ' 秒';
+  }
+  function kv(k, v) {
+    return '<div class="gdk"><span>' + esc(k) + '</span><span>' + esc(v) + '</span></div>';
+  }
+  function stat(text, bad) {
+    const el = $('gstat');
+    el.textContent = text;
+    el.className = 'gstat' + (bad ? ' gerr' : '');
+  }
+  function clampK(k) { return Math.max(MIN_K, Math.min(MAX_K, k)); }
+  function vw() { return $('gviewport').clientWidth || 900; }
+  function vh() { return $('gviewport').clientHeight || 400; }
+
+  // ---------------------------------------------------------------- 布局
+  // 课尾预留：汇回课尾的支线要往右缘多画一段「退出课堂」标，少了这段预留它会被裁掉。
+  // 两个来源都要看：旧计划的变体分支（branches）与备课期的预置路线（data.routes）。
+  function hasTerminal(nodes, routes) {
+    for (let i = 0; i < nodes.length; i++) {
+      const brs = nodes[i].branches || [];
+      for (let j = 0; j < brs.length; j++) {
+        if ((brs[j].merge_node | 0) >= nodes.length) return true;
+      }
+    }
+    const rs = routes || [];
+    for (let k = 0; k < rs.length; k++) {
+      if ((Number(rs[k].merge_node) || 0) >= nodes.length) return true;
+    }
+    return false;
+  }
+
+  function layout(nodes, lanesWidth) {
+    const lanes = Math.max(2, lanesWidth || 2);
+    // 预置支线占 lane 1..lanes-1，C 现造候选接在后面 —— 两类支线永远不共泳道。
+    const maxLane = (lanes - 1) + CAND_SLOTS;
+    const maxRow = Math.max(1, Math.ceil(maxLane / 2));
+    const bodyH = maxRow * ROW_H * 2 + BCH + 24;
+    const step = CW + GAP;
+    const xs = [];
+    for (let i = 0; i < nodes.length; i++) xs.push(PAD + i * step);
+    const lastRight = nodes.length ? xs[nodes.length - 1] + CW : PAD + CW;
+    const width = lastRight + PAD + (hasTerminal(nodes, S.routes) ? 110 : 0);
+    const mainY = BUBBLE_H + PAGE_H + bodyH / 2;
+    return {
+      xs: xs, step: step, width: width, bodyH: bodyH, mainY: mainY, cw: CW, ch: CH,
+      height: BUBBLE_H + PAGE_H + bodyH + 16,
+      center: function (i) { return xs[i] + CW / 2; },
+      // lane 1 上、2 下、3 上二层……（剧情图的泳道惯例：往两边交替叠）
+      laneY: function (lane) {
+        const k = Math.ceil(lane / 2), d = (lane % 2 === 1) ? -1 : 1;
+        return mainY + d * k * ROW_H;
+      },
+      pct: function (x) { return (width > 0 ? (x / width * 100) : 0) + '%'; },
+    };
+  }
+
+  // merge_node 缺省时退回「分叉点 +1」；越界一律当课尾，绝不画到画布外
+  function mergeOf(b, idx, count) {
+    let m = b.merge_node;
+    if (m === null || m === undefined) m = idx + 1;
+    m = m | 0;
+    if (m > count) m = count;
+    return m;
+  }
+
+  // 支线折线：入口点（卡片右缘）→ 45° 折进泳道 → 沿泳道 → 45° 折回下一张卡片左缘。
+  // 横向偏移 kx = min(|dy|, KNEE)：lane 1/2 的 |dy| = ROW_H = KNEE，因此恰好 45°；
+  // 更深的泳道在同样宽的间隙里只能更陡，同样是折线（不是曲线）。
+  function branchGeom(i, merge, lane) {
+    const g = S.G;
+    const y0 = g.mainY, y1 = g.laneY(lane);
+    const xr = g.xs[i] + CW;                        // 入口点：卡片右缘中点
+    const open = merge < 0;                         // 开放末端（C 候选落在最后一张卡片上）
+    const terminal = !open && merge >= S.nodes.length;
+    const xm = (open || terminal) ? (g.width - 16) : g.xs[merge];  // 汇合点：下一张卡片左缘
+    const kx = Math.min(Math.abs(y1 - y0), KNEE);
+    const xa = xr + kx;
+    let xb = (open || terminal) ? xm : (xm - kx);
+    if (xb < xa) xb = xa;                           // 间隙不够时退化成竖折，绝不往回画
+    let d = 'M' + xr + ' ' + y0 + ' L' + xa + ' ' + y1 + ' L' + xb + ' ' + y1;
+    if (!open && !terminal) d += ' L' + xm + ' ' + y0;
+    return { d: d, y: y1, xr: xr, xa: xa, xb: xb, xm: xm,
+             terminal: terminal, open: open };
+  }
+
+  //: 就地重讲 vs 路线分支：汇回点就在下一格 ⇒ 换说法/举例子，讲一句就回主线，
+  //: 只配一个徽标；汇回点跨 ≥2 格才是真的换了课堂走向，才进泳道。
+  //: （变体停产后这一档只剩旧 plan.json 会碰到；新计划的支线全走顶层 routes，见 buildRouteChip。）
+  function isRoute(b, i) { return mergeOf(b, i, S.nodes.length) - i >= 2; }
+
+  // 「这条线是哪来的」：预置（备课期 plan.json 的 routes）还是运行期（C 在课上现造）。
+  // 静态载荷的路线自带 source: "preset"（后端 _graph_route_row 加的）；live 行没有这个键 ——
+  // 它的来源在候选行的 source 上，而候选行**一定**是运行期造的。
+  // 这个判断同时决定线型：预置画实线（这门课的骨架），运行期画虚线（还没被选中）。
+  function routeSourceText(rt) {
+    return (rt && rt.source === 'preset') ? '预置（备课期）' : '运行期（C 现造）';
+  }
+
+  // ------------------------------------------------- 路线候选的几何（真实跨度）
+  //: 三种走向的人话前缀，与后端 director/route.py 的 _KIND_LABELS 同一套说法。
+  const ROUTE_KIND_TEXT = { skip: '跳讲', revisit: '补回头', finish: '提前收尾' };
+
+  // 候选行的汇回点。**这一行就是那次修复**：以前不管载荷说什么，运行期候选的 merge
+  // 一律写死成 i+1（汇回下一格），于是所有路线都被画成一个小菱形。
+  // 现在真实跨度来自 live 载荷的 route.merge_node，缺 route 时才退回旧行为 ——
+  // 没带 route 的行看起来和改动前一模一样。
+  function candMerge(p, i) {
+    const rt = p && p.route;
+    if (!rt) return (i + 1 < S.nodes.length) ? (i + 1) : -1;
+    let m = Number(rt.merge_node);
+    if (!isFinite(m)) m = i + 1;
+    m = Math.round(m);
+    if (m < i) m = i;              // 脏数据不往回画（往回画的折线会把整张图缠住）
+    return m;                      // m >= nodes.length ⇒ branchGeom 画成课尾
+  }
+
+  // 岔出格同样以载荷为准：target_unit 说的是"这一格选中了它"，fork_node 才是几何的起点。
+  function candFork(p, i) {
+    const rt = p && p.route;
+    if (!rt) return i;
+    const f = Number(rt.fork_node);
+    if (!isFinite(f)) return i;
+    const n = Math.round(f);
+    return (n >= 0 && n < S.nodes.length) ? n : i;
+  }
+
+  function routeKindText(rt) {
+    return (rt && (ROUTE_KIND_TEXT[rt.kind] || rt.kind)) || '路线';
+  }
+
+  function routeSpan(rt, i) {
+    return Math.max(0, candMerge({ route: rt }, i) - i);
+  }
+
+  // **真跳过**的格数 = 跨度 - 1。fork 与 merge 都是"格子"：从 #8 岔出、在 #11 汇回，
+  // 中间真正没讲的是 #9 #10 两格。拿跨度当跳过格数会把每一格都多算一格 ——
+  // 而"跳几格"是学生与老师唯一会去核对的那个数（Route.summary 是同一个口径）。
+  function routeSkip(rt, i) {
+    return Math.max(0, routeSpan(rt, i) - 1);
+  }
+
+  // chip 上那一行字：一眼看出走向与真跳过格数（跳讲 2 格 / 补回头 2 格 / 提前收尾 → 课尾）。
+  // revisit 的格数取 steps 的长度：那才是"要重讲几格"，跨度只是它落回主线的那一格。
+  // finish 不在这里报数：chip 一行只有 9 个字，而"提前收尾 → 课尾"已经占满 ——
+  // 它的真跳过格数（课尾 - 岔出格 - 1）在 tooltip 与详情面板里（都用 routeSkip）。
+  function routeTag(rt, i) {
+    if (rt.kind === 'finish') return '提前收尾 → 课尾';
+    if (rt.kind === 'revisit') {
+      const n = (rt.steps || []).length || routeSpan(rt, i);
+      return routeKindText(rt) + ' ' + n + ' 格';
+    }
+    return routeKindText(rt) + ' ' + routeSkip(rt, i) + ' 格';
+  }
+
+  // 详情面板里的"格数"：**只报学生感受到的那一个数**，按走向分开报。
+  // revisit → 重讲 N 格（steps 的长度；空 steps 时退回跨度）。补回头本来就不跳过任何一格，
+  // 以前那句"（跳过 0 格）"是纯噪声，还会让详情读起来像"这一支又跳又重讲"。
+  // skip / finish → 跳过 N 格（真跳过 = 跨度 - 1，与 chip 同一条口径 routeSkip）。
+  function routeCountText(rt, i) {
+    if (rt.kind === 'revisit') {
+      const n = (rt.steps || []).length || routeSpan(rt, i);
+      return '重讲 ' + n + ' 格';
+    }
+    return '跳过 ' + routeSkip(rt, i) + ' 格';
+  }
+
+  // chip 的横向中心：只由岔出格与汇回格决定（泳道只改 y），所以可以先算位置再挑泳道。
+  function branchChipX(i, merge, lane) {
+    const geo = branchGeom(i, merge, lane);
+    const mid = (geo.xa + geo.xb) / 2;
+    return Math.max(geo.xa + BCW / 2, Math.min(S.G.width - BCW / 2 - 8, mid));
+  }
+
+  // 两条候选 chip 的横坐标太近就换一条泳道。
+  // 为什么现在才需要这件小事：以前每条运行期候选都只跨一格，chip 落在自己那格旁边，
+  // 天然撞不上；路线一跨就是 3~5 格，chip 会落到别人那格的正上方 —— 两条虚线卡片
+  // 叠在一起，看起来像"少了一条候选"，而计数区说有三条。
+  function candLaneFree(lane, x) {
+    let free = true;
+    S.candGeom.forEach(function (g) {
+      if (free && g.lane === lane && Math.abs(g.left - x) < BCW + 8) free = false;
+    });
+    // 备课期的预置路线也占着这几条泳道：同一格上"备课期预置了一条、课上又现造了一条"
+    // 是最常见的情形（那条预置路线本来就活在池子里）。不查它，两条 chip 会叠成一张，
+    // 看起来像"少了一条"，而计数区说有两来源各一条。
+    S.routeGeom.forEach(function (g) {
+      if (free && g.lane === lane && Math.abs(g.left - x) < BCW + 8) free = false;
+    });
+    return free;
+  }
+
+  function pickCandLane(preferred, i, merge) {
+    const x = branchChipX(i, merge, preferred);
+    for (let k = 0; k < CAND_SLOTS; k++) {
+      if (candLaneFree(preferred + k, x)) return preferred + k;
+    }
+    return preferred;      // 泳道全撞：宁可重叠，也不画到画布外面去
+  }
+
+  // ------------------------------------------------- 路线的泳道与入口圆点
+  // 预置路线与运行期候选共用主线之外的那几条泳道（旧计划的变体泳道排在前面，base 让开）。
+  // 同一格上的第 k 条路线顺延一条；撞满就叠在最后一条上 —— 宁可重叠，
+  // 也不画到画布外面去（画布外的那一条在页面上等于不存在）。
+  function presetRouteLane(i) {
+    const base = Math.max(1, S.lanesWidth | 0);
+    const used = S.routeLaneUse.get(i) || 0;
+    S.routeLaneUse.set(i, used + 1);
+    const maxLane = Math.max(1, (S.lanesWidth - 1) + CAND_SLOTS);
+    return Math.min(base + used, maxLane);
+  }
+
+  // 入口圆点：卡片右缘那个小口子。预置路线与旧计划的路线分支共用它 ——
+  // 同一格上有几条就写几条，重复调用只更新 title，不叠第二个圆点。
+  function ensureEntryDot(i, n) {
+    let rec = S.entryEls.get(i);
+    if (!rec) {
+      const dot = document.createElement('div');
+      dot.className = 'gentry';
+      dot.style.left = (S.G.xs[i] + CW - ENTRY / 2) + 'px';
+      dot.style.top = (S.G.mainY - ENTRY / 2) + 'px';
+      $('gchips').appendChild(dot);
+      mmTick(i);
+      rec = { el: dot, n: 0 };
+      S.entryEls.set(i, rec);
+    }
+    rec.n += (n || 1);
+    rec.el.title = rec.n + ' 条路线从这里分出去';
+    return rec.el;
+  }
+
+  // **一套渲染**：静态预置路线（/api/script/graph 的 routes）与运行期路线（live 行的 route）
+  // 走同一个函数 —— 几何来自载荷的 fork_node → merge_node，chip 文案与详情都由
+  // routeTag / routeCountText / routeDetailHtml 产出，差别只有来源（实线 / 虚线）。
+  // 两套渲染路径就等于两种画法，而它们画的是同一个东西，迟早会画得不一样。
+  function buildRouteChip(rt, i, lane) {
+    const nd = S.nodes[i];
+    if (!nd) return null;
+    return buildBranch(nd, i, {
+      route: rt, variant_id: '', label: '', text: '', est_sec: 0, nodes: [],
+    }, lane, rt.source === 'preset' ? 'preset' : 'cand');
+  }
+
+  // 备课期预置路线：开课前一次画完，不依赖课堂在跑（这是这一页"看全课支线"的全部来源）。
+  function buildPresetRoutes(routes) {
+    (routes || []).forEach(function (rt) {
+      // 岔出格越界就不要画：一条画到画布外的线在页面上等于不存在，还会把
+      // 缩略条和适应全课的宽度算歪。后端已经逐条 validate 过，这里是前端自己的防线。
+      const f = Number(rt.fork_node);
+      if (!isFinite(f)) return;
+      const i = Math.round(f);
+      if (i < 0 || i >= S.nodes.length) return;
+      const key = rt.route_id || ('preset#' + i);
+      const r = buildRouteChip(rt, i, presetRouteLane(i));
+      if (!r) return;
+      S.routeEls.set(key, r.chip);
+      S.routeGeom.set(key, { lane: r.chip.__d.lane, left: r.chip.__d.chipX });
+      ensureEntryDot(i, 1);
+    });
+  }
+
+  function wire(d, cls) {
+    const p = document.createElementNS(SVGNS, 'path');
+    p.setAttribute('d', d);
+    p.setAttribute('class', cls);
+    $('gwires').appendChild(p);
+    return p;
+  }
+
+  // ---------------------------------------------------------------- 变换：平移 / 缩放
+  function applyTransform() {
+    const c = $('gcanvas');
+    if (S.mainPath) S.mainPath.style.strokeWidth = (2 / S.k) + 'px';
+    //: --gk 是「反补 scale」的那把尺子，所有屏幕上要求恒定大小的东西都用它：
+    //: 指针竖线、气泡、以及低缩放下退化成光点的卡片。所以它必须挂在每次变换上，
+    //: 而不是挂在指针上 —— 课堂没在跑时同样要更新。
+    c.style.setProperty('--gk', String(S.k));
+    c.style.transform = 'translate3d(' + S.tx.toFixed(2) + 'px,' + S.ty.toFixed(2) +
+      'px,0) scale(' + S.k.toFixed(4) + ')';
+    $('gzoom').textContent = Math.round(S.k * 100) + '%';
+    applyDots();
+    applyCollapse();
+    syncMM();
+    placePointer();
+  }
+
+  // 退化只切 class：卡片/支线卡片的 left/top 一个字都不动，所以实时指针不会跳
+  function applyDots() {
+    const dots = S.k < DOTS_K;
+    if (S.dots === dots) return;
+    S.dots = dots;
+    $('gcanvas').classList.toggle('dots', dots);
+  }
+
+  function applyCollapse() {
+    const collapse = (S.k < COLLAPSE_K) && !$('gshowbr').checked;
+    if (S.collapsed === collapse) return;
+    S.collapsed = collapse;
+    $('gcanvas').classList.toggle('lowbranches', collapse);
+    hideLayer('gwires', collapse);
+    hideLayer('gchips', collapse);
+  }
+  // SVG 元素的 hidden 属性在浏览器里不生效，所以 style.display 一起设；
+  // 两者都设也方便 DOM 桩断言（桩里没有 CSS 层叠）。
+  function hideLayer(id, hide) {
+    const el = $(id);
+    el.hidden = hide;
+    if (el.style) el.style.display = hide ? 'none' : '';
+  }
+
+  // 以 (px,py)（视窗内坐标）为锚点缩放：缩放前后鼠标下的画布坐标必须不变
+  function zoomAtPoint(px, py, factor) {
+    const k0 = S.k, k1 = clampK(k0 * factor);
+    if (Math.abs(k1 - k0) < 1e-9) return false;
+    const cx = (px - S.tx) / k0, cy = (py - S.ty) / k0;
+    S.k = k1;
+    S.tx = px - cx * k1;
+    S.ty = py - cy * k1;
+    applyTransform();
+    return true;
+  }
+
+  function fitAll() {
+    if (!S.G) return;
+    S.k = clampK(vw() / S.G.width);
+    S.tx = (vw() - S.G.width * S.k) / 2;
+    S.ty = (vh() - S.G.height * S.k) / 2;
+    applyTransform();
+  }
+  function centerHere() {
+    S.tx = vw() / 2 - S.curX * S.k;
+    S.ty = vh() / 2 - S.G.mainY * S.k;
+  }
+  function zoomTo(k, onlyIfPointer) {
+    if (!S.G) return false;
+    if (onlyIfPointer && S.curX === null) return false;
+    S.k = clampK(k);
+    if (S.curX !== null) centerHere();
+    else {
+      S.tx = (vw() - S.G.width * S.k) / 2;
+      S.ty = (vh() - S.G.height * S.k) / 2;
+    }
+    applyTransform();
+    return true;
+  }
+  // 跟随当前：只在换节点时平移，而且目标位置没变就不动
+  function followTo(x) {
+    const want = vw() / 2 - x * S.k;
+    if (Math.abs(S.tx - want) < 2) return;
+    S.tx = want;
+    applyTransform();
+  }
+
+  function syncMM() {
+    if (!S.G) return;
+    const W = S.G.width || 1;
+    const x0 = -S.tx / S.k, x1 = x0 + vw() / S.k;
+    const v = $('gmmview');
+    v.hidden = false;
+    const lp = Math.max(0, Math.min(99.6, (x0 / W) * 100));
+    const wp = Math.max(0.4, Math.min(100 - lp, ((x1 - x0) / W) * 100));
+    v.style.left = lp + '%';
+    v.style.width = wp + '%';
+  }
+  function seek(ratio) {
+    if (!S.G) return;
+    S.tx = vw() / 2 - ratio * S.G.width * S.k;
+    applyTransform();
+  }
+  function mmTick(i) {
+    if (!S.G) return null;
+    let t = S.mmTicks.get(i);
+    if (t) return t;
+    t = document.createElement('i');
+    t.className = 'gmm-tick';
+    t.style.left = S.G.pct(S.G.center(i));
+    $('gmm').appendChild(t);
+    S.mmTicks.set(i, t);
+    return t;
+  }
+
+  // ---------------------------------------------------------------- 静态结构（只拉一次）
+  function buildGraph(data) {
+    const nodes = (data && data.nodes) || [];
+    // 备课期预置路线：与 nodes 同级的一次性载荷，开课前就把整门课的支线画出来。
+    // 缺这个键（老载荷）时当空数组 —— 前端不该因为后端慢一拍就整页不画。
+    const routes = (data && data.routes) || [];
+    const lanesWidth = (data && data.lanes && data.lanes.width) || 2;
+    // S.routes 要先落地：layout() 用它判断要不要给课尾标留出右缘那一段。
+    S.routes = routes;
+    const g = layout(nodes, lanesWidth);
+    S.nodes = nodes;
+    S.G = g;
+    S.lanesWidth = lanesWidth;
+    S.collapsed = null;
+    S.dots = null;
+    S.lastUnit = null; S.lastSw = null; S.curEl = null; S.curX = null;
+
+    const canvas = $('gcanvas');
+    canvas.style.width = g.width + 'px';
+    canvas.style.height = g.height + 'px';
+    ['gpages', 'gnodes', 'gchips'].forEach(function (id) {
+      const el = $(id);
+      el.style.width = g.width + 'px';
+      el.style.height = g.height + 'px';
+    });
+    ['gmainline', 'gwires'].forEach(function (id) {
+      const el = $(id);
+      el.setAttribute('width', String(Math.max(1, g.width)));
+      el.setAttribute('height', String(Math.max(1, g.height)));
+      el.style.width = g.width + 'px';
+      el.style.height = g.height + 'px';
+    });
+    'gpages,gnodes,gchips'.split(',').forEach(function (id) { $(id).innerHTML = ''; });
+    $('gmainline').innerHTML = '';
+    $('gwires').innerHTML = '';
+    S.nodeEls.clear(); S.nodeMap.clear(); S.unitIndex.clear();
+    S.presetEls.clear(); S.presetWire.clear();
+    S.routeEls.clear(); S.routeGeom.clear(); S.routeLaneUse.clear();
+    S.entryEls.clear();
+    S.varEls.clear(); S.varState.clear();
+    S.candEls.clear(); S.candWire.clear(); S.candGeom.clear();
+    S.mmTicks.clear();
+
+    // 主线：一条横线把卡片中心串起来；卡片不透明，线只从卡片之间的缝隙露出来
+    if (nodes.length) {
+      const ml = document.createElementNS(SVGNS, 'path');
+      ml.setAttribute('class', 'gmain');
+      ml.setAttribute('d', 'M' + g.center(0) + ' ' + g.mainY +
+        'H' + g.center(nodes.length - 1));
+      $('gmainline').appendChild(ml);
+      S.mainPath = ml;
+    }
+    buildPages(nodes, g);
+    nodes.forEach(function (nd, i) { buildNode(nd, i, g); });
+    buildPresetRoutes(routes);
+    renderStructCounts();
+
+    S.k = 1;
+    S.tx = Math.max(0, (vw() - g.width) / 2);
+    S.ty = Math.max(0, (vh() - g.height) / 2);
+    applyTransform();
+  }
+
+  function buildPages(nodes, g) {
+    const host = $('gpages');
+    const last = nodes.length - 1;
+    let i = 0, alt = 0;
+    while (i <= last) {
+      const page = nodes[i].page_index | 0;
+      let j = i;
+      while (j < last && (nodes[j + 1].page_index | 0) === page) j++;
+      const left = Math.max(0, g.xs[i] - 10);
+      const right = Math.min(g.width, g.xs[j] + CW + 10);
+      const band = document.createElement('div');
+      band.className = 'gpage' + (alt % 2 ? ' alt' : '');
+      band.style.left = left + 'px';
+      band.style.width = Math.max(CW, right - left) + 'px';
+      const lab = document.createElement('div');
+      lab.className = 'gplabel';
+      lab.innerHTML = '<b>第 ' + (page + 1) + ' 页</b> · ' + esc(clip(nodes[i].slide_title || '', 14));
+      lab.title = '第 ' + (page + 1) + ' 页 · ' + (nodes[i].slide_title || '');
+      band.appendChild(lab);
+      host.appendChild(band);
+      alt++;
+      i = j + 1;
+    }
+  }
+
+  function buildNode(nd, i, g) {
+    const el = document.createElement('div');
+    const brs = nd.branches || [];
+    const route = brs.filter(function (b) { return isRoute(b, i); });
+    const inline = brs.filter(function (b) { return !isRoute(b, i); });
+    const page = (nd.page_index | 0) + 1;
+    const seq = (nd.index_in_slide | 0) + 1;
+    el.className = 'gnode' + (route.length ? ' hasbr' : '');
+    el.style.left = g.xs[i] + 'px';
+    el.style.top = (g.mainY - CH / 2) + 'px';
+    el.title = '第 ' + page + ' 页 · 单元 ' + seq + ' · ' + (nd.unit_id || '') +
+      '\n' + clip(nd.text, 90) + '\n（点一下看全文，只读）';
+    // 卡面：小字「第 N 页 · 单元 k」+ 一句话总结（超出省略号）
+    // summary 由后端保证非空且 ≤30 字，直接用全文 —— 再套一层 clip(…, SUMMARY)
+    // 会把「pack 的三个搭配与两句例句对比」这种刚好 18 字以上的总结二次截断。
+    // SUMMARY 只服务老计划（没有 summary 字段）：那时退回正文截断。
+    el.innerHTML = '<div class="gtag">第 ' + page + ' 页 · 单元 ' + seq + '</div>' +
+      '<div class="gsum">' + esc(nd.summary || clip(nd.text, SUMMARY)) + '</div>';
+    el.addEventListener('click', function () { if (S.suppressClick) return; showNode(nd); });
+    $('gnodes').appendChild(el);
+    S.nodeEls.set(nd.unit_id, el);
+    S.nodeMap.set(nd.unit_id, nd);
+    S.unitIndex.set(nd.unit_id, i);
+
+    route.forEach(function (b) {
+      const r = buildBranch(nd, i, b, (b.lane | 0) || 1, 'preset');
+      const key = (nd.unit_id || '') + '|' + (b.variant_id || '');
+      S.presetEls.set(key, r.chip);
+      S.presetWire.set(key, r.path);
+    });
+    // 入口圆点：只有真路线分支才在卡片右缘开口子。预置路线走同一个函数（ensureEntryDot），
+    // 于是"这一格有支线"在两种来源下长得一模一样，也不会叠出两个圆点。
+    if (route.length) ensureEntryDot(i, route.length);
+    if (inline.length) {
+      // 用 <button> 而不是 <div>：徽标是这一格里唯一可点的东西，键盘也要够得着
+      const badge = document.createElement('button');
+      badge.type = 'button';
+      badge.className = 'gnbadge st-none';
+      badge.textContent = inline.length + ' 支';
+      badge.setAttribute('aria-label',
+        inline.length + ' 支就地变体（换说法/举例子），点开看全文');
+      badge.addEventListener('click', function (ev) {
+        if (ev && ev.stopPropagation) ev.stopPropagation();
+        if (S.suppressClick) return;
+        showVariants(nd, inline);
+      });
+      el.appendChild(badge);
+      const rec = { unit: nd.unit_id || '', badge: badge, branches: inline };
+      S.varEls.set(rec.unit, rec);
+      paintBadge(rec);
+    }
+  }
+
+  // 徽标只有一个格子，所以把两条变体的三态压成一个「最该被看见」的状态：
+  // consumed（这格真的换过）> alive（池里还能用）> expired（已作废）> none（未入池）。
+  function paintBadge(rec) {
+    const sts = rec.branches.map(function (b) {
+      return S.varState.get(rec.unit + '|' + (b.variant_id || '')) || 'none';
+    });
+    const pick = sts.indexOf('consumed') >= 0 ? 'consumed'
+      : (sts.indexOf('alive') >= 0 ? 'alive'
+        : (sts.indexOf('expired') >= 0 ? 'expired' : 'none'));
+    rec.badge.className = 'gnbadge st-' + pick;
+    rec.badge.title = rec.branches.map(function (b, k) {
+      return (b.label || b.variant_id || '变体') + ' · ' + (ST_TEXT[sts[k]] || sts[k]);
+    }).join('\n') + '\n就地重讲：讲完这一句就回主线，不算路线分支（点开看全文）';
+  }
+
+  // kind = 'preset' | 'cand'；b 是契约里的 branch 对象（旧计划的就地变体 / 候选行），
+  // 或者 buildRouteChip 递进来的 {route}。**有 route 就按路线画**：几何与文案都由路线
+  // 自己说了算（见 candMerge / routeTag），来源只决定线型（预置实线 / 运行期虚线）。
+  function buildBranch(nd, i, b, lane, kind) {
+    const g = S.G;
+    const rt = b.route || null;
+    const src = (rt && rt.source === 'preset') ? 'preset'
+      : (kind === 'cand' ? 'runtime' : 'preset');
+    let merge;
+    if (kind === 'preset' && !rt) merge = mergeOf(b, i, S.nodes.length);
+    // 以前这里是 merge = (i + 1 < S.nodes.length) ? (i + 1) : -1 —— 运行期候选一律
+    // 「汇回下一格」，于是 skip/revisit/finish 全被画成同一个小菱形。跨度现在从载荷来。
+    else merge = candMerge(b, i);
+    const geo = branchGeom(i, merge, lane);
+    const path = wire(geo.d, 'gwire' + (kind === 'cand' ? ' cand' : '') +
+      ' src-' + src + (rt ? ' rt-' + (ROUTE_KIND_TEXT[rt.kind] ? rt.kind : 'x') : ''));
+    // 课尾标：预置支线的 merge 可以在静态载荷里等于课程总格数，路线候选的 finish 同理
+    // （提前收尾就是"跳到课尾"）。两种都在这里画同一个「退出课堂」。
+    if (geo.terminal) {
+      const t = document.createElement('div');
+      t.className = 'gterm';
+      t.style.left = (geo.xm - 58) + 'px';
+      t.style.top = (geo.y - 7) + 'px';
+      t.style.width = '58px';
+      t.textContent = '退出课堂 ▸';
+      t.title = '这一支的 merge_node = ' + merge + ' = 课程末尾：讲到这一格之后课就结束了';
+      $('gchips').appendChild(t);
+    }
+    const list = (b.nodes && b.nodes.length) ? b.nodes
+      : [{ variant_id: b.variant_id, label: b.label, text: b.text, est_sec: b.est_sec }];
+    const bn = list[0] || {};
+    // 支线卡片放在泳道水平段的中点：它是这条泳道上的「节点」，线从它背后穿过
+    const cx = branchChipX(i, merge, lane);
+    const info = {
+      kind: kind, branch: b, node: nd, bn: bn, list: list,
+      route: rt,           // 路线（预置 / 运行期）就挂在这里：详情与 tooltip 都读它
+      src: src,            // 'preset' 实线 / 'runtime' 虚线
+      merge: merge, lane: lane, geo: geo, chip: null,
+      forkIdx: i,          // 几何起点（路线候选取 fork_node，未必等于 target_unit 那格）
+      chipX: cx,           // 挑泳道时要比"两条 chip 离得多远"，所以把它记下来
+    };
+    const rkind = rt && ROUTE_KIND_TEXT[rt.kind] ? rt.kind : '';
+    const chip = document.createElement('div');
+    chip.className = 'gbr' + (kind === 'cand' ? ' cand' : '') +
+      (rkind ? ' rt rt-' + rkind : '') + ' src-' + src + ' st-none';
+    chip.dataset.node = String(i);
+    chip.dataset.kind = kind;
+    chip.dataset.source = src;
+    if (rkind) chip.dataset.routeKind = rkind;
+    chip.style.left = (cx - BCW / 2) + 'px';
+    chip.style.top = (geo.y - BCH / 2) + 'px';
+    // 路线 chip 的第一行就是"走向 + 真跳过格数"（跳讲 N 格 / 补回头 N 格 / 提前收尾 → 课尾），
+    // 第二行放理由的开头：两条都按真实 payload 写，不在这里另起一套说法。
+    chip.innerHTML = rt
+      ? '<div class="gtag">' + esc(clip(routeTag(rt, i), 9)) +
+        '</div><div class="gsum">' + esc(clip(rt.reason || '', BSUMMARY)) + '</div>'
+      : '<div class="gtag">' + esc(clip(bn.label || bn.variant_id || '支线', 6)) +
+        '</div><div class="gsum">' + esc(clip(bn.text || '', BSUMMARY)) + '</div>';
+    if (rt) {
+      chip.title = routeSourceText(rt) + ' · ' + routeKindText(rt) + ' · ' + (rt.route_id || '') +
+        '\n岔出#' + i + (geo.terminal ? ' → 课尾（退出课堂）' : (geo.open ? ' → 开放末端' : ' → 汇回#' + merge)) +
+        '（' + routeCountText(rt, i) + ' / 跨 ' + routeSpan(rt, i) + ' 格' +
+        ((rt.steps || []).length ? ' / ' + (rt.steps || []).length + ' 步' : '') + '）' +
+        '\n' + fmtDelta(rt.est_sec) + (rt.reason ? '\n' + rt.reason : '') +
+        '\n点一下看全文（只读）';
+    } else {
+      chip.title = (bn.label || '') + ' · ' + (bn.variant_id || '') +
+        '\n分叉于#' + i + (geo.terminal ? ' · 课尾：退出课堂' : (geo.open ? ' · 开放末端' : ' · 汇回#' + merge)) +
+        '\n约 ' + fmtSec(bn.est_sec) + '\n点一下看全文（只读）';
+    }
+    chip.addEventListener('click', function () { if (S.suppressClick) return; showBranch(info); });
+    chip.__d = info;
+    info.chip = chip;
+    $('gchips').appendChild(chip);
+    return { path: path, chip: chip, geo: geo };
+  }
+
+  // ---------------------------------------------------------------- 运行期叠加
+  function setState(el, st) {
+    const s = ST_TEXT[st] ? st : 'none';
+    if (el.__st === s) return;
+    el.classList.remove('st-alive');
+    el.classList.remove('st-consumed');
+    el.classList.remove('st-expired');
+    el.classList.remove('st-none');
+    el.classList.add('st-' + s);
+    el.__st = s;
+  }
+
+  function addCandidate(nd, p, i, lane) {
+    // 路线候选的出发格是 route.fork_node（target_unit 说明的是"在哪一格被选中"）：
+    // 两者通常相同，但几何只认 fork_node，否则工整的跨度会从一个错误的格子起画。
+    const fi = candFork(p, i);
+    const fnode = S.nodes[fi] || nd;
+    // 泳道：先用调用方给的（按单元分段），撞上已有 chip 就顺延一条（见 pickCandLane）
+    const merge = candMerge(p, fi);
+    const useLane = pickCandLane(lane, fi, merge);
+    // 路线候选与静态预置路线走**同一个** buildRouteChip（几何 / 文案 / 详情一套渲染）；
+    // 只有变体候选才落到"就地变体"那一路（画在本格泳道里）。
+    const r = p.route
+      ? buildRouteChip(p.route, fi, useLane)
+      : buildBranch(fnode, fi, {
+        variant_id: p.variant_id, label: p.label, text: '', est_sec: 0,
+        nodes: [{ variant_id: p.variant_id, label: p.label, text: '', est_sec: 0 }],
+      }, useLane, 'cand');
+    if (!r) return null;
+    r.chip.__unit = fnode.unit_id;
+    r.chip.dataset.cand = p.candidate_id;
+    r.chip.__d.cand = p;
+    S.candEls.set(p.candidate_id, r.chip);
+    S.candWire.set(p.candidate_id, r.path);
+    S.candGeom.set(p.candidate_id, { lane: useLane, left: r.chip.__d.chipX });
+    const t = mmTick(fi);
+    if (t) t.classList.add('has-cand');
+    return r.chip;
+  }
+
+  function dropCandidate(id) {
+    const el = S.candEls.get(id), w = S.candWire.get(id);
+    if (w && w.remove) { w.remove(); }
+    if (el && el.remove) { el.remove(); }
+    S.candEls.delete(id);
+    S.candWire.delete(id);
+    S.candGeom.delete(id);
+  }
+
+  function syncPool(pool) {
+    const seen = new Set();
+    const free = [];
+    const used = new Map();       // unit_id → 已占用的候选泳道数（先数已有的）
+    S.candEls.forEach(function (el) {
+      const u = el.__unit || '';
+      used.set(u, (used.get(u) || 0) + 1);
+    });
+    pool.forEach(function (p) {
+      // 预置货是 plan.json 里那批路线 / 变体在池中的运行期副本：它更新**实线**的三态，
+      // 不再另画一条虚线 —— 否则同一支讲法会在图上出现两次。
+      if (p.source === 'preset') {
+        if (p.route) {
+          // 预置路线：静态载荷（/api/script/graph 的 routes）已经把这一条画成实线了，
+          // 这里只把它的池内状态（alive / consumed / expired）贴回那块 chip 上。
+          const rel = S.routeEls.get(p.route.route_id || '');
+          if (rel) setState(rel, p.status || 'none');
+          return;
+        }
+        const unit = p.target_unit || '';
+        const key = unit + '|' + (p.variant_id || '');
+        const st = p.status || 'none';
+        if (S.varState.get(key) === st) return;   // 每秒轮询：状态没变就别改 DOM
+        S.varState.set(key, st);
+        const rec = S.varEls.get(unit);
+        if (rec) paintBadge(rec);
+        const el = S.presetEls.get(key);          // 路线分支若恰好也叫这个名字，仍然更新它
+        if (el) setState(el, st);
+        return;
+      }
+      let nd = S.nodeMap.get(p.target_unit || '');
+      if (!nd && p.route) {
+        // 路线候选还有第二个落点：fork_node。C 的 route 自带岔出格，
+        // 拿它挂上去比把一条有几何的路线丢进「未定向」更诚实。
+        const f = Number(p.route.fork_node);
+        if (isFinite(f)) nd = S.nodes[Math.round(f)] || nd;
+      }
+      if (!nd) { free.push(p); return; }          // target_unit 不在图上：收进「未定向候选」
+      seen.add(p.candidate_id);
+      let el = S.candEls.get(p.candidate_id);
+      if (!el) {
+        const n = used.get(nd.unit_id) || 0;
+        if (n >= CAND_SLOTS) return;              // 泳道用完了：这条只在详情面板里列
+        used.set(nd.unit_id, n + 1);
+        el = addCandidate(nd, p, S.unitIndex.get(nd.unit_id), (S.lanesWidth - 1) + n + 1);
+        if (!el) return;                          // 岔出格越界：不画，但也不炸
+      }
+      setState(el, p.status);
+    });
+    const stale = [];
+    S.candEls.forEach(function (el, id) { if (!seen.has(id)) stale.push(id); });
+    stale.forEach(dropCandidate);
+    renderFree(free);
+  }
+
+  function applySwitched(sw) {
+    S.switched = sw || {};
+    let sig = '';
+    Object.keys(S.switched).sort().forEach(function (u) {
+      (S.switched[u] || []).forEach(function (r) {
+        sig += u + '|' + (r.variant_id || '') + '|' + (r.candidate_id || '') + ';';
+      });
+    });
+    if (sig === S.lastSw) return;        // 没换过讲法就别每秒重画一遍几百个元素
+    S.lastSw = sig;
+    S.nodeEls.forEach(function (el) { el.classList.remove('is-switched'); });
+    S.presetEls.forEach(function (el) { el.classList.remove('on'); });
+    S.presetWire.forEach(function (w) { w.classList.remove('on'); });
+    S.varEls.forEach(function (rec) { rec.badge.classList.remove('on'); });
+    S.routeEls.forEach(function (el) { el.classList.remove('on'); });
+    S.candEls.forEach(function (el) { el.classList.remove('on'); });
+    S.candWire.forEach(function (w) { w.classList.remove('on'); });
+    Object.keys(S.switched).forEach(function (unit) {
+      const rows = S.switched[unit] || [];
+      if (!rows.length) return;
+      const node = S.nodeEls.get(unit);
+      if (node) node.classList.add('is-switched');
+      const vrec = S.varEls.get(unit);
+      if (vrec) vrec.badge.classList.add('on');
+      const last = rows[rows.length - 1];
+      const key = unit + '|' + (last.variant_id || '');
+      let chip = S.presetEls.get(key), w = S.presetWire.get(key);
+      if (!chip && last.candidate_id) {
+        chip = S.candEls.get(last.candidate_id);
+        w = S.candWire.get(last.candidate_id);
+      }
+      if (chip) chip.classList.add('on');
+      if (w) w.classList.add('on');
+    });
+  }
+
+  function renderFree(rows) {
+    const host = $('gfree');
+    const sig = rows.map(function (r, i) {
+      return (r.candidate_id || i) + ':' + (r.status || '') + ':' + (r.target_unit || '');
+    }).join(',');
+    if (sig === S.freeSig) return;
+    S.freeSig = sig;
+    if (!rows.length) { host.hidden = true; host.innerHTML = ''; return; }
+    let h = '<h3>未定向候选 ' + rows.length + ' 条（target_unit 为空，或那个单元不在这份脚本里）</h3>';
+    rows.forEach(function (r) {
+      // 路线行没有 label（label 是变体载荷的字段）：用走向顶上，否则这一列是空白。
+      const name = r.label || (r.route ? routeKindText(r.route) : '');
+      h += '<div class="gfrow"><span class="gfid">' + esc(r.candidate_id || '') + '</span>' +
+        '<span>' + esc(name) + '</span>' +
+        '<span>状态 ' + esc(r.status || '—') + '</span>' +
+        '<span>目标 ' + esc(r.target_unit || '—') + '</span></div>';
+    });
+    host.innerHTML = h;
+    host.hidden = false;
+  }
+
+  // 「C 现造」这一栏里其实是两种东西：变体（就地重讲一格）和路线（跨格走向）。
+  // 一锅数会让人以为路线候选有五条，实际可能只有一条路线 + 四条变体 ——
+  // 而"这一格到底能改走哪几条路"才是打开这一页时要回答的问题。
+  function renderCounts(d) {
+    const pool = (d && d.pool) || [];
+    let cands = 0, alive = 0, variants = 0, routes = 0, routeAlive = 0, termRoutes = 0;
+    pool.forEach(function (p) {
+      // 预置货（备课期的路线/变体在池中的副本）不在这里数：它们已经以实线画在图上，
+      // 数进来就等于把"课上现造了几条候选"说大了一倍。
+      if (p.source === 'preset') return;
+      cands++;
+      if (p.status === 'alive') alive++;
+      if (p.route) {
+        routes++;
+        if (p.status === 'alive') routeAlive++;
+        if ((Number(p.route.merge_node) || 0) >= S.nodes.length) termRoutes++;
+      } else {
+        variants++;
+      }
+    });
+    let sw = 0;
+    const map = (d && d.switched) || {};
+    Object.keys(map).forEach(function (k) { sw += (map[k] || []).length; });
+    $('cnCand').textContent = String(cands);
+    $('cnVar').textContent = String(variants);
+    $('cnRoute').textContent = String(routes);
+    $('cnAlive').textContent = String(alive);
+    $('cnSwitch').textContent = String(sw);
+    // 课尾分支 = 静态里汇回课尾的那些 + 运行期现造、也画到课尾的那些（画了就数）
+    $('cnTerm').textContent = String((((S.counts || {}).term) || 0) + termRoutes);
+    $('cnCandPill').title = '池内共 ' + ((d && d.pool_total) | 0) + ' 条，载荷里列了 ' +
+      pool.length + ' 条（alive 全给，作废的只给最近一批）' +
+      '\n变体 ' + variants + ' 条（就地重讲一格）· 路线 ' + routes + ' 条（跨格走向，alive ' +
+      routeAlive + '）· 预置货不在此列（它们已经在图上）';
+  }
+
+  function renderCur(d) {
+    const c = (d && d.current) || {};
+    const i = S.unitIndex.get(c.unit_id || '');
+    const el = $('cnCur');
+    if (i === undefined) { el.innerHTML = '课堂在跑，但当前单元不在图上'; return; }
+    const nd = S.nodes[i] || {};
+    el.innerHTML = '当前 第 ' + ((c.slide_index | 0) + 1) + ' 页 · 第 ' +
+      ((c.seg_index | 0) + 1) + ' 段 · <b>' + esc(nd.unit_id || '') + '</b> · ' +
+      esc(clip(nd.text, 20));
+  }
+
+  // 答疑不是分支：它只让指针临时离开主线，所以文案单独写一句，图上一个节点都不加
+  function setBubble(cur) {
+    const phase = (cur && cur.phase) || '—';
+    const up = (cur && cur.unit_progress) || {};
+    const b = $('gbubble');
+    const head = '<b>你现在在这里</b> · 第 ' + (((cur && cur.slide_index) | 0) + 1) + ' 页 · 第 ' +
+      (((cur && cur.seg_index) | 0) + 1) + ' 段 · ';
+    if (OFF_MAIN[phase] === 1) {
+      b.className = 'gbubble off';
+      b.innerHTML = head + '<b>答疑中 · 暂离主线</b>（' + esc(phase) + '）';
+      return;
+    }
+    b.className = 'gbubble';
+    b.innerHTML = head + esc(phase) + ' · 已讲 ' + (up.spoken | 0) + '/' + (up.total | 0) + ' 句';
+  }
+
+  // 指针必须**在屏幕上**保持可见：canvas 被 scale(k) 之后，1px 的竖线只剩 1*k px、
+  // 11px 的气泡文字只剩 11*k px —— 低缩放时两者都会消失。所以竖线宽度按 1/k 反补、
+  // 气泡整体反向缩放（CSS 变量 --gk），并随缩放/平移重算它的夹取位置。
+  function placePointer() {
+    if (S.curX === null) return;
+    const x = S.curX;
+    const ptr = $('gptr');
+    const lw = Math.max(0.5, 1 / S.k);          // 画布坐标系里要多宽才等于屏幕 1px
+    ptr.style.left = (x - lw / 2) + 'px';
+    ptr.style.width = lw + 'px';
+    const bwCanvas = BW / S.k;                  // 气泡反补后在画布坐标系里的宽度
+    const pad = 8 / S.k;
+    const bx = Math.max(pad, Math.min(S.G.width - bwCanvas - pad, x - bwCanvas / 2)) - x;
+    $('gbubble').style.left = bx + 'px';
+  }
+
+  function movePointer(cur) {
+    const unit = (cur && cur.unit_id) || '';
+    const i = S.unitIndex.get(unit);
+    if (i === undefined) {
+      if (S.lastUnit !== null || S.curX !== null) {
+        $('gptr').hidden = true;
+        $('gmmnow').hidden = true;
+        if (S.curEl) S.curEl.classList.remove('is-current');
+        S.curEl = null; S.lastUnit = null; S.curX = null;
+      }
+      return;
+    }
+    const x = S.G.center(i);
+    setBubble(cur);                              // 气泡文字每秒都变（句数、phase）
+    if (S.lastUnit === unit) return;             // 位置没变 → 一个字都不动
+    S.lastUnit = unit;
+    S.curX = x;
+    $('gptr').hidden = false;
+    placePointer();
+    const now = $('gmmnow');
+    now.hidden = false;
+    now.style.left = S.G.pct(x);
+    const node = S.nodeEls.get(unit);
+    if (S.curEl && S.curEl !== node) S.curEl.classList.remove('is-current');
+    if (node) node.classList.add('is-current');
+    S.curEl = node || null;
+    if ($('gfollow').checked) followTo(x);       // 跟随：只在换节点那一次平移
+  }
+
+  function clearLive() {
+    S.candEls.forEach(function (el, id) { dropCandidate(id); });
+    S.presetEls.forEach(function (el) { setState(el, 'none'); el.classList.remove('on'); });
+    S.presetWire.forEach(function (w) { w.classList.remove('on'); });
+    // 预置路线是静态的：课堂没在跑也一样留在图上，只是把池内三态清回"未入池"。
+    S.routeEls.forEach(function (el) { setState(el, 'none'); el.classList.remove('on'); });
+    S.nodeEls.forEach(function (el) { el.classList.remove('is-switched'); });
+    if (S.curEl) S.curEl.classList.remove('is-current');
+    S.curEl = null; S.lastUnit = null; S.lastSw = null; S.curX = null;
+    S.switched = {}; S.pool = [];
+    $('gptr').hidden = true;
+    $('gmmnow').hidden = true;
+    $('cnCand').textContent = '0';
+    $('cnVar').textContent = '0';
+    $('cnRoute').textContent = '0';
+    $('cnAlive').textContent = '0';
+    $('cnSwitch').textContent = '0';
+    // 静态的课尾分支照旧数着：它们画在图上，不因为课堂停了就消失
+    $('cnTerm').textContent = String(((S.counts || {}).term) || 0);
+    $('cnCur').textContent = '课堂没在跑';
+    renderFree([]);
+  }
+
+  function applyLive(d) {
+    if (!d) return;
+    if (!d.running) {
+      clearLive();
+      stat('课堂没在跑：图照常可浏览、可拖动缩放，只是没有指针（本页只读轮询，不会启动课堂）');
+      return;
+    }
+    S.pool = d.pool || [];
+    stat('每 ' + (POLL_MS / 1000) + ' 秒只读轮询 · 最近一次 ' + new Date().toLocaleTimeString());
+    syncPool(S.pool);
+    applySwitched(d.switched || {});
+    renderCounts(d);
+    renderCur(d);
+    movePointer(d.current || {});
+  }
+
+  // ---------------------------------------------------------------- 详情（只读）
+  function openDetail(title, body) {
+    $('gdt').textContent = title;
+    $('gdb').innerHTML = body;
+    $('gdetail').hidden = false;
+  }
+  function forkMergeText(i, merge) {
+    if (i === undefined) return '—';
+    if (merge < 0) return '分叉于#' + i + ' · 开放末端（不汇回）';
+    if (merge >= S.nodes.length) return '分叉于#' + i + ' · 汇回课尾（merge_node = ' +
+      merge + ' = 课程末尾 → 退出课堂）';
+    return '分叉于#' + i + ' · 汇回#' + merge + '（' + ((S.nodes[merge] || {}).unit_id || '') + '）';
+  }
+
+  function showNode(nd) {
+    const i = S.unitIndex.get(nd.unit_id);
+    let h = kv('位置', '第 ' + ((nd.page_index | 0) + 1) + ' 页 · 单元 ' +
+      ((nd.index_in_slide | 0) + 1) +
+      (nd.is_page_start ? ' · 页首' : '') + (nd.is_page_end ? ' · 页尾' : ''));
+    h += kv('页标题', nd.slide_title || '—');
+    h += kv('主线序号', '#' + i + ' / 共 ' + S.nodes.length);
+    h += kv('时长', fmtSec(nd.est_sec));
+    h += kv('知识点', (nd.kp || []).join('、') || '—');
+    h += kv('锚点', String(nd.anchors_count | 0));
+    h += kv('课件操作', String(nd.ops_count | 0));
+    const brs = nd.branches || [];
+    const routeN = brs.filter(function (b) { return isRoute(b, i); }).length;
+    const inlineN = brs.length - routeN;
+    // 本格岔出的预置路线（备课期 plan.json 的 routes）：开课前就画在图上，与运行期候选
+    // 同一个渲染。这一行是"这一格为什么有支线"的第一答案。
+    let presetN = 0;
+    (S.routes || []).forEach(function (rt) { if ((rt.fork_node | 0) === i) presetN++; });
+    h += kv('预置路线', String(presetN) + ' 条（备课期在本格岔出，实线）');
+    if (routeN) h += kv('路线分支', String(routeN) + ' 条（旧计划的变体分支，跨节点）');
+    if (inlineN) h += kv('就地变体', String(inlineN) + ' 条（旧计划：换说法/举例子，不算路线分支）');
+    const sw = (S.switched || {})[nd.unit_id] || [];
+    if (sw.length) {
+      h += '<div class="gdsub">已换讲法 ' + sw.length + ' 次</div>';
+      sw.forEach(function (r) {
+        h += '<div class="gdrow"><span class="gconsumed">' + esc(r.variant_id || '') + '</span> ' +
+          esc(r.label || '') + (r.candidate_id ? ' · 候选 ' + esc(r.candidate_id) : '') +
+          (r.decided_at ? ' · ' + esc(r.decided_at) : '') + '</div>';
+      });
+    }
+    const cands = (S.pool || []).filter(function (p) {
+      return p.source !== 'preset' && p.target_unit === nd.unit_id;
+    });
+    if (cands.length) {
+      h += '<div class="gdsub">C 现造候选 ' + cands.length + ' 条（画布上最多画 ' +
+        CAND_SLOTS + ' 条）</div>';
+      cands.forEach(function (p) {
+        h += '<div class="gdrow">' + esc(p.candidate_id || '') + ' · ' + esc(p.label || '') +
+          ' · <span class="g' + esc(p.status || '') + '">' + esc(p.status || '—') + '</span></div>';
+      });
+    }
+    h += '<pre class="gdtext">' + esc(nd.text || '') + '</pre>';
+    openDetail('节点 · ' + (nd.unit_id || ''), h);
+  }
+
+  function showVariants(nd, brs) {
+    const i = S.unitIndex.get(nd.unit_id);
+    let h = kv('位置', '第 ' + ((nd.page_index | 0) + 1) + ' 页 · 单元 ' +
+      ((nd.index_in_slide | 0) + 1));
+    h += kv('主线序号', '#' + i + ' / 共 ' + S.nodes.length);
+    h += '<div class="gdsub">这 ' + brs.length + ' 条是<b>就地重讲</b>的变体：分叉和汇回挤在同一格上，' +
+      '讲完这一句就回主线 —— 不改变课堂走向，所以不画泳道</div>';
+    brs.forEach(function (b) {
+      const st = S.varState.get((nd.unit_id || '') + '|' + (b.variant_id || '')) || 'none';
+      h += '<div class="gdrow"><span class="g' + esc(st) + '">' + esc(b.label || '') + '</span> · ' +
+        esc(b.variant_id || '') + ' · 约 ' + fmtSec(b.est_sec) + ' · ' +
+        esc(ST_TEXT[st] || st) + '</div>';
+      h += '<pre class="gdtext">' + esc(b.text || '') + '</pre>';
+    });
+    openDetail('就地变体 · ' + (nd.unit_id || ''), h);
+  }
+
+  // 结构计数只数**静态**载荷：路线分支 = 备课期预置路线（这一页现在的主角）+ 旧计划里
+  // 跨 ≥2 格的变体分支；就地变体单列一栏，为 0 时整栏隐藏 —— 变体停产后它不该在真实课件上
+  // 留一个恒为 0 的栏位，那看起来像"这里本来有东西，只是这次没有"。
+  function renderStructCounts() {
+    let route = 0, inline = 0, term = 0;
+    S.nodes.forEach(function (nd, i) {
+      (nd.branches || []).forEach(function (b) {
+        if (!isRoute(b, i)) { inline++; return; }
+        route++;
+        if (mergeOf(b, i, S.nodes.length) >= S.nodes.length) term++;
+      });
+    });
+    // 预置路线同样算路线分支（它们画在图上，就得数进这一栏）
+    (S.routes || []).forEach(function (rt) {
+      route++;
+      if ((Number(rt.merge_node) || 0) >= S.nodes.length) term++;
+    });
+    S.counts = { route: route, inline: inline, term: term };
+    $('cnMain').textContent = String(S.nodes.length);
+    $('cnPreset').textContent = String(route);
+    $('cnInline').textContent = String(inline);
+    $('cnInlinePill').hidden = inline === 0;
+    $('cnTerm').textContent = String(term);
+    return S.counts;
+  }
+
+  // 一条路线的详情：类型 / 岔出·汇回 / 跨格（含跳过或重讲几格）/ 时长（省·多）/ 理由 / steps。
+  // 预置与运行期**共用这一个函数**：它们本来就是同一种东西的两个来源，
+  // 两套文案迟早会分叉，而分叉之后没人知道哪一套是真的。
+  function routeDetailHtml(rt, i, p) {
+    const steps = rt.steps || [];
+    let h = kv('类型', '路线分支（' + routeKindText(rt) + ' · ' + routeSourceText(rt) + '）');
+    if (p) h += kv('候选', p.candidate_id || '—');
+    h += kv('走向', routeKindText(rt) + ' · ' + (rt.route_id || '—'));
+    h += kv('岔出/汇回', forkMergeText(i, candMerge({ route: rt }, i)));
+    // 跨度是几何（chip 从哪画到哪），第二段才是学生感受到的那个数，而且**按走向分开报**
+    // （见 routeCountText）：revisit 只报"重讲 N 格"，skip / finish 只报"跳过 N 格"。
+    // 两个数一起给的理由没变：只给跨度的话，详情里那个"跨 N 格"会被读成"跳 N 格"。
+    h += kv('跨格', routeSpan(rt, i) + ' 格 · ' + routeCountText(rt, i));
+    h += kv('时长', fmtDelta(rt.est_sec) + '（负数省 / 正数多花）');
+    if (p) {
+      h += kv('来源', p.source || '—');
+      h += kv('状态', ST_TEXT[p.status] || p.status || '—');
+    }
+    h += kv('理由', rt.reason || '—');
+    if (steps.length) {
+      h += '<div class="gdsub">steps · 按顺序走这 ' + steps.length + ' 格</div>';
+      steps.forEach(function (s, k) {
+        const name = s.label || s.variant_id || '沿用该格主 text';
+        h += '<div class="gdrow"><b>' + (k + 1) + '.</b> ' + esc(s.unit_id || '—') +
+          ' · ' + esc(name) + (s.est_sec ? ' · 约 ' + fmtSec(s.est_sec) : '') +
+          (s.text ? '<pre class="gdtext">' + esc(s.text) + '</pre>' : '') + '</div>';
+      });
+    } else {
+      h += '<div class="gdsub">steps 为空：这一支只改变"走哪几格"，不重讲任何一格' +
+        '（skip / finish 就是这样）</div>';
+    }
+    return h;
+  }
+
+  function showBranch(d) {
+    const b = d.branch || {};
+    // 几何起点以 chip 记下的 forkIdx 为准：路线候选的岔出格未必等于 target_unit 那格，
+    // 用 unitIndex 反查会把这个差值悄悄抹掉（详情里写着 #5，画布上却画在 #3）。
+    const i = (d.forkIdx !== undefined && d.forkIdx !== null)
+      ? (d.forkIdx | 0) : S.unitIndex.get((d.node || {}).unit_id);
+    // 路线优先：预置路线与运行期候选的 chip 都带着 route（buildRouteChip 递进去的），
+    // 它们走同一份详情。旧计划的就地变体分支没有 route，落到下面那一支。
+    const rt = d.route || (d.cand && d.cand.route) || null;
+    if (rt) {
+      const row = d.cand || null;
+      openDetail((rt.source === 'preset' ? '预置路线 · ' : '路线候选 · ') +
+        ((row && row.candidate_id) || rt.route_id || ''), routeDetailHtml(rt, i, row));
+      return;
+    }
+    let h = '';
+    if (d.kind === 'preset') {
+      h += kv('类型', '路线分支（跨节点，实线）');
+      h += kv('变体', (b.label || '') + ' · ' + (b.variant_id || ''));
+      h += kv('分叉/汇回', forkMergeText(i, d.merge));
+      h += kv('支线节点', ((b.nodes || []).length || 1) + ' 个');
+      h += kv('泳道', 'lane ' + (b.lane | 0));
+      h += kv('插到主线', '节点#' + (b.insert_node | 0) + '（' + (b.insert_unit || '') + '）');
+      h += kv('时长', fmtSec(b.est_sec));
+      h += kv('当前状态', ST_TEXT[(d.chip && d.chip.__st) || 'none'] || '—');
+      h += '<pre class="gdtext">' + esc(b.text || '') + '</pre>';
+      openDetail('支线 · ' + (b.label || b.variant_id || ''), h);
+      return;
+    }
+    const p = d.cand || {};
+    h += kv('类型', 'C 运行期造的候选（虚线）');
+    h += kv('候选', p.candidate_id || '—');
+    h += kv('讲法', p.label || '—');
+    h += kv('变体', p.variant_id || '—');
+    h += kv('来源', p.source || '—');
+    h += kv('状态', ST_TEXT[p.status] || p.status || '—');
+    h += kv('分叉/汇回', forkMergeText(i, d.merge));
+    h += '<div class="gdsub">池里只存候选的元数据：候选全文由 C 现造、不进 plan.json，' +
+      '所以这里没有正文可显示。</div>';
+    openDetail('候选 · ' + (p.candidate_id || ''), h);
+  }
+
+  // ---------------------------------------------------------------- 空状态
+  function showEmpty(d) {
+    const hint = (d && d.hint) || '这份课件没有分支结构可看。';
+    const box = $('gempty');
+    box.innerHTML = '<p class="gemptyhint">' + esc(hint) + '</p>' +
+      '<p class="gemptynote">这一页只读观测，不影响课堂：没有图就是没有图，不是课堂出问题了。</p>' +
+      '<p class="gemptynote">当前模式 ' + esc((d && d.mode) || '—') + '。</p>';
+    box.hidden = false;
+    $('gviewport').hidden = true;
+    $('gmm').hidden = true;
+    $('gmeta').textContent = '没有可画的分支结构';
+    const m = (d && d.meta) || {};
+    $('cnMain').textContent = String((m.mainline_nodes | 0) || 0);
+    $('cnPreset').textContent = '0';
+    $('cnInline').textContent = '0';
+    $('cnInlinePill').hidden = true;
+    $('cnTerm').textContent = '0';
+    $('cnCur').textContent = '课堂没在跑';
+    stat('没有分支图：' + clip(hint, 40), true);
+  }
+
+  function setStaticCounts(meta) {
+    const m = meta || {};
+    // 静态计数直接来自 meta：预置路线是这一页开课前就能报准的那部分，
+    // 而"就地变体"在变体停产后恒为 0（整栏隐藏，不占位置也不假装有东西）。
+    $('cnMain').textContent = String((m.mainline_nodes) | 0);
+    $('cnPreset').textContent = String((m.preset_routes) | 0);
+    $('cnInline').textContent = '0';
+    $('cnInlinePill').hidden = true;
+    $('cnTerm').textContent = String((m.terminal_branches) | 0);
+    $('gmeta').textContent = (m.deck_title || '—') +
+      ' · ' + (m.deck_id || '—') +
+      ' · ' + ((m.total_slides) | 0) + ' 页 / ' +
+      ((m.total_units) | 0) + ' 单元 · 预置路线 ' + ((m.preset_routes) | 0) + ' 条' +
+      ' · plan 来自 ' + (m.plan_source || '—');
+  }
+
+  // ---------------------------------------------------------------- 轮询
+  // 页面不可见就停：后台标签页每秒请求一次，烧的是这台机器和后端，而这段时间
+  // 没有任何一双眼睛在看它。
+  function stopPolling() { if (S.timer) { clearInterval(S.timer); S.timer = null; } }
+  function startPolling() {
+    stopPolling();
+    S.timer = setInterval(pollLive, POLL_MS);
+    pollLive();
+  }
+  function pollLive() {
+    if (document.hidden) return;
+    fetch('/api/script/live', { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(function (d) {
+      try { applyLive(d); } catch (e) { stat('live 载荷处理失败：' + e.message, true); }
+    })['catch'](function (e) {
+      // 轮询失败只写在状态行：已渲染的图一个字都不动 —— 清空等于告诉用户「课堂没了」
+      stat('live 拉取失败：' + e.message + ' · 已自动重试（图保持上一次的样子）', true);
+    });
+  }
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { stopPolling(); stat('页面不可见，轮询已暂停'); }
+    else { startPolling(); }
+  });
+
+  // ---------------------------------------------------------------- 拖拽平移 / 滚轮缩放
+  $('gviewport').addEventListener('mousedown', function (e) {
+    if (e.button !== undefined && e.button !== 0) return;
+    S.drag = { x: e.clientX, y: e.clientY, tx: S.tx, ty: S.ty, moved: false };
+    $('gviewport').classList.add('grabbing');
+  });
+  document.addEventListener('mousemove', function (e) {
+    const d = S.drag;
+    if (!d) return;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (!d.moved) {
+      // 位移没超过阈值就先当作「可能的点击」：不动画布，也不吞掉这次点击
+      if (Math.sqrt(dx * dx + dy * dy) <= DRAG_THRESH) return;
+      d.moved = true;
+      S.suppressClick = true;
+    }
+    S.tx = d.tx + dx;
+    S.ty = d.ty + dy;
+    applyTransform();
+  });
+  document.addEventListener('mouseup', function () {
+    if (!S.drag) return;
+    const moved = S.drag.moved;
+    S.drag = null;
+    $('gviewport').classList.remove('grabbing');
+    // 真的拖过：吞掉紧随其后的 click；只是点了一下：放行
+    if (moved) setTimeout(function () { S.suppressClick = false; }, 0);
+  });
+  $('gviewport').addEventListener('wheel', function (e) {
+    if (!S.G) return;
+    if (e.preventDefault) e.preventDefault();
+    const r = $('gviewport').getBoundingClientRect();
+    const f = Math.exp(-(e.deltaY || 0) * ZOOM_PX);
+    zoomAtPoint(e.clientX - r.left, e.clientY - r.top, f);
+  }, { passive: false });
+
+  $('gFit').addEventListener('click', function () { fitAll(); });
+  $('g100').addEventListener('click', function () { zoomTo(1); });
+  $('gHere').addEventListener('click', function () {
+    if (!zoomTo(S.k, true)) stat('当前没有在讲的单元（课堂没在跑），无处可回');
+  });
+  $('gfollow').addEventListener('change', function () {
+    // 关掉跟随 = 不替你平移，指针照样高亮（"别替我做决定" ≠ "别看当前在哪"）。
+    if (this.checked && S.curX !== null) followTo(S.curX);
+  });
+  $('gshowbr').addEventListener('change', function () { applyCollapse(); });
+  $('gdx').addEventListener('click', function () { $('gdetail').hidden = true; });
+
+  // ---------------------------------------------------------------- 缩略条
+  function seekAt(clientX) {
+    const mm = $('gmm');
+    if (!S.G || !mm.getBoundingClientRect) return;
+    const r = mm.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (clientX - r.left) / (r.width || 1)));
+    seek(ratio);
+  }
+  $('gmm').addEventListener('mousedown', function (e) { S.mmDrag = true; seekAt(e.clientX); });
+  $('gmm').addEventListener('mousemove', function (e) { if (S.mmDrag) seekAt(e.clientX); });
+  document.addEventListener('mouseup', function () { S.mmDrag = false; });
+
+  // ---------------------------------------------------------------- 启动
+  fetch('/api/script/graph', { cache: 'no-store' }).then(function (r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }).then(function (data) {
+    if (!data || !data.ok) { showEmpty(data || {}); return; }
+    setStaticCounts(data.meta);
+    buildGraph(data);
+    const c = S.counts || { route: 0, inline: 0 };
+    // 这一行说的是"开课前就画好了什么"：预置路线是新的主角，就地变体只在旧计划里报。
+    stat('静态结构已就绪：' + ((data.meta || {}).mainline_nodes | 0) + ' 个节点 · ' +
+      (data.routes || []).length + ' 条预置路线（备课期）' +
+      (c.inline ? ' · ' + c.inline + ' 条旧计划就地变体' : '') + '（只拉一次）');
+    startPolling();
+  })['catch'](function (e) {
+    showEmpty({ hint: '静态结构加载失败：' + e.message, mode: '—' });
+  });
+})();
+</script>
+</body>
+</html>

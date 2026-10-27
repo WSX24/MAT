@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "classroom": {
+      "type": "http",
+      "url": "http://127.0.0.1:8000/mcp"
+    },
+    "classroom-stdio": {
+      "command": "E:\\GitRepo\\muliple-agent\\prototype\\.venv\\Scripts\\python.exe",
+      "args": [
+        "E:\\GitRepo\\MAT\\TeachingFlow\\classroom\\run.py",
+        "mcp-stdio",
+        "http://127.0.0.1:8000/mcp"
+      ]
+    }
+  }
+}

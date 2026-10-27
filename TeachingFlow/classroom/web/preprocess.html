@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>预处理 · 课件库</title>
+<link rel="stylesheet" href="/static/classroom.css">
+<!-- 样式写在页内，不单开 preprocess.css：_with_asset_versions() 是一份硬编码清单
+     （classroom.css / deck.js / script.css / graph.css），只加文件不登记 = 没有 ?v=，
+     表现就是"新页面配旧样式"，而这正是那个函数自己的 docstring 要防的事。
+     变量仍取自 /static/classroom.css，配色与其它页一致。 -->
+<style>
+.pp{max-width:1180px;margin:0 auto;padding:18px 16px 44px}
+.pphead{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px}
+.pp h1{font-size:20px;margin:0;font-weight:600}
+.ppstat{font-size:12px;color:var(--dim);border:1px solid var(--line);border-radius:999px;
+  padding:2px 10px;background:var(--panel)}
+.ppnote{color:var(--dim);font-size:12px;line-height:1.6;margin:8px 0 0}
+.ppnote code{color:var(--fg);background:var(--panel2);border:1px solid var(--line);
+  border-radius:5px;padding:0 5px}
+.pp h2{font-size:13px;color:var(--dim);font-weight:600;letter-spacing:.5px;
+  margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.pp .panel{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:12px 14px}
+.pp .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pp button{font:inherit;font-size:12px;padding:5px 12px;border-radius:8px;cursor:pointer;
+  border:1px solid var(--line);background:var(--panel2);color:var(--fg)}
+.pp button:hover:not(:disabled){border-color:var(--accent)}
+.pp button:disabled{opacity:.45;cursor:not-allowed}
+.pp button.go{border-color:var(--accent)}
+.pp input[type=file]{font:inherit;font-size:12px;color:var(--dim)}
+.pp table{width:100%;border-collapse:collapse;font-size:12px}
+.pp th{text-align:left;color:var(--dim);font-weight:600;padding:6px 8px;
+  border-bottom:1px solid var(--line);white-space:nowrap}
+.pp td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.pp tr:last-child td{border-bottom:none}
+.pp .t{font-weight:600}
+.pp .id{color:var(--dim);font-size:11px;word-break:break-all}
+.pp .acts{display:flex;gap:6px;flex-wrap:wrap}
+.pp .yes{color:var(--ok)}
+.pp .no{color:var(--dim)}
+.pp .msg{font-size:12px;margin-top:10px;min-height:16px}
+.pp .msg.bad{color:#e5534b}
+.pp .msg.good{color:var(--ok)}
+.pp .bar{height:10px;border-radius:999px;background:var(--panel2);
+  border:1px solid var(--line);overflow:hidden;margin:8px 0}
+.pp .bar > i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s ease}
+.pp .jobline{font-size:12px;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap}
+.pp .jobline b{color:var(--fg);font-weight:600}
+.pp pre.log{margin:10px 0 0;padding:10px;max-height:300px;overflow:auto;font-size:11px;
+  line-height:1.55;background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+  color:var(--fg);white-space:pre-wrap;word-break:break-all}
+.pp .badge{font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--dim);white-space:nowrap}
+.pp .badge.on{color:var(--accent);border-color:var(--accent)}
+.pp .badge.live{color:#e5534b;border-color:#e5534b}
+</style>
+</head>
+<body>
+<div class="pp">
+  <div class="pphead">
+    <h1>预处理 · 课件库</h1>
+    <span class="ppstat" id="active">当前上课：读取中…</span>
+    <span class="ppstat" id="live">课堂状态：读取中…</span>
+    <button id="simple" title="切到原型自带的手写演示课件">不用真实课件（手写演示）</button>
+  </div>
+  <p class="ppnote">一次「预处理」= 解析 → 备课 → 预置路线，三段串成一条后台作业；这一页只是它的操作台，
+    点一下立刻返回作业号，进度和日志在这一页刷新，关掉页面作业照跑（作业记录在服务进程内存里，服务重启就没了）。
+    重跑一律先备份：覆盖写之前旧计划会落成 <code>plan.bak.json</code>。</p>
+
+  <h2>上传</h2>
+  <div class="panel">
+    <div class="row">
+      <input type="file" id="file" accept=".pptx">
+      <button class="go" id="upload">上传到源库</button>
+      <span class="ppnote" style="margin:0">只收 .pptx，单个不超过 200 MB；同名文件直接覆盖（重传一版是常态）。</span>
+    </div>
+    <div class="msg" id="uploadmsg"></div>
+  </div>
+
+  <h2>课件库</h2>
+  <div class="panel">
+    <table>
+      <thead><tr>
+        <th>课件</th><th>页数</th><th>单元</th><th>已总结 / 单元</th>
+        <th>源文件在库</th><th>上一版备份</th><th>操作</th>
+      </tr></thead>
+      <tbody id="rows"><tr><td colspan="7" class="no">读取中…</td></tr></tbody>
+    </table>
+    <p class="ppnote">「重新解析+备课」用源 pptx 重跑全链（覆盖写前先备份）；没有源文件时它能用的前提是
+      <code>decks/&lt;id&gt;/source.txt</code> 记的那条路径还在。「补生成总结」只写
+      <code>units[*].summary</code>，正文、锚点、课件操作一格都不动 —— 已上过课的定稿计划补这一层是安全的。</p>
+  </div>
+
+  <h2>作业</h2>
+  <div class="panel" id="jobpanel">
+    <div class="jobline" id="jobline">当前没有在跑的作业。点上面任意一个按钮就会开一个。</div>
+    <div class="bar" id="bar" hidden><i id="barfill"></i></div>
+    <pre class="log" id="log" hidden></pre>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  //: 用户可见字符串全部经过它：文件名、日志、标题都可能是模型或 pptx 里来的，
+  //: 里面出现尖括号不该把这一页的 DOM 掀了。
+  function esc(v) {
+    return String(v === null || v === undefined ? '' : v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var job = null;        // 当前盯着的那条作业（running 才轮询）
+  var timer = null;
+
+  function json(url, opt) {
+    return fetch(url, Object.assign({ cache: 'no-store' }, opt || {}))
+      .then(function (r) { return r.json(); });
+  }
+
+  function say(el, text, ok) {
+    el.textContent = text || '';
+    el.className = 'msg' + (text ? (ok ? ' good' : ' bad') : '');
+  }
+
+  // ---- 当前上课用哪份课件：顶部常驻 + 每行一个「设为当前上课」 -----------
+  // 为什么并进 library 那一次请求、不单独开一个 /api/decks：这一页每个按钮的灰/亮
+  // 都取决于"当前是哪份、课堂在不在跑"，两份快照必然有一瞬不同步 —— 表现是
+  // 按钮看着能点、点了被 409 拦，用户只会以为坏了。
+  var cur = { active: {}, live: {} };          // 最近一次 library 的 active/live
+
+  // 「课堂正在跑」的那句话只有一处口径：按钮 title、顶部徽标、失败提示都用它。
+  function liveWhy(n) {
+    return '课堂正在跑（' + n + ' 个连接）—— 先结课再换课件';
+  }
+
+  function paintActive(lib) {
+    cur.active = (lib && lib.active) || {};
+    cur.live = (lib && lib.live) || {};
+    var a = cur.active, n = (cur.live.running | 0);
+    $('active').innerHTML = '当前上课：<b>《' + esc(a.title || '（没有）') + '》</b>'
+      + (a.mode === 'simple' ? ' <span class="badge">手写演示</span>' : '');
+    $('live').innerHTML = n
+      ? '<span class="badge live">' + esc(liveWhy(n)) + '</span>'
+      : '<span class="badge">课堂没在跑</span>';
+    var s = $('simple');
+    s.disabled = n > 0 || a.mode === 'simple';
+    s.title = n > 0 ? liveWhy(n)
+      : (a.mode === 'simple' ? '现在用的就是手写演示课件' : '切到原型自带的手写演示课件');
+  }
+
+  // 切换 = 立刻生效（下一节课就用新的）+ 后端写回 .env（重启也保持）。
+  // 成功/失败都刷一次列表：当前徽标、按钮灰亮、作业都在同一张表里。
+  function activate(deckId) {
+    say($('uploadmsg'), '正在切换课件…', true);
+    return json('/api/deck/activate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deck_id: deckId })
+    }).then(function (res) {
+      if (!res || !res.ok) { throw new Error((res && res.error) || '切换失败'); }
+      // note 原文照抄：后端那句已经写清了"何时生效、重启保不保持"，另编一句就多了个口径
+      say($('uploadmsg'), res.note || '已切换', true);
+      loadLibrary().catch(function () {});
+    }).catch(function (e) {
+      say($('uploadmsg'), e && e.message ? e.message : String(e), false);
+      loadLibrary().catch(function () {});        // 被拦时列表要回到真实状态
+    });
+  }
+
+  // ---- 课件库：decks 每行一条，左连接 sources 补"源文件在库" ----------
+  // 为什么以 decks 为准：源库只看 pptx/，而 decks/ 里可能有一份"源文件早就不在了
+  // 但还能上课"的课件（仓库里那份 177 单元的就是）；只列 sources 会让它凭空消失，
+  // 而补总结恰恰只有它能点。
+  function merge(lib) {
+    var out = [], byId = {};
+    (lib.decks || []).forEach(function (d) {
+      var row = { deck: d, src: null };
+      byId[d.deck_id] = row;
+      out.push(row);
+    });
+    (lib.sources || []).forEach(function (s) {
+      var row = byId[s.deck_id];
+      if (row) { row.src = s; }
+      else { out.push({ deck: null, src: s }); }   // 还没解析的源：也算一行
+    });
+    return out;
+  }
+
+  // 发给后端的标识**按 action 分两档**，混用就是"源库里没有 …"：
+  //   · full / ingest 要**源文件全名** —— 后端拿它去 pptx/ 里找文件。上传后还没解析时，
+  //     这一行只有显示名（title，后缀被去掉了），拿它去找必定找不到。
+  //   · plan / summarize 只碰 decks/<id>/：源文件可能早就不在了，只有 deck_id 一直成立。
+  function pickName(r, act) {
+    var d = r.deck, s = r.src;
+    if (act === 'plan' || act === 'summarize') { return d ? d.deck_id : (s ? s.deck_id : ''); }
+    // 全名只在 sources 那一侧有；有它就是最直接的给法
+    if (s) { return s.name; }
+    // 源文件不在库里（source.txt 记的是别处的路径）：交回 deck_id，后端自己顺着 source.txt 找
+    return d ? d.deck_id : '';
+  }
+
+  // 禁用按钮也带 title：灰着的按钮更需要一句"为什么灰"，
+  // 否则用户只会以为功能没做（而不是"你缺一个源文件"）。
+  function btn(label, act, name, enabled, why) {
+    return '<button data-act="' + esc(act) + '" data-name="' + esc(name) + '"'
+      + (enabled ? '' : ' disabled')
+      + ' title="' + esc(why || '') + '"'
+      + '>' + esc(label) + '</button>';
+  }
+
+  function render(lib) {
+    var rows = merge(lib), html = [];
+    if (!rows.length) {
+      html.push('<tr><td colspan="7" class="no">还没有课件：先上传一份 .pptx，'
+        + '或把 pptx 放进源库目录。</td></tr>');
+    }
+    rows.forEach(function (r) {
+      var d = r.deck, s = r.src;
+      // 屏幕上那行字（显示名）和发给后端的标识**不是同一个东西**，所以分开两个变量：
+      // title 去掉了后缀、可以带全角标点；后端只认源文件全名或 deck_id（见 pickName）。
+      var title = d ? (d.title || d.deck_id) : (s ? s.name : '');
+      var deckId = d ? d.deck_id : s.deck_id;
+      var slides = d ? (d.slides || 0) : 0;
+      var units = d ? (d.units || 0) : (s ? s.units : 0);
+      var sumed = d ? (d.summarized || 0) : (s ? s.summarized : 0);
+      var hasPlan = d ? !!d.has_plan : !!(s && s.has_plan);
+      var hasDeck = !!d || !!(s && s.has_deck);
+      // full 需要源文件：源库里有，或 source.txt 记的那条路径此刻还在
+      var canFull = d ? (!!d.source_in_library || !!d.source_resolved) : !!s;
+      var srcName = d ? (d.source_name || '') : (s ? s.name : '');
+      var inLib = d ? !!d.source_in_library : !!s;
+      var bak = d ? !!d.has_bak : false;
+
+      var acts = [];
+      acts.push(btn('只重备课', 'plan', pickName(r, 'plan'), hasDeck,
+        hasDeck ? '从盘上的 deck.json 重新备课（不动解析结果）' : '还没解析过 —— 先跑「预处理（全链）」'));
+      // 两个 full 按钮其实是同一个动作的两副面孔：没解析过的第一次叫"预处理（全链）"，
+      // 解析过之后的再跑叫"重新解析+备课"。同一条行上并排两个一样的按钮只会点错。
+      acts.push(btn(hasDeck ? '重新解析+备课' : '预处理（全链）', 'full', pickName(r, 'full'), canFull,
+        canFull ? (hasDeck ? '用源 pptx 重跑解析+备课（覆盖写之前先备份）' : '第一次解析并备课')
+                : '源文件不在 pptx/，source.txt 记的路径也不在了 —— 只能重新上传'));
+      var filled = units > 0 && sumed >= units;
+      acts.push(btn(filled ? '已补全' : '补生成总结', 'summarize', pickName(r, 'summarize'), hasPlan && !filled,
+        !hasPlan ? '还没有 plan.json：先备课' : '只补 units[*].summary，正文一格都不动'));
+      // 这一档只认 deck_id：后端要读 decks/<id>/deck.json，显示名毫无意义。
+      // 课堂上正用着的那份：给徽标 + 灰按钮（再点一次也是幂等的"已经是当前课件"，
+      // 但灰着能省掉用户一次"点了没反应"的疑惑）。
+      var isCur = hasDeck && !!deckId && deckId === cur.active.deck_id;
+      var liveN = (cur.live.running | 0);
+      acts.push((isCur ? '<span class="badge on">当前上课</span>' : '')
+        + btn('设为当前上课', 'activate', deckId, hasDeck && !isCur && liveN === 0,
+          !hasDeck ? '还没解析过 —— 先跑「预处理（全链）」'
+            : (isCur ? '已经是当前上课的课件' : (liveN ? liveWhy(liveN) : '切到这份课件（下一节课就用它）'))));
+
+      html.push('<tr>'
+        + '<td><div class="t">' + esc(title) + '</div><div class="id">' + esc(deckId) + '</div>'
+        + (d && d.error ? '<div class="id">⚠️ ' + esc(d.error) + '</div>' : '')
+        + (r.deck ? '' : '<div class="id">未解析</div>') + '</td>'
+        + '<td>' + (hasDeck ? esc(slides) : '<span class="no">—</span>') + '</td>'
+        + '<td>' + esc(units) + '</td>'
+        + '<td>' + (units ? esc(sumed + ' / ' + units) : '<span class="no">—</span>') + '</td>'
+        + '<td>' + (inLib ? '<span class="yes">在库</span>'
+                          : (srcName ? '<span class="no">不在（记：' + esc(srcName) + '）</span>'
+                                     : '<span class="no">没有</span>')) + '</td>'
+        + '<td>' + (bak ? '<span class="yes">plan.bak.json</span>' : '<span class="no">无</span>') + '</td>'
+        + '<td><div class="acts">' + acts.join('') + '</div></td>'
+        + '</tr>');
+    });
+    $('rows').innerHTML = html.join('');
+  }
+
+  function loadLibrary() {
+    return json('/api/preprocess/library').then(function (lib) {
+      if (!lib || lib.ok === false) { throw new Error((lib && lib.error) || '课件库读取失败'); }
+      paintActive(lib);        // 顶部那一行与每行的按钮状态都来自同一份快照
+      render(lib);
+      // 页面刷新之后接着盯那条还在跑的作业：否则用户回来就再也看不到进度了。
+      var running = (lib.jobs || []).filter(function (j) { return j.status === 'running'; })[0];
+      if (running && !job) { watch(running); }
+    });
+  }
+
+  // ---- 作业：每秒一次，只在 running 时轮询，结束立刻停表 ---------------
+  function paint(j) {
+    job = j;
+    $('jobline').innerHTML = '作业 <b>' + esc(j.id) + '</b> · ' + esc(j.action)
+      + ' · 源 <b>' + esc(j.source) + '</b> · 阶段 <b>' + esc(j.stage) + '</b> / ' + esc(j.status)
+      + (j.progress && j.progress.label ? ' · ' + esc(j.progress.label) : '')
+      + (j.backup ? ' · 备份 <b>' + esc(j.backup) + '</b>' : '')
+      + (j.error ? '<br><span style="color:#e5534b">' + esc(j.error) + '</span>' : '');
+    var p = j.progress || {}, total = p.total | 0, done = p.done | 0;
+    $('bar').hidden = false;
+    // 解析那一段拿不到逐页回调（total=0），此时宁可让进度条空着 ——
+    // 画成 100% 会让人以为"已经跑完了"，而它其实刚开始。
+    $('barfill').style.width = total > 0 ? Math.round(done * 100 / total) + '%' : '0%';
+    $('log').hidden = false;
+    $('log').textContent = (j.log_tail || []).join('\n') || '（还没有日志）';
+    $('log').scrollTop = $('log').scrollHeight;
+  }
+
+  function watch(j) {
+    if (timer) { clearTimeout(timer); timer = null; }
+    paint(j);
+    pump();
+  }
+
+  function pump() {
+    timer = null;
+    if (!job || job.status !== 'running') { return; }
+    timer = setTimeout(function () {
+      json('/api/preprocess/job/' + encodeURIComponent(job.id)).then(function (res) {
+        if (!res || !res.ok) { throw new Error((res && res.error) || '作业查询失败'); }
+        var running = res.job.status === 'running';
+        paint(res.job);
+        if (running) { pump(); return; }
+        // 结束了：进度条停下，顺手刷新课件库 —— 已总结数、备份列都变了
+        loadLibrary().catch(function () {});
+      }).catch(function (e) {
+        $('jobline').innerHTML = '<span style="color:#e5534b">作业查询失败：'
+          + esc(e && e.message ? e.message : e) + '</span>';
+      });
+    }, 1000);
+  }
+
+  function start(act, name) {
+    say($('uploadmsg'), '', true);
+    return json('/api/preprocess/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, action: act, slides: null, force: false })
+    }).then(function (res) {
+      if (!res || !res.job) { throw new Error((res && res.error) || '开作业失败'); }
+      // 被拒的作业也照样上屏：paint 会把 job.error 显示在作业那一行，
+      // 不用在上传面板里再喊一遍（同一句话出现在两个区块只会让人找错地方）。
+      watch(res.job);
+      loadLibrary().catch(function () {});
+    }).catch(function (e) {
+      say($('uploadmsg'), '开作业失败：' + (e && e.message ? e.message : e), false);
+    });
+  }
+
+  // ---- 事件 ------------------------------------------------------------
+  $('rows').addEventListener('click', function (ev) {
+    var b = ev.target.closest ? ev.target.closest('button[data-act]') : null;
+    if (!b || b.disabled) { return; }
+    var act = b.getAttribute('data-act');
+    // 「设为当前上课」不是作业：它改的是全局课件，不开 job、不上进度条
+    if (act === 'activate') { activate(b.getAttribute('data-name')); return; }
+    start(act, b.getAttribute('data-name'));
+  });
+
+  $('simple').addEventListener('click', function () { activate(''); });
+
+  $('upload').addEventListener('click', function () {
+    var f = $('file').files && $('file').files[0];
+    if (!f) { say($('uploadmsg'), '先选一个 .pptx 文件', false); return; }
+    var fd = new FormData();
+    fd.append('file', f);
+    $('upload').disabled = true;
+    say($('uploadmsg'), '正在上传 ' + f.name + ' …', true);
+    json('/api/preprocess/upload', { method: 'POST', body: fd }).then(function (res) {
+      if (!res || !res.ok) { throw new Error((res && res.error) || '上传失败'); }
+      var row = res.row || {};
+      say($('uploadmsg'), '已上传 ' + row.name + '（' + (row.replaced ? '覆盖了同名旧文件' : '新文件')
+        + '）—— 下一步点它那一行的「预处理（全链）」', true);
+      $('file').value = '';
+      loadLibrary().catch(function () {});
+    }).catch(function (e) {
+      say($('uploadmsg'), '上传失败：' + (e && e.message ? e.message : e), false);
+    }).then(function () {
+      $('upload').disabled = false;
+    });
+  });
+
+  loadLibrary().catch(function (e) {
+    $('rows').innerHTML = '<tr><td colspan="7" class="no">课件库读取失败：'
+      + esc(e && e.message ? e.message : e) + '</td></tr>';
+  });
+})();
+</script>
+</body>
+</html>

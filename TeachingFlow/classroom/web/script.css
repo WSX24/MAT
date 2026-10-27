@@ -1,0 +1,95 @@
+/* 分支树页的补充样式（不替代 classroom.css）。
+   颜色一律取 classroom.css :root 里的变量：这两页会被同时打开，
+   "同一个蓝在一边表示可点、在另一边表示已消费"这种错会先把人看晕。
+
+   这一页真正要表达的是三层视觉层级，下面每条规则都为它服务：
+     页边界   —— 粗横线 +「第 N 页」药丸（页是树的一级节点）
+     单元边界 —— 左侧竖线 +「单元边界」标签（单元是二级节点，也是一个探针/翻页单位）
+     分支     —— 实线 = plan.json 的预置变体，虚线 = C 运行期造的候选 */
+
+.script{max-width:1080px;margin:0 auto;padding:14px}
+/* 类名不用 .bar：classroom.css 里 .bar 是"进度条"（height:5px + overflow:hidden），
+   复用那个名字会让这一整行标题被压成 5px —— 实测过，截图里标题直接不见了。 */
+.script .titlebar{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px}
+.script h1{font-size:19px;margin:0;font-weight:600}
+.script a{color:var(--accent)}
+.script .grow{flex:1}
+.script .toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 8px}
+.script .toolbar button{padding:4px 11px;font-size:12px;border-radius:999px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--fg);cursor:pointer}
+.script .toolbar button:hover{border-color:var(--accent)}
+.script .chk{display:inline-flex;gap:5px;align-items:center;font-size:12px;color:var(--dim);cursor:pointer}
+.script .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin:0 0 10px}
+.script .lg{display:inline-flex;gap:5px;align-items:center}
+.script .ln{display:inline-block;width:18px;height:0;border-top:2px solid var(--accent)}
+.script .ln.dashed{border-top:2px dashed var(--warn)}
+.script .dot{display:inline-block;width:9px;height:9px;border-radius:99px;background:var(--dim)}
+.script .dot.st-alive{background:var(--ok)} .script .dot.st-consumed{background:var(--accent)}
+.script .dot.st-expired{background:var(--dim)}
+.script .notice{color:var(--warn);border:1px solid var(--line);border-radius:10px;
+  padding:8px 12px;background:var(--panel2)}
+.script .notice[hidden]{display:none}
+.script .livebar{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;margin:0 0 10px}
+.script .livebar[hidden]{display:none}
+.script .pill{border:1px solid var(--line);border-radius:999px;padding:2px 10px;
+  background:var(--panel);color:var(--dim)}
+.script .pill b{color:var(--fg);font-weight:600}
+.script .foot{margin-top:18px}
+
+/* ===== 一级：页 ===== */
+.script .page{border-top:3px solid var(--line);margin:0;padding:0}
+.script .page:first-child{border-top:none}
+.script .page.filtered{display:none}
+.script .phead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  padding:10px 4px;cursor:pointer;user-select:none}
+.script .phead:hover{background:var(--panel)}
+.script .pageboundary{display:inline-block;padding:1px 10px;border-radius:99px;
+  background:var(--panel2);border:1px solid var(--line);font-size:12px;font-weight:600;
+  letter-spacing:.3px;color:var(--fg)}
+.script .ptitle{font-weight:600}
+.script .pmeta{font-size:12px;color:var(--dim)}
+.script .caret{color:var(--dim);font-size:12px;transition:transform .15s}
+.script .page:not(.collapsed) .caret{transform:rotate(90deg)}
+.script .page.collapsed .pbody{display:none}
+.script .pbody{padding:0 0 12px 4px}
+
+/* ===== 二级：单元（= 一个单元边界） ===== */
+.script .unit{border-left:3px solid var(--line);padding:6px 0 6px 12px;margin:6px 0;border-radius:0 8px 8px 0}
+.script .unit.branching{border-left-color:var(--accent)}
+.script .unit.pageend{border-left-color:var(--warn)}
+.script .unit.current{background:rgba(90,169,255,.12);box-shadow:inset 3px 0 0 var(--accent)}
+.script .unit.switched{background:rgba(90,212,138,.07)}
+.script .uhead{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.script .unitboundary{font-size:11px;color:var(--dim);border:1px dashed var(--line);
+  border-radius:99px;padding:0 6px;white-space:nowrap}
+.script .uid{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--fg)}
+.script .usum{font-size:13px;color:var(--fg);opacity:.92}
+.script .ubadges{display:inline-flex;gap:5px;flex-wrap:wrap}
+.script .bd{font-size:11px;border-radius:99px;padding:0 7px;background:var(--panel2);
+  border:1px solid var(--line);color:var(--dim)}
+.script .bd.bd-pageend{color:var(--warn);border-color:var(--warn)}
+.script .bd.bd-probe{color:var(--warn);border-style:dashed}
+.script .bd.bd-branch{color:var(--accent);border-color:var(--accent)}
+.script .uinfo{font-size:11px;color:var(--dim);margin:2px 0 0}
+.script .uSw{font-size:12px;color:var(--ok);margin:3px 0 0}
+.script .uSw:empty{display:none}
+
+/* ===== 分支：实线 = 预置，虚线 = C 造的候选 ===== */
+.script .branches{margin:6px 0 0 6px}
+.script .branch{border-left:2px solid var(--accent);padding:3px 0 3px 10px;margin:4px 0 4px 2px}
+.script .branch.cand{border-left:2px dashed var(--warn)}
+.script .branch.applied{background:rgba(90,212,138,.10)}
+.script .branch .bhead{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;cursor:pointer}
+.script .branch .blabel{font-weight:600;font-size:12px}
+.script .branch .bvid{font-family:ui-monospace,Consolas,monospace;font-size:11px;color:var(--dim)}
+.script .branch .bmeta{font-size:11px;color:var(--dim)}
+.script .branch .bstate{font-size:11px;border-radius:99px;padding:0 7px;
+  border:1px solid currentColor;color:var(--dim)}
+.script .branch.st-alive .bstate{color:var(--ok)}
+.script .branch.st-consumed .bstate{color:var(--accent)}
+.script .branch.st-expired .bstate{color:var(--dim);opacity:.8}
+.script .branch .btext{font-size:12px;color:var(--dim);margin-top:2px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.script .branch.expanded .btext{display:block;-webkit-line-clamp:unset;color:var(--fg)}
+.script .free{margin-top:14px;border-top:3px solid var(--line);padding-top:10px}
+.script .free h3{font-size:13px;color:var(--dim);margin:0 0 6px}

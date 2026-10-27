@@ -1,0 +1,5435 @@
+{
+ "deck_id": "Unit_2_Sweet_Home单词解析课件_2025_2026学年人教版_2024_八年级英",
+ "source": "llm",
+ "model": "ollama · qwen3.5:9b · http://127.0.0.1:11434/v1 · key:已设置 · 思考:off",
+ "session_goals": [
+  "黑体单词用法详解",
+  "词组搭配剖析",
+  "词汇练习题",
+  "答案解析与总结"
+ ],
+ "units": [
+  {
+   "slide": 0,
+   "text": "同学们好，欢迎来到八年级英语上册第二单元的学习。今天我们要一起攻克的重点是'Sweet Home'这个主题下的核心词汇和短语搭配。请大家把课本翻到这一页，我们马上开始今天的单词解析之旅。",
+   "anchors": [
+    {
+     "element_id": "s01-sh01-p01",
+     "text_hint": "Unit 2 Sweet Home\n 重点词汇短",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-p01",
+     "text_hint": "人教版八上（2024）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "unit2-words"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "Unit 2 Sweet Home 核心词汇与短语搭配"
+  },
+  {
+   "slide": 1,
+   "text": "同学们好，欢迎回到课堂。这一页是我们的学习导航图。今天我们将分四个板块来攻克'Sweet Home'单元的重点内容。首先，我们会深入解析黑体单词的用法；接着剖析关键的词组搭配；然后进行词汇练习实战；最后给出详细的答案解析与总结。请大家跟着我的指引，逐一查看这四个部分。",
+   "anchors": [
+    {
+     "element_id": "s02-sh01",
+     "text_hint": "目录",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh03",
+     "text_hint": "黑体单词用法详解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh06",
+     "text_hint": "词组搭配剖析",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh08",
+     "text_hint": "词汇练习题",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "黑体单词用法详解",
+     "target": "s02-sh03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "词组搭配剖析",
+     "target": "s02-sh06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "词汇练习题",
+     "target": "s02-sh08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "答案解析与总结",
+     "target": "s02-sh10-p01"
+    }
+   ],
+   "kp": [
+    "unit2-vocab"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "Sweet Home 单元四板块学习导航"
+  },
+  {
+   "slide": 2,
+   "text": "首先，我们进入第一个环节：黑体单词用法详解。请大家把目光聚焦到屏幕上方，这里就是我们要重点学习的标题部分。接下来，我们将逐一拆解这些核心词汇的具体用法和搭配。",
+   "anchors": [
+    {
+     "element_id": "s03-sh09-p01",
+     "text_hint": "01 黑体单词用法详解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s03-sh09-p01"
+    }
+   ],
+   "kp": [
+    "black-word-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "黑体单词用法详解环节的引入"
+  },
+  {
+   "slide": 3,
+   "text": "首先看单词 pack，读音是/pæk/，词性是动词。它的意思是打包或收拾。用法上，既可以单独使用，也可以和 up 搭配，强调整理物品准备出行或存放。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p01",
+     "text_hint": "音标：/pæk/   词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p02",
+     "text_hint": "释义：打包；收拾",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p03",
+     "text_hint": "用法：可单独使用或与 up 搭配，强调整理物品准",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "首先看单词 pack",
+     "target": "s04-sh02-p01"
+    }
+   ],
+   "kp": [
+    "pack-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "pack 的读音、词性与打包义"
+  },
+  {
+   "slide": 3,
+   "text": "我们来看几个常见搭配。比如 pack sth.，就是打包某物；pack up 是收拾行李；还有 pack for，表示为……打包。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p04",
+     "text_hint": "搭配：pack sth.（打包某物）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p05",
+     "text_hint": "     pack up（打包；收拾行李）pac",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s04-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "pack 的三个常见搭配"
+  },
+  {
+   "slide": 3,
+   "text": "接下来看例句。I need to pack my clothes for the trip，意思是：我需要为旅行打包衣服。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p06",
+     "text_hint": "例句：I need to pack my clo",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p07",
+     "text_hint": "（我需要为旅行打包衣服。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "接下来看例句",
+     "target": "s04-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "pack sth. for 表为旅行打包衣物"
+  },
+  {
+   "slide": 3,
+   "text": "再看这句：It's time to pack up and leave，意思是：是时候收拾行李离开了。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p08",
+     "text_hint": "    It's time to pack up",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p09",
+     "text_hint": "（是时候收拾行李离开了。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s04-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "pack up 用法：收拾行李离开"
+  },
+  {
+   "slide": 3,
+   "text": "最后一句：She is packing her suitcase for the business trip，意思是她正在为商务旅行收拾行李箱。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p10",
+     "text_hint": "   She is packing her su",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p11",
+     "text_hint": "  （她正在为商务旅行收拾行李箱。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s04-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "pack her suitcase for 商务旅行例句"
+  },
+  {
+   "slide": 4,
+   "text": "接下来我们看 sort 这个词。它既可以作动词，也可以作名词。作为动词时，意思是把东西分类或整理。注意它的用法后面直接接物品名词，说明整理的对象。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p01",
+     "text_hint": "音标：/sɔːt/  词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p02",
+     "text_hint": "动词释义：把…… 分类；整理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p03",
+     "text_hint": "动词用法：后接物品名词，说明分类整理对象。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "动词搭配",
+     "target": "s05-sh02-p04"
+    }
+   ],
+   "kp": [
+    "sort-verb"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sort 的动词与名词词性"
+  },
+  {
+   "slide": 4,
+   "text": "看这个搭配 sort sth. into...，意思是把某物分类为……。比如我们可以说 sort the books into different categories，就是把书分门别类地整理好。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p04",
+     "text_hint": "动词搭配：sort sth. into...（把",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p09",
+     "text_hint": "例句：She sorted the books ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s05-sh02-p04"
+    },
+    {
+     "op": "point",
+     "at_sentence": 1,
+     "target": "s05-sh03"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sort sth. into... 把某物分类的搭配"
+  },
+  {
+   "slide": 4,
+   "text": "sort out 也有整理、挑出的意思。那如果它作名词呢？意思是种类，常和 of 搭配修饰后面的名词。比如 a sort of 表示一种，all sorts of 就是各种各样的。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p05",
+     "text_hint": "sort out（整理；挑出）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p06",
+     "text_hint": "名词释义：种类",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p07",
+     "text_hint": "名词用法：常与 of 搭配修饰名词。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "名词搭配",
+     "target": "s05-sh02-p08"
+    }
+   ],
+   "kp": [
+    "sort-noun"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sort out 与名词 sort 表种类"
+  },
+  {
+   "slide": 4,
+   "text": "最后看两个例句。There are all sorts of fruits in the market，意思是市场上有各种各样的水果。大家可以把这句话记下来，多读几遍。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p11",
+     "text_hint": "There are all sorts of f",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s05-sh02-p11"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用例句巩固 all sorts of"
+  },
+  {
+   "slide": 5,
+   "text": "接下来看单词 yet。它的音标是/jet/，可以作副词或连词。作为副词时，意思是‘还’，专门用于否定句和疑问句的末尾。大家请看这里：",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-p01",
+     "text_hint": "音标：/jet/  词性：adv. / conj",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p02",
+     "text_hint": "副词释义：（用于否定句和疑问句）还",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p03",
+     "text_hint": "副词用法：常用于现在完成时否定句和疑问句，置于句",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "音标与词性",
+     "target": "s06-sh02-p01"
+    }
+   ],
+   "kp": [
+    "yet-adv"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "yet 音标及副词含义用于否定疑问句末尾"
+  },
+  {
+   "slide": 5,
+   "text": "我们来看第一个例句：I haven't finished my homework yet，意思是‘我还没完成作业’。这里 yet 放在句尾，表示动作尚未发生。",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-p06",
+     "text_hint": "例句：I haven't finished my",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s06-sh02-p06"
+    }
+   ],
+   "kp": [
+    "yet-adv"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句展示 yet 置句尾表尚未发生"
+  },
+  {
+   "slide": 5,
+   "text": "它也可以作连词，意思是‘但是’，用来连接两个句子表示转折。比如这个例子：He is young, yet he is very wise，翻译为‘他很年轻，但很聪明’。",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-p04",
+     "text_hint": "连词释义：但是",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p05",
+     "text_hint": "连词用法：连接两个句子，表转折。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p07",
+     "text_hint": "He is young, yet he is v",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s06-sh02-p07"
+    }
+   ],
+   "kp": [
+    "yet-conj"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "yet 作连词表转折并举例"
+  },
+  {
+   "slide": 5,
+   "text": "好了，关于 yet 的用法就讲到这里。大家把这两个例句多读几遍，体会一下副词和连词的不同位置与含义。",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-p02",
+     "text_hint": "副词释义：（用于否定句和疑问句）还",
+     "confidence": 0.4
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "yet-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "读例句体会 yet 副词与连词区别"
+  },
+  {
+   "slide": 6,
+   "text": "好，我们来看 invite 这个词。它的音标是 /ɪn'vaɪt/，词性是动词 v.，意思是“邀请”。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p01",
+     "text_hint": "音标：/ɪn'vaɪt/ 词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p02",
+     "text_hint": "释义：邀请",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "用法：可接双宾语",
+     "target": "s07-sh02-p03"
+    }
+   ],
+   "kp": [
+    "invite-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "invite 的音标、词性与词义"
+  },
+  {
+   "slide": 6,
+   "text": "在用法上，它可以接双宾语，或者用 invite sb. to...这个结构，也就是邀请某人去某地。大家注意看这里，搭配非常丰富。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p03",
+     "text_hint": "用法：可接双宾语或用 invite sb. to",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s07-sh02-p04"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s07-sh02-p05"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s07-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P07-4invite用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "invite 接双宾语与 invite sb. to 结构"
+  },
+  {
+   "slide": 6,
+   "text": "比如 invite sb. to do sth.是邀请某人做某事，invite sb. to sp.是邀请某人去某地，还有 invite sb. over 是邀请某人过来。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p04",
+     "text_hint": "搭配：invite sb. to do sth.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p05",
+     "text_hint": "           invite sb. to",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p06",
+     "text_hint": "           invite sb. ov",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P07-4invite用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "invite 的三个常见搭配"
+  },
+  {
+   "slide": 6,
+   "text": "我们来看两个例句。第一句 I invited my friends to my birthday party，意思是“我邀请朋友们来参加我的生日派对”。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p07",
+     "text_hint": "例句：I invited my friends ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p08",
+     "text_hint": "     （我邀请朋友们来参加我的生日派对。）；",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看两个例句",
+     "target": "s07-sh03"
+    }
+   ],
+   "kp": [
+    "P07-4invite用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句一：invite sb. to 生日派对"
+  },
+  {
+   "slide": 6,
+   "text": "第二句 He invited me to have dinner with him，意思是“他邀请我和他一起吃晚餐”。这两个句子都体现了 invite 的常见用法。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p09",
+     "text_hint": "       He invited me to ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p10",
+     "text_hint": "     （他邀请我和他一起吃晚餐。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P07-4invite用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句二：invite sb. to do sth."
+  },
+  {
+   "slide": 6,
+   "text": "好了，invite 这个词我们就讲完了。大家把这几个搭配和例句记一下，课后试着造几个句子。",
+   "anchors": [
+    {
+     "element_id": "s07-sh01",
+     "text_hint": "4.invite 用法讲解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "invite-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "invite 用法小结与造句练习"
+  },
+  {
+   "slide": 7,
+   "text": "接下来我们看 add。这个词读音是 /æd/，是个动词，意思是“添加”或者“加”。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-p01",
+     "text_hint": "音标：/æd/  词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p02",
+     "text_hint": "释义：添加；加",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "常与 to 搭配",
+     "target": "s08-sh02-p03"
+    }
+   ],
+   "kp": [
+    "add-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "add 的读音与词义"
+  },
+  {
+   "slide": 7,
+   "text": "它最常用的结构是 add something to something，就是把某样东西加入到另一个里面。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-p03",
+     "text_hint": "用法：常与 to 搭配，表示添加到…… 中；也可",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p04",
+     "text_hint": "搭配：add sth. to sth.（把…… ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s08-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P08-5add用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "add something to something 结构"
+  },
+  {
+   "slide": 7,
+   "text": "比如这个句子：Add some sugar to the coffee，意思就是在咖啡里加些糖。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-p07",
+     "text_hint": "例句：Add some sugar to the",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "add up 把……加起来",
+     "target": "s08-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P08-5add用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用例句示范 add...to 搭配"
+  },
+  {
+   "slide": 7,
+   "text": "另外，add up 表示把数字加起来，而 add up to 则表示总计达到某个数值。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-p05",
+     "text_hint": "           add up（把…… 加起",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p06",
+     "text_hint": "           add up to（总计达",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s08-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P08-5add用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "区分 add up 与 add up to"
+  },
+  {
+   "slide": 7,
+   "text": "看这个例子：Add up these numbers and tell me the result，就是把这些数字加起来告诉我结果。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-p08",
+     "text_hint": "          Add up these n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p09",
+     "text_hint": "        （把这些数字加起来，告诉我结果。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s08-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P08-5add用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用例句示范 add up 用法"
+  },
+  {
+   "slide": 8,
+   "text": "我们来看 borrow 这个词，它的读音是 /'bɒrəʊ/，是个动词，意思是“借”。",
+   "anchors": [
+    {
+     "element_id": "s09-sh02-p01",
+     "text_hint": "音标：/'bɒrəʊ/ 词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh02-p02",
+     "text_hint": "释义：借",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "音标：/'bɒrəʊ/ 词性",
+     "target": "s09-sh02-p01"
+    }
+   ],
+   "kp": [
+    "borrow-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "borrow 的读音与词义"
+  },
+  {
+   "slide": 8,
+   "text": "注意它的用法，主语是借入方，所以常和 from 搭配。大家看这个结构：",
+   "anchors": [
+    {
+     "element_id": "s09-sh02-p03",
+     "text_hint": "用法：从主语角度表示借入，常与 from 搭配。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "搭配：borrow sth. from sb",
+     "target": "s09-sh02-p04"
+    }
+   ],
+   "kp": [
+    "borrow-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "borrow 主语为借入方，常搭配 from"
+  },
+  {
+   "slide": 8,
+   "text": "比如，I borrowed a book from the library，意思是“我从图书馆借了一本书”。",
+   "anchors": [
+    {
+     "element_id": "s09-sh02-p05",
+     "text_hint": "例句：I borrowed a book fro",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh02-p06",
+     "text_hint": "       （我从图书馆借了一本书。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s09-sh02-p05"
+    }
+   ],
+   "kp": [
+    "borrow-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用例句展示 borrow from 的用法"
+  },
+  {
+   "slide": 8,
+   "text": "再比如，Can I borrow your pen?，就是问“我可以借你的钢笔吗？”。",
+   "anchors": [
+    {
+     "element_id": "s09-sh02-p07",
+     "text_hint": "        Can I borrow you",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s09-sh02-p07"
+    }
+   ],
+   "kp": [
+    "borrow-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用问句例句展示 borrow 的用法"
+  },
+  {
+   "slide": 9,
+   "text": "上节课我们学了借东西的句型，今天继续看 plan。先看它的拼写和读音，这里显示的是/ plæn/，既可以作动词也可以作名词。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p01",
+     "text_hint": "音标：/plæn/  词性：v. / n.",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "7.plan 用法讲解",
+     "target": "s10-sh02-p01"
+    }
+   ],
+   "kp": [
+    "plan-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "plan 的拼写读音与动名两种词性"
+  },
+  {
+   "slide": 9,
+   "text": "作为动词，意思是策划或打算，后面可以接名词、代词或者动词不定式。比如 plan to do sth.就是计划做某事，而 plan for则是为……做计划。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p02",
+     "text_hint": "动词释义：策划；打算",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p03",
+     "text_hint": "动词用法：后接名词、代词或动词不定式。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p04",
+     "text_hint": "动词搭配：plan to do sth.（计划做",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "plan to do sth.",
+     "target": "s10-sh02-p04"
+    }
+   ],
+   "kp": [
+    "plan-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "plan 作动词：plan to do 与 plan for"
+  },
+  {
+   "slide": 9,
+   "text": "那 plan 作名词呢？意思是计划或方案，常和 make、have 搭配。像 make a plan是制定计划，have a plan则是有一个计划。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p06",
+     "text_hint": "名词释义：计划；方案",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p07",
+     "text_hint": "名词用法：常与 make, have 等动词搭配",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p08",
+     "text_hint": "名词搭配：make a plan（制定计划）；h",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "名词释义：计划；方案",
+     "target": "s10-sh02-p06"
+    }
+   ],
+   "kp": [
+    "plan-noun"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "plan 作名词：make a plan 与 have a…"
+  },
+  {
+   "slide": 9,
+   "text": "最后看两个例句。We plan to go on a trip next month，我们计划下个月去旅行。还有 I have a plan to improve my English，我有一个提高英语的计划。大家记一下这两个搭配。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p09",
+     "text_hint": "例句：We plan to go on a tr",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p11",
+     "text_hint": "         I have a plan t",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "We plan to go on a trip next month.",
+     "target": "s10-sh02-p09"
+    }
+   ],
+   "kp": [
+    "plan-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用两个例句记 plan 的搭配"
+  },
+  {
+   "slide": 10,
+   "text": "接下来看单词 treasure，它既是名词也是动词。作为名词，意思是宝物或财富，可以作可数也可以作不可数名词。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p01",
+     "text_hint": "音标：/'treʒə(r)/ 词性：v. / n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p02",
+     "text_hint": "名词释义：宝物；财富",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p03",
+     "text_hint": "名词用法：作可数或不可数名词。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "名词搭配",
+     "target": "s11-sh02-p04"
+    }
+   ],
+   "kp": [
+    "treasure-noun"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "treasure 名动双词性及名词含义"
+  },
+  {
+   "slide": 10,
+   "text": "常见的搭配有 buried treasure 埋藏的宝藏，还有 treasure hunt 寻宝游戏，以及 treasure chest 宝箱。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p04",
+     "text_hint": "名词搭配：buried treasure（埋藏的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p05",
+     "text_hint": "treasure hunt（寻宝游戏）treas",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s11-sh02-p04"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s11-sh02-p05"
+    }
+   ],
+   "kp": [
+    "treasure-noun"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "treasure 的三个常见搭配"
+  },
+  {
+   "slide": 10,
+   "text": "作动词时，意思是珍视，后面直接接名词或代词作宾语。比如 treasure sth. 表示珍视某物。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p06",
+     "text_hint": "动词释义：珍视",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p07",
+     "text_hint": "动词用法：后接名词或代词作宾语。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p08",
+     "text_hint": "动词搭配：treasure sth.（珍视某物）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看例句",
+     "target": "s11-sh02-p09"
+    }
+   ],
+   "kp": [
+    "treasure-verb"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "treasure 作动词表珍视及接宾语"
+  },
+  {
+   "slide": 10,
+   "text": "看这个例句，海盗们寻找隐藏的宝藏。再看这句，我珍视我们在一起的回忆。大家把这两个意思记一下。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p09",
+     "text_hint": "例句：The pirates searched ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p10",
+     "text_hint": "I treasure the memories ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s11-sh02-p09"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s11-sh02-p10"
+    }
+   ],
+   "kp": [
+    "treasure-verb"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用例句巩固 treasure 的名词与动词义"
+  },
+  {
+   "slide": 11,
+   "text": "我们先看单词 hunt，读音是/hʌnt/。它既可以是动词也可以是名词。作为动词时，它可以及物也可以不及物。如果后面加了 for，比如 hunt for，意思就是搜寻具体的东西。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p01",
+     "text_hint": "音标：/hʌnt/  词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p03",
+     "text_hint": "动词用法：可及物或不及物，hunt for 表示",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "动词搭配",
+     "target": "s12-sh02-p04"
+    }
+   ],
+   "kp": [
+    "hunt-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "hunt 的读音、词性及 hunt for 表搜寻"
+  },
+  {
+   "slide": 11,
+   "text": "这里有两个常见搭配，一个是 hunt sth. 表示猎杀或搜寻某物，另一个是 hunt down，意思是追捕或者终于搜寻到了。大家注意区分一下这两个短语的细微差别。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p04",
+     "text_hint": "动词搭配：hunt for（搜寻；寻找）；hun",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s12-sh02-p04"
+    }
+   ],
+   "kp": [
+    "hunt-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "hunt sth. 与 hunt down 两个搭配的区分"
+  },
+  {
+   "slide": 11,
+   "text": "再看名词用法，它常与 for 搭配，表示对某事的搜寻。比如 a hunt for，就是指一次搜寻行动。下面这两个例句展示了具体的使用场景，请大家仔细听一下。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p06",
+     "text_hint": "名词用法：常与 for 搭配。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p07",
+     "text_hint": "名词搭配：a hunt for（对…… 的搜寻）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "They hunted for food",
+     "target": "s12-sh02-p08"
+    }
+   ],
+   "kp": [
+    "hunt-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "hunt 名词用法及 a hunt for 搭配"
+  },
+  {
+   "slide": 11,
+   "text": "第一句说他们在森林里寻找食物，第二句讲寻找失踪孩子的行动仍在继续。这两个例子很好地体现了 hunt 在不同语境下的用法。现在大家可以结合刚才讲的搭配和例句来巩固一下记忆。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p08",
+     "text_hint": "例句：They hunted for food ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p09",
+     "text_hint": "The hunt for the missing",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s12-sh02-p08"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s12-sh02-p09"
+    }
+   ],
+   "kp": [
+    "hunt-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "两个例句展示 hunt 不同语境的用法"
+  },
+  {
+   "slide": 12,
+   "text": "我们来看 lift 这个单词。首先看它的音标和词性，它既可以作动词也可以作名词。作为动词时，意思是举起或者搭便车。注意这里有个重点：当表示举起动作时，宾语通常是重物；而当表示搭便车时，常与 give 搭配使用。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p01",
+     "text_hint": "音标：/lɪft/   词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p02",
+     "text_hint": "动词释义：举起；抬起；（尤指免费）搭便车",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p03",
+     "text_hint": "动词用法：表示举起时，宾语为重物；表示搭便车时，",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看 lift 这个单词",
+     "target": "s13-sh02-p01"
+    }
+   ],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "lift 的音标、词性与动词两个含义"
+  },
+  {
+   "slide": 12,
+   "text": "接下来看具体的搭配。动词方面，我们可以说 lift sth. 来举起某物；也可以说 give sb. a lift，意思是开车顺便送某人一程。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p04",
+     "text_hint": "动词搭配：lift sth.（举起某物）；giv",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s13-sh02-p04"
+    }
+   ],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "lift 的动词搭配与 give sb. a lift"
+  },
+  {
+   "slide": 12,
+   "text": "再看名词用法。表示搭便车时，常用 get a lift；如果是电梯的话，可以说 in the lift 或者 take the lift。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p05",
+     "text_hint": "名词释义：搭便车；电梯",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p06",
+     "text_hint": "名词用法：表示搭便车时，与 give, get ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p07",
+     "text_hint": "名词搭配：get a lift（搭便车）；in ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s13-sh02-p07"
+    }
+   ],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "lift 作名词：get a lift 与 in the …"
+  },
+  {
+   "slide": 12,
+   "text": "最后看两个例句。第一句 He lifted the heavy box with ease，他轻松地举起了那个重箱子。第二句 Can you give me a lift to the station？你能顺便送我去车站吗？请大家结合这些用法和搭配来巩固记忆。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p08",
+     "text_hint": "例句：He lifted the heavy b",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p09",
+     "text_hint": " Can you give me a lift ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s13-sh02-p09"
+    }
+   ],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用两句例句巩固 lift 的用法"
+  },
+  {
+   "slide": 13,
+   "text": "首先看这个单词 until，它的音标是/ən'tɪl/，词性可以是介词也可以是连词。释义就是‘到……时’或者‘直到……为止’。",
+   "anchors": [
+    {
+     "element_id": "s14-sh02-p01",
+     "text_hint": "音标：/ən'tɪl/   词性：prep. /",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh02-p02",
+     "text_hint": "释义：到…… 时；直到…… 为止",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "首先看这个单词 until",
+     "target": "s14-sh02-p01"
+    }
+   ],
+   "kp": [
+    "until-basic"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "until 的音标与介词连词词性"
+  },
+  {
+   "slide": 13,
+   "text": "用法上，作介词时后接时间名词；作连词时则引导时间状语从句。大家重点记住这个搭配 not...until...，意思是‘直到……才……'。",
+   "anchors": [
+    {
+     "element_id": "s14-sh02-p03",
+     "text_hint": "用法：作介词时，后接时间名词；作连词时，引导时间",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh02-p04",
+     "text_hint": "搭配：not...until...（直到…… 才",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "用法上作介词时后接",
+     "target": "s14-sh02-p03"
+    }
+   ],
+   "kp": [
+    "until-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "until 作介词连词的用法与 not...until..."
+  },
+  {
+   "slide": 13,
+   "text": "来看第一个例句：I will wait until he comes back，我会一直等到他回来。再看第二个：He didn't go to bed until his mother came home，直到妈妈回家他才睡觉。",
+   "anchors": [
+    {
+     "element_id": "s14-sh02-p05",
+     "text_hint": "例句：I will wait until he ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh02-p06",
+     "text_hint": " He didn't go to bed unt",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "来看第一个例句",
+     "target": "s14-sh02-p05"
+    }
+   ],
+   "kp": [
+    "until-sentence"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用两个例句演示 until 的用法"
+  },
+  {
+   "slide": 13,
+   "text": "这两个句子都体现了 until 的核心用法。接下来我们结合刚才的用法和搭配，一起来巩固一下记忆。",
+   "anchors": [
+    {
+     "element_id": "s14-sh02-p07",
+     "text_hint": "（直到他妈妈回家他才睡觉。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "until-summary"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "until 用法搭配的记忆巩固"
+  },
+  {
+   "slide": 14,
+   "text": "我们先看单词 dead，音标是/ded/，词性是形容词。它的意思是“不运行的”或者“死的”，主要用来修饰名词，描述事物或生命的状态。",
+   "anchors": [
+    {
+     "element_id": "s15-sh02-p01",
+     "text_hint": "音标：/ded/  词性：adj.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p02",
+     "text_hint": "释义：不运行的；死的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p03",
+     "text_hint": "用法：修饰名词，描述事物状态或生命状态。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们先看单词 dead",
+     "target": "s15-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P15-12dead用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "dead 的音标、词性与基本含义"
+  },
+  {
+   "slide": 14,
+   "text": "在搭配方面，我们可以说 a dead tree 表示枯树，dead leaves 是枯叶。另外，be dead 可以表示死亡或者失效。比如这个例句：The flowers are dead because I forgot to water them.意思是这些花死了，因为我忘了浇水。",
+   "anchors": [
+    {
+     "element_id": "s15-sh02-p04",
+     "text_hint": "搭配：a dead tree（枯树）；dead ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p05",
+     "text_hint": "           be dead（死亡；失效",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p06",
+     "text_hint": "例句：The flowers are dead ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "在搭配方面",
+     "target": "s15-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P15-12dead用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "dead 修饰名词搭配与 be dead 例句"
+  },
+  {
+   "slide": 14,
+   "text": "再看这个例子，The battery is dead.意思是电池没电了。这两个句子都展示了 dead 的常见用法。好了，关于这个词我们就讲到这里。",
+   "anchors": [
+    {
+     "element_id": "s15-sh02-p08",
+     "text_hint": "The battery is dead.（电池没",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "dead-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "The battery is dead 例句收尾"
+  },
+  {
+   "slide": 15,
+   "text": "我们来看 community，它的音标是/kəˈmjuːnəti/，意思是社区或者社团。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p01",
+     "text_hint": "音标：/kəˈmjuːnəti/  词性：n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p02",
+     "text_hint": "释义：社区；社团",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "用法：指居住区域",
+     "target": "s16-sh02-p03"
+    }
+   ],
+   "kp": [
+    "community-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "community 的音标与含义"
+  },
+  {
+   "slide": 15,
+   "text": "它既可以指居住的社区，也能指有共同兴趣的群体。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p03",
+     "text_hint": "用法：指居住区域或具有共同兴趣的群体。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s16-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P16-13community用-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "community 的两个指代对象"
+  },
+  {
+   "slide": 15,
+   "text": "常见的搭配有 community service 社区服务、community center 社区中心，还有 local community 当地社区。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p04",
+     "text_hint": "搭配：community service（社区服",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p05",
+     "text_hint": "            community ce",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p06",
+     "text_hint": "            local commun",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "例句：We should",
+     "target": "s16-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P16-13community用-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "community 的三个常见搭配"
+  },
+  {
+   "slide": 15,
+   "text": "比如这个句子，我们应该参加社区活动。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p07",
+     "text_hint": "例句：We should participate",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p08",
+     "text_hint": "    （我们应该参加社区活动。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P16-13community用-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用例句展示 community 用法"
+  },
+  {
+   "slide": 15,
+   "text": "好，关于 community 的用法就讲到这里，大家记一下这些搭配。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p05",
+     "text_hint": "            community ce",
+     "confidence": 0.4
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "community-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "回顾 community 搭配并提醒记忆"
+  },
+  {
+   "slide": 16,
+   "text": "好，我们来看 almost。这个词读作 /ˈɔːlməʊst/，是副词。它的意思就是‘差不多’或者‘几乎’。大家看这里，",
+   "anchors": [
+    {
+     "element_id": "s17-sh02-p01",
+     "text_hint": "音标：/ˈɔːlməʊst/  词性：adv.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh02-p02",
+     "text_hint": "释义：差不多；几乎",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "用法：修饰动词",
+     "target": "s17-sh02-p03"
+    }
+   ],
+   "kp": [
+    "almost-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "almost 的读音与副词释义"
+  },
+  {
+   "slide": 16,
+   "text": "它主要用来修饰动词、形容词或者副词，强调动作或状态接近但还没完全达到。",
+   "anchors": [
+    {
+     "element_id": "s17-sh02-p03",
+     "text_hint": "用法：修饰动词、形容词、副词或名词，强调接近但未",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s17-sh02-p03"
+    }
+   ],
+   "kp": [
+    "almost-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "almost 修饰动词、形容词、副词"
+  },
+  {
+   "slide": 16,
+   "text": "我们来看第一个例句：It's almost time to go.意思是‘差不多该走了’。",
+   "anchors": [
+    {
+     "element_id": "s17-sh02-p04",
+     "text_hint": "例句：It's almost time to g",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "He is almost as tall",
+     "target": "s17-sh02-p05"
+    }
+   ],
+   "kp": [
+    "almost-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句展示 almost 表“差不多该走了”"
+  },
+  {
+   "slide": 16,
+   "text": "再看第二个：He is almost as tall as his father.意思是‘他几乎和他父亲一样高’。",
+   "anchors": [
+    {
+     "element_id": "s17-sh02-p05",
+     "text_hint": "    He is almost as tall",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh02-p06",
+     "text_hint": "  （他几乎和他父亲一样高。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "reveal",
+     "at_sentence": 1,
+     "at_text": "He is almost as tall",
+     "target": "s17-sh02-p05"
+    }
+   ],
+   "kp": [
+    "almost-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句中 almost as tall as 的用法"
+  },
+  {
+   "slide": 16,
+   "text": "好，这两个例句都展示了 almost 的用法。大家记一下，我们继续看下一个单词。",
+   "anchors": [
+    {
+     "element_id": "s17-sh02-p06",
+     "text_hint": "  （他几乎和他父亲一样高。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "almost-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "总结 almost 用法后过渡下一词"
+  },
+  {
+   "slide": 17,
+   "text": "好，我们来看 pull。大家看这里，它的音标是/pʊl/，是个动词，意思是拉、拖或者拔。",
+   "anchors": [
+    {
+     "element_id": "s18-sh02-p01",
+     "text_hint": "音标：/pʊl/  词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p02",
+     "text_hint": "释义：拉；拖；拔",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p03",
+     "text_hint": "用法：表示用力使物体朝自己或特定方向移动。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看pull",
+     "target": "s18-sh02-p01"
+    }
+   ],
+   "kp": [
+    "pull-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "pull 的音标、词性与释义"
+  },
+  {
+   "slide": 17,
+   "text": "它表示用力使物体朝自己或特定方向移动。常见的搭配有 pull sth.，就是拉某物；还有 pull out 拔出或驶出；以及 pull up 拉起或停下。",
+   "anchors": [
+    {
+     "element_id": "s18-sh02-p04",
+     "text_hint": "搭配：pull sth.（拉某物）；pull o",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p05",
+     "text_hint": "           pull up（拉起；停下",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s18-sh02-p04"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s18-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P18-15pull用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "pull 的释义与三个搭配"
+  },
+  {
+   "slide": 17,
+   "text": "我们来看例句。第一句是 Pull the door open，意思是把门拉开。",
+   "anchors": [
+    {
+     "element_id": "s18-sh02-p06",
+     "text_hint": "例句：Pull the door open.（把",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看例句",
+     "target": "s18-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P18-15pull用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用例句示范 pull the door open"
+  },
+  {
+   "slide": 17,
+   "text": "第二句 The driver pulled out of the parking lot，意思是司机把车驶出停车场。这两个例子都展示了 pull 在不同场景下的用法。",
+   "anchors": [
+    {
+     "element_id": "s18-sh02-p07",
+     "text_hint": "          The driver pul",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p08",
+     "text_hint": "        （司机把车驶出停车场。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s18-sh02-p07"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s18-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P18-15pull用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用例句示范 pull out of 的用法"
+  },
+  {
+   "slide": 18,
+   "text": "接下来我们看单词 familiar，它的音标是/fəˈmɪliə(r)/，词性是形容词，意思是“熟悉的”。",
+   "anchors": [
+    {
+     "element_id": "s19-sh02-p01",
+     "text_hint": "音标：/fəˈmɪliə(r)/  词性：adj",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p02",
+     "text_hint": "释义：熟悉的",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "用法：be familiar with",
+     "target": "s19-sh02-p03"
+    }
+   ],
+   "kp": [
+    "familiar-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "familiar 的音标、词性与词义"
+  },
+  {
+   "slide": 18,
+   "text": "这里有两个重要搭配，大家注意区分。第一是 be familiar with，表示“某人对……熟悉”，比如例句 I'm familiar with this song，我熟悉这首歌。",
+   "anchors": [
+    {
+     "element_id": "s19-sh02-p03",
+     "text_hint": "用法：be familiar with（某人对…",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p07",
+     "text_hint": "例句：I'm familiar with thi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s19-sh02-p03"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s19-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P19-16familiar用法-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be familiar with 表某人熟悉某物"
+  },
+  {
+   "slide": 18,
+   "text": "第二是 be familiar to，意思是“某物为某人所熟悉”，像这个例句 This face is familiar to me，这张脸我很熟悉。",
+   "anchors": [
+    {
+     "element_id": "s19-sh02-p04",
+     "text_hint": "           be familiar t",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p08",
+     "text_hint": "           This face is ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s19-sh02-p04"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s19-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P19-16familiar用法-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be familiar to 表某物为某人所熟悉"
+  },
+  {
+   "slide": 18,
+   "text": "这两个结构很容易混淆，记住主客体关系就能分清。好了，关于 familiar 的讲解就到这里，下面我们来做个练习巩固一下。",
+   "anchors": [
+    {
+     "element_id": "s19-sh01",
+     "text_hint": "16.familiar 用法讲解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "familiar-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用主客体关系区分两个 familiar 搭配"
+  },
+  {
+   "slide": 19,
+   "text": "先看单词 joke，它既是名词也是动词。作为名词，我们可以说 tell a joke，意思是讲笑话；也可以 play a joke on sb.，就是开某人的玩笑。",
+   "anchors": [
+    {
+     "element_id": "s20-sh02-p01",
+     "text_hint": "音标：/dʒəʊk/   词性：n. / v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p03",
+     "text_hint": "名词用法：tell a joke（讲笑话）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p04",
+     "text_hint": "play a joke on sb.（开某人玩笑",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "先看单词 joke",
+     "target": "s20-sh02-p01"
+    }
+   ],
+   "kp": [
+    "joke-noun"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "joke 名词用法：tell a joke 与 play …"
+  },
+  {
+   "slide": 19,
+   "text": "那它作动词时呢？就是 joke with sb.，表示和某人开玩笑。我们来看这两个例句，大家注意听一下语境的区别。",
+   "anchors": [
+    {
+     "element_id": "s20-sh02-p06",
+     "text_hint": "动词用法：joke with sb.（和某人开玩",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p07",
+     "text_hint": "例句：He told us a funny jo",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p09",
+     "text_hint": "Don't joke with him. He ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "那它作动词时呢",
+     "target": "s20-sh02-p06"
+    }
+   ],
+   "kp": [
+    "joke-verb"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "joke 作动词：joke with sb. 及例句语境"
+  },
+  {
+   "slide": 19,
+   "text": "第一个句子 He told us a funny joke，就是讲了一个有趣的笑话；第二个句子 Don't joke with him，意思是别和他开玩笑，因为他很严肃。",
+   "anchors": [
+    {
+     "element_id": "s20-sh02-p08",
+     "text_hint": "（他给我们讲了一个有趣的笑话。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p10",
+     "text_hint": "（别和他开玩笑。他很严肃。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "第一个句子 He told us a funny joke",
+     "target": "s20-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P20-17joke用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用两个例句区分 tell a joke 与 joke wi…"
+  },
+  {
+   "slide": 20,
+   "text": "我们来看单词 text，它既可以是名词也可以是动词。作为名词时，意思是正文或文本，比如这里指文字内容。",
+   "anchors": [
+    {
+     "element_id": "s21-sh02-p02",
+     "text_hint": "名词释义：正文；文本",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p03",
+     "text_hint": "名词用法：指文字内容。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "音标和词性",
+     "target": "s21-sh02-p01"
+    }
+   ],
+   "kp": [
+    "text-noun"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "text 作名词表正文或文本"
+  },
+  {
+   "slide": 20,
+   "text": "那它作动词呢？就是用手机给某人发短信，用法是 text sb。大家看这个例句：Read the text carefully and answer the questions.",
+   "anchors": [
+    {
+     "element_id": "s21-sh02-p06",
+     "text_hint": "例句：Read the text careful",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "动词释义",
+     "target": "s21-sh02-p04"
+    }
+   ],
+   "kp": [
+    "text-verb"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "text 作动词表发短信 text sb"
+  },
+  {
+   "slide": 20,
+   "text": "意思是仔细阅读文章并回答问题。再看第二个例句，I'll text you when I arrive，我到了会给你发短信。",
+   "anchors": [
+    {
+     "element_id": "s21-sh02-p07",
+     "text_hint": "        （仔细阅读文章并回答问题。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p08",
+     "text_hint": "           I'll text you",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p09",
+     "text_hint": "         （我到了会给你发短信。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "动词用法",
+     "target": "s21-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P21-18text用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "两个例句区分 text 名词与动词用法"
+  },
+  {
+   "slide": 21,
+   "text": "接下来看单词 matter，它的音标是 /ˈmætə(r)/。它既可以作动词，也可以作名词。",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p01",
+     "text_hint": "音标：/ˈmætə(r)/  词性：v. / n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh02-p02",
+     "text_hint": "动词释义：要紧",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "动词用法：常用于否定句",
+     "target": "s22-sh02-p03"
+    }
+   ],
+   "kp": [
+    "matter-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "matter 的音标与动词名词双重词性"
+  },
+  {
+   "slide": 21,
+   "text": "作动词时，意思是‘要紧’。大家注意看这里，它通常只用在否定句或疑问句里，比如我们常说的 it doesn't matter，就是‘没关系’的意思。",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p03",
+     "text_hint": "动词用法：常用于否定句和疑问句，it doesn",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s22-sh02-p03"
+    }
+   ],
+   "kp": [
+    "matter-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "matter 作动词表要紧 多用于否定疑问"
+  },
+  {
+   "slide": 21,
+   "text": "我们来看第一个例句：It doesn't matter if you are late.这句话翻译过来就是‘你迟到没关系’。",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p06",
+     "text_hint": "例句：It doesn't matter if ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "reveal",
+     "at_sentence": 1,
+     "at_text": "再看第二个例句",
+     "target": "s22-sh02-p07"
+    }
+   ],
+   "kp": [
+    "matter-example"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "it doesn't matter 例句及释义"
+  },
+  {
+   "slide": 21,
+   "text": "再看第二个例句，What's the matter with you?这里 matter 变成了名词，意思是‘问题’。整句话是在问‘你怎么了？’或者‘你出什么毛病了？’",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p07",
+     "text_hint": "    What's the matter wi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s22-sh02-p07"
+    }
+   ],
+   "kp": [
+    "matter-example"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "What's the matter 中 matter 作名…"
+  },
+  {
+   "slide": 21,
+   "text": "总结一下，matter 作动词表‘要紧’，常接否定或疑问；作名词表‘问题’，常和 the 连用。好了，关于 matter 的讲解就到这里。",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p01",
+     "text_hint": "音标：/ˈmætə(r)/  词性：v. / n",
+     "confidence": 0.4
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "matter-summary"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "matter 动词与名词用法归纳"
+  },
+  {
+   "slide": 22,
+   "text": "接下来我们看第 20 个词，perhaps。它是个副词，读音是/pəˈhæps/，意思是‘也许’或‘可能’。",
+   "anchors": [
+    {
+     "element_id": "s23-sh02-p01",
+     "text_hint": "音标：/pəˈhæps/   词性：adv.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s23-sh02-p02",
+     "text_hint": "释义：也许；可能",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看音标与释义",
+     "target": "s23-sh02-p01"
+    }
+   ],
+   "kp": [
+    "perhaps-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "perhaps 读音与词义：副词，意为也许、可能"
+  },
+  {
+   "slide": 22,
+   "text": "它的主要用法是表达不确定性，位置很灵活，可以放在句首、句中或者句末。大家看这两个例句：",
+   "anchors": [
+    {
+     "element_id": "s23-sh02-p03",
+     "text_hint": "用法：用于表达不确定性，可置于句首、句中或句末。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看两个例句",
+     "target": "s23-sh02-p04"
+    }
+   ],
+   "kp": [
+    "perhaps-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "perhaps 表不确定，位置灵活，配两个例句"
+  },
+  {
+   "slide": 22,
+   "text": "第一句是 Perhaps it will rain tomorrow，意思是‘也许明天会下雨’。第二句把词放到了句中：It will perhaps be sunny later。",
+   "anchors": [
+    {
+     "element_id": "s23-sh02-p04",
+     "text_hint": "例句：Perhaps it will rain ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s23-sh02-p05",
+     "text_hint": "      It will perhaps be",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "perhaps-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句展示 perhaps 放句首与放句中"
+  },
+  {
+   "slide": 22,
+   "text": "好了，关于 perhaps 的用法讲解就到这里。",
+   "anchors": [
+    {
+     "element_id": "s23-sh01",
+     "text_hint": "20.perhaps 用法讲解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "perhaps-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "perhaps 用法讲解到此结束"
+  },
+  {
+   "slide": 23,
+   "text": "接下来我们看单词 smell。大家先跟我读一下它的音标 /smel/，记住它既是动词也是名词。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p01",
+     "text_hint": "音标：/smel/  词性：v. / n.",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来读一下它的音标",
+     "target": "s24-sh02-p01"
+    }
+   ],
+   "kp": [
+    "smell-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "smell 的音标与动名词双重词性"
+  },
+  {
+   "slide": 23,
+   "text": "作动词时，意思有‘闻到’和‘发臭’。注意区别：表示‘闻到’时要接宾语；而表示‘发臭’时，主语通常是东西。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p03",
+     "text_hint": "动词用法：作 “闻到” 讲时，后接宾语；作 “发",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s24-sh02-p03"
+    }
+   ],
+   "kp": [
+    "smell-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "smell 作动词：闻到接宾语、发臭主语是物"
+  },
+  {
+   "slide": 23,
+   "text": "作名词时就是指气味或臭味。我们来看几个常用搭配，比如 smell sth. 表示闻到某物，或者说 smell bad 表示发臭了。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p06",
+     "text_hint": "搭配：smell sth.（闻到某物）；smel",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看几个常用搭配",
+     "target": "s24-sh02-p06"
+    }
+   ],
+   "kp": [
+    "smell-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "smell 作名词及 smell sth.、smell b…"
+  },
+  {
+   "slide": 23,
+   "text": "这里还有一个短语 a bad smell，意思是‘一股臭味’。最后看这两个例句：I can smell the flowers 我能闻到花香；The garbage smells bad 垃圾发臭了。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p08",
+     "text_hint": "例句：I can smell the flowe",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s24-sh02-p09",
+     "text_hint": "           The garbage s",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "最后看这两个例句",
+     "target": "s24-sh02-p08"
+    }
+   ],
+   "kp": [
+    "smell-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "a bad smell 短语与两个例句巩固"
+  },
+  {
+   "slide": 24,
+   "text": "接下来我们看 cover。先读一下音标 /ˈkʌvə(r)/，它既是动词也是名词。作为动词，意思是遮盖或包括，比如表示覆盖的动作。",
+   "anchors": [
+    {
+     "element_id": "s25-sh02-p01",
+     "text_hint": "音标：/ˈkʌvə(r)/  词性：v. / n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p02",
+     "text_hint": "动词释义：遮盖；包括",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p03",
+     "text_hint": "动词用法：表示覆盖或包含的动作。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "先读一下音标",
+     "target": "s25-sh02-p01"
+    }
+   ],
+   "kp": [
+    "cover-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "cover 音标与动词词义"
+  },
+  {
+   "slide": 24,
+   "text": "那名词呢？指遮盖物或者书的封面。我们来看两个常用搭配：cover sth. with sth. 是用某物覆盖某物；还有 cover an area of...表示占地面积。",
+   "anchors": [
+    {
+     "element_id": "s25-sh02-p04",
+     "text_hint": "名词释义：遮盖物；封皮",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p05",
+     "text_hint": "名词用法：指用于覆盖的物品或书籍等的封面。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p06",
+     "text_hint": "搭配：cover sth. with sth.（",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p07",
+     "text_hint": "            cover an are",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "那名词呢",
+     "target": "s25-sh02-p04"
+    }
+   ],
+   "kp": [
+    "cover-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "cover 名词词义及两个搭配"
+  },
+  {
+   "slide": 24,
+   "text": "最后看例句：Cover the food with a lid，用盖子把食物盖上；The book has a beautiful cover，这本书有一个漂亮的封面。大家可以把这两个句子记下来。",
+   "anchors": [
+    {
+     "element_id": "s25-sh02-p09",
+     "text_hint": "例句：Cover the food with a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p10",
+     "text_hint": "The book has a beautiful",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "最后看例句",
+     "target": "s25-sh02-p09"
+    }
+   ],
+   "kp": [
+    "cover-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "cover 两个例句"
+  },
+  {
+   "slide": 25,
+   "text": "好，我们进入第二部分，词组用法详解。请大家把目光聚焦到屏幕中央的标题上，这里就是本节的重点。接下来我们会逐一拆解这些常用搭配，帮助大家更好地掌握它们的用法和语境。",
+   "anchors": [
+    {
+     "element_id": "s26-sh09",
+     "text_hint": "02 词组用法详解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s26-sh09"
+    }
+   ],
+   "kp": [
+    "P26-02词组用法详解"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "词组用法详解板块引入"
+  },
+  {
+   "slide": 26,
+   "text": "好，我们来看第 23 个短语 no matter。它的意思是“不论”或“不要紧”，常用来引导让步状语从句。大家请看屏幕上的搭配部分，这里有三个常用结构：no matter what 表示无论什么，no matter how 表示无论怎样，还有 no matter when 表示无论何时。",
+   "anchors": [
+    {
+     "element_id": "s27-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p02",
+     "text_hint": "释义：不论；不要紧",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p03",
+     "text_hint": "用法：常与疑问词连用引导让步状语从句。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p04",
+     "text_hint": "搭配：no matter what（无论什么）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p05",
+     "text_hint": "           no matter how",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p06",
+     "text_hint": "           no matter whe",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "no matter what",
+     "target": "s27-sh02-p04"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "no matter how",
+     "target": "s27-sh02-p05"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "no matter when",
+     "target": "s27-sh02-p06"
+    }
+   ],
+   "kp": [
+    "no-matter-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "no matter 含义与三个引导从句的搭配"
+  },
+  {
+   "slide": 26,
+   "text": "光看搭配还不够，我们来看一个完整的例句。No matter what happens, I will support you.这句话的意思是：无论发生什么，我都会支持你。请大家注意，这里的 h-a-p-p-e-n-s 是动词原形，前面不需要加 to。",
+   "anchors": [
+    {
+     "element_id": "s27-sh02-p07",
+     "text_hint": "例句：No matter what happen",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p08",
+     "text_hint": "      （无论发生什么，我都会支持你。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "No matter what happens",
+     "target": "s27-sh02-p07"
+    }
+   ],
+   "kp": [
+    "no-matter-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句展示 no matter what 引导让步从句"
+  },
+  {
+   "slide": 26,
+   "text": "这个短语在口语和写作中都非常实用，能帮我们把句子表达得更丰富。如果还有什么不清楚的地方，现在可以举手提问。",
+   "anchors": [
+    {
+     "element_id": "s27-sh02-p03",
+     "text_hint": "用法：常与疑问词连用引导让步状语从句。",
+     "confidence": 0.4
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P27-23nomatter用法-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "no matter 实用性与课堂提问收尾"
+  },
+  {
+   "slide": 27,
+   "text": "我们来看第 24 个短语 hang up，它是一个常用的短语动词。首先看它的两个主要意思：一是‘挂起’东西，比如衣物；二是‘挂断电话’。",
+   "anchors": [
+    {
+     "element_id": "s28-sh01",
+     "text_hint": "24.hang up 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p02",
+     "text_hint": "释义：挂起；挂断电话",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p03",
+     "text_hint": "用法：“挂起” 时宾语为衣物等；“挂断电话” 时",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "搭配：hang up sth",
+     "target": "s28-sh02-p04"
+    }
+   ],
+   "kp": [
+    "phrase-verb"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "hang up 的两个意思：挂起、挂断电话"
+  },
+  {
+   "slide": 27,
+   "text": "当表示‘挂起’时，后面要接宾语，比如衣物。大家请看这句例句：Please hang up your coat on the hanger.意思是请把你的外套挂在衣架上。",
+   "anchors": [
+    {
+     "element_id": "s28-sh02-p04",
+     "text_hint": "搭配：hang up sth.（挂起某物）；ha",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p05",
+     "text_hint": "例句：Please hang up your c",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s28-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P28-24hangup用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "hang up 表挂起时接宾语，配例句"
+  },
+  {
+   "slide": 27,
+   "text": "而当表示‘挂断电话’时，后面通常不接宾语，或者只接电话相关的人或事。注意听这句：Don't hang up! I still have something to say.意思是别挂电话，我还有话要说。",
+   "anchors": [
+    {
+     "element_id": "s28-sh02-p04",
+     "text_hint": "搭配：hang up sth.（挂起某物）；ha",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p07",
+     "text_hint": "          Don't hang up!",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s28-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P28-24hangup用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "hang up 表挂断电话，不接宾语"
+  },
+  {
+   "slide": 27,
+   "text": "这个短语在口语和写作中都非常实用，能帮我们把句子表达得更丰富。如果还有什么不清楚的地方，现在可以举手提问。",
+   "anchors": [
+    {
+     "element_id": "s28-sh01",
+     "text_hint": "24.hang up 用法讲解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P28-24hangup用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "hang up 口语写作实用，留答疑"
+  },
+  {
+   "slide": 28,
+   "text": "我们来看第 25 个短语，give sb a lift。这个短语的意思是开车顺便送某人，专门用来表示提供顺路搭载的服务。",
+   "anchors": [
+    {
+     "element_id": "s29-sh01-p01",
+     "text_hint": "25.give sb a lift 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s29-sh02-p02",
+     "text_hint": "释义：开车顺便送某人",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看第 25 个短语",
+     "target": "s29-sh02-p04"
+    }
+   ],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "give sb a lift 的含义：开车顺路送某人"
+  },
+  {
+   "slide": 28,
+   "text": "大家请看屏幕上的这个例句，My neighbor gave me a lift to school this morning。翻译过来就是，今天早上我的邻居顺路送我去学校。",
+   "anchors": [
+    {
+     "element_id": "s29-sh02-p04",
+     "text_hint": "例句：My neighbor gave me a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s29-sh02-p05",
+     "text_hint": "      （今天早上我的邻居顺路送我去学校。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s29-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P29-25givesbalif-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "例句展示 give sb a lift 的实际用法"
+  },
+  {
+   "slide": 28,
+   "text": "这个短语在口语和写作中都非常实用，能帮我们把句子表达得更丰富。如果还有什么不清楚的地方，现在可以举手提问。",
+   "anchors": [
+    {
+     "element_id": "s29-sh01-p01",
+     "text_hint": "25.give sb a lift 用法讲解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P29-25givesbalif-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "give sb a lift 的实用性与提问提醒"
+  },
+  {
+   "slide": 29,
+   "text": "同学们，我们来看第 26 个短语。大家请看屏幕上的用法说明，它后面可以接名词、代词或者动名词。比如这里展示了两个常见搭配：小心对待某物，以及做某事时要小心。",
+   "anchors": [
+    {
+     "element_id": "s30-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p04",
+     "text_hint": "搭配：be careful with sth.（",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p05",
+     "text_hint": "           be careful wi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "careful-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be careful with 接名词、代词或动名词"
+  },
+  {
+   "slide": 29,
+   "text": "接下来看例句。Be careful with the glass，小心那个玻璃杯，因为它很容易碎。还有过马路时也要小心。这些表达在口语和写作中都非常实用，能帮我们把句子写得更丰富。",
+   "anchors": [
+    {
+     "element_id": "s30-sh02-p06",
+     "text_hint": "例句：Be careful with the g",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p07",
+     "text_hint": "        （小心那个玻璃杯，它很容易碎。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p08",
+     "text_hint": "           You should be",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p09",
+     "text_hint": "          （过马路时你应该小心。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "careful-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be careful with 的两个例句"
+  },
+  {
+   "slide": 29,
+   "text": "如果还有什么不清楚的地方，现在可以举手提问。",
+   "anchors": [
+    {
+     "element_id": "s30-sh02-p08",
+     "text_hint": "           You should be",
+     "confidence": 0.4
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P30-26becarefulw-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "留出时间让学生举手提问"
+  },
+  {
+   "slide": 30,
+   "text": "如果还有什么不清楚的地方，现在可以举手提问。",
+   "anchors": [
+    {
+     "element_id": "s31-sh01",
+     "text_hint": "27.clean up 用法讲解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P31-27cleanup用法讲"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "询问是否还有疑问"
+  },
+  {
+   "slide": 30,
+   "text": "好，我们来看第 27 个短语 clean up。它的意思是清扫、清理，既可以单独用，也可以后面接要清理的对象。",
+   "anchors": [
+    {
+     "element_id": "s31-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p02",
+     "text_hint": "释义：清扫；清理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p03",
+     "text_hint": "用法：可单独使用或接宾语，宾语为清理的对象。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s31-sh02-p02"
+    }
+   ],
+   "kp": [
+    "clean-up-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "clean up 的意思与单独用法"
+  },
+  {
+   "slide": 30,
+   "text": "看这里，它有两个常见搭配。一个是 clean up sth，用来清理某物；另一个是 clean up after 后面加人或者事，表示在……之后进行清理。",
+   "anchors": [
+    {
+     "element_id": "s31-sh02-p04",
+     "text_hint": "搭配：clean up sth.（清理某物）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p05",
+     "text_hint": "           clean up afte",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s31-sh02-p04"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s31-sh02-p05"
+    }
+   ],
+   "kp": [
+    "clean-up-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "clean up sth 与 clean up after…"
+  },
+  {
+   "slide": 30,
+   "text": "我们来看一个例句。课后我们需要打扫教室，英文就是 We need to clean up the classroom after class。这句话很实用，大家记一下。",
+   "anchors": [
+    {
+     "element_id": "s31-sh02-p06",
+     "text_hint": "例句：We need to clean up t",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p07",
+     "text_hint": "          （课后我们需要打扫教室。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s31-sh02-p06"
+    }
+   ],
+   "kp": [
+    "clean-up-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用打扫教室的例句展示 clean up"
+  },
+  {
+   "slide": 30,
+   "text": "再比如，晚饭后请清理一下，可以说 Please clean up after dinner。这两个句子都展示了短语的不同用法，希望能帮助大家掌握。",
+   "anchors": [
+    {
+     "element_id": "s31-sh02-p08",
+     "text_hint": "           Please clean ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p09",
+     "text_hint": "         （晚饭后请清理一下。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s31-sh02-p08"
+    }
+   ],
+   "kp": [
+    "clean-up-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "用 clean up after dinner 例句巩固用法"
+  },
+  {
+   "slide": 31,
+   "text": "接下来我们看第 28 个短语，share sth. with sb.。这个短语的意思是‘把……与……分享’。",
+   "anchors": [
+    {
+     "element_id": "s32-sh01-p01",
+     "text_hint": "28.share sth. with sb. 用",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p02",
+     "text_hint": "释义：把…… 与…… 分享",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "词性：短语",
+     "target": "s32-sh02-p01"
+    }
+   ],
+   "kp": [
+    "share-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "share sth. with sb. 的含义"
+  },
+  {
+   "slide": 31,
+   "text": "使用时要注意，它后面要接分享的物品和分享对象。比如 share sth. with sb.就是‘和某人分享某物’。",
+   "anchors": [
+    {
+     "element_id": "s32-sh02-p03",
+     "text_hint": "用法：后接分享的物品和分享对象。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p04",
+     "text_hint": "搭配：share sth. with sb.（和",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "share one's feelings",
+     "target": "s32-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "share sth. with sb. 后接物品和对象"
+  },
+  {
+   "slide": 31,
+   "text": "再比如，你可以说 I like to share my toys with my friends.意思是‘我喜欢和朋友们分享我的玩具’。",
+   "anchors": [
+    {
+     "element_id": "s32-sh02-p06",
+     "text_hint": "例句：I like to share my to",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p07",
+     "text_hint": "        （我喜欢和朋友们分享我的玩具。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s32-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "share sth. with sb. 例句一"
+  },
+  {
+   "slide": 31,
+   "text": "还有 She shared her secret with me.表示‘她和我分享了她的秘密’。大家试着用这个短语造个句子吧。",
+   "anchors": [
+    {
+     "element_id": "s32-sh02-p08",
+     "text_hint": "          She shared her",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p09",
+     "text_hint": "        （她和我分享了她的秘密。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s32-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "share sth. with sb. 例句二与造句"
+  },
+  {
+   "slide": 32,
+   "text": "好，现在我们来进入第三部分：词汇练习题。大家请看屏幕上的标题，准备好动笔了吗？",
+   "anchors": [
+    {
+     "element_id": "s33-sh09-p01",
+     "text_hint": "03 词汇练习题 ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "03 词汇练习题",
+     "target": "s33-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P33-03词汇练习题"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "进入第三部分词汇练习题"
+  },
+  {
+   "slide": 33,
+   "text": "好，我们开始做第一题。请看这道关于整理书籍的题目，请选一个最合适的动词填入空白处。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p01",
+     "text_hint": "1.Please help me ______ ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p02",
+     "text_hint": "A. pack B. sort C. lift",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P34-一词汇练习选择题"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "整理书籍选择题选合适动词"
+  },
+  {
+   "slide": 33,
+   "text": "选项 A 是 pack，意思是打包；B 是 sort，意为分类；C 是 lift，表示举起。结合句意‘把这些书分成不同组’，我们应该选 B sort。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p01",
+     "text_hint": "1.Please help me ______ ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p02",
+     "text_hint": "A. pack B. sort C. lift",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P34-一词汇练习选择题-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "讲 pack sort lift 辨析选 sort"
+  },
+  {
+   "slide": 33,
+   "text": "接下来看第二题，我想邀请朋友参加派对，应该用什么词？A 是 invite 邀请，B 是 borrow 借入，C 是 add 添加。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p03",
+     "text_hint": "2.I want to ______ my fr",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p04",
+     "text_hint": "A. invite B. borrow C. a",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P34-一词汇练习选择题-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "邀请朋友派对选 invite 等选项"
+  },
+  {
+   "slide": 33,
+   "text": "很明显，这里要表达邀请的意思，所以选 A invite。第三题记得往汤里加点盐，选项里有 hunt 打猎、add 添加和 plan 计划。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p05",
+     "text_hint": "3.Remember to ______ som",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p06",
+     "text_hint": "A. hunt B. add C. plan",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P34-一词汇练习选择题-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "选 invite 后看第三题加盐"
+  },
+  {
+   "slide": 33,
+   "text": "往汤里加盐当然是 add，选 C。第四题经常从同学那里借书，borrow 是借入，lend 是借出，share 是分享。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p07",
+     "text_hint": "4.I often ______ books f",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p08",
+     "text_hint": "A. borrow B. lend C. sha",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P34-一词汇练习选择题-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "选 add 后辨析 borrow lend share"
+  },
+  {
+   "slide": 33,
+   "text": "从同学那里借书是 borrow，选 A。最后一题我们下周计划去爬山，A 是 planning 计划，B 是 hunting 打猎，C 是 lifting 举起。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p09",
+     "text_hint": "5.We are ______ a trip t",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p10",
+     "text_hint": "A. planning B. hunting C",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P34-一词汇练习选择题-6"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "借书选 borrow 后看 plan 等选项"
+  },
+  {
+   "slide": 33,
+   "text": "计划去旅行用 plan，所以选 A。这页的选择题我们就讲到这里，大家核对一下答案。",
+   "anchors": [
+    {
+     "element_id": "s34-sh01",
+     "text_hint": "一.词汇练习选择题",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "P34-一词汇练习选择题-7"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "选 plan 并核对全页答案"
+  },
+  {
+   "slide": 34,
+   "text": "好，我们继续看词汇选择题。第一题，海盗们去寻找宝藏，这里应该填 hunt，表示‘搜寻’的意思。请看第 6 题的选项，A 是 hunt，B 是 lift，C 是 joke。选 A 最合适。",
+   "anchors": [
+    {
+     "element_id": "s35-sh02-p01",
+     "text_hint": "6.The pirates went on a ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p02",
+     "text_hint": "A. hunt B. lift C. joke",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看第一题",
+     "target": "s35-sh02-p01"
+    }
+   ],
+   "kp": [
+    "hunt-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第6题选 hunt 表搜寻"
+  },
+  {
+   "slide": 34,
+   "text": "第二题考的是 give me a lift，意思是‘搭便车’。大家看第 7 题，A 选项是 give，正好符合这个搭配。所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s35-sh02-p03",
+     "text_hint": "7.Can you ______ me a li",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p04",
+     "text_hint": "A. give B. take C. make",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看第二题",
+     "target": "s35-sh02-p03"
+    }
+   ],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第7题考 give me a lift 搭便车"
+  },
+  {
+   "slide": 34,
+   "text": "第三题，句子意思是‘我等到他到达为止’。until 表示‘直到……为止’，符合语境。请看第 8 题的选项，A 是 until，选它。",
+   "anchors": [
+    {
+     "element_id": "s35-sh02-p05",
+     "text_hint": "8.I waited for him _____",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p06",
+     "text_hint": "A. until B. if C. becaus",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看第三题",
+     "target": "s35-sh02-p05"
+    }
+   ],
+   "kp": [
+    "until-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第8题考 until 直到为止"
+  },
+  {
+   "slide": 34,
+   "text": "第四题，玻璃可能会碎，所以要小心。Be careful with 就是‘小心某物’的意思。看第 9 题选项，A 正好是这个短语，选 A。",
+   "anchors": [
+    {
+     "element_id": "s35-sh02-p07",
+     "text_hint": "9.______ the glass. It m",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p08",
+     "text_hint": "A. Be careful with B. Cl",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看第四题",
+     "target": "s35-sh02-p07"
+    }
+   ],
+   "kp": [
+    "careful-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第9题考 be careful with 小心某物"
+  },
+  {
+   "slide": 34,
+   "text": "最后一题，离开教室前我们应该打扫干净。clean up 表示‘清理’，符合句意。请看第 10 题选项，A 是 clean up，选它。",
+   "anchors": [
+    {
+     "element_id": "s35-sh02-p09",
+     "text_hint": "10.We should ______ the ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p10",
+     "text_hint": "A.clean up B. lift up C.",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看最后一题",
+     "target": "s35-sh02-p09"
+    }
+   ],
+   "kp": [
+    "clean-up-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "第10题考 clean up 清理"
+  },
+  {
+   "slide": 35,
+   "text": "好，我们来做填空题。先看第一题，She is busy ______ (pack) her bags for the journey. 这里考查的是固定搭配 be busy doing something，意思是‘忙于做某事’。所以括号里的动词 pack 要变成动名词形式 packing。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p01",
+     "text_hint": "1.She is busy ______ (pa",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh03-p01"
+    }
+   ],
+   "kp": [
+    "busy-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be busy doing 搭配，pack 变 packi…"
+  },
+  {
+   "slide": 35,
+   "text": "第二题，We should ______ (sort) the waste to protect the environment. 情态动词 should 后面直接跟动词原形。sort 意为‘分类’，这里填 sort 即可。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p02",
+     "text_hint": "2.We should ______ (sort",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh04-p01"
+    }
+   ],
+   "kp": [
+    "should-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "should 后接动词原形，填 sort"
+  },
+  {
+   "slide": 35,
+   "text": "第三题，I ______ (invite) my neighbor to dinner last night. 注意时间状语 last night，这是一般过去时。invite 的过去式是 invited，所以填 invited。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p03",
+     "text_hint": "3.I ______ (invite) my n",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh05-p01"
+    }
+   ],
+   "kp": [
+    "past-tense"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "last night 提示一般过去时，invite 变 i…"
+  },
+  {
+   "slide": 35,
+   "text": "第四题，Don't forget to ______ (add) some milk to the coffee. 这里的 to 是不定式符号，后面接动词原形。add 意思是‘添加’，直接填 add。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p04",
+     "text_hint": "4.Don't forget to ______",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh06-p01"
+    }
+   ],
+   "kp": [
+    "infinitive-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "不定式 to 后接原形，填 add"
+  },
+  {
+   "slide": 35,
+   "text": "第五题，He often ______ (borrow) money from his friends. 看到 often 可知是一般现在时。主语 He 是第三人称单数，动词 borrow 要加 s，填 borrows。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p05",
+     "text_hint": "5.He often ______ (borro",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh07-p01"
+    }
+   ],
+   "kp": [
+    "third-person-singular"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "often 提示一般现在时，borrow 加 s"
+  },
+  {
+   "slide": 35,
+   "text": "第六题，They are making a ______ (plan) for the summer vacation. 这里需要名词形式。plan 的名词还是 plan，意思是‘计划’，填 plan。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p06",
+     "text_hint": "6.They are making a ____",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh08-p01"
+    }
+   ],
+   "kp": [
+    "noun-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "需要名词形式，plan 填原形"
+  },
+  {
+   "slide": 35,
+   "text": "第七题，The kids are excited about the ______ (treasure) hunt. 这里修饰名词 hunt，需要用形容词。treasure 本身就是名词‘宝藏’，作定语时直接用 treasure。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p07",
+     "text_hint": "7.The kids are excited a",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh09-p01"
+    }
+   ],
+   "kp": [
+    "adjective-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "treasure 作定语修饰 hunt"
+  },
+  {
+   "slide": 35,
+   "text": "第八题，We hunted ______ (careful) for the lost keys. 这里修饰动词 hunted，需要用副词。careful 是形容词，变副词要加 ly，填 carefully。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p08",
+     "text_hint": "8.We hunted ______ (care",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh10-p01"
+    }
+   ],
+   "kp": [
+    "adverb-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "修饰动词 hunted 用副词 carefully"
+  },
+  {
+   "slide": 35,
+   "text": "第九题，Please give me a ______ (lift) to the airport. 这里需要名词‘搭车’的意思。lift 作名词表示‘搭便车’或‘电梯’，填 lift。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p09",
+     "text_hint": "9.Please give me a _____",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh11-p01"
+    }
+   ],
+   "kp": [
+    "noun-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "lift 作名词表示搭车，填 lift"
+  },
+  {
+   "slide": 35,
+   "text": "最后一题，We waited until it ______ (stop) raining. 主句 waited 是过去式，until 引导的时间状语从句也用过去时。stop 的过去式是 stopped。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p10",
+     "text_hint": "10.We waited until it __",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看一个例句",
+     "target": "s36-sh12-p01"
+    }
+   ],
+   "kp": [
+    "past-tense"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "until 从句用过去时，stop 变 stopped"
+  },
+  {
+   "slide": 36,
+   "text": "同学们，咱们来做翻译练习。先看第一句，请帮我把这些衣服分类。对应的英文是 Please help me sort these clothes。注意这里用了 sort 表示分类，help sb do sth 也是常用搭配。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p01",
+     "text_hint": "1.请帮我把这些衣服分类。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh03-p01",
+     "text_hint": "Please help me sort thes",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "请帮我把这些衣服分类",
+     "target": "s37-sh02-p01"
+    }
+   ],
+   "kp": [
+    "sort-usage",
+    "help-structure"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sort 与 help sb do sth 翻译练习"
+  },
+  {
+   "slide": 36,
+   "text": "第二句，我打算邀请我的老师参加生日派对。英文是 I'm going to invite my teacher to my birthday party。这里用 be going to 表示将来计划，invite sb to... 是固定用法。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p02",
+     "text_hint": "2.我打算邀请我的老师参加我的生日派对。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh04-p01",
+     "text_hint": "I'm going to invite my t",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我打算邀请我的老师参加我的生日派对",
+     "target": "s37-sh04-p01"
+    }
+   ],
+   "kp": [
+    "invite-usage",
+    "plan-structure"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be going to 与 invite sb to 翻译…"
+  },
+  {
+   "slide": 36,
+   "text": "第三句，他从图书馆借了一本有趣的书。He borrowed an interesting book from the library。borrow 的过去式是 borrowed，from the library 表示来源地，要注意时态变化。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p03",
+     "text_hint": "3.他从图书馆借了一本有趣的书。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh05-p01",
+     "text_hint": "He borrowed an interesti",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "他从图书馆借了一本有趣的书",
+     "target": "s37-sh05-p01"
+    }
+   ],
+   "kp": [
+    "borrow-tense",
+    "library-prep"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "borrow 过去式与 from 来源翻译练习"
+  },
+  {
+   "slide": 36,
+   "text": "第四句，我们计划下个月去北京旅行。We plan to travel to Beijing next month。plan to do sth 表示计划做某事，travel to... 是去某地旅行，next month 提示将来时。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p04",
+     "text_hint": "4.我们计划下个月去北京旅行。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh06-p01",
+     "text_hint": "We plan to travel to Bei",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们计划下个月去北京旅行",
+     "target": "s37-sh06-p01"
+    }
+   ],
+   "kp": [
+    "plan-structure",
+    "travel-prep"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "plan to do 与 travel to 翻译练习"
+  },
+  {
+   "slide": 36,
+   "text": "第五句，直到妈妈回来他才完成作业。He didn't finish his homework until his mother came back。until 引导时间状语从句，主句是否定，从句用过去时。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p05",
+     "text_hint": "5.直到妈妈回来，他才完成作业。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh07-p01",
+     "text_hint": "He didn't finish his hom",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "直到妈妈回来，他才完成作业",
+     "target": "s37-sh07-p01"
+    }
+   ],
+   "kp": [
+    "until-usage",
+    "tense-consistency"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "not...until 引导时间状语从句翻译"
+  },
+  {
+   "slide": 36,
+   "text": "第六句，小心那把刀，它很锋利。Be careful with that knife. It's very sharp。be careful with... 表示小心某物，sharp 形容刀刃锋利，要注意形容词用法。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p06",
+     "text_hint": "6.小心那把刀，它很锋利。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh08-p01",
+     "text_hint": "Be careful with that kni",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "小心那把刀，它很锋利",
+     "target": "s37-sh08-p01"
+    }
+   ],
+   "kp": [
+    "careful-usage",
+    "sharp-adjective"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be careful with 与 sharp 翻译练习"
+  },
+  {
+   "slide": 36,
+   "text": "第七句，晚饭后让我们一起打扫厨房吧。Let's clean up the kitchen after dinner。clean up 是清理打扫的意思，let's do sth 表示建议，after dinner 是时间状语。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p07",
+     "text_hint": "7.晚饭后让我们一起打扫厨房吧。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh09-p01",
+     "text_hint": "Let's clean up the kitch",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "晚饭后让我们一起打扫厨房吧",
+     "target": "s37-sh09-p01"
+    }
+   ],
+   "kp": [
+    "clean-up-phrase",
+    "let-s-structure"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "clean up 与 let's do sth 翻译练习"
+  },
+  {
+   "slide": 36,
+   "text": "第八句，我喜欢和我的妹妹分享我的故事书。I like sharing my storybooks with my sister。like doing sth 表示喜欢做某事，share... with sb 是分享给某人。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p08",
+     "text_hint": "8.我喜欢和我的妹妹分享我的故事书。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh10-p01",
+     "text_hint": "I like sharing my storyb",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我喜欢和我的妹妹分享我的故事书",
+     "target": "s37-sh10-p01"
+    }
+   ],
+   "kp": [
+    "like-structure",
+    "share-prep"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "like doing 与 share...with 翻译练习"
+  },
+  {
+   "slide": 36,
+   "text": "第九句，他们正在寻找丢失的宠物狗。They are looking for the lost pet dog。look for 是寻找的意思，现在进行时表示动作正在进行，lost 修饰宠物狗。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p09",
+     "text_hint": "9.他们正在寻找丢失的宠物狗。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh11-p01",
+     "text_hint": "They are looking for the",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "他们正在寻找丢失的宠物狗",
+     "target": "s37-sh11-p01"
+    }
+   ],
+   "kp": [
+    "look-for-phrase",
+    "present-progressive"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "look for 与现在进行时翻译练习"
+  },
+  {
+   "slide": 36,
+   "text": "最后一句，你能帮我把这个箱子抬起来吗？Can you help me lift this box？help sb do sth 再次出现，lift 表示举起，祈使句转疑问句要注意语序。好，翻译题讲完啦。",
+   "anchors": [
+    {
+     "element_id": "s37-sh02-p10",
+     "text_hint": "10.你能帮我把这个箱子抬起来吗？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh12-p01",
+     "text_hint": "Can you help me lift thi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "你能帮我把这个箱子抬起来吗",
+     "target": "s37-sh12-p01"
+    }
+   ],
+   "kp": [
+    "lift-verb",
+    "question-form"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "help sb do sth 与 lift 翻译练习"
+  },
+  {
+   "slide": 37,
+   "text": "好，我们来看第 38 页的标题。这里写着‘04 答案解析’，意味着刚才做的练习题现在要公布标准答案了。请大家把目光聚焦到屏幕上方，跟着我一起核对一下你的选择是否正确。",
+   "anchors": [
+    {
+     "element_id": "s38-sh09-p01",
+     "text_hint": "04 答案解析",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s38-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P38-04答案解析"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "第38页标题：核对练习的标准答案解析"
+  },
+  {
+   "slide": 38,
+   "text": "我们来看第一题，答案选 B。这里 sort...into... 意思是‘把……分类为……'，正好符合‘把书分类’的语境。而 pack 是打包，lift 是举起或搭便车，都不对。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p01",
+     "text_hint": "1.B。解析：sort...into... 表示",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "我们来看第一题",
+     "target": "s39-sh02-p01"
+    }
+   ],
+   "kp": [
+    "sort-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sort...into... 的释义与词义排除"
+  },
+  {
+   "slide": 38,
+   "text": "接着看第二题，选 A。invite sb. to... 表示‘邀请某人去……'，符合邀请朋友参加派对的场景。borrow 是借，add 是添加，都不合适。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p02",
+     "text_hint": "2.A。解析：invite sb. to... ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "接着看第二题",
+     "target": "s39-sh02-p02"
+    }
+   ],
+   "kp": [
+    "invite-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "invite sb. to... 的用法与搭配"
+  },
+  {
+   "slide": 38,
+   "text": "第三题选 B。add...to... 意思是‘把……加入……'，比如往汤里加盐。hunt 是搜寻，plan 是计划，所以不选它们。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p03",
+     "text_hint": "3.解析：add...to... 表示 “把……",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "第三题选 B",
+     "target": "s39-sh02-p03"
+    }
+   ],
+   "kp": [
+    "add-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "add...to... 的用法与词义排除"
+  },
+  {
+   "slide": 38,
+   "text": "第四题答案 A。borrow sth. from sb. 表示‘从某人那里借某物'，符合向同学借书的语境。lend 是借出，share 是分享，都不对。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p04",
+     "text_hint": "4.A。解析：borrow sth. from ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "第四题答案 A",
+     "target": "s39-sh02-p04"
+    }
+   ],
+   "kp": [
+    "borrow-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "borrow sth. from sb. 的用法与辨析"
+  },
+  {
+   "slide": 38,
+   "text": "第五题选 A。plan a trip 就是‘计划一次旅行'，符合去山区旅行的意思。hunt 和 lift 在这里都不对。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p05",
+     "text_hint": "5.A。解析：plan a trip 表示 “计",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "第五题选 A",
+     "target": "s39-sh02-p05"
+    }
+   ],
+   "kp": [
+    "plan-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "plan a trip 的用法与词义排除"
+  },
+  {
+   "slide": 38,
+   "text": "第六题也是 A。go on a hunt for 表示‘搜寻……'，海盗搜寻宝藏正是这个意思。lift 是搭便车，joke 是笑话，都不对。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p06",
+     "text_hint": "6.A。解析：go on a hunt for ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "第六题也是 A",
+     "target": "s39-sh02-p06"
+    }
+   ],
+   "kp": [
+    "hunt-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "go on a hunt for 的用法与词义排除"
+  },
+  {
+   "slide": 38,
+   "text": "第七题选 A。give sb. a lift 意思是‘开车顺便送某人'，符合送我去图书馆的情景。take 是拿走，make 是制作，都不对。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p07",
+     "text_hint": "7.A。解析：give sb. a lift 表",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "第七题选 A",
+     "target": "s39-sh02-p07"
+    }
+   ],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "give sb. a lift 的用法与词义排除"
+  },
+  {
+   "slide": 38,
+   "text": "第八题答案 A。until 表示‘直到……为止'，我一直等到他到达就是这意思。if 是如果，because 是因为，都不对。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p08",
+     "text_hint": "8.A。解析：until 表示 “直到…… 为止",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "第八题答案 A",
+     "target": "s39-sh02-p08"
+    }
+   ],
+   "kp": [
+    "until-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "until 的用法与词义排除"
+  },
+  {
+   "slide": 38,
+   "text": "第九题选 A。be careful with 表示‘注意；当心'，小心玻璃杯就是这个用法。clean up 是清扫，share with 是分享，都不对。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p09",
+     "text_hint": "9.A。解析：be careful with 表",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "第九题选 A",
+     "target": "s39-sh02-p09"
+    }
+   ],
+   "kp": [
+    "careful-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be careful with 的用法与词义排除"
+  },
+  {
+   "slide": 38,
+   "text": "最后一题选 A。clean up 表示‘清扫'，打扫教室就是这个短语。lift up 是举起，hunt for 是寻找，都不对。大家核对完毕了吗？",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p10",
+     "text_hint": "1.A。解析：clean up 表示 “清扫”，",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "最后一题选 A",
+     "target": "s39-sh02-p10"
+    }
+   ],
+   "kp": [
+    "clean-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "clean up 的用法与词义排除"
+  },
+  {
+   "slide": 39,
+   "text": "我们来看第一题，选 packing。这里考查 be busy doing sth.这个结构，意思是‘忙于做某事’。所以 pack 要用动名词形式 packing。大家看屏幕上的解析部分。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p01",
+     "text_hint": "1.packing。解析：be busy doi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p01"
+    }
+   ],
+   "kp": [
+    "busy-structure"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第一题考be busy doing sth.选packing"
+  },
+  {
+   "slide": 39,
+   "text": "第二题选 sort。should 是情态动词，后面必须接动词原形，所以填 sort。第三题注意时间状语 last night，这是一般过去时的标志，invite 的过去式 invited 要加 ed。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p02",
+     "text_hint": "2.sort。解析：should 是情态动词，后",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p03",
+     "text_hint": "3.invited。解析：last night ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p02"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p03"
+    }
+   ],
+   "kp": [
+    "past-tense"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第二三题：should后接原形sort，last nigh…"
+  },
+  {
+   "slide": 39,
+   "text": "第四题选 add，forget to do sth.表示‘忘记要做某事’，后面接原形。第五题 often 是一般现在时标志，主语 he 是第三人称单数，borrow 要变位为 borrows。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p04",
+     "text_hint": "4.add。解析：forget to do st",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p05",
+     "text_hint": "5.borrows。解析：often 是一般现在",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p04"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p05"
+    }
+   ],
+   "kp": [
+    "third-person-singular"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第四五题：forget to do选add，often用b…"
+  },
+  {
+   "slide": 39,
+   "text": "第六题 make a plan 是固定搭配，plan 在这里作名词。第七题 treasure hunt 意为‘寻宝游戏’，填 treasure。第八题 carefully 修饰动词 hunted，表示‘仔细地搜寻’。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p06",
+     "text_hint": "6.plan。解析：make a plan 表示",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p07",
+     "text_hint": "7.treasure。解析：treasure h",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p08",
+     "text_hint": "8.carefully。解析：修饰动词 hunt",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p06"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p07"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p08"
+    }
+   ],
+   "kp": [
+    "adverb-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第六至八题：make a plan、treasure hu…"
+  },
+  {
+   "slide": 39,
+   "text": "第九题 give sb. a lift 意思是‘开车送某人’，填 lift。最后一题 until 引导从句时，主句是过去时，从句 stop 也要用过去式 stopped。全页解析完毕，大家再核对一遍答案。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p09",
+     "text_hint": "9.lift。解析：give sb. a lif",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p10",
+     "text_hint": "10.stopped。解析：until 引导时间",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p09"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "target": "s40-sh02-p10"
+    }
+   ],
+   "kp": [
+    "until-clause"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "最后两题：give sb. a lift填lift，unt…"
+  },
+  {
+   "slide": 40,
+   "text": "咱们来看第一句。Please help me sort these clothes.这里的 sort 就是‘分类’的意思，整句话翻译为‘请帮我整理一下这些衣服’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p01",
+     "text_hint": "1.Please help me sort th",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "sort-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sort 意为分类，翻译第一句"
+  },
+  {
+   "slide": 40,
+   "text": "第二句 I'm going to invite my teacher to my birthday party.注意这里用了 be going to 结构，表示将来打算做某事。翻译是‘我打算邀请老师参加我的生日派对’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p02",
+     "text_hint": "2.I'm going to invite my",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "invite-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "be going to 表将来，翻译第二句"
+  },
+  {
+   "slide": 40,
+   "text": "第三句 He borrowed an interesting book from the library.borrowed 是 borrow 的过去式，意思是‘借入’。全句译为‘他从图书馆借了一本有趣的书’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p03",
+     "text_hint": "3.He borrowed an interes",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "borrow-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "borrow 过去式 borrowed 意为借入"
+  },
+  {
+   "slide": 40,
+   "text": "第四句 We plan to travel to Beijing next month.plan to 表示‘计划做某事’，travel 是不及物动词，后面直接加地点。翻译为‘我们计划下个月去北京旅行’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p04",
+     "text_hint": "4.We plan to travel to B",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "plan-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "plan to 表计划做某事及 travel 用法"
+  },
+  {
+   "slide": 40,
+   "text": "第五句 He didn't finish his homework until his mother came back.until 引导时间状语从句，主句是否定，直到……才发生。翻译为‘直到他妈妈回来他才完成作业’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p05",
+     "text_hint": "5.He didn't finish his h",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "until-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "not until 引导时间状语从句译法"
+  },
+  {
+   "slide": 40,
+   "text": "第六句 Be careful with that knife. It's very sharp.这里 sharp 形容‘锋利的’，整句话提醒小心那把刀。翻译为‘小心那把刀，它很锋利’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p06",
+     "text_hint": "6.Be careful with that k",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "sharp-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sharp 意为锋利的，翻译第六句"
+  },
+  {
+   "slide": 40,
+   "text": "第七句 Let's clean up the kitchen after dinner.clean up 是固定短语，意为‘打扫干净’。翻译为‘晚饭后我们打扫厨房吧’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p07",
+     "text_hint": "7.Let's clean up the kit",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "clean-up-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "clean up 固定短语意为打扫干净"
+  },
+  {
+   "slide": 40,
+   "text": "第八句 I like sharing my storybooks with my sister.这里 sharing 是动名词作宾语，with 表示‘和……一起’。翻译为‘我喜欢和我的姐姐分享我的故事书’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p08",
+     "text_hint": "8.I like sharing my stor",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "share-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "sharing 动名词作宾语，with 表一起"
+  },
+  {
+   "slide": 40,
+   "text": "第九句 They are looking for the lost pet dog.looking for 意思是‘寻找’，lost 是形容词修饰狗。翻译为‘他们正在寻找那只走失的宠物狗’。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p09",
+     "text_hint": "9.They are looking for t",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "look-for-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "looking for 意为寻找，lost 修饰狗"
+  },
+  {
+   "slide": 40,
+   "text": "最后一句 Can you help me lift this box?lift 在这里作动词，意思是‘举起、抬起’。翻译为‘你能帮我搬一下这个箱子吗？’好了，所有句子解析完毕。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p10",
+     "text_hint": "10.Can you help me lift ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "lift-usage"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "lift 作动词意为举起、抬起"
+  },
+  {
+   "slide": 41,
+   "text": "今天的单词解析和练习环节就到这里，非常感谢大家的认真听讲。最后，让我们把目光投向屏幕中央的这张图片，一起说一声：Thank you！希望同学们能把今天学到的关于 pack up 等词汇用法记在心里，运用到生活中去。下课！",
+   "anchors": [
+    {
+     "element_id": "s42-sh01-p01",
+     "text_hint": "Thank You!",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s42-sh04",
+     "text_hint": "",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "point",
+     "at_sentence": 1,
+     "target": "s42-sh04"
+    }
+   ],
+   "kp": [
+    "P42-ThankYou"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "结束语致谢并鼓励运用 pack up 等词汇"
+  }
+ ],
+ "warnings": [
+  "⚠️ 第 6 页第 4 个单元没有有效锚点，已兜底到 s06-sh02-p02（低置信度）",
+  "⚠️ 第 16 页第 5 个单元没有有效锚点，已兜底到 s16-sh02-p05（低置信度）",
+  "⚠️ 第 22 页第 5 个单元没有有效锚点，已兜底到 s22-sh02-p01（低置信度）",
+  "⚠️ 第 27 页第 3 个单元没有有效锚点，已兜底到 s27-sh02-p03（低置信度）",
+  "⚠️ 第 30 页第 3 个单元没有有效锚点，已兜底到 s30-sh02-p08（低置信度）"
+ ],
+ "created_at": "2026-10-04T18:20:01",
+ "coverage": {
+  "slides": 42,
+  "units": 177,
+  "chars": 13405,
+  "est_sec": 2681.0,
+  "longest_unit_sec": 29.0,
+  "units_over_hard_max": 0,
+  "units_with_anchor": 177,
+  "anchors": 317,
+  "anchor_hit": 317,
+  "anchor_hit_rate": 1.0,
+  "para_level_anchors": 304,
+  "low_confidence_anchors": 5,
+  "ops": 160,
+  "ops_invalid": 34
+ },
+ "routes": [
+  {
+   "route_id": "p-r-revisit-34",
+   "kind": "revisit",
+   "fork_node": 34,
+   "merge_node": 35,
+   "steps": [
+    {
+     "unit_id": "S10-U04",
+     "variant_id": "",
+     "label": "",
+     "text": "",
+     "est_sec": 23.2
+    }
+   ],
+   "est_sec": 23.2,
+   "reason": "第10页讲得最长的一格（约23秒），学生容易在这里掉队",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  },
+  {
+   "route_id": "p-r-revisit-49",
+   "kind": "revisit",
+   "fork_node": 49,
+   "merge_node": 50,
+   "steps": [
+    {
+     "unit_id": "S14-U03",
+     "variant_id": "",
+     "label": "",
+     "text": "",
+     "est_sec": 22.8
+    }
+   ],
+   "est_sec": 22.8,
+   "reason": "第14页讲得最长的一格（约23秒），学生容易在这里掉队",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  },
+  {
+   "route_id": "p-r-revisit-52",
+   "kind": "revisit",
+   "fork_node": 52,
+   "merge_node": 53,
+   "steps": [
+    {
+     "unit_id": "S15-U02",
+     "variant_id": "",
+     "label": "",
+     "text": "",
+     "est_sec": 28.6
+    }
+   ],
+   "est_sec": 28.6,
+   "reason": "第15页讲得最长的一格（约29秒），学生容易在这里掉队",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  },
+  {
+   "route_id": "p-r-revisit-56",
+   "kind": "revisit",
+   "fork_node": 56,
+   "merge_node": 57,
+   "steps": [
+    {
+     "unit_id": "S16-U03",
+     "variant_id": "",
+     "label": "",
+     "text": "",
+     "est_sec": 15.2
+    }
+   ],
+   "est_sec": 15.2,
+   "reason": "第16页讲得最长的一格（约15秒），学生容易在这里掉队",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  },
+  {
+   "route_id": "p-r-revisit-85",
+   "kind": "revisit",
+   "fork_node": 85,
+   "merge_node": 86,
+   "steps": [
+    {
+     "unit_id": "S23-U03",
+     "variant_id": "",
+     "label": "",
+     "text": "",
+     "est_sec": 18.0
+    }
+   ],
+   "est_sec": 18.0,
+   "reason": "第23页讲得最长的一格（约18秒），学生容易在这里掉队",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  },
+  {
+   "route_id": "p-r-revisit-90",
+   "kind": "revisit",
+   "fork_node": 90,
+   "merge_node": 91,
+   "steps": [
+    {
+     "unit_id": "S24-U04",
+     "variant_id": "",
+     "label": "",
+     "text": "",
+     "est_sec": 20.0
+    }
+   ],
+   "est_sec": 20.0,
+   "reason": "第24页讲得最长的一格（约20秒），学生容易在这里掉队",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-108-5",
+   "kind": "skip",
+   "fork_node": 108,
+   "merge_node": 113,
+   "steps": [],
+   "est_sec": -57.8,
+   "reason": "第31页连续4格讲的都是同一件事，讲透了可以整段跳过",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-117-8",
+   "kind": "skip",
+   "fork_node": 117,
+   "merge_node": 125,
+   "steps": [],
+   "est_sec": -86.2,
+   "reason": "第34页整页是一.词汇练习选择题，跟得上就整页略过，把时间留给后面的讲解",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-124-6",
+   "kind": "skip",
+   "fork_node": 124,
+   "merge_node": 130,
+   "steps": [],
+   "est_sec": -72.0,
+   "reason": "第35页整页是一.词汇练习选择题，跟得上就整页略过，把时间留给后面的讲解",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-129-11",
+   "kind": "skip",
+   "fork_node": 129,
+   "merge_node": 140,
+   "steps": [],
+   "est_sec": -219.4,
+   "reason": "第36页整页是二.词汇练习填空题，跟得上就整页略过，把时间留给后面的讲解",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-139-11",
+   "kind": "skip",
+   "fork_node": 139,
+   "merge_node": 150,
+   "steps": [],
+   "est_sec": -219.6,
+   "reason": "第37页整页是三.词汇练习题 - 翻译题，跟得上就整页略过，把时间留给后面的讲解",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-150-11",
+   "kind": "skip",
+   "fork_node": 150,
+   "merge_node": 161,
+   "steps": [],
+   "est_sec": -143.6,
+   "reason": "第39页整页是选择答案解析，跟得上就整页略过，把时间留给后面的讲解",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-160-6",
+   "kind": "skip",
+   "fork_node": 160,
+   "merge_node": 166,
+   "steps": [],
+   "est_sec": -99.8,
+   "reason": "第40页整页是填空答案解析，跟得上就整页略过，把时间留给后面的讲解",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-165-11",
+   "kind": "skip",
+   "fork_node": 165,
+   "merge_node": 176,
+   "steps": [],
+   "est_sec": -193.4,
+   "reason": "第41页整页是翻译答案解析，跟得上就整页略过，把时间留给后面的讲解",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  }
+ ]
+}

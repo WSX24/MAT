@@ -15,3 +15,10 @@ ppt-master/
 # 系统文件
 .DS_Store
 Thumbs.db
+# 课堂原型（TeachingFlow/classroom/）：运行产物与二进制不入库
+# .env 与 __pycache__/ 已由上面的通用规则在任意深度覆盖，这里不再重复
+TeachingFlow/classroom/.cache/
+TeachingFlow/classroom/.pytest_cache/
+TeachingFlow/classroom/decks/*/media/
+TeachingFlow/classroom/pptx/*.pptx
+TeachingFlow/classroom/*.log

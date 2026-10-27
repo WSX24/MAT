@@ -1,0 +1,255 @@
+/* 剧情游戏式走向图（配 web/graph.html）。
+   颜色一律取 classroom.css 的 :root 变量 —— 这一页和上课页会同时开着，
+   同一个蓝在两边必须表示同一件事。
+   选择器一律收在 .graph 下：classroom.css 里 .bar（5px 进度条）/ .chip / .hint /
+   .row / .card 都是全局类名，撞上就会把这一页的元素变成别的东西。
+
+   三层结构：
+     主线  —— 一排**可读的卡片**（第 N 页 · 单元 k + 正文摘要），卡片之间一条横线
+     支线  —— 卡片右缘的入口圆点 → 45° 折进泳道 → 泳道上的小卡片 → 45° 折回下一张卡片左缘
+     当前  —— 竖线 + 「你现在在这里」气泡（答疑时改口成「答疑中 · 暂离主线」）
+
+   低缩放只改 class，不改任何 left/top：几何只算一次，实时指针因此不会跳。 */
+
+.graph{max-width:none;margin:0;padding:12px 14px 0}
+.graph a{color:var(--accent)}
+/* 用 [hidden] 收口：下面每条规则都可能给元素一个 display，UA 的 [hidden] 就不再管用 */
+.graph [hidden]{display:none!important}
+
+/* ===== 顶部：标题 / 计数条 / 工具行 / 图例 ===== */
+.graph .ghead{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:8px}
+.graph .ghead h1{font-size:19px;margin:0;font-weight:600}
+.graph .gmeta{font-size:12px;color:var(--dim)}
+.graph .grow{flex:1}
+
+.graph .gcounts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px;font-size:12px;color:var(--dim)}
+.graph .gcnt{border:1px solid var(--line);border-radius:99px;padding:2px 10px;background:var(--panel)}
+.graph .gcnt b{color:var(--fg);font-weight:600}
+.graph .gcnt.gcand{border-color:var(--warn)}
+.graph .gcnt.gcand b{color:var(--warn)}
+.graph .gcnt.gsw{border-color:var(--ok)}
+.graph .gcnt.gsw b{color:var(--ok)}
+.graph .gcnt.gend{border-color:var(--warn);border-style:dashed}
+/* 预置路线那一栏是开课前就能报准的静态计数：给它主色，和运行期那几栏分开 */
+.graph .gcnt.gpreset{border-color:var(--accent)}
+.graph .gcnt.gpreset b{color:var(--accent)}
+.graph .gcnt.gcur{border-color:var(--hlbar);color:var(--hlbar)}
+.graph .gcnt.gcur b{color:var(--hlbar)}
+
+.graph .gtools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 6px;font-size:12px}
+.graph .gtools button{padding:3px 11px;font-size:12px;border-radius:99px}
+.graph .gchk{display:inline-flex;gap:5px;align-items:center;color:var(--dim);cursor:pointer}
+.graph .gchk input{margin:0}
+.graph .gstat{color:var(--dim)}
+.graph .gstat.gerr{color:var(--warn)}
+.graph .gzoom{color:var(--accent);font-variant-numeric:tabular-nums}
+
+.graph .glegend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin:0 0 10px}
+.graph .glg{display:inline-flex;gap:6px;align-items:center}
+.graph .gln{display:inline-block;width:20px;height:0;border-top:2px solid var(--accent)}
+.graph .gln.gdash{border-top:2px dashed var(--warn)}
+.graph .gln.gok{border-top:2px solid var(--ok)}
+.graph .gdot{display:inline-block;width:8px;height:8px;border-radius:99px;background:var(--dim)}
+.graph .gdot.galive{background:var(--ok)}
+.graph .gdot.gconsumed{background:var(--accent)}
+.graph .gdot.gexpired{background:var(--dim)}
+.graph .gmv{display:inline-block;width:0;height:12px;border-left:2px solid var(--hlbar)}
+.graph .gcard{display:inline-block;width:15px;height:10px;border-radius:3px;
+  background:var(--panel2);border:1px solid var(--line)}
+.graph .gentrylg{display:inline-block;width:8px;height:8px;border-radius:99px;
+  background:var(--panel);border:1px solid var(--accent);transform:translateY(-1px)}
+
+/* 徽标图例：圆角小方块，和卡片图例区分开 */
+.graph .gvarlg{display:inline-block;width:16px;height:10px;border-radius:99px;
+  border:1px dashed var(--line);background:var(--panel2)}
+
+/* ===== 缩略条 ===== */
+.graph .gmm{position:relative;height:26px;border:1px solid var(--line);border-radius:8px;
+  background:var(--panel);margin:0 0 8px;cursor:pointer;overflow:hidden;user-select:none}
+.graph .gmm-rail{position:absolute;left:0;right:0;top:12px;height:2px;background:var(--line)}
+.graph .gmm-tick{position:absolute;top:6px;width:1px;height:14px;background:var(--accent);
+  transform:translateX(-.5px)}
+.graph .gmm-tick.has-cand{background:var(--warn)}
+.graph .gmm-now{position:absolute;top:0;bottom:0;width:2px;background:var(--hlbar);
+  transform:translateX(-1px)}
+.graph .gmm-view{position:absolute;top:0;bottom:0;background:var(--line);opacity:.55}
+
+/* ===== 视窗：拖拽平移 + 滚轮缩放的容器（内层画布只做 transform） ===== */
+.graph .gviewport{position:relative;overflow:hidden;height:min(56vh,420px);
+  border:1px solid var(--line);border-radius:12px;background:var(--panel);
+  cursor:grab;user-select:none;touch-action:none}
+.graph .gviewport.grabbing{cursor:grabbing}
+.graph .gcanvas{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
+
+/* 图层：页标尺在最底，主线横线与支线折线压在卡片下面（卡片不透明，线只从缝隙露出来） */
+.graph .gpages,.graph .gmainline,.graph .gwires,.graph .gnodes,.graph .gchips{
+  position:absolute;left:0;top:0}
+.graph .gpages{z-index:0}
+.graph .gmainline,.graph .gwires{z-index:1;overflow:visible}
+.graph .gnodes{z-index:3}
+/* 覆盖层只负责画：容器放行指针，只有真正可点的元素把它收回来。
+   缺了这条，z-index 4 的满画布 div 会吃掉下面卡片与徽标的点击。 */
+.graph .gchips{z-index:4;pointer-events:none}
+.graph .gchips > *{pointer-events:auto}
+.graph .gentry,.graph .gterm{pointer-events:none}
+
+.graph .gpage{position:absolute;top:0;bottom:0;border-left:1px solid var(--line)}
+.graph .gpage.alt{background:var(--panel2)}
+.graph .gplabel{position:absolute;top:3px;left:6px;max-width:calc(100% - 12px);
+  font-size:10px;line-height:16px;color:var(--dim);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.graph .gplabel b{color:var(--fg);font-weight:600}
+
+/* 主线：一条横线把整排卡片的中心串起来 */
+.graph .gmainline path{fill:none;stroke:var(--line);stroke-width:2}
+
+/* 支线：进出泳道是 45° 折线（横向偏移 == 纵向偏移） */
+.graph .gwires path{fill:none;stroke:var(--accent);stroke-width:2;stroke-opacity:.9;
+  stroke-linejoin:miter}
+.graph .gwires path.cand{stroke:var(--warn);stroke-dasharray:5 4}
+.graph .gwires path.on{stroke:var(--ok);stroke-width:3;stroke-opacity:1}
+
+/* ===== 主线卡片：可读的剧情节点 ===== */
+.graph .gnode{position:absolute;width:120px;height:52px;padding:4px 7px;box-sizing:border-box;
+  border-radius:8px;background:var(--panel2);border:1px solid var(--line);
+  /* 卡面自己已经逐行夹紧（.gtag 省略号 + .gsum line-clamp），盒子不必再裁一刀；
+     而「N 支」徽标挂在卡片下缘、要露到盒子外面，所以 overflow 放开。 */
+  cursor:pointer;overflow:visible;transition:background .18s,border-color .18s}
+.graph .gnode:hover{border-color:var(--accent)}
+.graph .gnode.hasbr{border-color:var(--accent)}
+.graph .gnode.is-switched{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+.graph .gnode.is-current{border-color:var(--hlbar);background:var(--panel);
+  box-shadow:0 0 0 2px var(--hlbar)}
+.graph .gnode .gtag{font-size:9px;line-height:12px;color:var(--dim);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.graph .gnode .gsum{font-size:10px;line-height:13px;color:var(--fg);margin-top:2px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* 分支入口圆点：挂在卡片右缘 */
+.graph .gentry{position:absolute;width:8px;height:8px;border-radius:99px;
+  background:var(--panel);border:1px solid var(--accent);box-sizing:border-box}
+
+/* ===== 支线卡片：泳道上的小节点（实线 = 预置 / 虚线 = C 现造） ===== */
+.graph .gbr{position:absolute;width:84px;height:34px;padding:3px 5px;box-sizing:border-box;
+  border-radius:7px;background:var(--panel);border:1px solid var(--accent);color:var(--fg);
+  cursor:pointer;overflow:hidden;z-index:2}
+.graph .gbr.cand{border-style:dashed;border-color:var(--warn)}
+.graph .gbr .gtag{font-size:9px;line-height:11px;color:var(--accent);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.graph .gbr.cand .gtag{color:var(--warn)}
+/* ===== 路线 chip（跨格走向）：预置（备课期 routes）与运行期（C 现造）=====
+   两者的几何都来自载荷的 fork_node → merge_node，chip 文案与详情完全一致 ——
+   它们是同一种东西的两个来源，所以**只靠线型分开**（见 src-preset / src-runtime）：
+   预置实线（开课前就在图上，是这门课的骨架），运行期虚线（课上现造，选中前不是这门课的一部分）。
+   三种走向各上一色：一张图上同时有跳讲 / 补回头 / 提前收尾，光看线长分不出是哪一种，
+   而 chip 只有 84px 宽。颜色只改外观，left/top 一个字都不动 —— 低缩放退化成光点时，
+   这圈颜色就是唯一还读得出来的信息。 */
+.graph .gbr.rt.rt-skip{border-color:var(--warn)}
+.graph .gbr.rt.rt-revisit{border-color:var(--hlbar)}
+.graph .gbr.rt.rt-finish{border-color:var(--ok)}
+.graph .gbr.rt.rt-skip .gtag{color:var(--warn)}
+.graph .gbr.rt.rt-revisit .gtag{color:var(--hlbar)}
+.graph .gbr.rt.rt-finish .gtag{color:var(--ok)}
+/* 来源只改线型：预置实线 / 运行期虚线。两条路径的几何与文案一个字都不差，
+   所以这一处是页面上唯一"看得出这条线哪来的"的地方（配合图例那一行）。 */
+.graph .gbr.rt.src-preset{border-style:solid}
+.graph .gbr.rt.src-runtime{border-style:dashed}
+.graph .gwires path.src-preset{stroke-dasharray:none}
+.graph .gwires path.src-runtime{stroke-dasharray:5 4}
+.graph .gbr .gsum{font-size:9px;line-height:11px;color:var(--dim);margin-top:1px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.graph .gbr.st-alive::after,.graph .gbr.st-consumed::after,.graph .gbr.st-expired::after{
+  content:"";position:absolute;right:4px;top:4px;width:5px;height:5px;border-radius:99px;
+  background:var(--dim)}
+.graph .gbr.st-alive::after{background:var(--ok)}
+.graph .gbr.st-consumed::after{background:var(--accent)}
+.graph .gbr.st-expired::after{background:var(--dim)}
+.graph .gbr.on{border-color:var(--ok);box-shadow:inset 0 0 0 1px var(--ok)}
+
+/* 课尾：merge_node == len(nodes) 的支线画到右缘，标「退出课堂」 */
+.graph .gterm{position:absolute;font-size:10px;line-height:14px;color:var(--warn);
+  text-align:right;white-space:nowrap;border-right:2px solid var(--warn);padding-right:5px}
+
+/* ===== 低缩放退化：只改外观，绝不改 left/top（用 margin 居中，几何完全不动） ===== */
+/* 盒子的 left/top/尺寸一个字都不动（几何不动，指针才不会跳），只把可见部分换成
+   反补缩放的光点：width = 4px / k，屏幕上永远是 4px，3% 时也还是 4px。 */
+.graph .gcanvas.dots .gnode{width:120px;height:52px;padding:0;border-color:transparent;
+  background:none;box-shadow:none;overflow:visible}
+.graph .gcanvas.dots .gnode::before{content:"";position:absolute;left:50%;top:50%;
+  width:calc(4px / var(--gk, 1));height:calc(4px / var(--gk, 1));
+  transform:translate(-50%,-50%);border-radius:99px;background:var(--dim)}
+.graph .gcanvas.dots .gnode .gtag,
+.graph .gcanvas.dots .gnode .gsum{display:none}
+.graph .gcanvas.dots .gbr{width:10px;height:10px;padding:0;border-radius:99px;
+  margin:12px 0 0 37px}                        /* (84-10)/2=37  (34-10)/2=12 */
+.graph .gcanvas.dots .gbr .gtag,
+.graph .gcanvas.dots .gbr .gsum{display:none}
+.graph .gcanvas.dots .gnode.is-current{box-shadow:none}
+.graph .gcanvas.dots .gnode.is-current::before{background:var(--hlbar);
+  box-shadow:0 0 0 calc(2px / var(--gk, 1)) var(--hlbar)}
+.graph .gcanvas.dots .gnbadge{display:none}
+/* 「适应全课」那一档里，页与页的分界靠明暗交替读出来（1px 边框早就缩没了） */
+.graph .gcanvas.dots .gpage.alt{background:var(--line);opacity:.5}
+
+/* 「N 支」徽标：就地重讲变体的唯一可见物（点开看全文）。它常显 —— 折叠支线时
+   泳道没了，徽标正好接住那一档唯一还读得出来的信息。 */
+.graph .gnbadge{position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  margin-top:2px;padding:0 4px;border-radius:99px;white-space:nowrap;
+  font:inherit;font-size:9px;line-height:12px;background:var(--panel2);
+  border:1px solid var(--line);color:var(--dim);cursor:pointer}
+.graph .gnbadge:hover{border-color:var(--accent);color:var(--fg)}
+.graph .gnbadge.st-alive{border-color:var(--ok);color:var(--ok)}
+.graph .gnbadge.st-consumed{border-color:var(--accent);color:var(--accent)}
+.graph .gnbadge.on{border-color:var(--ok);color:var(--ok);
+  box-shadow:inset 0 0 0 1px var(--ok)}
+
+/* ===== 指针：竖线 + 「你现在在这里」气泡 ===== */
+.graph .gptr{position:absolute;top:0;bottom:0;width:0;background:var(--hlbar);
+  opacity:.85;pointer-events:none;transition:left .3s ease;z-index:6}
+.graph .gbubble{position:absolute;top:4px;width:236px;box-sizing:border-box;
+  padding:3px 9px;border-radius:8px;background:var(--panel2);border:1px solid var(--hlbar);
+  color:var(--hlbar);font-size:11px;line-height:18px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;pointer-events:none;
+  /* 反补画布的 scale(k)：气泡在屏幕上始终是 236px 宽、11px 字 */
+  transform:scale(calc(1 / var(--gk, 1)));transform-origin:0 0}
+.graph .gbubble b{color:var(--hlbar);font-weight:600}
+.graph .gbubble.off{color:var(--warn);border-color:var(--warn)}
+.graph .gbubble.off b{color:var(--warn)}
+
+/* ===== 空状态 ===== */
+.graph .gempty{border:1px dashed var(--line);border-radius:12px;background:var(--panel);
+  padding:18px;margin:0 0 10px}
+.graph .gemptyhint{margin:0 0 8px;color:var(--warn);font-size:13px;line-height:1.7}
+.graph .gemptynote{margin:0;color:var(--dim);font-size:12px}
+
+/* ===== 未定向候选 ===== */
+.graph .gfree{border:1px dashed var(--warn);border-radius:10px;background:var(--panel);
+  padding:8px 12px;margin:10px 0 0;font-size:12px;color:var(--dim)}
+.graph .gfree h3{margin:0 0 6px;font-size:12px;color:var(--warn);font-weight:600}
+.graph .gfrow{display:flex;gap:8px;flex-wrap:wrap;align-items:baseline;padding:2px 0;
+  border-bottom:1px dashed var(--line)}
+.graph .gfrow:last-child{border-bottom:none}
+.graph .gfid{font-family:ui-monospace,Consolas,monospace;color:var(--fg)}
+
+/* ===== 只读详情面板 ===== */
+.graph .gdetail{position:fixed;right:16px;bottom:16px;width:min(560px,92vw);max-height:70vh;
+  overflow:auto;background:var(--panel);border:1px solid var(--accent);border-radius:12px;
+  padding:12px 14px;font-size:13px;z-index:70;box-shadow:0 18px 48px var(--bg)}
+.graph .gdh{display:flex;gap:10px;align-items:baseline;margin:-2px 0 8px}
+.graph .gdt{font-weight:600;font-size:13px;color:var(--fg);word-break:break-all}
+.graph .gdx{margin-left:auto;flex:none;padding:1px 9px;font-size:12px}
+.graph .gdk{display:grid;grid-template-columns:76px 1fr;gap:2px 10px;font-size:12px;
+  padding:1px 0;color:var(--fg)}
+.graph .gdk span:first-child{color:var(--dim)}
+.graph .gdtext{white-space:pre-wrap;word-break:break-word;background:var(--panel2);
+  border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:8px 0 0;
+  font-size:12px;line-height:1.7;max-height:280px;overflow:auto;color:var(--fg)}
+.graph .gdsub{margin:10px 0 4px;font-size:12px;color:var(--dim);border-top:1px solid var(--line);
+  padding-top:8px}
+.graph .gdrow{padding:3px 0;border-bottom:1px dashed var(--line);font-size:12px}
+.graph .gdrow:last-child{border-bottom:none}
+.graph .gdrow .galive{color:var(--ok)}
+.graph .gdrow .gconsumed{color:var(--accent)}
+.graph .gdrow .gexpired{color:var(--dim)}
+
+.graph .gfoot{color:var(--dim);font-size:12px;margin:12px 0 16px}

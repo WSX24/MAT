@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>课件重绘预览 · 真实 PPT 接入</title>
+<link rel="stylesheet" href="/static/classroom.css">
+</head>
+<body>
+<div class="preview">
+  <h1 id="h1">课件重绘预览</h1>
+  <p class="hint" id="sub">把 pptx 解析结果按真实版式重绘，用于**目视核对**解析与实际课件的差距。
+    与 PowerPoint/LibreOffice 导出的同一页并排看，是这套重绘唯一诚实的验收方式。</p>
+  <p class="hint" id="goto" style="margin:8px 0 0">
+    ⚠ 这是<b>课件重绘核对页</b>，没有课堂会话：<b>没有字幕、不能提问、没有右下角悬浮助手</b>。
+    要全屏上课 → <a href="/">打开上课页</a>（点「⛶ 全屏播放」或按 F11）。
+    页面版本 <span id="ui">—</span>
+  </p>
+
+  <div class="toolbar">
+    <button id="prev">← 上一页</button>
+    <span id="pageinfo" class="hint"></span>
+    <button id="next">下一页 →</button>
+    <span style="margin-left:auto"></span>
+    <select id="zoomsel">
+      <option value="1">缩放 100%</option>
+      <option value="1.5">150%</option>
+      <option value="2">200%</option>
+    </select>
+    <label class="hint" style="display:flex;gap:5px;align-items:center">
+      <input type="checkbox" id="stepmode"> 按脚本隐藏分步内容
+    </label>
+    <button id="ops">演示一次课件操作</button>
+    <button id="clear">清空操作</button>
+  </div>
+
+  <div class="card">
+    <h2><span>重绘结果</span><span class="right meta" id="slideTitle"></span></h2>
+    <div class="body">
+      <div id="stagewrap">
+        <div id="stage">
+          <div id="zoomlayer"><div id="slide" style="position:absolute;inset:0"></div></div>
+          <div id="pageflip"></div>
+        </div>
+        <div id="pointer"></div>
+        <div id="simplehost" style="display:none"></div>
+      </div>
+      <div id="deckbar"><span id="deckmeta"></span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h2><span>本页可锚定的元素（点一下看高亮落在哪）</span>
+      <span class="right meta">段落级锚点列表</span></h2>
+    <div class="body"><div class="anchorlist" id="anchors"></div></div>
+  </div>
+</div>
+
+<template id="svg-img"></template>
+<script src="/static/deck.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const params = new URLSearchParams(location.search);
+const deckId = params.get('deck') || '';
+let index = parseInt(params.get('slide') || '0', 10);
+let total = 0;
+
+DeckView.init({
+  stagewrap: $('stagewrap'), stage: $('stage'), zoomlayer: $('zoomlayer'),
+  slide: $('slide'), pointer: $('pointer'), pageflip: $('pageflip'),
+  simplehost: $('simplehost'),
+}, {
+  onPageInfo: info => {
+    // `?bare=1` 会把工具条/标题/说明都从 DOM 里删掉（截图对比要干净），
+    // 所以这里的元素**可能不存在**。以前直接取 .textContent：
+    // 一次 `Cannot set properties of null` 就抛在 render() 里，
+    // 把它后面的逻辑整段跳过 —— 表现为"操作不生效"，其实页面早就不往下走了。
+    const t = $('slideTitle'), m = $('deckmeta'), p = $('pageinfo');
+    if (t) t.textContent = `第 ${(info.index|0)+1} 页 · ${info.title||''}`;
+    if (m) m.textContent = `${info.size} · 元素 ${info.elements}`
+      + (info.steps ? ` · 原稿分步 ${info.steps}` : '');
+    if (p) p.textContent = `第 ${(info.index|0)+1} / ${total} 页`;
+    history.replaceState(null,'',`?deck=${encodeURIComponent(deckId)}&slide=${info.index}`);
+  },
+});
+
+async function load(i){
+  // 默认整页显示（不带 reveal）：预览的目的是"看清版式"，
+  // 而分步隐藏会把"讲到才出现"的内容先藏起来 —— 那样看到的是一张白页，
+  // 既没法核对重绘，也容易误判成渲染坏了。要看分步效果就勾上面的复选框。
+  const steps = $('stepmode').checked ? '' : '?reveal=all';
+  const r = await fetch(`/api/deck/slide/${encodeURIComponent(deckId)}/${i}${steps}`);
+  if (!r.ok){ $('sub').textContent = `加载失败：${r.status}（课件 ${deckId} 未解析？）`; return; }
+  const data = await r.json();
+  total = data.slide_count;
+  const slide = data.slide;
+  DeckView.render(slide);
+  // 调试用：`?ops=[{"op":"zoom","target":"s04-sh02"}]` 直接看某个操作的效果。
+  // 课件操作的"效果"只有画出来才看得见（放大/压暗/指认/分步），
+  // 而真实备课计划里这些操作出现得很少 —— 没有这个入口就没法逐个核对。
+  applyOpsFromQuery();
+  // 锚点清单：点一下就在课件上高亮，用来确认"锚点真的指到了那一行"
+  // （`bare=1` 时这张卡片被删掉了，所以要先看看容器还在不在）
+  const box = $('anchors');
+  if (!box) return;
+  box.innerHTML = '';
+  for (const el of (slide.elements||[])){
+    const line = document.createElement('div');
+    line.textContent = `${el.element_id}  [${el.kind}/${el.role}]  ${(el.name||'')}`;
+    line.onclick = () => DeckView.highlight([{element_id: el.element_id}]);
+    box.appendChild(line);
+    for (const p of ((el.text&&el.text.paras)||[])){
+      if (!p.text || !p.text.trim()) continue;
+      const d = document.createElement('div');
+      d.style.paddingLeft = '22px';
+      d.textContent = `└ ${p.pid} = ${p.text.slice(0,60)}`;
+      d.onclick = () => DeckView.highlight([{element_id: p.pid}]);
+      box.appendChild(d);
+    }
+  }
+}
+$('prev').onclick = () => { index = Math.max(0, index-1); load(index); };
+$('next').onclick = () => { index = Math.min(total-1, index+1); load(index); };
+$('stepmode').onchange = () => load(index);
+$('clear').onclick = () => DeckView.applyOps([{op:'reset_zoom'},{op:'clear'}]);
+$('zoomsel').onchange = e => {
+  const z = parseFloat(e.target.value);
+  if (z === 1) DeckView.applyOps([{op:'reset_zoom'}]);
+  else {
+    // 直接缩到页面中心（这里只是核对版式，不针对具体元素）
+    const nodes = Object.keys(DeckView.debugElements());
+    const first = nodes.find(k => k.indexOf('-sh') > 0);
+    DeckView.applyOps([{op:'zoom', target:first, scale:z}]);
+  }
+};
+$('ops').onclick = async () => {
+  // 演示一次真实的课件操作序列：先把段落藏起来，再逐个放出来 + 高亮 + 指过去
+  const ids = Object.keys(DeckView.debugElements()).filter(k => k.indexOf('-p') > 0).slice(0,3);
+  if (!ids.length) return;
+  DeckView.applyOps(ids.map(id => ({op:'hide', target:id})));
+  let n = 0;
+  for (const id of ids){
+    await new Promise(r => setTimeout(r, 900));
+    DeckView.applyOps([{op:'step', target:id},{op:'point', target:id}]);
+    n++;
+  }
+};
+
+// 页面版本：和上课页一样，用来一眼分辨"新页面"和"浏览器缓存的旧页面"
+fetch('/api/state').then(r => r.json()).then(s => {
+  const el = $('ui');
+  if (el && s.ui) el.textContent = s.ui;
+}).catch(() => {});
+
+load(index);
+
+/* 浏览器截图核对时用得上：等图片都加载完再打标记 */
+window.addEventListener('load', () => setTimeout(() => document.body.setAttribute('data-ready','1'), 600));
+
+/* `?ops=<url 编码的 JSON>`：把一串课件操作直接作用在预览页上。
+   为什么要有这个入口：课件操作的效果（压暗/放大/指认/分步）只有**画出来**才看得见，
+   而真实备课计划里 focus/zoom/point 出现得很少 —— 没有它就没法逐个核对，
+   只能等上课时碰运气遇到。tools/shot_ops.py 就是靠它出效果图的。 */
+function applyOpsFromQuery(){
+  const raw = params.get('ops');
+  if (!raw) return;
+  let ops = [];
+  try { ops = JSON.parse(raw); } catch (e) {
+    console.warn('[ops] 解析失败：', e); return;
+  }
+  if (!Array.isArray(ops) || !ops.length) return;
+  // 分步隐藏会把目标先藏掉，看效果时要先显示全
+  document.querySelectorAll('.prehide,.hidden').forEach(n =>
+    n.classList.remove('prehide','hidden'));
+  DeckView.applyOps(ops);
+  // `bare` 模式是拿来做像素对比的，不加任何额外绘制
+  if (params.get('bare')) return;
+  const tag = document.createElement('div');
+  tag.id = 'opsbadge';
+  tag.textContent = `已应用 ${ops.length} 个操作：` + ops.map(o => o.op).join('、');
+  document.body.appendChild(tag);
+}
+
+/* `?bare=1`：只留课件本身（把工具条、锚点清单、卡片标题都藏掉），
+   窗口开 1280×720 截图就正好是一页 —— 用来和 PowerPoint 导出的同页逐张对比。
+   目视核对是这套重绘唯一诚实的验收方式，所以这个开关是给验收用的，不是装饰。 */
+if (params.get('bare')) {
+  document.querySelectorAll('.toolbar, .card h2, .card:last-of-type, h1, #sub, #goto').forEach(el => el.remove());
+  document.querySelector('.preview').style.cssText = 'max-width:none;padding:0;margin:0';
+  document.querySelectorAll('.card').forEach(el => el.style.cssText = 'border:none;border-radius:0;background:transparent');
+  document.querySelectorAll('.card .body').forEach(el => el.style.padding = '0');
+}
+</script>
+</body>
+</html>
