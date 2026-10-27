@@ -1,0 +1,115 @@
+/* 设计令牌：色彩 / 字阶 / 间距 / 圆角 / 阴影。深浅两套，投屏字号偏大。 */
+:root {
+  color-scheme: light;
+
+  --font-sans: "MiSans", "Microsoft YaHei", "PingFang SC", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  /* 字阶（基准 17px，投屏可读） */
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.25rem;
+  --text-display: 3rem;
+
+  /* 间距（4 的倍数） */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 56px;
+  --space-9: 72px;
+
+  /* 圆角 */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 999px;
+
+  /* 布局 */
+  --header-h: 68px;
+  --content-max: 1320px;
+  --content-pad: var(--space-6);
+  --sidebar-w: 380px;
+
+  /* 动效 */
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 320ms;
+
+  /* 浅色 */
+  --bg: #f4f6f8;
+  --bg-soft: #eceff3;
+  --surface: #ffffff;
+  --surface-2: #f1f4f7;
+  --surface-3: #e7ecf1;
+  --border: #e2e7ee;
+  --border-strong: #cbd4df;
+  --text: #15202a;
+  --text-2: #4b5866;
+  --text-3: #7c8896;
+  --text-inverse: #ffffff;
+  --brand: #1d5c4d;
+  --brand-strong: #14443a;
+  --brand-soft: #e5f0eb;
+  --on-brand: #ffffff;
+  --accent: #d9662a;
+  --accent-strong: #93430f;
+  --accent-soft: #fdece1;
+  --ok: #1c7a52;
+  --ok-soft: #e3f3ec;
+  --warn: #9a6413;
+  --warn-soft: #fbf0dc;
+  --danger: #b0261f;
+  --danger-soft: #fbe9e7;
+  --overlay: rgba(12, 20, 26, 0.48);
+  --shadow-1: 0 1px 2px rgba(16, 27, 38, 0.06), 0 1px 3px rgba(16, 27, 38, 0.04);
+  --shadow-2: 0 6px 18px rgba(16, 27, 38, 0.08), 0 2px 6px rgba(16, 27, 38, 0.05);
+  --shadow-3: 0 22px 48px rgba(16, 27, 38, 0.16), 0 6px 16px rgba(16, 27, 38, 0.08);
+  --ring: rgba(29, 92, 77, 0.32);
+  --stage-bg: #10171c;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0d1216;
+  --bg-soft: #0a0e12;
+  --surface: #151d23;
+  --surface-2: #1b252c;
+  --surface-3: #23303a;
+  --border: #25323c;
+  --border-strong: #3a4a57;
+  --text: #e9eff4;
+  --text-2: #b3c0ca;
+  --text-3: #8394a1;
+  --text-inverse: #0d1216;
+  --brand: #4cb492;
+  --brand-strong: #7ed4b7;
+  --brand-soft: #12322a;
+  --on-brand: #06110d;
+  --accent: #ef8a4c;
+  --accent-strong: #ffbe8f;
+  --accent-soft: #3a2517;
+  --ok: #4cbd8d;
+  --ok-soft: #14302a;
+  --warn: #d9a44f;
+  --warn-soft: #33260f;
+  --danger: #ef6d66;
+  --danger-soft: #3a1a18;
+  --overlay: rgba(3, 7, 10, 0.66);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-3: 0 26px 60px rgba(0, 0, 0, 0.6);
+  --ring: rgba(76, 180, 146, 0.36);
+  --stage-bg: #080c0f;
+}

@@ -30,3 +30,4 @@ TeachingFlow/classroom/mcp-config.json
 # 首次本地备课写出的中间产物：内含机器绝对路径，同样不该入库
 TeachingFlow/classroom/decks/*/source.txt
 TeachingFlow/classroom/decks/*/plan.bak.json
+TeachingFlow/classroom/webapp/node_modules/
