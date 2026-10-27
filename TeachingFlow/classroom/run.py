@@ -1,14 +1,16 @@
 """课堂交互原型 —— 启动脚本。
 
+这是**备课与运维**脚本，不是课堂入口：起课堂服务请用仓库根的 app.py
+（`python app.py` 或 `powershell -File ./start-app.ps1`）。原来的 `run.py serve`
+随旧 UI（web.py）一起删除，敲它只会得到这份帮助。
+
 用法：
-    python run.py            一键启动：起课堂 + 写出 MCP 接入提示词 + 开浏览器
-    python run.py serve --no-browser   只起服务，不开浏览器
     python run.py mcp-stdio [endpoint] 内置 stdio↔HTTP 桥接（给只认 stdio 的宿主）
     python run.py audit      只做脚本体检，不启动服务
     python run.py test       跑全部离线测试
     python run.py warmup     预合成全部讲解音频（让演示更顺）
     python run.py check      检查服务商连通性
-    python run.py serve --env env.broken      换一份配置启动（复现故障/对照实验）
+    python run.py <任意命令> --env env.broken   换一份配置跑（复现故障/对照实验）
 
 真实 PPT 接入（详见 README §9）：
     python run.py pptx "<课件.pptx>" [--max-slides N] [--no-download]
@@ -802,68 +804,6 @@ def cmd_check() -> int:
     return asyncio.run(_go())
 
 
-def cmd_serve(argv: list[str] | None = None) -> int:
-    import uvicorn
-
-    from config import load_settings
-
-    argv = argv or []
-    open_browser = "--no-browser" not in argv
-    s = load_settings()
-
-    # 一键启动：把「外置大脑接入提示词」写盘，方便直接交给别的 agent 使用
-    access_path = ensure_access_files(s)
-
-    print("=" * 66)
-    print("  课堂交互原型 · 个人自学场景（段末让位）")
-    print("=" * 66)
-    print(f"  服务商    {s.describe()}")
-    print(f"  语音      {'edge-tts ' + s.tts_voice if s.tts_enabled else '未启用（纯文字）'}")
-    print(f"  探针窗口  {s.probe_window}s    重讲上限 {s.max_rephrase} 轮")
-    if s.deck_id or s.pptx_file:
-        print(f"  课件      {s.deck_id or s.pptx_file}")
-    else:
-        print("  课件      原型自带手写课件（设 DECK_ID / PPTX_FILE 可换成真实 PPT）")
-    print(f"  地址      http://{s.host}:{s.port}")
-    print(f"  MCP 外脑  http://{s.host}:{s.port}/mcp")
-    if access_path is not None:
-        print(f"  接入提示词 {access_path}")
-        print("            （把它整份发给 Claude Code / Codex，对方会自己接好）")
-    print("=" * 66)
-    print("  Ctrl+C 停止课堂")
-    print("=" * 66)
-
-    if open_browser:
-        _open_browser_when_ready(f"http://{s.host}:{s.port}")
-
-    uvicorn.run("web:app", host=s.host, port=s.port, reload=False, log_level="warning")
-    return 0
-
-
-def _open_browser_when_ready(url: str, timeout: float = 60.0) -> None:
-    """后台等端口就绪再打开浏览器 —— 开早了只会看到「无法访问」。"""
-    import socket
-    import threading
-    import webbrowser
-
-    host, _, port_text = url.partition("://")[2].partition(":")
-    port = int(port_text.split("/")[0] or 80)
-
-    def _worker() -> None:
-        deadline = time.monotonic() + timeout
-        while time.monotonic() < deadline:
-            time.sleep(0.4)
-            try:
-                with socket.create_connection((host, port), timeout=0.6):
-                    time.sleep(0.4)
-                    webbrowser.open(url)
-                    return
-            except OSError:
-                continue
-
-    threading.Thread(target=_worker, name="open-browser", daemon=True).start()
-
-
 def ensure_access_files(s) -> Path | None:
     """写出接入提示词与 MCP 配置片段（一键启动的产物，给别的 agent 直接用）。"""
     endpoint = f"http://{s.host}:{s.port}/mcp"
@@ -963,15 +903,13 @@ def main() -> int:
         os.environ["DSH_ENV_FILE"] = argv[i + 1]
         del argv[i:i + 2]
 
-    cmd = (argv[0] if argv else "serve").lower()
+    cmd = (argv[0] if argv else "").lower()
     rest = argv[1:]
     table = {
         "audit": lambda: cmd_audit(rest),
         "test": cmd_test,
         "warmup": lambda: cmd_warmup(rest),
         "check": cmd_check,
-        "serve": lambda: cmd_serve(rest),
-        "start": lambda: cmd_serve(rest),
         "pptx": lambda: cmd_pptx(rest),
         "decks": cmd_decks,
         "plan": lambda: cmd_plan(rest),
@@ -981,8 +919,26 @@ def main() -> int:
         "mcp-stdio": lambda: cmd_mcp_stdio(rest),
         "mcp-prompt": cmd_mcp_prompt,
     }
-    fn = table.get(cmd, lambda: cmd_serve(rest))
+    # serve/start 已随旧 UI（web.py）一起删除：课堂服务只剩一个入口，在仓库根。
+    # 未知命令与"什么都不给"都给帮助 —— 以前默认起服务，删掉 serve 后那个默认会
+    # 变成"敲错一个字母就悄悄起来一个服务"，比报错难查得多。
+    fn = table.get(cmd)
+    if fn is None:
+        return cmd_help(argv[0] if argv else "")
     return fn()
+
+
+def cmd_help(unknown: str = "") -> int:
+    """打印子命令清单，并指出课堂服务入口在哪。"""
+    if unknown:
+        print(f"未知命令：{unknown}\n")
+    print(__doc__ or "")
+    print("课堂服务（网页）入口已统一到仓库根：")
+    print("    python app.py                        # 在仓库根 MAT/ 下执行")
+    print("    powershell -File ./start-app.ps1     # 一键启动（可选自动开浏览器）")
+    print("run.py 只保留备课/运维子命令：audit / test / warmup / check / pptx / decks /")
+    print("plan / variants / routes / summarize / mcp-stdio / mcp-prompt")
+    return 2
 
 
 def cmd_mcp_prompt() -> int:

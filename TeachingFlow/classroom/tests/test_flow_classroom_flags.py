@@ -182,13 +182,19 @@ def test_pop_classroom_serve_takes_everything_after_it() -> None:
     assert flow._pop_classroom_serve(["--mock"]) is None, "没这个开关就不该动命令行"
     assert flow._pop_classroom_serve(["--classroom-serve"]) == []
     assert flow._pop_classroom_serve(
-        ["--classroom-serve", "--", "serve", "--no-browser"]) == ["serve", "--no-browser"]
+        ["--classroom-serve", "--", "--no-browser"]) == ["--no-browser"]
     assert flow._pop_classroom_serve(
-        ["--classroom-serve", "decks"]) == ["decks"], "不带 -- 也照样透传"
+        ["--classroom-serve", "--port", "8010"]) == ["--port", "8010"], "不带 -- 也照样透传"
 
 
-def test_serve_classroom_uses_a_subprocess(monkeypatch) -> None:
-    """必须是子进程：import 课堂的 web.py 会把 FastAPI/edge-tts 拖进这次运行。"""
+def test_serve_classroom_runs_the_repo_entry_in_a_subprocess(monkeypatch) -> None:
+    """必须是子进程，且跑的是**仓库根的 app.py**（正式版唯一网页入口）。
+
+    为什么要子进程：在这个进程里 import 课堂那一整套，会把 FastAPI / edge-tts 拖进
+    "只想出片"的那次运行。
+    为什么是 app.py 而不是 classroom/run.py：run.py 已收敛为备课/运维脚本，
+    `serve` 子命令随旧 UI 删除（`run.py serve` 现在只会打印帮助并返回 2）。
+    """
     seen: dict = {}
 
     def fake_run(cmd, **kw):
@@ -199,14 +205,16 @@ def test_serve_classroom_uses_a_subprocess(monkeypatch) -> None:
         return R()
 
     monkeypatch.setattr(flow.subprocess, "run", fake_run)
-    code = flow._serve_classroom(["serve", "--no-browser"])
+    code = flow._serve_classroom(["--no-browser", "--port", "8010"])
     assert code == 7, "退出码要原样透传"
     cmd = seen["cmd"]
     assert Path(cmd[0]).name.lower().startswith("python"), cmd[0]
-    assert Path(cmd[1]).name == "run.py"
-    assert str(Path(cmd[1]).parent) == str(flow.CLASSROOM_DIR)
-    assert cmd[2:] == ["serve", "--no-browser"]
-    assert seen["kw"]["cwd"] == str(flow.CLASSROOM_DIR)
+    assert Path(cmd[1]).name == "app.py", f"必须跑仓库根 app.py：{cmd[1]}"
+    root = flow.CLASSROOM_DIR.parent.parent          # TeachingFlow/classroom → 仓库根
+    assert Path(cmd[1]) == flow.CLASSROOM_ENTRY, "入口用模块里的常量，别在函数里另推导一份"
+    assert str(Path(cmd[1]).parent) == str(root), "app.py 就在仓库根"
+    assert cmd[2:] == ["--no-browser", "--port", "8010"], "透传参数原样交给 app.py"
+    assert seen["kw"]["cwd"] == str(root), "cwd 必须是仓库根（app.py 按自己的位置找 classroom）"
 
 
 def test_main_routes_classroom_serve_before_parsing(monkeypatch) -> None:

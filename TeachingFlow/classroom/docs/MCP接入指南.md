@@ -3,15 +3,32 @@
 > **读者**：将要接入这堂 AI 课堂的外部 Agent（Claude Code / Codex / Cursor / Cline / Claude Desktop / 其它 MCP 宿主）
 > **服务端**：本仓库 `TeachingFlow/classroom/` 内的课堂状态机（MCP server，唯一权威）
 > **设计依据**：原原型仓库的 `MCP方案设计-AI课堂外置大脑.md`（历史文档，未随迁移带入 MAT）
-> **实现位置**：`TeachingFlow/classroom/mcp_server.py`、`TeachingFlow/classroom/machine.py`、`TeachingFlow/classroom/web.py`、`TeachingFlow/classroom/run.py`
+> **实现位置**：`TeachingFlow/classroom/mcp_server.py`（内核）、`TeachingFlow/classroom/machine.py`（状态机）、`TeachingFlow/classroom/phrases.py`（意图分流）
+
+> ## ⚠️ 现状（正式版重构后，先用这一块判断能不能照做）
+>
+> **本文描述的 HTTP 传输已经不可用：**
+> - `POST /mcp` 与 `GET/POST /api/dev/mcp` 挂在旧原型 UI 的 `web.py` 上，**已随整套旧 UI 删除**；
+>   新应用（`TeachingFlow/classroom/app/`）**没有挂载任何 `/mcp` 路由**（`grep -rn mcp app/` 可自证）。
+> - `python run.py mcp-stdio` 仍在，但它是 **stdio ↔ HTTP 的桥**，需要一个 `/mcp` 上游 ——
+>   现在**没有上游可连**，所以它暂时也不可用（旧启动器写出的 `mcp-config.json` 同样指向不存在的端点）。
+> - `mcp_server.py` 的**内核没有删**：JSON-RPC 分发、6 个工具、`EventBus`、`McpMode` 都在，
+>   由 `tests/test_mcp.py` 的 6 条用例覆盖。
+>
+> 因此：**第 2 节（启动）、第 3 节（接入方式）、§7.3（自查清单）、附录 A 的操作步骤现在做不通**，
+> 它们保留是为了"内核重新挂上之后照做即可"。**第 4~6 节、第 8 节讲的是内核语义，仍然准确。**
+> 恢复办法：把 `McpBrainServer` 挂到新 app（设计文档 §4 的契约里目前没有 `/mcp`，属后续工作）。
+>
+> 现行课堂入口（与 MCP 无关）：`python app.py` 或 `powershell -File ./start-app.ps1`，见 [使用说明.md](使用说明.md)。
 
 ---
 
 ## 0. 三十秒版本
 
 ```
-1) 启动课堂：仓库根 `powershell -ExecutionPolicy Bypass -File .\start-classroom.ps1`（或在 `TeachingFlow/classroom` 里 `python run.py`）
-2) 接入本机：claude mcp add --transport http classroom http://127.0.0.1:8000/mcp
+1) 启动课堂：仓库根 `powershell -ExecutionPolicy Bypass -File ./start-app.ps1`（或 `python app.py`）
+   ⚠️ 这一步只起课堂本身：**HTTP MCP 端点 /mcp 目前不存在**（见文首「现状」）
+2) 接入本机（**要等 /mcp 重新挂载后才成立**）：claude mcp add --transport http classroom http://127.0.0.1:8000/mcp
 3) 开始值守：循环调用 get_events(wait_seconds=50)
    → 收到 type="query" → say(text, from_version=event.snapshot.version, final=True)
    → 立刻再调 get_events（这就是「我说完了」）
@@ -49,32 +66,45 @@
 
 ## 2. 启动课堂（服务端）
 
-任选一种：
+> ⚠️ **本节只负责把课堂起起来；它不再提供 MCP 端点**（`/mcp` 已随旧 UI 移除，见文首「现状」）。
 
 | 方式 | 命令 | 说明 |
 |---|---|---|
-| **一键启动（推荐）** | 仓库根 `powershell -ExecutionPolicy Bypass -File .\start-classroom.ps1` | 切到 `TeachingFlow/classroom` 再起服务，参数原样透传给 `run.py` |
-| 直接起服务 | 在 `TeachingFlow/classroom` 里 `python run.py` | 最直接；`--no-browser` 不开浏览器 |
-| 预热 / 查连通性 | `python run.py warmup` / `python run.py check` | 预合成讲解语音；只测模型，不起服务 |
+| **一键启动（推荐）** | 仓库根 `powershell -ExecutionPolicy Bypass -File ./start-app.ps1` | 查依赖 / 查配置 / 起服务 /（默认）开浏览器 |
+| 直接起服务 | 仓库根 `python app.py` | 最直接；只起服务不开浏览器。端口用 `PORT`（默认 8000） |
+| 预热 / 查连通性 | 在 `TeachingFlow/classroom` 里 `python run.py warmup` / `python run.py check` | 预合成讲解语音；只测模型，都不起服务 |
 
-启动成功后你会看到：
+启动成功后你会看到（正式版的横幅 —— **注意没有 MCP 那一行**）：
 
 ```text
-  地址      http://127.0.0.1:8000
-  MCP 外脑  http://127.0.0.1:8000/mcp
-  接入提示词 ...\TeachingFlow\classroom\mcp-access-prompt.md
+  地址          http://127.0.0.1:8000
+  健康检查      http://127.0.0.1:8000/api/health
+  课程库        ...\TeachingFlow\state\classroom.sqlite
+  引擎          deepseek / deepseek-chat
+  语音(edge-tts) 开
 ```
 
-启动时会自动生成两个文件，**都可以直接交给别的 Agent / 粘进配置**：
+接入提示词与配置片段不再由"起服务"顺手写出（那段代码随 `run.py serve` 一起删除了）。
+需要的话显式生成一份 —— 但要清楚它指向的 `/mcp` 目前不存在：
 
-- `TeachingFlow/classroom/mcp-access-prompt.md` —— 一份完整的自然语言接入提示词（把整份发给 Agent 即可）
-- `TeachingFlow/classroom/mcp-config.json` —— 现成的 `mcpServers` 配置片段（含 HTTP 与 stdio 两种）
+```powershell
+cd TeachingFlow\classroom
+python run.py mcp-prompt      # 只写文件，不起服务
+```
 
-> 端口以 `.env` 里的 `HOST` / `PORT` 为准，下文一律按 `http://127.0.0.1:8000/mcp` 说明。
+- `TeachingFlow/classroom/mcp-access-prompt.md` —— 自然语言接入提示词（生成物，不入库）
+- `TeachingFlow/classroom/mcp-config.json` —— `mcpServers` 片段（生成物，不入库）
+
+> 端口以 `HOST` / `PORT` 为准（`.env` 或环境变量）。下文一律按 `http://127.0.0.1:8000/mcp` 说明，
+> 但请记住：**这个端点在当前版本里不存在**。
 
 ---
 
 ## 3. 接入方式（按宿主类型选择）
+
+> ⚠️ **本节全部依赖 `POST /mcp`**，而它在新应用里没有挂载 —— 下面三条路现在都走不通。
+> 保留原文是为了"内核重新挂上之后照做即可"。若只想先确认端点是否存在：
+> `curl -s -o /dev/null -w '%{http_code}\n' -X POST http://127.0.0.1:8000/mcp` → 会得到 404。
 
 ### 3.1 原生 HTTP / Streamable-HTTP 宿主（Claude Code、Codex、Cursor 等）
 
@@ -137,7 +167,9 @@ claude
 
 ### 3.3 一个关键前提
 
-**必须先启动课堂，再接 MCP。** 服务端是课堂进程自己（`/mcp` 路由挂在同一个 FastAPI 上），课堂没起 = 端点不存在。
+**必须先启动课堂，再接 MCP。** 旧实现里服务端就是课堂进程自己（`/mcp` 挂在同一个 FastAPI 上）；
+正式版把 `web.py` 整个删掉之后，**这个路由不存在**：课堂起没起，`/mcp` 都是 404
+（能访问到的只有 `/api/health` 与 `/api/v1/*`）。
 
 ---
 
@@ -382,7 +414,8 @@ while True:
 
 | 现象 | 原因 | 处理 |
 |---|---|---|
-| 连接被拒绝 | 课堂没启动 | 先启动课堂（`start-classroom.ps1` / `python run.py`） |
+| 连接被拒绝 | 课堂没启动 | 先启动课堂（`start-app.ps1` / `python app.py`） |
+| `POST /mcp` 回 404 | **预期**：`/mcp` 已随旧 UI 移除（见文首「现状」） | 目前无解；恢复要先把内核挂到新 app |
 | `get_events` 总是立刻返回空 | 正常现象（无急件时确实很快到点或无事） | 看 `idle_hint`，按提示放宽间隔 |
 | 桥接层报超时 | 宿主/桥接的单请求超时 < 50s | 把 `wait_seconds` 降到 30，或改用 `run.py mcp-stdio` |
 | `say` 总是 `throttled` | 队列已有 2 条 | 先回去 `get_events` 等播出 |
@@ -394,7 +427,8 @@ while True:
 
 接入完成后，按顺序确认：
 
-1. `http://127.0.0.1:8000/api/dev/mcp` 的 `mode.state` 由 `unconnected` 变成 **`active`**，`client_name` 显示你的名字。
+1. ~~`http://127.0.0.1:8000/api/dev/mcp` 的 `mode.state` 由 `unconnected` 变成 **`active`**~~
+   —— **这条现在查不了**：`/api/dev/mcp` 已随旧 UI 移除。重新挂载后用 `McpMode.status_dict()` 看同一份数据。
 2. `tools/list` 返回 **恰好 6 个**工具。
 3. `get_events(wait_seconds=0)` 返回结构正常的空结果（含 `idle_hint`）。
 4. 在课堂页面发一句开放问题（如「sweet 和 home 之间为什么加连字符？」），应收到 `type="query"`、`urgent=true`、`triage.stage="fallback"` 的事件。
@@ -429,18 +463,19 @@ while True:
 
 ---
 
-## 附录 A：一键启动产物
+## 附录 A：接入提示词与配置片段
 
-`python run.py`（或仓库根的 `start-classroom.ps1`）启动时会自动写出：
+> ⚠️ 起服务**不再自动写出**这两个文件（写出的那段代码随 `run.py serve` 一起删除）；
+> 现在只有显式跑 `python run.py mcp-prompt` 才会写。而且它们指向的 `/mcp` 当前不存在。
+
+`python run.py mcp-prompt` 会写出：
 
 - `TeachingFlow/classroom/mcp-access-prompt.md` —— 交给别的 Agent 的整段接入提示词
 - `TeachingFlow/classroom/mcp-config.json` —— 现成 `mcpServers` 片段（HTTP + stdio 各一份）
 
-单独重新生成（不起服务）：
-
 ```powershell
 cd TeachingFlow\classroom
-python run.py mcp-prompt
+python run.py mcp-prompt      # 只写文件，不起服务
 ```
 
 ## 附录 B：服务端源码索引
@@ -452,10 +487,10 @@ python run.py mcp-prompt
 | 长轮询与双车道 | `TeachingFlow/classroom/mcp_server.py` `EventBus` |
 | 三态掌舵 / quietFallback | `TeachingFlow/classroom/mcp_server.py` `McpMode` |
 | 版本校验与 Floor Control | `TeachingFlow/classroom/mcp_server.py` `check_version` / `compute_floor` |
-| 挂载点 `POST /mcp` | `TeachingFlow/classroom/web.py` `mcp_endpoint` |
-| 状态查询面板 | `TeachingFlow/classroom/web.py` `GET /api/dev/mcp` |
+| 挂载点 `POST /mcp` | **已删除**（原 `web.py` `mcp_endpoint`；新 app 未挂载 → 恢复时挂这里） |
+| 状态查询面板 | **已删除**（原 `web.py` `GET /api/dev/mcp`；改用 `McpMode.status_dict()`） |
 | 急救室舱 / 意图分流 | `TeachingFlow/classroom/phrases.py` `StudentIntent.DELEGATE` |
 | 上下文快照 | `TeachingFlow/classroom/llm.py` `ContextSnapshot` / `build_ctx` |
 | 让位点插播 | `TeachingFlow/classroom/machine.py` `_yield_for_agent` |
-| stdio 桥接 | `TeachingFlow/classroom/run.py` `cmd_mcp_stdio` |
+| stdio 桥接 | `TeachingFlow/classroom/run.py` `cmd_mcp_stdio`（需 `/mcp` 上游，当前无可用上游） |
 | 接入提示词生成 | `TeachingFlow/classroom/mcp_server.py` `build_access_prompt` |

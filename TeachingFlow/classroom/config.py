@@ -15,7 +15,8 @@ def ensure_utf8_console() -> None:
 
     为什么必须由代码兜底，不能只靠启动脚本：控制台编码是 GBK 时，
     `print("✅ …")` 直接抛 UnicodeEncodeError —— 而课堂的课程笔记、自检报告里
-    全是 ✅❌⚠️，于是 `import web` 在导入期就炸，服务连 bind 的机会都没有
+    全是 ✅❌⚠️，于是课堂入口在导入期就炸（当时是 `import web`，现已并入 `app.py`），
+    服务连 bind 的机会都没有
     （实测事故）；`python run.py test/check/audit` 的输出被管道/重定向接走时
     同样会崩，而那条路径上根本没有 powershell 脚本来设 PYTHONUTF8。
 

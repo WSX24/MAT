@@ -1,7 +1,7 @@
 """控制台编码回归 —— 中文 Windows 上"课堂起不来"的那次事故。
 
 事故现场（修复前，环境里没有 PYTHONUTF8）：
-    python -c "import web"
+    python -c "import app"
     → UnicodeEncodeError: 'gbk' codec can't encode character '\u2705'
     → 导入期就崩，服务连 bind 的机会都没有（课程笔记里全是 ✅❌⚠️）。
 
@@ -31,16 +31,18 @@ def _gbk_env() -> dict[str, str]:
     return env
 
 
-def test_import_web_survives_a_gbk_console() -> None:
+def test_import_app_survives_a_gbk_console() -> None:
+    """入口从 web.py 换成 app 包（正式版唯一入口），要证的事没变：
+    GBK 控制台下把课堂入口导进来不许崩。"""
     proc = subprocess.run(
-        [sys.executable, "-c", "import web"],
-        cwd=str(ROOT),                       # web.py 的扁平导入只在本目录成立
+        [sys.executable, "-c", "import app"],
+        cwd=str(ROOT),                       # 扁平/包导入都只在本目录成立
         env=_gbk_env(),
         capture_output=True,
     )
     out = (proc.stdout + proc.stderr).decode("utf-8", errors="replace")
     assert proc.returncode == 0, (
-        "GBK 控制台下 `import web` 崩了 —— 课堂会因为一行 emoji 打印起不来。\n"
+        "GBK 控制台下 `import app` 崩了 —— 课堂会因为一行 emoji 打印起不来。\n"
         f"退出码 {proc.returncode}\n{out[-2000:]}"
     )
 

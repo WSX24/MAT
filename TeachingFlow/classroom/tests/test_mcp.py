@@ -661,48 +661,9 @@ async def test_rag_interrupt_memory_and_exception_visibility():
     print("[M6] query_rag 急件打断 · student_memory 异步写同步读 · 故障注入异常可见性 全部通过")
 
 
-# ===========================================================================
-# 7. Web 路由集成测试：POST /mcp 与 /api/dev/mcp
-# ===========================================================================
-
-async def test_web_mcp_http_endpoints():
-    from types import SimpleNamespace
-    import web
-
-    # 1) POST /mcp initialize
-    fake_req = SimpleNamespace(
-        body=lambda: asyncio.sleep(0, result=json.dumps({
-            "jsonrpc": "2.0",
-            "id": 101,
-            "method": "initialize",
-            "params": {"clientInfo": {"name": "Codex", "version": "0.2"}},
-        }).encode("utf-8"))
-    )
-    resp = await web.mcp_endpoint(fake_req)  # type: ignore[arg-type]
-    assert resp.status_code == 200
-    body = json.loads(resp.body.decode("utf-8"))
-    assert body["result"]["serverInfo"]["name"] == "classroom-mcp"
-
-    # 2) POST /mcp notifications/initialized -> 202
-    fake_notif = SimpleNamespace(
-        body=lambda: asyncio.sleep(0, result=json.dumps({
-            "jsonrpc": "2.0",
-            "method": "notifications/initialized",
-        }).encode("utf-8"))
-    )
-    resp_202 = await web.mcp_endpoint(fake_notif)  # type: ignore[arg-type]
-    assert resp_202.status_code == 202
-
-    # 3) GET / POST /api/dev/mcp
-    st = await web.api_dev_mcp()
-    assert st["mode"]["client_name"] == "Codex 0.2"
-    assert st["endpoint"] == "/mcp"
-    st2 = await web.api_dev_mcp_action({"action": "disconnect"})
-    assert st2["mode"]["driving"] is False
-    assert st2["mode"]["state"] == "unconnected"
-
-    print("[M7] Web HTTP 端点 POST /mcp 与 /api/dev/mcp 集成验证通过")
-
+# 注：原来第 7 节「POST /mcp 与 /api/dev/mcp 的 Web 路由集成」已随 web.py 一起删除
+# —— 那是旧原型 HTTP 层的东西，正式版没有 /mcp 端点（设计文档 §4 的契约里没有它）。
+# MCP 内核本身照旧由本文件 1~6 节覆盖；外部 agent 接入改走 `python run.py mcp-stdio`。
 
 ALL = [
     test_prerequisites_and_phase0,
@@ -711,7 +672,6 @@ ALL = [
     test_say_version_check_10_cases_and_queue_depth,
     test_dual_active_yield_playback_and_no_deadlock,
     test_rag_interrupt_memory_and_exception_visibility,
-    test_web_mcp_http_endpoints,
 ]
 
 

@@ -17,7 +17,6 @@ import asyncio
 import json
 import sys
 from pathlib import Path
-from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -25,8 +24,6 @@ import deck.store as deck_store  # noqa: E402
 import llm as llm_mod  # noqa: E402
 import run as run_mod  # noqa: E402
 import script_gen as sg  # noqa: E402
-import web  # noqa: E402
-from course import Course  # noqa: E402
 from script_gen import (  # noqa: E402
     LessonPlan,
     PlanUnit,
@@ -60,16 +57,6 @@ class FakeLLM:
 
 def _raw(units: list[dict]) -> str:
     return json.dumps({"units": units}, ensure_ascii=False)
-
-
-def _course(script) -> Course:
-    """只喂 script_graph_payload 真正读到的那几项（它是纯读函数，见 web.py 的注释）。"""
-    deck = SimpleNamespace(
-        deck_id="deck-test", title="测试课件", slide_count=3,
-        slides=[SimpleNamespace(index=i, title=f"第 {i + 1} 页") for i in range(3)],
-    )
-    return Course(script=script, mode="deck", deck=deck,
-                  plan=SimpleNamespace(source="manual"))
 
 
 def _plan_two_pages() -> LessonPlan:
@@ -182,7 +169,7 @@ def test_split_long_units_regenerates_summary_per_segment():
 
 
 # ===========================================================================
-# ③ 传导：计划层 → 运行期 → /graph 载荷
+# ③ 传导：计划层 → 运行期单元
 # ===========================================================================
 
 def test_build_lesson_script_carries_summary_to_runtime_units():
@@ -197,20 +184,21 @@ def test_build_lesson_script_carries_summary_to_runtime_units():
         "计划里没有就由运行期兜底（不是前端补）"
 
 
-def test_graph_payload_summary_verbatim_and_never_empty():
-    """/graph 的 nodes[].summary：有就逐字透传，没有也绝不返空串。
+def test_runtime_unit_summary_is_verbatim_and_never_empty():
+    """运行期单元的 summary：有就逐字透传，没有也绝不返空串。
 
     "永远非空"是前端不判空这个决定的前提：卡面上只有一行字，空串等于那一格看上去没内容，
-    而这一页看起来一切正常。
+    而这一页看起来一切正常。（旧 UI 的 /graph 载荷已随 web.py 删除，判据落在它的数据源——
+    运行期单元本身，载荷只是把这两个字段读出来。）
     """
     plan = LessonPlan(units=[
         PlanUnit(slide=0, text="旧计划：这一格没有总结。"),
         PlanUnit(slide=0, text="这一格有：讲 pack 的两个搭配。", summary="pack 的两个搭配"),
     ])
-    nodes = web.script_graph_payload(_course(build_lesson_script(DECK, plan)))["nodes"]
-    assert nodes[0]["summary"] == clip_summary("旧计划：这一格没有总结。"), "回落正文截断"
-    assert nodes[0]["summary"], "旧计划也必须有总结"
-    assert nodes[1]["summary"] == "pack 的两个搭配", "有 summary 就逐字等于 plan.json 里的值"
+    units = build_lesson_script(DECK, plan).units
+    assert units[0].summary == clip_summary("旧计划：这一格没有总结。"), "回落正文截断"
+    assert units[0].summary, "旧计划也必须有总结"
+    assert units[1].summary == "pack 的两个搭配", "有 summary 就逐字等于 plan.json 里的值"
 
 
 def test_runtime_unit_fills_blank_summary_on_construction():

@@ -39,9 +39,11 @@ from steps import s0_scope, s1_plan, s2_select, s3_unit, s4_outline, s5_render
 STOPS = ("map", "plan", "unit", "outline", "render")
 
 #: 课堂子系统：TeachingFlow/classroom（扁平绝对导入的独立应用）。
-#: bridge 需要它自己在 sys.path 里；起服务走**子进程**，绝不 import 它的 web.py ——
-#: 那会把 FastAPI / edge-tts 拖进"只想出片"的那一次运行。
+#: bridge 需要它自己在 sys.path 里；起服务走**子进程**（仓库根的 app.py），绝不 import
+#: 课堂那一整套 —— 那会把 FastAPI / edge-tts 拖进"只想出片"的那一次运行。
 CLASSROOM_DIR = Path(__file__).resolve().parent / "classroom"
+#: 课堂网页入口：仓库根的 app.py（= CLASSROOM_DIR.parent.parent / "app.py"）
+CLASSROOM_ENTRY = CLASSROOM_DIR.parent.parent / "app.py"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -104,8 +106,9 @@ def build_parser() -> argparse.ArgumentParser:
                          "mock 且未 --render 时跳过（那时本来就不产片）；"
                          "--classroom 一定跑，--no-classroom 永不跑")
     ap.add_argument("--classroom-serve", action="store_true",
-                    help="起课堂 Web 服务后退出（-- 之后的参数原样透传给 "
-                         "classroom/run.py；不需要一句话需求）")
+                    help="起课堂服务后退出：就是仓库根的 python app.py"
+                         "（-- 之后的参数原样透传给它，不认识的会被忽略；"
+                         "不需要一句话需求）")
     return ap
 
 
@@ -267,8 +270,8 @@ def _classroom_reason(args, enabled: bool) -> str:
 def _pop_classroom_serve(argv: list[str]):
     """把 --classroom-serve（及其后的透传参数）从命令行里剥出来；没这个开关返回 None。
 
-    必须发生在 build_parser().parse_args 之前：透传过去的参数（如 serve --no-browser）
-    是 classroom/run.py 的语言，flow 的 parser 一个都不认识，交给它只会报
+    必须发生在 build_parser().parse_args 之前：透传过去的参数（如 `--no-browser` `--port 8010`）
+    是**课堂入口 app.py** 的语言，flow 的 parser 一个都不认识，交给它只会报
     "unrecognized arguments"。`--` 只当分隔符本身，不透传。
     """
     flag = "--classroom-serve"
@@ -281,22 +284,26 @@ def _pop_classroom_serve(argv: list[str]):
 
 
 def _serve_classroom(argv: list[str]) -> int:
-    """起课堂 Web 服务，退出码原样透传。
+    """起课堂服务（仓库根的 app.py），退出码原样透传。
 
-    为什么走子进程而不是 import classroom/web.py：课堂是**另一个应用**（自己的
-    argparse、自己的 .env、自己的 FastAPI / edge-tts 依赖）。在这个进程里 import，
-    等于让"只想出片"的这次运行也得装齐它那一整套。
+    为什么走子进程而不是在这个进程里 import：课堂是**另一个应用**（自己的 argparse、
+    自己的 .env、自己的 FastAPI / edge-tts 依赖）。在这里 import，等于让"只想出片"
+    的这次运行也得装齐它那一整套。
+
+    为什么是 `app.py` 而不是 `classroom/run.py`：正式版只有一个网页入口（设计文档 §2），
+    `run.py` 已收敛为备课/运维脚本、`serve` 子命令随旧 UI 删除。这里的参数透传语义不变：
+    `--` 之后原样交给 app.py，它不认识的就忽略（不因此崩）。
     """
-    script = CLASSROOM_DIR / "run.py"
-    if not script.is_file():
-        print(f"❌ 找不到课堂启动脚本：{script}")
+    entry = CLASSROOM_ENTRY                  # 仓库根 app.py（CLASSROOM_DIR 的上两级）
+    if not entry.is_file():
+        print(f"❌ 找不到课堂入口：{entry}")
         return 1
-    cmd = [sys.executable, str(script), *argv]
-    extra = " ".join(argv) if argv else "（默认 serve）"
-    print(f"▶ 课堂服务：{script} {extra}")
-    print(f"  工作目录：{CLASSROOM_DIR}")
+    cmd = [sys.executable, str(entry), *argv]
+    extra = " ".join(argv) if argv else "（无额外参数）"
+    print(f"▶ 课堂服务：{entry} {extra}")
+    print(f"  工作目录：{entry.parent}")
     try:
-        return subprocess.run(cmd, cwd=str(CLASSROOM_DIR)).returncode
+        return subprocess.run(cmd, cwd=str(entry.parent)).returncode
     except OSError as exc:
         print(f"❌ 课堂服务起不来：{type(exc).__name__}: {exc}")
         return 1
@@ -328,7 +335,8 @@ def _run_classroom(produced: list[str], units: dict[str, str],
         if str(CLASSROOM_DIR) not in sys.path:
             # 课堂是扁平绝对导入（from config import …），得让它自己的目录在路径上
             sys.path.insert(0, str(CLASSROOM_DIR))
-        import bridge        # 惰性：不 import web.py，也就不需要 FastAPI/edge-tts
+        # 惰性导入：只装 bridge 这条最小依赖，不把 FastAPI / edge-tts 拖进"只想出片"的这次运行
+        import bridge
     except Exception as exc:
         message = f"{type(exc).__name__}: {exc}"
         print(f"⚠️ 课堂备课不可用：{message}")

@@ -538,21 +538,25 @@ def test_parse_plan_routes_total_nodes_is_enforced():
 # ===========================================================================
 
 def _real_pair():
-    from deck.store import list_decks, load_deck, plan_json
-    from script_gen import LessonPlan
+    """入库真实课件（**按固定 deck_id 选**，见 tests/fixtures.real_deck_id 的注释）。
 
-    for row in list_decks():
-        deck_id = str(row.get("deck_id") or "")
-        if not deck_id or not row.get("has_plan"):
-            continue
+    不取 list_decks() 的第一份：decks/ 下多一份 import-xxxxxxx 就会换掉被测课件，
+    红出来的是"42 页对不上 38 页"，与这条用例要证的事毫无关系。
+    """
+    from deck.store import load_deck, plan_json
+    from script_gen import LessonPlan
+    from tests.fixtures import real_deck_id
+
+    deck_id = real_deck_id()
+    if deck_id:
         try:
             deck = load_deck(deck_id)
             plan = LessonPlan.load(plan_json(deck_id))
-        except Exception:
-            continue
+        except Exception as exc:
+            pytest.skip(f"真实课件 {deck_id} 读不出来（{type(exc).__name__}: {exc}），跳过实测")
         if plan.units:
             return deck, plan
-    pytest.skip("decks/ 下没有可用的真实课件，跳过实测")
+    pytest.skip("decks/ 下没有入库的真实课件（Unit_2_Sweet_Home… / 高一物理第一课…），跳过实测")
 
 
 def test_real_deck_routes_are_sparse_and_aligned_with_the_script():

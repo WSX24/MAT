@@ -48,7 +48,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from config import load_settings  # noqa: E402
 from course import load_course  # noqa: E402
-from deck.store import list_decks, plan_json  # noqa: E402
+from deck.store import plan_json  # noqa: E402
 from director.decider import Director, RuleDecider  # noqa: E402
 from director.pool import CandidatePool  # noqa: E402
 from machine import SpeechSeg  # noqa: E402
@@ -68,16 +68,22 @@ MAX_ROUTE_DENSITY = 0.10
 
 
 def _real_course():
-    """decks/ 下第一份"既有 deck.json 又有 plan.json"的真实课件（离线，不调模型）。"""
-    for row in list_decks():
-        deck_id = str(row.get("deck_id") or "")
-        if not deck_id or not row.get("has_plan"):
-            continue
+    """入库真实课件（**按固定 deck_id 选**，离线，不调模型）。
+
+    不取 list_decks() 的第一份：decks/ 下多一份 import-xxxxxxx 就会换掉被测课件，
+    规模断言（≥100 单元 / ≥20 页）会红在一份 4 页的试导入课件上。
+    """
+    from tests.fixtures import real_deck_id
+
+    deck_id = real_deck_id()
+    if deck_id:
         settings = dataclasses.replace(load_settings(), deck_id=deck_id, pptx_file="")
         course = load_course(settings)
         if course.mode == "deck" and course.script.units:
             return course
-    pytest.skip("decks/ 下没有可用的真实课件（deck.json + plan.json），跳过规模验证")
+        pytest.skip(f"真实课件 {deck_id} 装配不出课堂（mode={course.mode}），跳过规模验证")
+    pytest.skip("decks/ 下没有入库的真实课件（Unit_2_Sweet_Home… / 高一物理第一课…），"
+                "跳过规模验证")
 
 
 def _pick_targets(units, want: int) -> list[str]:
@@ -132,10 +138,12 @@ def _assert_preset_routes_are_real(script, plan_doc: dict) -> list:
 async def test_real_deck_full_class_runs_at_scale_with_preset_routes():
     """真实课件跑一整节课：预置路线合法且稀疏、变体已停产、42 页仍然收尾干净。"""
     # 先算 sha1、再加载：这样"加载时不许改盘"与"上课不许改盘"一次就验完
-    deck_id = next((str(r["deck_id"]) for r in list_decks()
-                    if r.get("deck_id") and r.get("has_plan")), "")
+    from tests.fixtures import real_deck_id
+
+    deck_id = real_deck_id()
     if not deck_id:
-        pytest.skip("decks/ 下没有已备好 plan.json 的真实课件，跳过规模验证")
+        pytest.skip("decks/ 下没有入库的真实课件（Unit_2_Sweet_Home… / 高一物理第一课…），"
+                    "跳过规模验证")
     plan_file = plan_json(deck_id)
     sha_before = hashlib.sha1(plan_file.read_bytes()).hexdigest()
     plan_doc = json.loads(plan_file.read_text(encoding="utf-8"))

@@ -268,3 +268,31 @@ def make_pptx(path: str | Path) -> Path:
     out.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(out))
     return out
+
+
+# ===========================================================================
+# 入库真实课件的**固定选择**（见 REAL_DECK_PREFIXES 的注释）
+# ===========================================================================
+
+#: 入库的两份真实课件（decks/ 下 deck.json + plan.json 齐全）。**按固定前缀选**，
+#: 绝不"取 list_decks() 的第一份"：decks/ 下随时会多出 import-xxxxxxx（导入课件、手工
+#: 试跑都会留下），而 list_decks() 按目录名排序 —— 一次导入就能插到前面，把真实课件类
+#: 用例一起打红，且红的是"42 页对不上 38 页"这种谁也看不懂的断言。
+#: 顺序即优先级；第一份正是这些用例的断言口径（42 页 / 177 格 / 14 条 routes）。
+REAL_DECK_PREFIXES = ("Unit_2_Sweet_Home", "高一物理第一课_运动的描述")
+
+
+def real_deck_id(*, require_plan: bool = True) -> str:
+    """按 REAL_DECK_PREFIXES 的顺序挑一份入库真实课件；一份都没有返回 ""（调用方 skip）。"""
+    from deck.store import list_decks
+
+    rows = sorted(list_decks(), key=lambda r: str(r.get("deck_id") or ""))
+    for prefix in REAL_DECK_PREFIXES:
+        for row in rows:
+            deck_id = str(row.get("deck_id") or "")
+            if not deck_id or not deck_id.startswith(prefix):
+                continue
+            if require_plan and not row.get("has_plan"):
+                continue
+            return deck_id
+    return ""

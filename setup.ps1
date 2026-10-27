@@ -70,7 +70,8 @@ Write-Host @"
     python flow.py "我想系统学习高中语文" --no-input
     python flow.py "…" --mock --to plan        # 不花 token 验链路
 
-    课堂子系统（流水线出片后会自动备课，也可单独起服务）：
-    powershell -ExecutionPolicy Bypass -File .\start-classroom.ps1
-    详见 TeachingFlow\classroom\README.md
+    课堂（学生自学）正式版 —— 流水线出片后会自动备课，也可单独起服务：
+    powershell -ExecutionPolicy Bypass -File .\start-app.ps1       # → http://127.0.0.1:8000
+    # 或：python app.py   （只起服务，不开浏览器）
+    详见 TeachingFlow\classroom\README.md 与 TeachingFlow\classroom\docs\使用说明.md
 "@ -ForegroundColor Gray
