@@ -1,17 +1,82 @@
-# 运行产物
+# ============================================================================
+# MAT · 多智能体教育系统 —— 入库范围规则
+#
+# 原则只有一条：**产物、密钥、缓存、本机状态不入库；代码、模板、文档、教具入库。**
+# 每条规则下面写清"为什么"，因为下一个改这里的人需要知道代价：
+#   漏排一条 → 把 1MB 级派生数据或真 Key 提交上去；
+#   误排一条 → 新 clone 起不来，而且改完还以为是环境问题。
+# 第 9 节是反向清单（故意入库、不要加规则），改之前先读那一节。
+# ============================================================================
+
+# ── 1. 密钥（任意深度）──────────────────────────────────────────────────────
+# .env 无前导斜杠 = 任意层级匹配：根 .env / PPT-Agent/.env / classroom/.env 一并排除。
+.env
+# 模板必须入库：只有装了真 Key 的文件才排除。这条否定规则是防呆——
+# 若将来有人把上面写成 .env*，模板会被一起吞掉，新用户就无从知道要填哪些变量。
+!.env.example
+# 显式冗余：上面的 .env 已覆盖，保留一行是给"这里踩过坑"留个记号。
+PPT-Agent/.env
+
+# ── 2. Python / 测试缓存 ────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+# 根目录与 TeachingFlow/ 下各有一份。pytest 会在里面自建 .gitignore 把它藏起来，
+# 但那是运行时产物——一旦被清掉 git status 立刻变脏，所以自己排掉。
+.pytest_cache/
+
+# ── 3. 流水线运行产物 ───────────────────────────────────────────────────────
+# TeachingFlow/.gitignore 已声明同名规则；这里保留仓库级兜底，
+# 防止子目录那份被误删后，几十 MB 的 run 静默进入提交。
 TeachingFlow/runs/
 TeachingFlow/.work/
 TeachingFlow/state/
 TeachingFlow/dist/
 TeachingFlow/recovered/
-# 加密 material
-.env
-PPT-Agent/.env
-# python
-__pycache__/
-*.pyc
-# 第三方 skill（由 setup.ps1 拉取）
+
+# ── 4. 课堂运行时产物与二进制 ───────────────────────────────────────────────
+# .env 与 __pycache__/ 已由第 1、2 节在任意深度覆盖，此处不重复。
+TeachingFlow/classroom/.cache/
+TeachingFlow/classroom/decks/*/media/
+# 源 pptx 是二进制教具且体积大；运行时真正读的是解析结果 deck.json。
+TeachingFlow/classroom/pptx/*.pptx
+*.log
+# 这两个是运行期生成物：run.py 每次起服务都按本机 host:port 与解释器重写一遍。
+# 入库的后果是"任何人跑一次服务 git status 就脏"，而提交里那份路径/端口只对作者
+# 那台机器有效——新用户拿去用只会指向不存在的解释器。
+TeachingFlow/classroom/mcp-access-prompt.md
+TeachingFlow/classroom/mcp-config.json
+# 首次本地备课写出的中间产物：内含机器绝对路径，同样不该入库。
+TeachingFlow/classroom/decks/*/source.txt
+TeachingFlow/classroom/decks/*/plan.bak.json
+
+# ── 5. 本机导入的课件解析产物 ───────────────────────────────────────────────
+# 上传/扫描 pptx 时自动生成，单份 deck.json 实测 1.3MB、plan.json 0.14MB，
+# 且与入库教具内容重复。入库的两份教具按课程名命名（见第 9 节），
+# 不匹配本规则，因此不会被误伤。
+TeachingFlow/classroom/decks/import*/
+
+# ── 6. 出片引擎运行报告 ─────────────────────────────────────────────────────
+# pipeline.py 每次运行写 report_*.json / last_report.json，内含本机路径与错误栈。
+PPT-Agent/runs/
+PPT-Agent/last_report.json
+
+# ── 7. 第三方与依赖 ─────────────────────────────────────────────────────────
+# ppt-master 是外部 skill，由 setup.ps1 git clone 拉取，不是本仓库代码。
 ppt-master/
-# 系统文件
+TeachingFlow/classroom/webapp/node_modules/
+
+# ── 8. 系统与办公文件 ───────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+~$*
+
+# ── 9. 故意入库，不要加规则 ─────────────────────────────────────────────────
+# 反向清单：以下内容看起来像产物，但按设计应当入库。
+#   · TeachingFlow/classroom/webapp/dist/    构建产物，但 README 约定入库，
+#                                            新 clone 免构建即可起服务（现 4 个文件在库）
+#   · TeachingFlow/classroom/decks/<课程名>/  两份测试固定 fixture 的 deck.json / plan.json
+#                                            （Unit_2_Sweet_Home…、高一物理第一课…），
+#                                            测试按固定前缀选取，缺了就 skip
+#   · docs/                                  文档与中期答辩报告（含 8 页逐页稿）
+#   · .env.example / *.env.example           配置模板，见第 1 节否定规则
+#   · TeachingFlow/fixtures/                 --mock 用的假 LLM 回复，自检依赖它们

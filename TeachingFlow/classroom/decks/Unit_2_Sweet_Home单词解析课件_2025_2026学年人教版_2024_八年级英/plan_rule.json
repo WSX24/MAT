@@ -1,0 +1,6569 @@
+{
+ "deck_id": "Unit_2_Sweet_Home单词解析课件_2025_2026学年人教版_2024_八年级英",
+ "source": "rule",
+ "model": "",
+ "session_goals": [
+  "黑体单词用法详解",
+  "词组搭配剖析",
+  "词汇练习题",
+  "答案解析与总结"
+ ],
+ "units": [
+  {
+   "slide": 0,
+   "text": "Unit 2 Sweet Home\n 重点词汇短语解析。人教版八上（2024）。",
+   "anchors": [
+    {
+     "element_id": "s01-sh01-p01",
+     "text_hint": "Unit 2 Sweet Home\n 重点词汇短",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-p01",
+     "text_hint": "人教版八上（2024）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s01-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s01-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P01-Unit2SweetHo"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 1,
+   "text": "目录。黑体单词用法详解。词组搭配剖析。01。02。词汇练习题。答案解析与总结。03。04。",
+   "anchors": [
+    {
+     "element_id": "s02-sh01-p01",
+     "text_hint": "目录",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh03-p01",
+     "text_hint": "黑体单词用法详解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh06-p01",
+     "text_hint": "词组搭配剖析",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh02-p01",
+     "text_hint": "01",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-p01",
+     "text_hint": "02",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh08-p01",
+     "text_hint": "词汇练习题",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-p01",
+     "text_hint": "答案解析与总结",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh07-p01",
+     "text_hint": "03",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh09-p01",
+     "text_hint": "04",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P02-目录"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 2,
+   "text": "01 黑体单词用法详解。",
+   "anchors": [
+    {
+     "element_id": "s03-sh09-p01",
+     "text_hint": "01 黑体单词用法详解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P03-01黑体单词用法详解"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 3,
+   "text": "1.pack 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1216548724.jpg?uid=386&timestamp=1745810910&sign=21ccf96ba7fd70187ef0032163609eea）。音标：/pæk/   词性：v.。",
+   "anchors": [
+    {
+     "element_id": "s04-sh01-p01",
+     "text_hint": "1.pack 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p01",
+     "text_hint": "音标：/pæk/   词性：v.",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 3,
+   "text": "释义：打包；收拾。用法：可单独使用或与 up 搭配，强调整理物品准备出行或存放。搭配：pack sth.（打包某物）；。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p02",
+     "text_hint": "释义：打包；收拾",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p03",
+     "text_hint": "用法：可单独使用或与 up 搭配，强调整理物品准",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p04",
+     "text_hint": "搭配：pack sth.（打包某物）；",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 3,
+   "text": "pack up（打包；收拾行李）pack for（为…… 打包）。例句：I need to pack my clothes for the trip.。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p05",
+     "text_hint": "pack up（打包；收拾行李）pack for",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p06",
+     "text_hint": "例句：I need to pack my clo",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 3,
+   "text": "（我需要为旅行打包衣服。）。It's time to pack up and leave.。（是时候收拾行李离开了。）。She is packing her suitcase for the business trip.。（她正在为商务旅行收拾行李箱。）。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-p07",
+     "text_hint": "（我需要为旅行打包衣服。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p08",
+     "text_hint": "It's time to pack up and",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p09",
+     "text_hint": "（是时候收拾行李离开了。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p10",
+     "text_hint": "She is packing her suitc",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-p11",
+     "text_hint": "（她正在为商务旅行收拾行李箱。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh02-p10"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh02-p11"
+    }
+   ],
+   "kp": [
+    "P04-1pack用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 4,
+   "text": "2.sort 用法讲解。音标：/sɔːt/  词性：v. / n.。动词释义：把…… 分类；整理。",
+   "anchors": [
+    {
+     "element_id": "s05-sh01-p01",
+     "text_hint": "2.sort 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p01",
+     "text_hint": "音标：/sɔːt/  词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p02",
+     "text_hint": "动词释义：把…… 分类；整理",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 4,
+   "text": "动词用法：后接物品名词，说明分类整理对象。动词搭配：sort sth. into...（把某物分类为……）。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p03",
+     "text_hint": "动词用法：后接物品名词，说明分类整理对象。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p04",
+     "text_hint": "动词搭配：sort sth. into...（把",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 4,
+   "text": "sort out（整理；挑出）。名词释义：种类。名词用法：常与 of 搭配修饰名词。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p05",
+     "text_hint": "sort out（整理；挑出）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p06",
+     "text_hint": "名词释义：种类",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p07",
+     "text_hint": "名词用法：常与 of 搭配修饰名词。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 4,
+   "text": "名词搭配：a sort of（一种）；all sorts of（各种各样的）。例句：She sorted the books into different categories.。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p08",
+     "text_hint": "名词搭配：a sort of（一种）；all s",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p09",
+     "text_hint": "例句：She sorted the books ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 4,
+   "text": "（她把书分类整理。）。There are all sorts of fruits in the market.。（市场上有各种各样的水果。）。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-p10",
+     "text_hint": "（她把书分类整理。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p11",
+     "text_hint": "There are all sorts of f",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-p12",
+     "text_hint": "（市场上有各种各样的水果。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh02-p10"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh02-p11"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh02-p12"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 4,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/version23/VCG41165735305.jpg?uid=386&timestamp=1745810825&sign=1532f3f0d682760aa7ef2c40a2c0ba2f）。",
+   "anchors": [
+    {
+     "element_id": "s05-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh03"
+    }
+   ],
+   "kp": [
+    "P05-2sort用法讲解-6"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 5,
+   "text": "3.yet 用法讲解。音标：/jet/  词性：adv. / conj.。副词释义：（用于否定句和疑问句）还。",
+   "anchors": [
+    {
+     "element_id": "s06-sh01-p01",
+     "text_hint": "3.yet 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p01",
+     "text_hint": "音标：/jet/  词性：adv. / conj",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p02",
+     "text_hint": "副词释义：（用于否定句和疑问句）还",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P06-3yet用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 5,
+   "text": "副词用法：常用于现在完成时否定句和疑问句，置于句末。连词释义：但是。连词用法：连接两个句子，表转折。",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-p03",
+     "text_hint": "副词用法：常用于现在完成时否定句和疑问句，置于句",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p04",
+     "text_hint": "连词释义：但是",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p05",
+     "text_hint": "连词用法：连接两个句子，表转折。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P06-3yet用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 5,
+   "text": "例句：I haven't finished my homework yet.（我还没完成作业。）。",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-p06",
+     "text_hint": "例句：I haven't finished my",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P06-3yet用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 5,
+   "text": "He is young, yet he is very wise.。（他很年轻，但很聪明。）。",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-p07",
+     "text_hint": "He is young, yet he is v",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-p08",
+     "text_hint": "（他很年轻，但很聪明。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P06-3yet用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 5,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/veer/400/new/VCG41N472292551.jpg?uid=386&timestamp=1745810763&sign=76a2c2d9fe3ca84a998b302af2ce5edc）。",
+   "anchors": [
+    {
+     "element_id": "s06-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh03"
+    }
+   ],
+   "kp": [
+    "P06-3yet用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 6,
+   "text": "4.invite 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1533466734.jpg?uid=386&timestamp=1745810729&sign=524feeea8a7066ebe80f227e480f6ef8）。",
+   "anchors": [
+    {
+     "element_id": "s07-sh01-p01",
+     "text_hint": "4.invite 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh03"
+    }
+   ],
+   "kp": [
+    "P07-4invite用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 6,
+   "text": "音标：/ɪn'vaɪt/ 词性：v.。释义：邀请。用法：可接双宾语或用 invite sb. to...（邀请某人去某地）结构。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p01",
+     "text_hint": "音标：/ɪn'vaɪt/ 词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p02",
+     "text_hint": "释义：邀请",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p03",
+     "text_hint": "用法：可接双宾语或用 invite sb. to",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P07-4invite用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 6,
+   "text": "搭配：invite sb. to do sth.（邀请某人做某事）；。invite sb. to sp.（邀请某人去某地）。invite sb. over（邀请某人过来）。例句：I invited my friends to my birthday party.。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p04",
+     "text_hint": "搭配：invite sb. to do sth.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p05",
+     "text_hint": "invite sb. to sp.（邀请某人去某",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p06",
+     "text_hint": "invite sb. over（邀请某人过来）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p07",
+     "text_hint": "例句：I invited my friends ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s07-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P07-4invite用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 6,
+   "text": "（我邀请朋友们来参加我的生日派对。）；。He invited me to have dinner with him.。（他邀请我和他一起吃晚餐。）。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-p08",
+     "text_hint": "（我邀请朋友们来参加我的生日派对。）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p09",
+     "text_hint": "He invited me to have di",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-p10",
+     "text_hint": "（他邀请我和他一起吃晚餐。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P07-4invite用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 7,
+   "text": "5.add 用法讲解。音标：/æd/  词性：v.。释义：添加；加。用法：常与 to 搭配，表示添加到…… 中；也可单独表示相加。",
+   "anchors": [
+    {
+     "element_id": "s08-sh01-p01",
+     "text_hint": "5.add 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p01",
+     "text_hint": "音标：/æd/  词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p02",
+     "text_hint": "释义：添加；加",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p03",
+     "text_hint": "用法：常与 to 搭配，表示添加到…… 中；也可",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s08-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P08-5add用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 7,
+   "text": "搭配：add sth. to sth.（把…… 加入……）。add up（把…… 加起来）；。add up to（总计达）。例句：Add some sugar to the coffee.（在咖啡里加些糖。）。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-p04",
+     "text_hint": "搭配：add sth. to sth.（把…… ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p05",
+     "text_hint": "add up（把…… 加起来）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p06",
+     "text_hint": "add up to（总计达）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p07",
+     "text_hint": "例句：Add some sugar to the",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s08-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s08-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P08-5add用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 7,
+   "text": "Add up these numbers and tell me the result.。（把这些数字加起来，告诉我结果。）。（配图：图片 8）。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-p08",
+     "text_hint": "Add up these numbers and",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh02-p09",
+     "text_hint": "（把这些数字加起来，告诉我结果。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh03",
+     "text_hint": "（配图：图片 8）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s08-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh03"
+    }
+   ],
+   "kp": [
+    "P08-5add用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 8,
+   "text": "6.borrow 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N974517292.jpg?uid=386&timestamp=1745810591&sign=648ba65458c0e6e676a0027e2f104e12）。音标：/'bɒrəʊ/ 词性：v.。",
+   "anchors": [
+    {
+     "element_id": "s09-sh01-p01",
+     "text_hint": "6.borrow 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh02-p01",
+     "text_hint": "音标：/'bɒrəʊ/ 词性：v.",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P09-6borrow用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 8,
+   "text": "释义：借。用法：从主语角度表示借入，常与 from 搭配。搭配：borrow sth. from sb.（从某人那里借某物）。",
+   "anchors": [
+    {
+     "element_id": "s09-sh02-p02",
+     "text_hint": "释义：借",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh02-p03",
+     "text_hint": "用法：从主语角度表示借入，常与 from 搭配。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh02-p04",
+     "text_hint": "搭配：borrow sth. from sb.（",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P09-6borrow用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 8,
+   "text": "例句：I borrowed a book from the library.。（我从图书馆借了一本书。）。Can I borrow your pen?（我可以借你的钢笔吗？）。",
+   "anchors": [
+    {
+     "element_id": "s09-sh02-p05",
+     "text_hint": "例句：I borrowed a book fro",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh02-p06",
+     "text_hint": "（我从图书馆借了一本书。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh02-p07",
+     "text_hint": "Can I borrow your pen?（我",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s09-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P09-6borrow用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 9,
+   "text": "7.plan 用法讲解。音标：/plæn/  词性：v. / n.。动词释义：策划；打算。",
+   "anchors": [
+    {
+     "element_id": "s10-sh01-p01",
+     "text_hint": "7.plan 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p01",
+     "text_hint": "音标：/plæn/  词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p02",
+     "text_hint": "动词释义：策划；打算",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P10-7plan用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 9,
+   "text": "动词用法：后接名词、代词或动词不定式。动词搭配：plan to do sth.（计划做某事）；。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p03",
+     "text_hint": "动词用法：后接名词、代词或动词不定式。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p04",
+     "text_hint": "动词搭配：plan to do sth.（计划做",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P10-7plan用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 9,
+   "text": "plan for（为…… 做计划）。名词释义：计划；方案。名词用法：常与 make, have 等动词搭配。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p05",
+     "text_hint": "plan for（为…… 做计划）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p06",
+     "text_hint": "名词释义：计划；方案",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p07",
+     "text_hint": "名词用法：常与 make, have 等动词搭配",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P10-7plan用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 9,
+   "text": "名词搭配：make a plan（制定计划）；have a plan（有一个计划）。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p08",
+     "text_hint": "名词搭配：make a plan（制定计划）；h",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P10-7plan用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 9,
+   "text": "例句：We plan to go on a trip next month.。（我们计划下个月去旅行。）。I have a plan to improve my English.。（我有一个提高英语的计划。）。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-p09",
+     "text_hint": "例句：We plan to go on a tr",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p10",
+     "text_hint": "（我们计划下个月去旅行。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p11",
+     "text_hint": "I have a plan to improve",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-p12",
+     "text_hint": "（我有一个提高英语的计划。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh02-p10"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh02-p11"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh02-p12"
+    }
+   ],
+   "kp": [
+    "P10-7plan用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 9,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/veer/400/new/VCG41N639127592.jpg?uid=386&timestamp=1745810518&sign=f735b5fafd837036f694486b5705d7b8）。",
+   "anchors": [
+    {
+     "element_id": "s10-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh03"
+    }
+   ],
+   "kp": [
+    "P10-7plan用法讲解-6"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 10,
+   "text": "8.treasure 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG211331605315.jpg?uid=386&timestamp=1745810468&sign=d8a80c02e22832ce491c63795518dba3）。",
+   "anchors": [
+    {
+     "element_id": "s11-sh01-p01",
+     "text_hint": "8.treasure 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh03"
+    }
+   ],
+   "kp": [
+    "P11-8treasure用法讲"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 10,
+   "text": "音标：/'treʒə(r)/ 词性：v. / n.。名词释义：宝物；财富。名词用法：作可数或不可数名词。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p01",
+     "text_hint": "音标：/'treʒə(r)/ 词性：v. / n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p02",
+     "text_hint": "名词释义：宝物；财富",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p03",
+     "text_hint": "名词用法：作可数或不可数名词。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s11-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P11-8treasure用法讲-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 10,
+   "text": "名词搭配：buried treasure（埋藏的宝藏）；。treasure hunt（寻宝游戏）treasure chest（宝箱）。动词释义：珍视。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p04",
+     "text_hint": "名词搭配：buried treasure（埋藏的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p05",
+     "text_hint": "treasure hunt（寻宝游戏）treas",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p06",
+     "text_hint": "动词释义：珍视",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s11-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P11-8treasure用法讲-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 10,
+   "text": "动词用法：后接名词或代词作宾语。动词搭配：treasure sth.（珍视某物）。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p07",
+     "text_hint": "动词用法：后接名词或代词作宾语。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh02-p08",
+     "text_hint": "动词搭配：treasure sth.（珍视某物）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P11-8treasure用法讲-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 10,
+   "text": "例句：The pirates searched for the hidden treasure.（海盗们寻找隐藏的宝藏。）。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p09",
+     "text_hint": "例句：The pirates searched ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P11-8treasure用法讲-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 10,
+   "text": "I treasure the memories of our time together.（我珍视我们在一起的回忆。）。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-p10",
+     "text_hint": "I treasure the memories ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P11-8treasure用法讲-6"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 11,
+   "text": "9.hunt 用法讲解。音标：/hʌnt/  词性：v. / n.。动词释义：搜寻；打猎。",
+   "anchors": [
+    {
+     "element_id": "s12-sh01-p01",
+     "text_hint": "9.hunt 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p01",
+     "text_hint": "音标：/hʌnt/  词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p02",
+     "text_hint": "动词释义：搜寻；打猎",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s12-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s12-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P12-9hunt用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 11,
+   "text": "动词用法：可及物或不及物，hunt for 表示搜寻具体事物。动词搭配：hunt for（搜寻；寻找）；hunt sth.（猎杀某物；搜寻某物） hunt down（追捕；搜寻到）。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p03",
+     "text_hint": "动词用法：可及物或不及物，hunt for 表示",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p04",
+     "text_hint": "动词搭配：hunt for（搜寻；寻找）；hun",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s12-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P12-9hunt用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 11,
+   "text": "名词释义：搜寻；狩猎。名词用法：常与 for 搭配。名词搭配：a hunt for（对…… 的搜寻）。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p05",
+     "text_hint": "名词释义：搜寻；狩猎",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p06",
+     "text_hint": "名词用法：常与 for 搭配。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-p07",
+     "text_hint": "名词搭配：a hunt for（对…… 的搜寻）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s12-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s12-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P12-9hunt用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 11,
+   "text": "例句：They hunted for food in the forest.（他们在森林里寻找食物。）。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p08",
+     "text_hint": "例句：They hunted for food ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P12-9hunt用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 11,
+   "text": "The hunt for the missing child is still going on.（寻找失踪孩子的行动仍在继续。）。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-p09",
+     "text_hint": "The hunt for the missing",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P12-9hunt用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 11,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG211447953314.jpg?uid=386&timestamp=1745810392&sign=d97e113893667af822f0c6372e4c82c0）。",
+   "anchors": [
+    {
+     "element_id": "s12-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh03"
+    }
+   ],
+   "kp": [
+    "P12-9hunt用法讲解-6"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 12,
+   "text": "10.lift 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/version23/VCG41471582002.jpg?uid=386&timestamp=1745810347&sign=d7c070ed679c5401c74c7ea08d40b882）。",
+   "anchors": [
+    {
+     "element_id": "s13-sh01-p01",
+     "text_hint": "10.lift 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh03"
+    }
+   ],
+   "kp": [
+    "P13-10lift用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 12,
+   "text": "音标：/lɪft/   词性：v. / n.。动词释义：举起；抬起；（尤指免费）搭便车。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p01",
+     "text_hint": "音标：/lɪft/   词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p02",
+     "text_hint": "动词释义：举起；抬起；（尤指免费）搭便车",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P13-10lift用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 12,
+   "text": "动词用法：表示举起时，宾语为重物；表示搭便车时，常与 give 搭配。动词搭配：lift sth.（举起某物）；give sb. a lift（开车顺便送某人）。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p03",
+     "text_hint": "动词用法：表示举起时，宾语为重物；表示搭便车时，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p04",
+     "text_hint": "动词搭配：lift sth.（举起某物）；giv",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P13-10lift用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 12,
+   "text": "名词释义：搭便车；电梯。名词用法：表示搭便车时，与 give, get 等动词搭配；表示电梯时，与 in, take 等动词搭配。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p05",
+     "text_hint": "名词释义：搭便车；电梯",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh02-p06",
+     "text_hint": "名词用法：表示搭便车时，与 give, get ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P13-10lift用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 12,
+   "text": "名词搭配：get a lift（搭便车）；in the lift（在电梯里）；take the lift（乘电梯）。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p07",
+     "text_hint": "名词搭配：get a lift（搭便车）；in ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P13-10lift用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 12,
+   "text": "例句：He lifted the heavy box with ease.（他轻松地举起了那个重箱子。）。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p08",
+     "text_hint": "例句：He lifted the heavy b",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P13-10lift用法讲解-6"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 12,
+   "text": "Can you give me a lift to the station?（你能顺便送我去车站吗？）。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-p09",
+     "text_hint": "Can you give me a lift t",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P13-10lift用法讲解-7"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 13,
+   "text": "11.until 用法讲解。音标：/ən'tɪl/   词性：prep. / conj.。",
+   "anchors": [
+    {
+     "element_id": "s14-sh01-p01",
+     "text_hint": "11.until 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh02-p01",
+     "text_hint": "音标：/ən'tɪl/   词性：prep. /",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s14-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P14-11until用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 13,
+   "text": "释义：到…… 时；直到…… 为止。用法：作介词时，后接时间名词；作连词时，引导时间状语从句。",
+   "anchors": [
+    {
+     "element_id": "s14-sh02-p02",
+     "text_hint": "释义：到…… 时；直到…… 为止",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh02-p03",
+     "text_hint": "用法：作介词时，后接时间名词；作连词时，引导时间",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s14-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P14-11until用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 13,
+   "text": "搭配：not...until...（直到…… 才……）。例句：I will wait until he comes back.（我会一直等到他回来。）。",
+   "anchors": [
+    {
+     "element_id": "s14-sh02-p04",
+     "text_hint": "搭配：not...until...（直到…… 才",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh02-p05",
+     "text_hint": "例句：I will wait until he ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s14-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P14-11until用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 13,
+   "text": "He didn't go to bed until his mother came home.。（直到他妈妈回家他才睡觉。）。",
+   "anchors": [
+    {
+     "element_id": "s14-sh02-p06",
+     "text_hint": "He didn't go to bed unti",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh02-p07",
+     "text_hint": "（直到他妈妈回家他才睡觉。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s14-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P14-11until用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 13,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N898707710.jpg?uid=386&timestamp=1745810301&sign=a29ce281af42bd8d7565920d74ea48ee）。",
+   "anchors": [
+    {
+     "element_id": "s14-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh03"
+    }
+   ],
+   "kp": [
+    "P14-11until用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 14,
+   "text": "12.dead 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/veer/400/new/VCG41N603989728.jpg?uid=386&timestamp=1745810221&sign=7db3840763881c4f53a6f4d13f214ad6）。",
+   "anchors": [
+    {
+     "element_id": "s15-sh01-p01",
+     "text_hint": "12.dead 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh03"
+    }
+   ],
+   "kp": [
+    "P15-12dead用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 14,
+   "text": "音标：/ded/  词性：adj.。释义：不运行的；死的。用法：修饰名词，描述事物状态或生命状态。",
+   "anchors": [
+    {
+     "element_id": "s15-sh02-p01",
+     "text_hint": "音标：/ded/  词性：adj.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p02",
+     "text_hint": "释义：不运行的；死的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p03",
+     "text_hint": "用法：修饰名词，描述事物状态或生命状态。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s15-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P15-12dead用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 14,
+   "text": "搭配：a dead tree（枯树）；dead leaves（枯叶）；。be dead（死亡；失效）。例句：The flowers are dead because I forgot to water them.。",
+   "anchors": [
+    {
+     "element_id": "s15-sh02-p04",
+     "text_hint": "搭配：a dead tree（枯树）；dead ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p05",
+     "text_hint": "be dead（死亡；失效）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p06",
+     "text_hint": "例句：The flowers are dead ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s15-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s15-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P15-12dead用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 14,
+   "text": "（这些花死了，因为我忘了浇水。）。The battery is dead.（电池没电了。）。",
+   "anchors": [
+    {
+     "element_id": "s15-sh02-p07",
+     "text_hint": "（这些花死了，因为我忘了浇水。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-p08",
+     "text_hint": "The battery is dead.（电池没",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P15-12dead用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 15,
+   "text": "13.community 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1139021541.jpg?uid=386&timestamp=1745810177&sign=e7c021a9c2c11ae630c1631d00d486e3）。",
+   "anchors": [
+    {
+     "element_id": "s16-sh01-p01",
+     "text_hint": "13.community 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh03"
+    }
+   ],
+   "kp": [
+    "P16-13community用"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 15,
+   "text": "音标：/kəˈmjuːnəti/  词性：n.。释义：社区；社团。用法：指居住区域或具有共同兴趣的群体。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p01",
+     "text_hint": "音标：/kəˈmjuːnəti/  词性：n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p02",
+     "text_hint": "释义：社区；社团",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p03",
+     "text_hint": "用法：指居住区域或具有共同兴趣的群体。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P16-13community用-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 15,
+   "text": "搭配：community service（社区服务）。community center（社区中心）。local community（当地社区）。例句：We should participate in community activities.。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p04",
+     "text_hint": "搭配：community service（社区服",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p05",
+     "text_hint": "community center（社区中心）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p06",
+     "text_hint": "local community（当地社区）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-p07",
+     "text_hint": "例句：We should participate",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s16-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P16-13community用-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 15,
+   "text": "（我们应该参加社区活动。）。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-p08",
+     "text_hint": "（我们应该参加社区活动。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P16-13community用-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 16,
+   "text": "14.almost 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N826732286.jpg?uid=386&timestamp=1745810095&sign=d7344642401bbdff2138f0b029178f36）。",
+   "anchors": [
+    {
+     "element_id": "s17-sh01-p01",
+     "text_hint": "14.almost 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s17-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s17-sh03"
+    }
+   ],
+   "kp": [
+    "P17-14almost用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 16,
+   "text": "音标：/ˈɔːlməʊst/  词性：adv.。释义：差不多；几乎。用法：修饰动词、形容词、副词或名词，强调接近但未完全达到。",
+   "anchors": [
+    {
+     "element_id": "s17-sh02-p01",
+     "text_hint": "音标：/ˈɔːlməʊst/  词性：adv.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh02-p02",
+     "text_hint": "释义：差不多；几乎",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh02-p03",
+     "text_hint": "用法：修饰动词、形容词、副词或名词，强调接近但未",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s17-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s17-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s17-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P17-14almost用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 16,
+   "text": "例句：It's almost time to go.（差不多该走了。）。He is almost as tall as his father.。（他几乎和他父亲一样高。）。",
+   "anchors": [
+    {
+     "element_id": "s17-sh02-p04",
+     "text_hint": "例句：It's almost time to g",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh02-p05",
+     "text_hint": "He is almost as tall as ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh02-p06",
+     "text_hint": "（他几乎和他父亲一样高。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s17-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s17-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s17-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P17-14almost用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 17,
+   "text": "15.pull 用法讲解。音标：/pʊl/  词性：v.。释义：拉；拖；拔。用法：表示用力使物体朝自己或特定方向移动。",
+   "anchors": [
+    {
+     "element_id": "s18-sh01-p01",
+     "text_hint": "15.pull 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p01",
+     "text_hint": "音标：/pʊl/  词性：v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p02",
+     "text_hint": "释义：拉；拖；拔",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p03",
+     "text_hint": "用法：表示用力使物体朝自己或特定方向移动。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s18-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s18-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s18-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s18-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P18-15pull用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 17,
+   "text": "搭配：pull sth.（拉某物）；pull out（拔出；驶出）。pull up（拉起；停下）。例句：Pull the door open.（把门拉开。）。",
+   "anchors": [
+    {
+     "element_id": "s18-sh02-p04",
+     "text_hint": "搭配：pull sth.（拉某物）；pull o",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p05",
+     "text_hint": "pull up（拉起；停下）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p06",
+     "text_hint": "例句：Pull the door open.（把",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s18-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s18-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s18-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P18-15pull用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 17,
+   "text": "The driver pulled out of the parking lot.。（司机把车驶出停车场。）。",
+   "anchors": [
+    {
+     "element_id": "s18-sh02-p07",
+     "text_hint": "The driver pulled out of",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh02-p08",
+     "text_hint": "（司机把车驶出停车场。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s18-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s18-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P18-15pull用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 17,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1301136012.jpg?uid=386&timestamp=1745810041&sign=d6ce10ed0fbcd08de58f11cbb748110b）。",
+   "anchors": [
+    {
+     "element_id": "s18-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s18-sh03"
+    }
+   ],
+   "kp": [
+    "P18-15pull用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 18,
+   "text": "16.familiar 用法讲解。音标：/fəˈmɪliə(r)/  词性：adj.。",
+   "anchors": [
+    {
+     "element_id": "s19-sh01-p01",
+     "text_hint": "16.familiar 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p01",
+     "text_hint": "音标：/fəˈmɪliə(r)/  词性：adj",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s19-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P19-16familiar用法"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 18,
+   "text": "释义：熟悉的。用法：be familiar with（某人对…… 熟悉）。be familiar to（某物为某人所熟悉）。搭配：be familiar with sth.（熟悉某事 / 物）。",
+   "anchors": [
+    {
+     "element_id": "s19-sh02-p02",
+     "text_hint": "释义：熟悉的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p03",
+     "text_hint": "用法：be familiar with（某人对…",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p04",
+     "text_hint": "be familiar to（某物为某人所熟悉）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p05",
+     "text_hint": "搭配：be familiar with sth.",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s19-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s19-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P19-16familiar用法-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 18,
+   "text": "be familiar to sb.（为某人所熟悉）。例句：I'm familiar with this song.（我熟悉这首歌。）。",
+   "anchors": [
+    {
+     "element_id": "s19-sh02-p06",
+     "text_hint": "be familiar to sb.（为某人所熟",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh02-p07",
+     "text_hint": "例句：I'm familiar with thi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s19-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P19-16familiar用法-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 18,
+   "text": "This face is familiar to me.（这张脸我很熟悉。）。",
+   "anchors": [
+    {
+     "element_id": "s19-sh02-p08",
+     "text_hint": "This face is familiar to",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P19-16familiar用法-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 18,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N488786773.jpg?uid=386&timestamp=1745809994&sign=ba140d44b109d82b8b014aaa2471248c）。",
+   "anchors": [
+    {
+     "element_id": "s19-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh03"
+    }
+   ],
+   "kp": [
+    "P19-16familiar用法-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 19,
+   "text": "17.joke 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1003203832.jpg?uid=386&timestamp=1745809942&sign=a3c12bbbfd9e44ef7fc53ee101372be6）。",
+   "anchors": [
+    {
+     "element_id": "s20-sh01-p01",
+     "text_hint": "17.joke 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s20-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s20-sh03"
+    }
+   ],
+   "kp": [
+    "P20-17joke用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 19,
+   "text": "音标：/dʒəʊk/   词性：n. / v.。名词释义：笑话。名词用法：tell a joke（讲笑话）；。",
+   "anchors": [
+    {
+     "element_id": "s20-sh02-p01",
+     "text_hint": "音标：/dʒəʊk/   词性：n. / v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p02",
+     "text_hint": "名词释义：笑话",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p03",
+     "text_hint": "名词用法：tell a joke（讲笑话）；",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s20-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s20-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s20-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P20-17joke用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 19,
+   "text": "play a joke on sb.（开某人玩笑）。动词释义：开玩笑。动词用法：joke with sb.（和某人开玩笑）。",
+   "anchors": [
+    {
+     "element_id": "s20-sh02-p04",
+     "text_hint": "play a joke on sb.（开某人玩笑",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p05",
+     "text_hint": "动词释义：开玩笑",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p06",
+     "text_hint": "动词用法：joke with sb.（和某人开玩",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s20-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s20-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s20-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P20-17joke用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 19,
+   "text": "例句：He told us a funny joke.。（他给我们讲了一个有趣的笑话。）。Don't joke with him. He is very serious.。（别和他开玩笑。他很严肃。）。",
+   "anchors": [
+    {
+     "element_id": "s20-sh02-p07",
+     "text_hint": "例句：He told us a funny jo",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p08",
+     "text_hint": "（他给我们讲了一个有趣的笑话。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p09",
+     "text_hint": "Don't joke with him. He ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh02-p10",
+     "text_hint": "（别和他开玩笑。他很严肃。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s20-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s20-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s20-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s20-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P20-17joke用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 20,
+   "text": "18.text 用法讲解。音标：/tekst/  词性：n. / v.。名词释义：正文；文本。",
+   "anchors": [
+    {
+     "element_id": "s21-sh01-p01",
+     "text_hint": "18.text 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p01",
+     "text_hint": "音标：/tekst/  词性：n. / v.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p02",
+     "text_hint": "名词释义：正文；文本",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s21-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s21-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s21-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P21-18text用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 20,
+   "text": "名词用法：指文字内容。动词释义：（用手机给某人）发短信。动词用法：text sb.（给某人发短信）。",
+   "anchors": [
+    {
+     "element_id": "s21-sh02-p03",
+     "text_hint": "名词用法：指文字内容。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p04",
+     "text_hint": "动词释义：（用手机给某人）发短信",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p05",
+     "text_hint": "动词用法：text sb.（给某人发短信）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s21-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s21-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s21-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P21-18text用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 20,
+   "text": "例句：Read the text carefully and answer the questions.。",
+   "anchors": [
+    {
+     "element_id": "s21-sh02-p06",
+     "text_hint": "例句：Read the text careful",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s21-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P21-18text用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 20,
+   "text": "（仔细阅读文章并回答问题。）。I'll text you when I arrive.。（我到了会给你发短信。）。（配图：图片 8）。",
+   "anchors": [
+    {
+     "element_id": "s21-sh02-p07",
+     "text_hint": "（仔细阅读文章并回答问题。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p08",
+     "text_hint": "I'll text you when I arr",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh02-p09",
+     "text_hint": "（我到了会给你发短信。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh03",
+     "text_hint": "（配图：图片 8）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s21-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s21-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s21-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s21-sh03"
+    }
+   ],
+   "kp": [
+    "P21-18text用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 21,
+   "text": "19.matter 用法讲解。音标：/ˈmætə(r)/  词性：v. / n.。动词释义：要紧。",
+   "anchors": [
+    {
+     "element_id": "s22-sh01-p01",
+     "text_hint": "19.matter 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh02-p01",
+     "text_hint": "音标：/ˈmætə(r)/  词性：v. / n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh02-p02",
+     "text_hint": "动词释义：要紧",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s22-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s22-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s22-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P22-19matter用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 21,
+   "text": "动词用法：常用于否定句和疑问句，it doesn't matter（没关系）。名词释义：问题。",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p03",
+     "text_hint": "动词用法：常用于否定句和疑问句，it doesn",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh02-p04",
+     "text_hint": "名词释义：问题",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s22-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s22-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P22-19matter用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 21,
+   "text": "名词用法：常与 the 连用，the matter（麻烦事；毛病）。例句：It doesn't matter if you are late.（你迟到没关系。）。",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p05",
+     "text_hint": "名词用法：常与 the 连用，the matte",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh02-p06",
+     "text_hint": "例句：It doesn't matter if ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s22-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s22-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P22-19matter用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 21,
+   "text": "What's the matter with you?（你怎么了？）。",
+   "anchors": [
+    {
+     "element_id": "s22-sh02-p07",
+     "text_hint": "What's the matter with y",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s22-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P22-19matter用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 21,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/version23/VCG41503919511.jpg?uid=386&timestamp=1745809846&sign=bb07f718532bf45b414f6f8832e1da7d）。",
+   "anchors": [
+    {
+     "element_id": "s22-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s22-sh03"
+    }
+   ],
+   "kp": [
+    "P22-19matter用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 22,
+   "text": "20.perhaps 用法讲解。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1319734904.jpg?uid=386&timestamp=1745809799&sign=3ef5f31c3c53c14640b3f7bd0f936580）。",
+   "anchors": [
+    {
+     "element_id": "s23-sh01-p01",
+     "text_hint": "20.perhaps 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s23-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s23-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s23-sh03"
+    }
+   ],
+   "kp": [
+    "P23-20perhaps用法讲"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 22,
+   "text": "音标：/pəˈhæps/   词性：adv.。释义：也许；可能。用法：用于表达不确定性，可置于句首、句中或句末。",
+   "anchors": [
+    {
+     "element_id": "s23-sh02-p01",
+     "text_hint": "音标：/pəˈhæps/   词性：adv.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s23-sh02-p02",
+     "text_hint": "释义：也许；可能",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s23-sh02-p03",
+     "text_hint": "用法：用于表达不确定性，可置于句首、句中或句末。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s23-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s23-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s23-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P23-20perhaps用法讲-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 22,
+   "text": "例句：Perhaps it will rain tomorrow.（也许明天会下雨。）。",
+   "anchors": [
+    {
+     "element_id": "s23-sh02-p04",
+     "text_hint": "例句：Perhaps it will rain ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s23-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P23-20perhaps用法讲-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 22,
+   "text": "It will perhaps be sunny later.（过会儿可能会出太阳。）。",
+   "anchors": [
+    {
+     "element_id": "s23-sh02-p05",
+     "text_hint": "It will perhaps be sunny",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s23-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P23-20perhaps用法讲-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 23,
+   "text": "21.smell 用法讲解。音标：/smel/  词性：v. / n.。动词释义：发臭；闻到。",
+   "anchors": [
+    {
+     "element_id": "s24-sh01-p01",
+     "text_hint": "21.smell 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s24-sh02-p01",
+     "text_hint": "音标：/smel/  词性：v. / n.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s24-sh02-p02",
+     "text_hint": "动词释义：发臭；闻到",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s24-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s24-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s24-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P24-21smell用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 23,
+   "text": "动词用法：作 “闻到” 讲时，后接宾语；作 “发臭” 讲时，主语常为物。名词释义：气味；臭味。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p03",
+     "text_hint": "动词用法：作 “闻到” 讲时，后接宾语；作 “发",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s24-sh02-p04",
+     "text_hint": "名词释义：气味；臭味",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s24-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s24-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P24-21smell用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 23,
+   "text": "名词用法：指嗅觉感知的味道。搭配：smell sth.（闻到某物）；smell bad（发臭）。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p05",
+     "text_hint": "名词用法：指嗅觉感知的味道。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s24-sh02-p06",
+     "text_hint": "搭配：smell sth.（闻到某物）；smel",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s24-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s24-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P24-21smell用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 23,
+   "text": "a bad smell（一股臭味）。例句：I can smell the flowers.（我能闻到花香。）。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p07",
+     "text_hint": "a bad smell（一股臭味）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s24-sh02-p08",
+     "text_hint": "例句：I can smell the flowe",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s24-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s24-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P24-21smell用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 23,
+   "text": "The garbage smells bad.（垃圾发臭了。）。",
+   "anchors": [
+    {
+     "element_id": "s24-sh02-p09",
+     "text_hint": "The garbage smells bad.（",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s24-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P24-21smell用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 23,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1204747716.jpg?uid=386&timestamp=1745809752&sign=359f13992371cf5a1fbb0f2efd2feb58）。",
+   "anchors": [
+    {
+     "element_id": "s24-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s24-sh03"
+    }
+   ],
+   "kp": [
+    "P24-21smell用法讲解-6"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 24,
+   "text": "22.cover 用法讲解。音标：/ˈkʌvə(r)/  词性：v. / n.。动词释义：遮盖；包括。",
+   "anchors": [
+    {
+     "element_id": "s25-sh01-p01",
+     "text_hint": "22.cover 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p01",
+     "text_hint": "音标：/ˈkʌvə(r)/  词性：v. / n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p02",
+     "text_hint": "动词释义：遮盖；包括",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s25-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s25-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s25-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P25-22cover用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 24,
+   "text": "动词用法：表示覆盖或包含的动作。名词释义：遮盖物；封皮。名词用法：指用于覆盖的物品或书籍等的封面。",
+   "anchors": [
+    {
+     "element_id": "s25-sh02-p03",
+     "text_hint": "动词用法：表示覆盖或包含的动作。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p04",
+     "text_hint": "名词释义：遮盖物；封皮",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p05",
+     "text_hint": "名词用法：指用于覆盖的物品或书籍等的封面。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s25-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s25-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s25-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P25-22cover用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 24,
+   "text": "搭配：cover sth. with sth.（用某物覆盖某物）。cover an area of...（占地面积为……）。book cover（书皮）。例句：Cover the food with a lid.（用盖子把食物盖上。）。",
+   "anchors": [
+    {
+     "element_id": "s25-sh02-p06",
+     "text_hint": "搭配：cover sth. with sth.（",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p07",
+     "text_hint": "cover an area of...（占地面积",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p08",
+     "text_hint": "book cover（书皮）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s25-sh02-p09",
+     "text_hint": "例句：Cover the food with a",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s25-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s25-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s25-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s25-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P25-22cover用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 24,
+   "text": "The book has a beautiful cover.（这本书有一个漂亮的封面。）。",
+   "anchors": [
+    {
+     "element_id": "s25-sh02-p10",
+     "text_hint": "The book has a beautiful",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s25-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P25-22cover用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 24,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1226449165.jpg?uid=386&timestamp=1745809712&sign=7133b052c34ccd054c5f8d24905bdc8f）。",
+   "anchors": [
+    {
+     "element_id": "s25-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s25-sh03"
+    }
+   ],
+   "kp": [
+    "P25-22cover用法讲解-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 25,
+   "text": "02 词组用法详解。",
+   "anchors": [
+    {
+     "element_id": "s26-sh09-p01",
+     "text_hint": "02 词组用法详解",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s26-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P26-02词组用法详解"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 26,
+   "text": "23.no matter 用法讲解。词性：短语。释义：不论；不要紧。用法：常与疑问词连用引导让步状语从句。",
+   "anchors": [
+    {
+     "element_id": "s27-sh01-p01",
+     "text_hint": "23.no matter 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p02",
+     "text_hint": "释义：不论；不要紧",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p03",
+     "text_hint": "用法：常与疑问词连用引导让步状语从句。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s27-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s27-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s27-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s27-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P27-23nomatter用法"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 26,
+   "text": "搭配：no matter what（无论什么）；。no matter how（无论怎样）；。no matter when（无论何时）。例句：No matter what happens, I will support you.。",
+   "anchors": [
+    {
+     "element_id": "s27-sh02-p04",
+     "text_hint": "搭配：no matter what（无论什么）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p05",
+     "text_hint": "no matter how（无论怎样）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p06",
+     "text_hint": "no matter when（无论何时）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh02-p07",
+     "text_hint": "例句：No matter what happen",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s27-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s27-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s27-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s27-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P27-23nomatter用法-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 26,
+   "text": "（无论发生什么，我都会支持你。）。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1360125911.jpg?uid=386&timestamp=1745809643&sign=76fa5c66cbbc7c88685937a239d7ed15）。",
+   "anchors": [
+    {
+     "element_id": "s27-sh02-p08",
+     "text_hint": "（无论发生什么，我都会支持你。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s27-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s27-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s27-sh03"
+    }
+   ],
+   "kp": [
+    "P27-23nomatter用法-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 27,
+   "text": "24.hang up 用法讲解。词性：短语动词。释义：挂起；挂断电话。用法：“挂起” 时宾语为衣物等；“挂断电话” 时无宾语或接电话相关宾语。",
+   "anchors": [
+    {
+     "element_id": "s28-sh01-p01",
+     "text_hint": "24.hang up 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p01",
+     "text_hint": "词性：短语动词",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p02",
+     "text_hint": "释义：挂起；挂断电话",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p03",
+     "text_hint": "用法：“挂起” 时宾语为衣物等；“挂断电话” 时",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s28-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s28-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s28-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s28-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P28-24hangup用法讲解"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 27,
+   "text": "搭配：hang up sth.（挂起某物）；hang up（挂断电话）。例句：Please hang up your coat on the hanger.。",
+   "anchors": [
+    {
+     "element_id": "s28-sh02-p04",
+     "text_hint": "搭配：hang up sth.（挂起某物）；ha",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p05",
+     "text_hint": "例句：Please hang up your c",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s28-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s28-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P28-24hangup用法讲解-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 27,
+   "text": "（请把你的外套挂在衣架上。）。Don't hang up! I still have something to say.。（别挂电话！我还有话要说。）。",
+   "anchors": [
+    {
+     "element_id": "s28-sh02-p06",
+     "text_hint": "（请把你的外套挂在衣架上。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p07",
+     "text_hint": "Don't hang up! I still h",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s28-sh02-p08",
+     "text_hint": "（别挂电话！我还有话要说。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s28-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s28-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s28-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P28-24hangup用法讲解-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 27,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/version23/VCG41164553506.jpg?uid=386&timestamp=1745809613&sign=92068dc27904db94ee2cfdb23b3c7d92）。",
+   "anchors": [
+    {
+     "element_id": "s28-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s28-sh03"
+    }
+   ],
+   "kp": [
+    "P28-24hangup用法讲解-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 28,
+   "text": "25.give sb a lift 用法讲解。词性：短语。释义：开车顺便送某人。用法：表示提供顺路搭载服务。",
+   "anchors": [
+    {
+     "element_id": "s29-sh01-p01",
+     "text_hint": "25.give sb a lift 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s29-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s29-sh02-p02",
+     "text_hint": "释义：开车顺便送某人",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s29-sh02-p03",
+     "text_hint": "用法：表示提供顺路搭载服务。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s29-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s29-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s29-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s29-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P29-25givesbalif"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 28,
+   "text": "例句：My neighbor gave me a lift to school this morning.。",
+   "anchors": [
+    {
+     "element_id": "s29-sh02-p04",
+     "text_hint": "例句：My neighbor gave me a",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s29-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P29-25givesbalif-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 28,
+   "text": "（今天早上我的邻居顺路送我去学校。）。（配图：https://photo-static-api.fotomore.com/creative/vcg/400/version23/VCG41148058006.jpg?uid=386&timestamp=1745809573&sign=9696ba6e79927d0224aeaa432b189934）。",
+   "anchors": [
+    {
+     "element_id": "s29-sh02-p05",
+     "text_hint": "（今天早上我的邻居顺路送我去学校。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s29-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s29-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s29-sh03"
+    }
+   ],
+   "kp": [
+    "P29-25givesbalif-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 29,
+   "text": "26.be careful with 用法讲解。词性：短语。释义：注意；当心。用法：后接名词、代词或动名词，提醒对某事小心谨慎。",
+   "anchors": [
+    {
+     "element_id": "s30-sh01-p01",
+     "text_hint": "26.be careful with 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p02",
+     "text_hint": "释义：注意；当心",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p03",
+     "text_hint": "用法：后接名词、代词或动名词，提醒对某事小心谨慎",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s30-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s30-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s30-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s30-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P30-26becarefulw"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 29,
+   "text": "搭配：be careful with sth.（小心对待某物）。be careful with doing sth.（做某事时要小心）。例句：Be careful with the glass. It's easy to break.。",
+   "anchors": [
+    {
+     "element_id": "s30-sh02-p04",
+     "text_hint": "搭配：be careful with sth.（",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p05",
+     "text_hint": "be careful with doing st",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p06",
+     "text_hint": "例句：Be careful with the g",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s30-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s30-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s30-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P30-26becarefulw-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 29,
+   "text": "（小心那个玻璃杯，它很容易碎。）。You should be careful with crossing the road.。（过马路时你应该小心。）。",
+   "anchors": [
+    {
+     "element_id": "s30-sh02-p07",
+     "text_hint": "（小心那个玻璃杯，它很容易碎。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p08",
+     "text_hint": "You should be careful wi",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s30-sh02-p09",
+     "text_hint": "（过马路时你应该小心。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s30-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s30-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s30-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P30-26becarefulw-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 29,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1223652444.jpg?uid=386&timestamp=1745809535&sign=bc34c9c831a680463f1e8de01b23698e）。",
+   "anchors": [
+    {
+     "element_id": "s30-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s30-sh03"
+    }
+   ],
+   "kp": [
+    "P30-26becarefulw-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 30,
+   "text": "27.clean up 用法讲解。词性：短语。释义：清扫；清理。用法：可单独使用或接宾语，宾语为清理的对象。",
+   "anchors": [
+    {
+     "element_id": "s31-sh01-p01",
+     "text_hint": "27.clean up 用法讲解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p02",
+     "text_hint": "释义：清扫；清理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p03",
+     "text_hint": "用法：可单独使用或接宾语，宾语为清理的对象。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s31-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s31-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s31-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s31-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P31-27cleanup用法讲"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 30,
+   "text": "搭配：clean up sth.（清理某物）；。clean up after...（在…… 之后清理）。例句：We need to clean up the classroom after class.。",
+   "anchors": [
+    {
+     "element_id": "s31-sh02-p04",
+     "text_hint": "搭配：clean up sth.（清理某物）；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p05",
+     "text_hint": "clean up after...（在…… 之后",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p06",
+     "text_hint": "例句：We need to clean up t",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s31-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s31-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s31-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P31-27cleanup用法讲-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 30,
+   "text": "（课后我们需要打扫教室。）。Please clean up after dinner.。（晚饭后请清理一下。）。",
+   "anchors": [
+    {
+     "element_id": "s31-sh02-p07",
+     "text_hint": "（课后我们需要打扫教室。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p08",
+     "text_hint": "Please clean up after di",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s31-sh02-p09",
+     "text_hint": "（晚饭后请清理一下。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s31-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s31-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s31-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P31-27cleanup用法讲-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 30,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/version23/VCG41472275833.jpg?uid=386&timestamp=1745809372&sign=dfa267f5ca6b7b10934f67ab3f607a0c）。",
+   "anchors": [
+    {
+     "element_id": "s31-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s31-sh03"
+    }
+   ],
+   "kp": [
+    "P31-27cleanup用法讲-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 31,
+   "text": "28.share sth. with sb. 用法讲解。词性：短语。释义：把…… 与…… 分享。",
+   "anchors": [
+    {
+     "element_id": "s32-sh01-p01",
+     "text_hint": "28.share sth. with sb. 用",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p01",
+     "text_hint": "词性：短语",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p02",
+     "text_hint": "释义：把…… 与…… 分享",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s32-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s32-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s32-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 31,
+   "text": "用法：后接分享的物品和分享对象。搭配：share sth. with sb.（和某人分享某物）；。",
+   "anchors": [
+    {
+     "element_id": "s32-sh02-p03",
+     "text_hint": "用法：后接分享的物品和分享对象。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p04",
+     "text_hint": "搭配：share sth. with sb.（和",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s32-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s32-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 31,
+   "text": "share one's feelings with sb.（和某人分享自己的感受）。例句：I like to share my toys with my friends.。",
+   "anchors": [
+    {
+     "element_id": "s32-sh02-p05",
+     "text_hint": "share one's feelings wit",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p06",
+     "text_hint": "例句：I like to share my to",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s32-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s32-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 31,
+   "text": "（我喜欢和朋友们分享我的玩具。）。She shared her secret with me.。（她和我分享了她的秘密。）。",
+   "anchors": [
+    {
+     "element_id": "s32-sh02-p07",
+     "text_hint": "（我喜欢和朋友们分享我的玩具。）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p08",
+     "text_hint": "She shared her secret wi",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s32-sh02-p09",
+     "text_hint": "（她和我分享了她的秘密。）",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s32-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s32-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s32-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 31,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG211344553059.jpg?uid=386&timestamp=1745809328&sign=debe084480eefc77b947f7ce4efcfb69）。",
+   "anchors": [
+    {
+     "element_id": "s32-sh03",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s32-sh03"
+    }
+   ],
+   "kp": [
+    "P32-28sharesthwi-5"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 32,
+   "text": "03 词汇练习题。",
+   "anchors": [
+    {
+     "element_id": "s33-sh09-p01",
+     "text_hint": "03 词汇练习题",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s33-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P33-03词汇练习题"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 33,
+   "text": "一.词汇练习选择题。B。1.Please help me ______ these books into different groups.。A. pack B. sort C. lift。2.I want to ______ my friend to my party. What should I do?。A. invite B. borrow C. add。",
+   "anchors": [
+    {
+     "element_id": "s34-sh01-p01",
+     "text_hint": "一.词汇练习选择题",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh03-p01",
+     "text_hint": "B",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p01",
+     "text_hint": "1.Please help me ______ ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p02",
+     "text_hint": "A. pack B. sort C. lift",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p03",
+     "text_hint": "2.I want to ______ my fr",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p04",
+     "text_hint": "A. invite B. borrow C. a",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s34-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s34-sh03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s34-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s34-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s34-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s34-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P34-一词汇练习选择题"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 33,
+   "text": "3.Remember to ______ some salt to the soup.。A. hunt B. add C. plan。4.I often ______ books from my classmate.。A. borrow B. lend C. share。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p05",
+     "text_hint": "3.Remember to ______ som",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p06",
+     "text_hint": "A. hunt B. add C. plan",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p07",
+     "text_hint": "4.I often ______ books f",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p08",
+     "text_hint": "A. borrow B. lend C. sha",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s34-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s34-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s34-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s34-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P34-一词汇练习选择题-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 33,
+   "text": "5.We are ______ a trip to the mountains next week.。A. planning B. hunting C. lifting。A。B。A。A。",
+   "anchors": [
+    {
+     "element_id": "s34-sh02-p09",
+     "text_hint": "5.We are ______ a trip t",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh02-p10",
+     "text_hint": "A. planning B. hunting C",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh04-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh05-p01",
+     "text_hint": "B",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh06-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s34-sh07-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s34-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s34-sh02-p10"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s34-sh04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s34-sh05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s34-sh06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s34-sh07-p01"
+    }
+   ],
+   "kp": [
+    "P34-一词汇练习选择题-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 34,
+   "text": "一.词汇练习选择题。A。6.The pirates went on a ______ for buried treasure.。A. hunt B. lift C. joke。7.Can you ______ me a lift to the library?。A. give B. take C. make。",
+   "anchors": [
+    {
+     "element_id": "s35-sh01-p01",
+     "text_hint": "一.词汇练习选择题",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh03-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p01",
+     "text_hint": "6.The pirates went on a ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p02",
+     "text_hint": "A. hunt B. lift C. joke",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p03",
+     "text_hint": "7.Can you ______ me a li",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p04",
+     "text_hint": "A. give B. take C. make",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s35-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s35-sh03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s35-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s35-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s35-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s35-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P35-一词汇练习选择题"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 34,
+   "text": "8.I waited for him ______ he arrived.。A. until B. if C. because。9.______ the glass. It might break.。A. Be careful with B. Clean up C. Share with。",
+   "anchors": [
+    {
+     "element_id": "s35-sh02-p05",
+     "text_hint": "8.I waited for him _____",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p06",
+     "text_hint": "A. until B. if C. becaus",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p07",
+     "text_hint": "9.______ the glass. It m",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p08",
+     "text_hint": "A. Be careful with B. Cl",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s35-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s35-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s35-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s35-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P35-一词汇练习选择题-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 34,
+   "text": "10.We should ______ the classroom before we leave.。A.clean up B. lift up C. hunt for。A。A。A。A。",
+   "anchors": [
+    {
+     "element_id": "s35-sh02-p09",
+     "text_hint": "10.We should ______ the ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh02-p10",
+     "text_hint": "A.clean up B. lift up C.",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh04-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh05-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh06-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s35-sh07-p01",
+     "text_hint": "A",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s35-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s35-sh02-p10"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s35-sh04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s35-sh05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s35-sh06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s35-sh07-p01"
+    }
+   ],
+   "kp": [
+    "P35-一词汇练习选择题-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 35,
+   "text": "二.词汇练习填空题。packing。1.She is busy ______ (pack) her bags for the journey.。2.We should ______ (sort) the waste to protect the environment.。",
+   "anchors": [
+    {
+     "element_id": "s36-sh01-p01",
+     "text_hint": "二.词汇练习填空题",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh03-p01",
+     "text_hint": "packing",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh02-p01",
+     "text_hint": "1.She is busy ______ (pa",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh02-p02",
+     "text_hint": "2.We should ______ (sort",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s36-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s36-sh03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s36-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s36-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P36-二词汇练习填空题"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 35,
+   "text": "3.I ______ (invite) my neighbor to dinner last night.。4.Don't forget to ______ (add) some milk to the coffee.。5.He often ______ (borrow) money from his friends.。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p03",
+     "text_hint": "3.I ______ (invite) my n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh02-p04",
+     "text_hint": "4.Don't forget to ______",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh02-p05",
+     "text_hint": "5.He often ______ (borro",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s36-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s36-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s36-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P36-二词汇练习填空题-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 35,
+   "text": "6.They are making a ______ (plan) for the summer vacation.。7.The kids are excited about the ______ (treasure) hunt.。8.We hunted ______ (careful) for the lost keys.。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p06",
+     "text_hint": "6.They are making a ____",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh02-p07",
+     "text_hint": "7.The kids are excited a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh02-p08",
+     "text_hint": "8.We hunted ______ (care",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s36-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s36-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s36-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P36-二词汇练习填空题-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 35,
+   "text": "9.Please give me a ______ (lift) to the airport.。10.We waited until it ______ (stop) raining.。sort。invited。add。borrows。plan。treasure。carefully。lift。stopped。",
+   "anchors": [
+    {
+     "element_id": "s36-sh02-p09",
+     "text_hint": "9.Please give me a _____",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh02-p10",
+     "text_hint": "10.We waited until it __",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh04-p01",
+     "text_hint": "sort",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh05-p01",
+     "text_hint": "invited",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh06-p01",
+     "text_hint": "add",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh07-p01",
+     "text_hint": "borrows",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh08-p01",
+     "text_hint": "plan",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh09-p01",
+     "text_hint": "treasure",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh10-p01",
+     "text_hint": "carefully",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh11-p01",
+     "text_hint": "lift",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s36-sh12-p01",
+     "text_hint": "stopped",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s36-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s36-sh02-p10"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s36-sh04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s36-sh05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s36-sh06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s36-sh07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s36-sh08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s36-sh09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s36-sh10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s36-sh11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s36-sh12-p01"
+    }
+   ],
+   "kp": [
+    "P36-二词汇练习填空题-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 36,
+   "text": "三.词汇练习题 - 翻译题。1.请帮我把这些衣服分类。2.我打算邀请我的老师参加我的生日派对。3.他从图书馆借了一本有趣的书。4.我们计划下个月去北京旅行。5.直到妈妈回来，他才完成作业。6.小心那把刀，它很锋利。7.晚饭后让我们一起打扫厨房吧。8.我喜欢和我的妹妹分享我的故事书。9.他们正在寻找丢失的宠物狗。10.你能帮我把这个箱子抬起来吗？。",
+   "anchors": [
+    {
+     "element_id": "s37-sh01-p01",
+     "text_hint": "三.词汇练习题 - 翻译题",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p01",
+     "text_hint": "1.请帮我把这些衣服分类。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p02",
+     "text_hint": "2.我打算邀请我的老师参加我的生日派对。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p03",
+     "text_hint": "3.他从图书馆借了一本有趣的书。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p04",
+     "text_hint": "4.我们计划下个月去北京旅行。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p05",
+     "text_hint": "5.直到妈妈回来，他才完成作业。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p06",
+     "text_hint": "6.小心那把刀，它很锋利。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p07",
+     "text_hint": "7.晚饭后让我们一起打扫厨房吧。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p08",
+     "text_hint": "8.我喜欢和我的妹妹分享我的故事书。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p09",
+     "text_hint": "9.他们正在寻找丢失的宠物狗。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh02-p10",
+     "text_hint": "10.你能帮我把这个箱子抬起来吗？",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s37-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s37-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s37-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s37-sh02-p03"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s37-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s37-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s37-sh02-p06"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s37-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s37-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s37-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s37-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P37-三词汇练习题翻译题"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 36,
+   "text": "Please help me sort these clothes.。I'm going to invite my teacher to my birthday party.。He borrowed an interesting book from the library.。We plan to travel to Beijing next month.。",
+   "anchors": [
+    {
+     "element_id": "s37-sh03-p01",
+     "text_hint": "Please help me sort thes",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh04-p01",
+     "text_hint": "I'm going to invite my t",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh05-p01",
+     "text_hint": "He borrowed an interesti",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh06-p01",
+     "text_hint": "We plan to travel to Bei",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s37-sh03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s37-sh04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s37-sh05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s37-sh06-p01"
+    }
+   ],
+   "kp": [
+    "P37-三词汇练习题翻译题-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 36,
+   "text": "He didn't finish his homework until his mother came back.。Be careful with that knife. It's very sharp.。Let's clean up the kitchen after dinner.。",
+   "anchors": [
+    {
+     "element_id": "s37-sh07-p01",
+     "text_hint": "He didn't finish his hom",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh08-p01",
+     "text_hint": "Be careful with that kni",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh09-p01",
+     "text_hint": "Let's clean up the kitch",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s37-sh07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s37-sh08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s37-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P37-三词汇练习题翻译题-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 36,
+   "text": "I like sharing my storybooks with my sister.。They are looking for the lost pet dog.。Can you help me lift this box?。",
+   "anchors": [
+    {
+     "element_id": "s37-sh10-p01",
+     "text_hint": "I like sharing my storyb",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh11-p01",
+     "text_hint": "They are looking for the",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s37-sh12-p01",
+     "text_hint": "Can you help me lift thi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s37-sh10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s37-sh11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s37-sh12-p01"
+    }
+   ],
+   "kp": [
+    "P37-三词汇练习题翻译题-4"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 37,
+   "text": "04 答案解析。",
+   "anchors": [
+    {
+     "element_id": "s38-sh09-p01",
+     "text_hint": "04 答案解析",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s38-sh09-p01"
+    }
+   ],
+   "kp": [
+    "P38-04答案解析"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "选择答案解析。1.B。解析：sort...into... 表示 “把…… 分类为……”，符合 “把书分类” 的语境；pack 是 “打包”，lift 是 “举起；搭便车”，均不符合，所以选 B。",
+   "anchors": [
+    {
+     "element_id": "s39-sh01-p01",
+     "text_hint": "选择答案解析",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s39-sh02-p01",
+     "text_hint": "1.B。解析：sort...into... 表示",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "2.A。解析：invite sb. to... 表示 “邀请某人去……”，invite 符合 “邀请朋友参加派对” 的意思；borrow 是 “借”，add 是 “添加”，不符合语境，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p02",
+     "text_hint": "2.A。解析：invite sb. to... ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p02"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "3.解析：add...to... 表示 “把…… 加入……”，add salt to the soup “往汤里加盐”，hunt 是 “搜寻；打猎”，plan 是 “计划”，所以选 B。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p03",
+     "text_hint": "3.解析：add...to... 表示 “把……",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "4.A。解析：borrow sth. from sb. 表示 “从某人那里借某物”，符合 “从同学那里借书”；lend 是 “借出”，share 是 “分享”，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p04",
+     "text_hint": "4.A。解析：borrow sth. from ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "5.A。解析：plan a trip 表示 “计划一次旅行”，符合 “计划去山区旅行”；hunt 是 “搜寻；打猎”，lift 是 “举起；搭便车”，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p05",
+     "text_hint": "5.A。解析：plan a trip 表示 “计",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "6.A。解析：go on a hunt for 表示 “搜寻……”，hunt 符合 “海盗搜寻宝藏”；lift 是 “搭便车；电梯”，joke 是 “笑话”，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p06",
+     "text_hint": "6.A。解析：go on a hunt for ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-6"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "7.A。解析：give sb. a lift 表示 “开车顺便送某人”，符合 “送我去图书馆”；take 是 “拿走”，make 是 “制作”，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p07",
+     "text_hint": "7.A。解析：give sb. a lift 表",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p07"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-7"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "8.A。解析：until 表示 “直到…… 为止”，“我一直等到他到达”，if 是 “如果”，because 是 “因为”，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p08",
+     "text_hint": "8.A。解析：until 表示 “直到…… 为止",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p08"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-8"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "9.A。解析：be careful with 表示 “注意；当心”，符合 “小心玻璃杯”；clean up 是 “清扫”，share with 是 “与…… 分享”，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p09",
+     "text_hint": "9.A。解析：be careful with 表",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-9"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 38,
+   "text": "1.A。解析：clean up 表示 “清扫”，clean up the classroom “打扫教室”，lift up 是 “举起”，hunt for 是 “寻找”，所以选 A。",
+   "anchors": [
+    {
+     "element_id": "s39-sh02-p10",
+     "text_hint": "1.A。解析：clean up 表示 “清扫”，",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s39-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P39-选择答案解析-10"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 39,
+   "text": "填空答案解析。1.packing。解析：be busy doing sth. 表示 “忙于做某事”，pack 用动名词形式 packing。",
+   "anchors": [
+    {
+     "element_id": "s40-sh01-p01",
+     "text_hint": "填空答案解析",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p01",
+     "text_hint": "1.packing。解析：be busy doi",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh02-p01"
+    }
+   ],
+   "kp": [
+    "P40-填空答案解析"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 39,
+   "text": "2.sort。解析：should 是情态动词，后接动词原形 sort。3.invited。解析：last night 是一般过去时的标志，invite 的过去式是 invited。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p02",
+     "text_hint": "2.sort。解析：should 是情态动词，后",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p03",
+     "text_hint": "3.invited。解析：last night ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s40-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P40-填空答案解析-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 39,
+   "text": "4.add。解析：forget to do sth. 表示 “忘记要做某事”，add 用原形。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p04",
+     "text_hint": "4.add。解析：forget to do st",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh02-p04"
+    }
+   ],
+   "kp": [
+    "P40-填空答案解析-3"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 39,
+   "text": "5.borrows。解析：often 是一般现在时的标志，主语 he 是第三人称单数，borrow 用第三人称单数形式 borrows。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p05",
+     "text_hint": "5.borrows。解析：often 是一般现在",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh02-p05"
+    }
+   ],
+   "kp": [
+    "P40-填空答案解析-4"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 39,
+   "text": "6.plan。解析：make a plan 表示 “制定计划”，plan 用名词形式。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p06",
+     "text_hint": "6.plan。解析：make a plan 表示",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P40-填空答案解析-5"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 39,
+   "text": "7.treasure。解析：treasure hunt 是固定短语，意为 “寻宝游戏”，用 treasure。8.carefully。解析：修饰动词 hunted 用副词 carefully，表示 “仔细地搜寻”。9.lift。解析：give sb. a lift 表示 “开车顺便送某人”，用 lift。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p07",
+     "text_hint": "7.treasure。解析：treasure h",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p08",
+     "text_hint": "8.carefully。解析：修饰动词 hunt",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s40-sh02-p09",
+     "text_hint": "9.lift。解析：give sb. a lif",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s40-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s40-sh02-p09"
+    }
+   ],
+   "kp": [
+    "P40-填空答案解析-6"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 39,
+   "text": "10.stopped。解析：until 引导时间状语从句，主句是一般过去时，从句也用一般过去时，stop 的过去式是 stopped。",
+   "anchors": [
+    {
+     "element_id": "s40-sh02-p10",
+     "text_hint": "10.stopped。解析：until 引导时间",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s40-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P40-填空答案解析-7"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 40,
+   "text": "翻译答案解析。1.Please help me sort these clothes.。2.I'm going to invite my teacher to my birthday party.。3.He borrowed an interesting book from the library.。",
+   "anchors": [
+    {
+     "element_id": "s41-sh01-p01",
+     "text_hint": "翻译答案解析",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p01",
+     "text_hint": "1.Please help me sort th",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p02",
+     "text_hint": "2.I'm going to invite my",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p03",
+     "text_hint": "3.He borrowed an interes",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s41-sh01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s41-sh02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s41-sh02-p02"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s41-sh02-p03"
+    }
+   ],
+   "kp": [
+    "P41-翻译答案解析"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 40,
+   "text": "4.We plan to travel to Beijing next month.。5.He didn't finish his homework until his mother came back.。6.Be careful with that knife. It's very sharp.。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p04",
+     "text_hint": "4.We plan to travel to B",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p05",
+     "text_hint": "5.He didn't finish his h",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p06",
+     "text_hint": "6.Be careful with that k",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s41-sh02-p04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s41-sh02-p05"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s41-sh02-p06"
+    }
+   ],
+   "kp": [
+    "P41-翻译答案解析-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 40,
+   "text": "7.Let's clean up the kitchen after dinner.。8.I like sharing my storybooks with my sister.。9.They are looking for the lost pet dog.。10.Can you help me lift this box?。",
+   "anchors": [
+    {
+     "element_id": "s41-sh02-p07",
+     "text_hint": "7.Let's clean up the kit",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p08",
+     "text_hint": "8.I like sharing my stor",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p09",
+     "text_hint": "9.They are looking for t",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s41-sh02-p10",
+     "text_hint": "10.Can you help me lift ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s41-sh02-p07"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s41-sh02-p08"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s41-sh02-p09"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s41-sh02-p10"
+    }
+   ],
+   "kp": [
+    "P41-翻译答案解析-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  },
+  {
+   "slide": 41,
+   "text": "（配图：https://photo-static-api.fotomore.com/creative/vcg/400/new/VCG41N1272811959.jpg?uid=386&timestamp=1745811254&sign=52eab94110dab9be79cbe91f69527c02）。Thank You!。",
+   "anchors": [
+    {
+     "element_id": "s42-sh04",
+     "text_hint": "（配图：https://photo-static",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s42-sh01-p01",
+     "text_hint": "Thank You!",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s42-sh04"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s42-sh01-p01"
+    }
+   ],
+   "kp": [
+    "P42-ThankYou"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）"
+  }
+ ],
+ "warnings": [],
+ "created_at": "2026-10-04T18:15:46",
+ "coverage": {
+  "slides": 42,
+  "units": 167,
+  "chars": 14772,
+  "est_sec": 2954.4,
+  "longest_unit_sec": 36.6,
+  "units_over_hard_max": 0,
+  "units_with_anchor": 167,
+  "anchors": 420,
+  "anchor_hit": 420,
+  "anchor_hit_rate": 1.0,
+  "para_level_anchors": 391,
+  "low_confidence_anchors": 0,
+  "ops": 420,
+  "ops_invalid": 0
+ }
+}

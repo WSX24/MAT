@@ -24,7 +24,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
+from pathlib import Path
 
 import yaml
 
@@ -36,11 +38,20 @@ from steps import s0_scope, s1_plan, s2_select, s3_unit, s4_outline, s5_render
 
 STOPS = ("map", "plan", "unit", "outline", "render")
 
+#: 课堂子系统：TeachingFlow/classroom（扁平绝对导入的独立应用）。
+#: bridge 需要它自己在 sys.path 里；起服务走**子进程**（仓库根的 app.py），绝不 import
+#: 课堂那一整套 —— 那会把 FastAPI / edge-tts 拖进"只想出片"的那一次运行。
+CLASSROOM_DIR = Path(__file__).resolve().parent / "classroom"
+#: 课堂网页入口：仓库根的 app.py（= CLASSROOM_DIR.parent.parent / "app.py"）
+CLASSROOM_ENTRY = CLASSROOM_DIR.parent.parent / "app.py"
+
 
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(
         description="TeachingFlow：一句话 → 学习方案 → 单元教学 → 课件 → PPTX")
-    ap.add_argument("text", help="一句话需求，如「我想系统学习高中语文」")
+    ap.add_argument("text", nargs="?",
+                    help="一句话需求，如「我想系统学习高中语文」"
+                         "（--classroom-serve 时不需要）")
     # —— S0 覆盖 ——
     ap.add_argument("--stage", choices=scope.STAGES, default=None,
                     help="学段（指定即视为确认，不再询问）")
@@ -89,10 +100,23 @@ def build_parser() -> argparse.ArgumentParser:
                     help="图库优先级，逗号分隔（默认 pixabay,wikimedia——国内 pixabay 最稳）")
     ap.add_argument("--image-max-candidates", type=int, default=8,
                     help="每张 web 图最多拉多少候选（默认 8）")
+    # —— 课堂备课（S5 出片之后把 PPTX 送进 TeachingFlow/classroom 预处理链）——
+    ap.add_argument("--classroom", action=argparse.BooleanOptionalAction, default=None,
+                    help="产片后把 PPTX 送进课堂备课。默认 auto："
+                         "mock 且未 --render 时跳过（那时本来就不产片）；"
+                         "--classroom 一定跑，--no-classroom 永不跑")
+    ap.add_argument("--classroom-serve", action="store_true",
+                    help="起课堂服务后退出：就是仓库根的 python app.py"
+                         "（-- 之后的参数原样透传给它，不认识的会被忽略；"
+                         "不需要一句话需求）")
     return ap
 
 
 def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    passthrough = _pop_classroom_serve(argv)
+    if passthrough is not None:              # --classroom-serve：只起课堂服务，读完就退
+        return _serve_classroom(passthrough)
     args = build_parser().parse_args(argv)
     if getattr(args, "no_images", False):
         args.image_source = "off"
@@ -107,6 +131,9 @@ def main(argv: list[str] | None = None) -> int:
     print(f"\n▶ TeachingFlow · {mode} · --to {args.to}")
     print(f"  产物目录：{run.dir}\n")
     run.manifest.update({"input": text, "mode": mode, "args": vars(args)})
+    classroom_on = _classroom_enabled(args)
+    print(f"【课堂】备课{'启用' if classroom_on else '跳过'}"
+          f"（{_classroom_reason(args, classroom_on)}）")
     _lint_prompts()
 
     spec = course = None
@@ -144,6 +171,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"【S2】复用 02_targets.json：{len(targets)} 个单元")
 
         produced: list[str] = []
+        # 交付件路径 → 单元 id：备课结果要能和单元对上（produced 只有路径）
+        produced_units: dict[str, str] = {}
         for target in targets:
             uid = target["unit_id"]
             outline_path = run.path(f"04_outline_{uid}.result.md")
@@ -171,11 +200,14 @@ def main(argv: list[str] | None = None) -> int:
             if deliverable.is_file():
                 print(f"【S5】{uid} 已有交付件 {deliverable.name}，跳过（--resume）")
                 produced.append(str(deliverable))
+                produced_units[str(deliverable)] = uid
                 continue
             old = naming.old_output_roots(run.dir, target)
             if old:                                  # 旧布局：已产过片，只补中文名交付件
                 print(f"【S5】{uid} 复用旧产物 {run.rel(old[0])}，按课程命名补交付件")
-                produced.append(str(s5_render.publish(old[0], target, run)))
+                published = s5_render.publish(old[0], target, run)
+                produced.append(str(published))
+                produced_units[str(published)] = uid
                 continue
             if llm.mock and not args.render:
                 print(f"【S5】{uid} 跳过产片（--mock 默认不产片；加 --render 可强制）")
@@ -184,8 +216,16 @@ def main(argv: list[str] | None = None) -> int:
             pptx = s5_render.run(target, outline_path, run, args)
             if pptx:
                 produced.append(str(pptx))
+                produced_units[str(pptx)] = uid
 
         run.manifest["produced"] = produced
+        # 备课是**加分项**：它失败只多一条记录，绝不改写本次运行已经拿到的片。
+        try:
+            _run_classroom(produced, produced_units, run, enabled=classroom_on)
+        except Exception as exc:
+            print(f"⚠️ 课堂备课异常：{type(exc).__name__}: {exc}")
+            run.note(f"课堂备课异常：{exc}")
+            run.manifest.setdefault("classroom", [])
         return _finish(run, spec)
 
     except LLMError as exc:
@@ -199,6 +239,140 @@ def main(argv: list[str] | None = None) -> int:
             run.save()
             return 1
         return 0
+
+
+# ===========================================================================
+# 课堂备课：S5 出片之后的那一跳（失败只记账，绝不改写本次运行的结论）
+# ===========================================================================
+
+def _classroom_enabled(args) -> bool:
+    """备课开关三态：--classroom 一定跑 / --no-classroom 永不跑 / 默认 auto。
+
+    auto 的判据与 S5 同一条：mock 且没 --render 时本来就不产片，没有 PPTX 可送，
+    备课也就无从谈起。跟产片口径走，用户不必记两个开关。
+    """
+    if getattr(args, "classroom", None) is not None:
+        return bool(args.classroom)
+    return not (args.mock and not args.render)
+
+
+def _classroom_reason(args, enabled: bool) -> str:
+    """一句话说清这次为什么跑/不跑备课（--to plan 这类提前结束的运行也看得见）。"""
+    if getattr(args, "classroom", None) is True:
+        return "--classroom 强制启用"
+    if getattr(args, "classroom", None) is False:
+        return "--no-classroom 强制关闭"
+    if enabled:
+        return "auto：本次会产片"
+    return "auto：mock 且未 --render → 不产片，不备课"
+
+
+def _pop_classroom_serve(argv: list[str]):
+    """把 --classroom-serve（及其后的透传参数）从命令行里剥出来；没这个开关返回 None。
+
+    必须发生在 build_parser().parse_args 之前：透传过去的参数（如 `--no-browser` `--port 8010`）
+    是**课堂入口 app.py** 的语言，flow 的 parser 一个都不认识，交给它只会报
+    "unrecognized arguments"。`--` 只当分隔符本身，不透传。
+    """
+    flag = "--classroom-serve"
+    if flag not in argv:
+        return None
+    rest = argv[argv.index(flag) + 1:]
+    if "--" in rest:
+        rest = rest[rest.index("--") + 1:]
+    return rest
+
+
+def _serve_classroom(argv: list[str]) -> int:
+    """起课堂服务（仓库根的 app.py），退出码原样透传。
+
+    为什么走子进程而不是在这个进程里 import：课堂是**另一个应用**（自己的 argparse、
+    自己的 .env、自己的 FastAPI / edge-tts 依赖）。在这里 import，等于让"只想出片"
+    的这次运行也得装齐它那一整套。
+
+    为什么是 `app.py` 而不是 `classroom/run.py`：正式版只有一个网页入口（设计文档 §2），
+    `run.py` 已收敛为备课/运维脚本、`serve` 子命令随旧 UI 删除。这里的参数透传语义不变：
+    `--` 之后原样交给 app.py，它不认识的就忽略（不因此崩）。
+    """
+    entry = CLASSROOM_ENTRY                  # 仓库根 app.py（CLASSROOM_DIR 的上两级）
+    if not entry.is_file():
+        print(f"❌ 找不到课堂入口：{entry}")
+        return 1
+    cmd = [sys.executable, str(entry), *argv]
+    extra = " ".join(argv) if argv else "（无额外参数）"
+    print(f"▶ 课堂服务：{entry} {extra}")
+    print(f"  工作目录：{entry.parent}")
+    try:
+        return subprocess.run(cmd, cwd=str(entry.parent)).returncode
+    except OSError as exc:
+        print(f"❌ 课堂服务起不来：{type(exc).__name__}: {exc}")
+        return 1
+
+
+def _say(line: str) -> None:
+    """bridge 的旁路日志（缩进一级，与教学链路的输出区分开）。"""
+    print(f"   {line}")
+
+
+def _run_classroom(produced: list[str], units: dict[str, str],
+                   run: Run, *, enabled: bool) -> list[dict]:
+    """把 S5 产出的每份 PPTX 依次送进课堂备课，结果写进 manifest["classroom"]。
+
+    三条纪律：
+      - 单个单元失败不牵连其他单元（逐个记账，循环不中断）；
+      - 备课失败不动已产出的 PPTX（produced 与 manifest["produced"] 一个字不改）；
+      - 备课这一跳整体不可用（缺 python-pptx、bridge import 失败）也只告警。
+    """
+    records: list[dict] = []
+    run.manifest["classroom"] = records      # 空表也是一种结论，别留成"没跑过"
+    if not enabled:
+        print("【课堂】--no-classroom：本次不备课")
+        return records
+    if not produced:
+        print("【课堂】本次没有产出 PPTX，跳过备课（mock 默认不产片时属正常）")
+        return records
+    try:
+        if str(CLASSROOM_DIR) not in sys.path:
+            # 课堂是扁平绝对导入（from config import …），得让它自己的目录在路径上
+            sys.path.insert(0, str(CLASSROOM_DIR))
+        # 惰性导入：只装 bridge 这条最小依赖，不把 FastAPI / edge-tts 拖进"只想出片"的这次运行
+        import bridge
+    except Exception as exc:
+        message = f"{type(exc).__name__}: {exc}"
+        print(f"⚠️ 课堂备课不可用：{message}")
+        run.note(f"课堂备课不可用：{message}")
+        return records
+
+    print(f"【课堂】开始备课：{len(produced)} 份 PPTX（失败只记账，不影响已产出的片）")
+    for pptx in produced:
+        unit_id = units.get(pptx, "")
+        try:
+            res = bridge.preprocess_pptx_sync(Path(pptx), log=_say)
+        except Exception as exc:      # bridge 自己说不抛，这里再兜一层：口径不靠约定
+            res = {"ok": False, "deck_id": "",
+                   "error": f"{type(exc).__name__}: {exc}", "stages": [], "stats": {}}
+        record = {
+            "unit_id": unit_id,
+            "pptx": pptx,
+            "deck_id": str(res.get("deck_id") or ""),
+            "ok": bool(res.get("ok")),
+            "error": str(res.get("error") or ""),
+            "stages": list(res.get("stages") or []),
+            "stats": dict(res.get("stats") or {}),
+        }
+        records.append(record)
+        name = record["deck_id"] or Path(pptx).name
+        if record["ok"]:
+            stats = record["stats"]
+            print(f"   ✓ {name}：{stats.get('slides', 0)} 页 / "
+                  f"{stats.get('units', 0)} 个单元")
+        else:
+            print(f"   ✗ {name}：{record['error']}")
+            run.note(f"课堂备课失败：{name} —— {record['error']}")
+        if res.get("note"):
+            # 降级（只解析不备课）也要说出来：下一次跑的人得知道该补哪一把 key
+            run.note(f"课堂备课降级：{name} —— {res['note']}")
+    return records
 
 
 def _lint_prompts() -> None:
