@@ -55,10 +55,17 @@ TeachingFlow/classroom/decks/*/plan.bak.json
 # 不匹配本规则，因此不会被误伤。
 TeachingFlow/classroom/decks/import*/
 
-# ── 6. 出片引擎运行报告 ─────────────────────────────────────────────────────
+# ── 6. 出片引擎与路由层运行产物 ─────────────────────────────────────────────
 # pipeline.py 每次运行写 report_*.json / last_report.json，内含本机路径与错误栈。
 PPT-Agent/runs/
 PPT-Agent/last_report.json
+# 集成路由V1.0 的产出：templates/ 是「发给 LLM 的提示词副本」按日期归类，
+# ppt/ 是一次产片目录（PPTX + 讲稿 + 每册的 ppt-master skill 项目文件夹，单册几十 MB）。
+# 两者都是运行产物，换机后没有历史是正常的，别为了"看起来干净"把规则删掉。
+# 路径写全而不写 templates/：模板源在 PromptTemplate/templates/ 必须入库，
+# 只写 templates/ 会把它一起吞掉，新 clone 直接渲染不出提示词。
+集成路由V1.0/templates/
+集成路由V1.0/ppt/
 
 # ── 7. 第三方与依赖 ─────────────────────────────────────────────────────────
 # ppt-master 是外部 skill，由 setup.ps1 git clone 拉取，不是本仓库代码。
@@ -80,3 +87,7 @@ Thumbs.db
 #   · docs/                                  文档与中期答辩报告（含 8 页逐页稿）
 #   · .env.example / *.env.example           配置模板，见第 1 节否定规则
 #   · TeachingFlow/fixtures/                 --mock 用的假 LLM 回复，自检依赖它们
+
+outputs/
+docs_from_to_ZhongQi/
+*.pptx
