@@ -1,25 +1,20 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light dark" />
-    <meta name="description" content="课堂 · 学生自学：课程库 → 单元 → 课堂 → 续学" />
-    <title>课堂 · 学生自学</title>
-    <script>
-      (function () {
-        try {
-          var stored = localStorage.getItem('classroom.theme');
-          var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.setAttribute('data-theme', stored === 'dark' || stored === 'light' ? stored : dark ? 'dark' : 'light');
-        } catch (e) {}
-      })();
-    </script>
-    <script type="module" crossorigin src="/assets/index-C6PbU5-s.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-RzJHxpLb.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="description" content="智塾 AI 教学平台 · MAT 课堂" />
+    <title>智塾 · AI Teaching Platform</title>
+    <script type="module" crossorigin src="/assets/index-C5Siq9Q1.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Be7-92_e.css">
   </head>
   <body>
-    <div id="root"></div>
+    <div id="app"></div>
   </body>
 </html>

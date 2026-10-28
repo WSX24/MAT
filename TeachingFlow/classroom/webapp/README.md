@@ -1,42 +1,100 @@
-# webapp · 课堂前端（Vite + React + TS）
+# 课堂前端（classroom-webapp）
 
-契约唯一事实源：`TeachingFlow/classroom/docs/正式版设计.md` §4（HTTP/WS）、§6（页面清单）。
-本目录只依赖那两份契约，不读后端源码。
+MAT「课堂」学生端界面：Vue 3 + TypeScript + Vite。`src/views` 里的 6 个页面
+（落地页 / 登录 / 我的课堂 / 课程详情 / 生成课堂 / 小节学习）复刻自旧仓库
+`Multi-agent-Eduacation-System/frontend/src`，另外 3 页（单元大纲、课后小结、课堂深链跳转）
+承接后端独有能力。
+
+数据层以真实 API（`/api/v1`）为主；`src/data/demoCourses.ts` 只在后端不可达时
+提供一个标注了 OFFLINE SAMPLE 的离线示例，不写库、不保存进度。
 
 ## 开发
 
 ```bash
 cd TeachingFlow/classroom/webapp
 npm install
-npm run dev          # http://127.0.0.1:5173，/api 与 /ws 代理到 127.0.0.1:8000
+npm run dev
 ```
 
-后端没起时用内置假数据独立开发：
+打开 <http://127.0.0.1:5173/>。
+
+**dev 代理**（见 `vite.config.ts`）：`/api` 转到 `http://127.0.0.1:8000`，
+`/ws` 转到 `ws://127.0.0.1:8000`（WebSocket）。后端用 `python app.py` 或
+`./start-app.ps1` 起，默认 `HOST=127.0.0.1`、`PORT=8000`。
+
+为什么代理而不是直连绝对地址：浏览器里前端和接口同源，跨域、Cookie、WebSocket 都不用额外配置；
+代价是后端换端口时 `vite.config.ts` 要跟着改。
+
+## 构建与类型检查
 
 ```bash
-VITE_MOCK=1 npm run dev
-# 场景（首次读到的 ?mock= 会写进 sessionStorage，页面跳转后仍生效）：
-#   ?mock=default   完整数据
-#   ?mock=empty     课程库/大纲为空，扫描后才出现课程
-#   ?mock=error     所有接口 500（验证错误态与「重试」）
-#   ?mock=slow      每个请求 +1.1s（验证骨架屏）
-#   ?mock=unprepared 单元未备课、大纲为空（验证「备课并生成大纲」）
+npx vue-tsc -b     # 只做类型检查
+npm run build      # = vue-tsc -b && vite build
 ```
 
-## 类型与构建
+产物写在 `dist/`。
 
-```bash
-npm run typecheck    # tsc --noEmit
-npm run build        # tsc --noEmit && vite build → dist/
+## 为什么 dist/ 入库
+
+- 交付形态是「一条命令起服务」：`python app.py` 直接拿到可用界面，不需要目标机器装 Node。
+- 后端在 `dist/index.html` 缺失时返回的是「前端还没构建」的说明页
+  （`classroom/app/routes/static.py`），入库让这个状态只出现在真的忘了构建时。
+- 代价要说清：改了 `src/` 就必须重建并一起提交 `dist/`，否则线上跑的还是旧包。
+  评审时以 `dist/index.html` 引用的哈希文件名为准。
+
+## 为什么资源必须走 /assets/*
+
+后端只服务这几处（`TeachingFlow/classroom/app/routes/static.py`）：
+
+| 请求 | 返回 |
+| --- | --- |
+| `GET /` | `dist/index.html` |
+| `GET /assets/<相对路径>` | `dist/assets/<相对路径>`（做了目录穿越收敛） |
+| `GET /assets/audio/<sha1>.mp3` | TTS 缓存（同一前缀下更具体的路由，先声明先匹配） |
+| 其它路径 | SPA 兜底，同样返回 `dist/index.html` |
+
+课件里的图片**不在** `/assets/` 下：page 帧的 `media_base` 指向
+`/api/v1/units/{unit_id}/media/`（`classroom/app/routes/units.py`），重绘课件时别假设
+媒体和前端资源同源同前缀。
+
+结论：`public/` 里放根路径文件没有意义 —— 站点根目录下的单个文件（比如 favicon）
+后端取不到，只会落到 SPA 兜底返回 HTML。所以图片、视频、字体一律 `import` 进 Vite 资源，
+由构建指纹化后自然落进 `/assets/`：
+
+```ts
+import posterUrl from '@/assets/poster.png'                       // 图片
+const videoUrl = new URL('../assets/motion-baked-desktop.mp4', import.meta.url).href
 ```
 
-`dist/` 入库（由调度方提交），供 FastAPI 以 `GET /` 与 `/assets/*` 提供。
-深链（如直接打开 `/courses/xxx`）需要后端补一个 SPA 回退：非 `/api`、非 `/ws`、非静态资源的 404 返回 `dist/index.html`。
+同理，源码里不允许出现指向旧仓库根目录的绝对资源地址（旧构建媒体目录、旧 prototype
+资源目录那一套）；这类地址在这个后端下必然是死链。`public/` 目前为空，也不需要它。
 
-## 设计约束
+## 深链与 SPA 兜底
 
-- 令牌：`src/styles/tokens.css`（色彩/字阶/间距/圆角/阴影，深浅两套；基准字号 17px 面向投屏）。
-- 基础组件自带，不引入 UI 库：Button / Card / Progress(Ring) / Badge / Modal / Toast / Empty / Skeleton / Field。
-- 课件重绘：`src/features/deck/SlideView.tsx`，1280×720 逻辑画布 + `transform: scale()`，字号 px = pt × 4/3。
-- 无障碍：焦点可见、按钮 aria-label、课堂内空格暂停/继续、←→ 翻页。
-- 断点：1279px（投屏以下的窄屏，收起单元进度列、侧栏变窄）、768px（手机，课堂侧栏变底部抽屉）。
+路由用 history 模式，刷新 `/app/courses/:id`、`/app/units/:unitId/outline`、
+`/app/sessions/:id/summary`、`/learn/:unitId` 都靠后端 `GET /{path:path}` 返回
+`index.html` 才打得开。`src/router/index.ts` 里另外留了一组「旧地址 → 新路由」的重定向。
+
+以 `api` / `ws` / `dev` / `assets` 开头的路径**不会**进兜底：写错的接口地址要返回 404，
+一旦返回 HTML，排查的人会以为「接口存在但返回了网页」。
+
+## 后端没起来时
+
+`fetch` 失败统一抛 `ApiError(status=0)`（`src/api/client.ts`）。课程库页面会显示错误态
+与一张离线示例卡片，课程详情 / 小节页显示「离线示例」占位并说明要先 `python app.py`。
+这套兜底只是演示用，不冒充真实课程。
+
+## 目录
+
+```
+src/api/            HTTP 契约类型、fetch 封装、视图模型翻译
+src/components/     应用外壳、档案菜单、导入课件弹窗、Toast
+src/composables/    落地页动效（滚轮驱动逐帧视频）
+src/data/           离线示例课程
+src/features/deck/  课件重绘（SlideView）
+src/features/classroom/  课堂会话、WebSocket 传输、控制条、字幕
+src/styles/         prototype/*、workspace.css、style.css（与旧仓库同源）
+src/views/          6 个复刻页面 + Outline / Summary / LearnRedirect
+```
+
+样式与设计 token 与旧仓库逐字同源，不要在复刻页面里另起一套。

@@ -7,7 +7,7 @@
   overflow: hidden;
   border-radius: var(--radius-md);
   background: #ffffff;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 18px 44px rgb(24 20 40 / 14%);
 }
 
 .deck-canvas {
@@ -51,9 +51,9 @@
   inset: 0;
   display: grid;
   place-items: center;
-  color: var(--text-3);
+  color: var(--muted);
   font-size: var(--text-sm);
-  background: var(--surface-2);
+  background: var(--surface);
 }
 
 .deck-table td {
