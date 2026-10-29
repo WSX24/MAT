@@ -242,4 +242,89 @@ export const api = {
   exportModelEnv(): Promise<T.ModelEnvExport> {
     return request<T.ModelEnvExport>(V1 + '/model-providers/export-env', jsonBody('POST', {}))
   },
+
+  // ── 交互式课程生成（对话提问 → 需求确认 → 大纲 → 单元设计 → 入库）────────
+  createBuilderSession(message: string): Promise<T.BuilderSession> {
+    return request<T.BuilderSession>(V1 + '/course-builder/sessions', jsonBody('POST', { message }))
+  },
+
+  listBuilderSessions(limit = 20): Promise<T.BuilderSessionList> {
+    return request<T.BuilderSessionList>(V1 + '/course-builder/sessions?limit=' + encodeURIComponent(String(limit)))
+  },
+
+  getBuilderSession(id: string): Promise<T.BuilderSession> {
+    return request<T.BuilderSession>(V1 + '/course-builder/sessions/' + encodeURIComponent(id))
+  },
+
+  sendBuilderMessage(id: string, text: string): Promise<T.BuilderSession> {
+    return request<T.BuilderSession>(
+      V1 + '/course-builder/sessions/' + encodeURIComponent(id) + '/messages',
+      jsonBody('POST', { text }),
+    )
+  },
+
+  /** accepted=false 表示"不符合"：回到对话继续细化，feedback 会当成用户的一句话记进去。 */
+  confirmBuilderRequirements(
+    id: string,
+    input: { accepted: boolean; feedback?: string; requirements?: T.CourseRequirements },
+  ): Promise<T.BuilderSession> {
+    return request<T.BuilderSession>(
+      V1 + '/course-builder/sessions/' + encodeURIComponent(id) + '/confirm-requirements',
+      jsonBody('POST', input),
+    )
+  },
+
+  saveBuilderOutline(id: string, outline: T.CourseOutline): Promise<T.BuilderSession> {
+    return request<T.BuilderSession>(
+      V1 + '/course-builder/sessions/' + encodeURIComponent(id) + '/outline',
+      jsonBody('POST', { outline }),
+    )
+  },
+
+  /** 确认大纲：把（可选的）最终版大纲一起带上，然后开始生成单元设计并入库。 */
+  confirmBuilderOutline(id: string, outline?: T.CourseOutline): Promise<T.BuilderSession> {
+    const body: Record<string, unknown> = {}
+    if (outline) body.outline = outline
+    return request<T.BuilderSession>(
+      V1 + '/course-builder/sessions/' + encodeURIComponent(id) + '/outline/confirm',
+      jsonBody('POST', body),
+    )
+  },
+
+  deleteBuilderSession(id: string): Promise<{ ok: boolean }> {
+    return request<{ ok: boolean }>(
+      V1 + '/course-builder/sessions/' + encodeURIComponent(id),
+      jsonBody('DELETE'),
+    )
+  },
+
+  // ── 渐进式单课 PPT（按课生成，不一次性生成过多）─────────────────────────
+  getPptPlan(courseId: string): Promise<T.PptPlan> {
+    return request<T.PptPlan>(V1 + '/courses/' + encodeURIComponent(courseId) + '/ppt-plan')
+  },
+
+  generateNextPpt(courseId: string): Promise<T.UnitPptJob> {
+    return request<T.UnitPptJob>(
+      V1 + '/courses/' + encodeURIComponent(courseId) + '/ppt/next',
+      jsonBody('POST', {}),
+    )
+  },
+
+  getUnitPpt(unitId: string): Promise<T.UnitPptState> {
+    return request<T.UnitPptState>(V1 + '/units/' + encodeURIComponent(unitId) + '/ppt')
+  },
+
+  generateUnitPpt(unitId: string): Promise<T.UnitPptJob> {
+    return request<T.UnitPptJob>(
+      V1 + '/units/' + encodeURIComponent(unitId) + '/ppt',
+      jsonBody('POST', {}),
+    )
+  },
+
+  cancelUnitPpt(unitId: string): Promise<T.UnitPptState> {
+    return request<T.UnitPptState>(
+      V1 + '/units/' + encodeURIComponent(unitId) + '/ppt/cancel',
+      jsonBody('POST', {}),
+    )
+  },
 }

@@ -48,15 +48,17 @@ TeachingFlow/       一句话到课件的编排器（入口 flow.py）
 ├── docs/README.md  使用文档
 └── classroom/      课堂子系统：pptx → 备课 → 上课（网页入口是仓库根的 app.py）
     ├── app/        FastAPI 应用：HTTP/WS 契约、路由、依赖装配
-    ├── store/      sqlite：档案 / 课程 / 单元 / 会话 / 进度 / 事件
+    ├── store/      sqlite：档案 / 课程 / 单元 / 会话 / 进度 / 事件 / 建课会话 / 单课出片任务
     ├── studio/     引擎适配：扫描 runs · 备课 · 大纲 · 会话运行时
-    ├── webapp/     前端（Vite + React + TS，dist 入库）
+    ├── course_plan.py    对话式建课的纯函数层（需求 / 大纲 / 蓝图 / 单元设计 / 10 模块渲染）
+    ├── course_builder.py 建课状态机 + 模型工具调用 + 后台任务 + 落盘入库 + 逐课出片
+    ├── webapp/     前端（Vite + Vue + TS，dist 入库）
     ├── deck/       pptx 解析与产物读写（deck.json / plan.json 的契约）
     ├── decks/      解析与备课产物（不入库）
     ├── pptx/       课件源文件投放处（.pptx 不入库）
     ├── tools/      验收脚本（端到端 / 截图对比 / 两份计划 A/B）
-    ├── tests/      契约 · 端到端主线 · 状态机 · 备课 · 课件解析 的离线测试
-    └── docs/       课堂设计文档（正式版设计 / 使用说明 / 状态机 / 分支 / MCP / 预处理）
+    ├── tests/      契约 · 端到端主线 · 建课 · 状态机 · 备课 · 课件解析 的离线测试
+    └── docs/       课堂设计文档（正式版设计 / 课程生成 / 使用说明 / 状态机 / 分支 / MCP / 预处理）
 PromptTemplate/     提示词模板库（teacher_planner / teacher_unit / teacher_ppt + fewshot）
 PPT-Agent/          产片引擎（pipeline.py：SVG → PPTX）
 ```
@@ -71,6 +73,8 @@ LLM返回/                                  # 每次调用的「模型原文 + �
 第1章-章名/第M单元-单元名-讲稿.md
 第1章-章名/第M单元-单元名-页面说明.md
 00_spec.json 01_blueprint.yaml 02_targets.json …   # 过程产物
+outline.json / outline.md                 # 对话式建课写出的结构化大纲（章 → 单元 + 知识点）
+unit_design_<uid>.json                    # 单元课程安排设计（学生看不到；出片与备课读它）
 manifest.json                             # 每步 ok / 校验 / 页数与周期依据
 ```
 
@@ -86,18 +90,27 @@ manifest.json                             # 每步 ok / 校验 / 页数与周期
 
 ```
 课程库（首页 /）
-   → 课程详情 /courses/<id>（章 → 单元行：页数 / 时长 / 进度 / 继续 / 大纲）
+   → 生成课堂 /app/generate（和模型聊：想学到什么程度 / 有什么基础 / 学多久）
+        → 模型提问卡 → 需求确认卡 →（符合才继续）→ 课程大纲（章 → 单元，可编辑）
+        → 手动确认 → 逐章设计每一课 → 存入课程库
+   → 课程详情 /courses/<id>（章 → 单元行：课件进度 / 时长 / 进度 / 继续 / 大纲）
+        → 「生成下一课 PPT」：上到哪一课，生成哪一课（也可单点某一课的「生成课件」）
    → 单元大纲 /units/<id>/outline（这单元讲什么，可从某页开始）
    → 上课 /learn/<unitId>（课件重绘 + 字幕 + 提问 + 暂停/翻页/语速）
    → 课后小结 /sessions/<id>/summary（时长 / 覆盖页数 / 提问数 / 继续学）
    → 再进同一单元：从上次位置**续学**；换档案则进度互不干扰
 ```
 
-**课程从哪来**（两条路，最后落到同一批产物）
+> 没有 PPT 的那一课不会报错：页面给一个「生成这节课的 PPT」的入口，生成完自动进课堂。
+> 设计细节（工具、状态机、落盘形状、降级）见
+> [`TeachingFlow/classroom/docs/课程生成与渐进式课件.md`](TeachingFlow/classroom/docs/课程生成与渐进式课件.md)。
 
-1. **TeachingFlow 的 run**：`TeachingFlow/runs/<日期>/<课程名>/` 有出片产物时，
+**课程从哪来**（三条路，最后落到同一批产物）
+
+1. **对话式建课**：`/app/generate` 里聊出来的课，直接写进课程库（`source='builder'`）。
+2. **TeachingFlow 的 run**：`TeachingFlow/runs/<日期>/<课程名>/` 有出片产物时，
    首页「重新扫描」（`POST /api/v1/courses/scan`）就进课程库。
-2. **导入 pptx**：首页「导入课件」上传一份 `.pptx`（`POST /api/v1/courses/import`），
+3. **导入 pptx**：首页「导入课件」上传一份 `.pptx`（`POST /api/v1/courses/import`），
    立刻进课程库并顺手备一次课。
 
 **数据落位**
@@ -134,7 +147,7 @@ Copy-Item .env.example PPT-Agent\.env    # 然后填 DEEPSEEK_API_KEY=...
   自备源 pptx 放进 `classroom/pptx/` 重跑一次预处理即可。
 - 旧的六个页面（`/hub` `/graph` `/script` `/review` `/preprocess` `/preview`）与 `web.py` 已删除，
   诊断信息改走 `CLASSROOM_DEV=1` 下的 `/dev/units/{id}/plan`、`/dev/sessions/{id}/events`。
-- 课堂测试基线（离线，不联网）：`478 passed`。其中两条「真实课件」用例**按固定 deck_id 选**入库课件
+- 课堂测试基线（离线，不联网）：`613 passed`。其中两条「真实课件」用例**按固定 deck_id 选**入库课件
   （`Unit_2_Sweet_Home…` 42 页 / 177 格；`高一物理第一课…` 38 页 / 167 格），选不到就 skip ——
   往 `decks/` 里导入新课件不会再让它们变红。
 
@@ -154,7 +167,7 @@ cd TeachingFlow\classroom
 python run.py test
 ```
 
-完整用例（478 条）要直接跑 pytest；从仓库根跑也一样（根目录 `pytest.ini` 已把收集范围钉在课堂测试上，不会扫进 `ppt-master/`）：
+完整用例（613 条）要直接跑 pytest；从仓库根跑也一样（根目录 `pytest.ini` 已把收集范围钉在课堂测试上，不会扫进 `ppt-master/`）：
 
 ```powershell
 cd TeachingFlow\classroom

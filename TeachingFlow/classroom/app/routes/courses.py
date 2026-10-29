@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
 import zipfile
 from pathlib import Path
@@ -47,6 +48,7 @@ def list_courses(profile_id: str = "", conn=Depends(deps.get_conn)) -> list[dict
     out: list[dict] = []
     for c in conn.execute("SELECT * FROM courses ORDER BY updated_at DESC, id").fetchall():
         total, ready = repo.course_unit_counts(conn, c["id"])
+        _total2, with_ppt = repo.course_ppt_counts(conn, c["id"])
         progress = (repo.course_progress(conn, c["id"], pid) if pid
                     else {"started": 0, "completed": 0, "percent": 0.0})
         out.append({
@@ -56,6 +58,10 @@ def list_courses(profile_id: str = "", conn=Depends(deps.get_conn)) -> list[dict
             "source": c["source"] or "",
             "unit_count": total,
             "unit_ready_count": ready,
+            # 渐进式 PPT 的两个计数：卡片上要说清"已经生成了几课的课件"。
+            # 它们是**追加**字段（老的三个计数口径不变），前端不读也不影响。
+            "ppt_ready_count": with_ppt,
+            "ppt_total": total,
             "progress": progress,
             "updated_at": c["updated_at"] or c["created_at"] or "",
         })
@@ -193,19 +199,47 @@ def course_detail(course_id: str, profile_id: str = "",
     pid = (profile_id or "").strip() or repo.active_profile_id(conn)
     chapters: list[dict] = []
     by_chapter: dict[str, list[dict]] = {}
-    for unit in repo.units_of_course(conn, course_id):
+    rows = repo.units_of_course(conn, course_id)
+    for unit in rows:
         chapter = unit["chapter"] or "未分章"
         if chapter not in by_chapter:
             by_chapter[chapter] = []
             chapters.append({"title": chapter, "units": by_chapter[chapter]})
         by_chapter[chapter].append(_unit_view(conn, unit, pid))
+    # 逐单元的 PPT 状态由 /courses/{id}/ppt-plan 提供（要带任务进度、能轮询），
+    # 这里只给三个汇总数：卡片与页头最先要的就是"几课有片、下一课是谁"。
+    ready_units = [u for u in rows if str(u.get("pptx_path") or "").strip()]
+    pending = [u for u in rows if not str(u.get("pptx_path") or "").strip()]
     return {
         "id": course["id"],
         "title": course["title"] or "",
         "subject": course["subject"] or "",
         "source": course["source"] or "",
         "chapters": chapters,
+        # 结构化大纲（章 → 单元 + 知识点）：课程详情页要按截图那套层级展示"这门课讲什么"。
+        # 没有 outline.json 的老课程（扫描/导入来的）就是 None，前端退回只显示单元列表。
+        "outline": _course_outline(course),
+        "ppt": {
+            "total": len(rows),
+            "ready": len(ready_units),
+            "next_unit_id": str(pending[0]["id"]) if pending else "",
+        },
     }
+
+
+def _course_outline(course: dict):
+    """读课程目录下的 outline.json；读不到返回 None（绝不抛）。"""
+    run_dir = str(course.get("run_dir") or "")
+    if not run_dir:
+        return None
+    path = Path(run_dir) / "outline.json"
+    if not path.is_file():
+        return None
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    return data if isinstance(data, dict) else None
 
 
 @router.delete("/courses/{course_id}")

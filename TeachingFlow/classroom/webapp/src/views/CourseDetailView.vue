@@ -1,62 +1,171 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { api } from '@/api/client'
+import { ApiError, api } from '@/api/client'
 import { errorText, formatDuration, sourceLabel } from '@/api/format'
 import { totalSeconds, totalSlides, unitStatusText } from '@/api/view'
-import type { CourseDetail, CourseUnit } from '@/api/types'
+import type { CourseDetail, PptPlan, PptPlanItem } from '@/api/types'
 import { toast } from '@/state/toast'
 
 /**
- * 课程详情：章 → 单元 → 进入课堂。
+ * 课程详情：章 → 单元 → 进入课堂，外加**渐进式 PPT 的进度与入口**。
  *
- * 旧设计的「单元 / 小节」两层在这里对应真实契约的「章 / 单元」（后端一个单元 = 一份
- * 课件 = 一次上课），因此版式不动、映射改名：
- *  - 旧「第 N 单元」= 第 N 章；
- *  - 旧「小节」= 真实单元，状态直接用 progress.status（已完成 / 进行中 / 未完成）。
- * 概述与学习目标在真实课程里没有对应字段，用**可核对的数据**（章数、单元数、页数、时长、
- * 进度）拼出来，不编造学习目标。
+ * 版式沿用截图里那套「章号 + 章名 / 单元行 + 状态圆点 + 竖虚线」的层级，
+ * 因为学生看的就是"这门课分几章、每章几节、我上到哪了"。
+ *
+ * PPT 的口径是"上哪一课、生成哪一课"：
+ *   · 每一行都显示这一课有没有课件（✓ 绿点 / 序号橙点）；
+ *   · 页头有「生成下一课 PPT」—— 顺序取第一个还没有课件的单元；
+ *   · 正在生成时整页会轮询 /ppt-plan，进度直接画在那一行上。
  */
+const POLL_MS = 1500
+
 const route = useRoute()
 const router = useRouter()
 
 const course = ref<CourseDetail | null>(null)
+const plan = ref<PptPlan | null>(null)
 const loading = ref(true)
 const loadError = ref('')
 const deleting = ref(false)
+const starting = ref(false)
+const collapsed = ref<Record<string, boolean>>({})
 
-const units = computed<CourseUnit[]>(() =>
-  course.value ? course.value.chapters.flatMap((chapter) => chapter.units) : [],
-)
-const lessonCount = computed(() => units.value.length)
+let pollTimer: number | null = null
+let disposed = false
+
+interface UnitRow {
+  id: string
+  title: string
+  slides: number
+  estSec: number
+  ready: boolean
+  hasPpt: boolean
+  jobStatus: string
+  jobStage: string
+  jobPercent: number
+  error: string
+  kp: string[]
+  orderIndex: number
+  chapterIndex: number
+  unitIndex: number
+  chapterTitle: string
+  progressPercent: number
+  progressStatus: string
+}
+
+const rows = computed<UnitRow[]>(() => {
+  const detail = course.value
+  if (!detail) return []
+  const items = plan.value?.items ?? []
+  const flat = (detail.outline?.chapters ?? []).flatMap((chapter) => chapter.units)
+  const out: UnitRow[] = []
+  let order = 0
+  detail.chapters.forEach((chapter, chapterIndex) => {
+    chapter.units.forEach((unit, unitIndex) => {
+      const item: PptPlanItem | undefined =
+        items.find((candidate) => candidate.order_index === order) ?? items[order]
+      const outlineUnit = flat[order]
+      out.push({
+        id: unit.id,
+        title: unit.title || outlineUnit?.title || '未命名单元',
+        slides: unit.slides,
+        estSec: unit.est_sec,
+        ready: unit.ready,
+        hasPpt: item ? item.has_ppt : unit.slides > 0,
+        jobStatus: item?.job_status ?? '',
+        jobStage: item?.job_stage ?? '',
+        jobPercent: item?.job_percent ?? 0,
+        error: item?.error ?? '',
+        kp: outlineUnit?.knowledge_points ?? [],
+        orderIndex: order,
+        chapterIndex,
+        unitIndex,
+        chapterTitle: chapter.title,
+        progressPercent: Math.round(unit.progress?.percent ?? 0),
+        progressStatus: unit.progress?.status ?? '',
+      })
+      order += 1
+    })
+  })
+  return out
+})
+
+const chapters = computed(() => {
+  const grouped: Array<{ title: string; index: number; units: UnitRow[] }> = []
+  for (const row of rows.value) {
+    const last = grouped[grouped.length - 1]
+    if (last && last.title === row.chapterTitle) last.units.push(row)
+    else grouped.push({ title: row.chapterTitle, index: row.chapterIndex, units: [row] })
+  }
+  return grouped
+})
+
+const totalUnits = computed(() => rows.value.length)
+const readyUnits = computed(() => rows.value.filter((row) => row.hasPpt).length)
+const nextUnit = computed(() => {
+  const id = plan.value?.next_unit_id ?? ''
+  return rows.value.find((row) => row.id === id) ?? rows.value.find((row) => !row.hasPpt) ?? null
+})
+const runningRow = computed(() =>
+  rows.value.find((row) => row.jobStatus === 'queued' || row.jobStatus === 'running') ?? null)
+const canGenerate = computed(() => !!course.value?.outline && totalUnits.value > 0)
+
 const slideCount = computed(() => (course.value ? totalSlides(course.value) : 0))
 const duration = computed(() => (course.value ? formatDuration(totalSeconds(course.value)) : '—'))
-const completedCount = computed(() => units.value.filter((unit) => unit.progress?.status === 'completed').length)
+const completedCount = computed(() =>
+  rows.value.filter((row) => row.progressStatus === 'completed').length)
 const percent = computed(() => {
-  if (!units.value.length) return 0
-  const sum = units.value.reduce((total, unit) => total + (unit.progress?.percent ?? 0), 0)
-  return Math.round(sum / units.value.length)
+  if (!rows.value.length) return 0
+  const sum = rows.value.reduce((total, row) => total + row.progressPercent, 0)
+  return Math.round(sum / rows.value.length)
 })
+
 const overviewText = computed(() => {
-  if (!course.value) return ''
-  return `本课程共 ${course.value.chapters.length} 章、${lessonCount.value} 个单元，覆盖约 ${slideCount.value} 页课件，预计学习 ${duration.value}。当前完成 ${completedCount.value} 个单元，整体进度 ${percent.value}%。`
+  const detail = course.value
+  if (!detail) return ''
+  const free = detail.outline?.summary?.trim()
+  const goal = detail.outline?.goal?.trim()
+  // 概述与目标是两块内容，不能同一句话贴两遍（模型给的 summary 经常就是 goal）
+  if (free && free !== goal) return free
+  return `本课程共 ${detail.chapters.length} 章、${totalUnits.value} 个单元，已生成 ${readyUnits.value} 个单元的课件。`
+    + `预计学习 ${duration.value}。当前完成 ${completedCount.value} 个单元，整体进度 ${percent.value}%。`
 })
 
 const goalText = computed(() => {
-  if (!course.value) return ''
-  const minutes = Math.max(1, Math.round(totalSeconds(course.value) / Math.max(1, lessonCount.value) / 60))
-  return `完成全部 ${lessonCount.value} 个单元后，可覆盖本课程的全部课件内容。建议按「章 → 单元」顺序学习，每个单元约 ${minutes} 分钟；学完可直接进入课堂做课后小结。`
+  const detail = course.value
+  if (!detail) return ''
+  const goal = detail.outline?.goal?.trim()
+  if (goal) return goal
+  const minutes = Math.max(1, Math.round(totalSeconds(detail) / Math.max(1, totalUnits.value) / 60))
+  return `完成全部 ${totalUnits.value} 个单元后，可覆盖本课程的全部课件内容。`
+    + `建议按「章 → 单元」顺序学习，每个单元约 ${minutes} 分钟。`
 })
 
-function unitRoute(chapterIndex: number, unitIndex: number) {
+const outlineMeta = computed(() => {
+  const outline = course.value?.outline
+  if (!outline) return ''
+  const parts: string[] = []
+  if (outline.subject) parts.push(outline.subject)
+  if (outline.stage) parts.push(outline.stage)
+  if (outline.student_level) parts.push(`起点 ${outline.student_level}`)
+  parts.push(`${outline.weeks} 周 × 每周 ${outline.hours_per_week} 课时`)
+  return parts.join(' · ')
+})
+
+function unitRoute(row: UnitRow) {
   return {
     name: 'app-lesson',
     params: {
       id: course.value?.id ?? '',
-      unitNumber: String(chapterIndex + 1),
-      lessonNumber: String(unitIndex + 1),
+      unitNumber: String(row.chapterIndex + 1),
+      lessonNumber: String(row.unitIndex + 1),
     },
   }
+}
+
+function toggleChapter(key: string) {
+  collapsed.value = { ...collapsed.value, [key]: !collapsed.value[key] }
 }
 
 async function load() {
@@ -70,6 +179,105 @@ async function load() {
     course.value = null
   } finally {
     loading.value = false
+  }
+  await loadPlan(id)
+}
+
+async function loadPlan(id: string) {
+  try {
+    plan.value = await api.getPptPlan(id)
+    if (plan.value.items.some((item) => item.job_status === 'queued' || item.job_status === 'running')) {
+      schedulePoll(id)
+    }
+  } catch {
+    // 没有 ppt-plan 不应该让整页打不开：结构照常显示，只是看不到课件状态
+    plan.value = null
+  }
+}
+
+function stopPolling() {
+  if (pollTimer !== null) {
+    window.clearTimeout(pollTimer)
+    pollTimer = null
+  }
+}
+
+function schedulePoll(id: string) {
+  stopPolling()
+  if (disposed) return
+  pollTimer = window.setTimeout(() => { void poll(id) }, POLL_MS)
+}
+
+async function poll(id: string) {
+  pollTimer = null
+  if (disposed) return
+  try {
+    const before = plan.value
+    plan.value = await api.getPptPlan(id)
+    const finishedNow = plan.value.items.some((item, index) => {
+      const previous = before?.items[index]
+      return item.has_ppt && previous && !previous.has_ppt
+    })
+    if (finishedNow) {
+      toast.ok('这一课的课件已经生成好了')
+      await refreshCourse(id)
+    }
+    if (plan.value.items.some((item) => item.job_status === 'queued' || item.job_status === 'running')) {
+      schedulePoll(id)
+    }
+  } catch {
+    schedulePoll(id)
+  }
+}
+
+async function refreshCourse(id: string) {
+  try {
+    course.value = await api.getCourse(id)
+  } catch {
+    // 刷新失败只是列表上的页数晚一步更新
+  }
+}
+
+async function generateNext() {
+  const id = course.value?.id ?? ''
+  if (!id || starting.value) return
+  starting.value = true
+  try {
+    await api.generateNextPpt(id)
+    toast.ok(`正在生成「${nextUnit.value?.title ?? '下一课'}」的课件`)
+    await loadPlan(id)
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 409) toast.warn(error.message)
+    else toast.error(errorText(error))
+  } finally {
+    starting.value = false
+  }
+}
+
+async function generateOne(row: UnitRow) {
+  if (starting.value || runningRow.value) return
+  starting.value = true
+  try {
+    await api.generateUnitPpt(row.id)
+    toast.ok(`正在生成「${row.title}」的课件`)
+    await loadPlan(course.value?.id ?? '')
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 409) toast.warn(error.message)
+    else toast.error(errorText(error))
+  } finally {
+    starting.value = false
+  }
+}
+
+async function cancelRunning() {
+  const row = runningRow.value
+  if (!row) return
+  try {
+    await api.cancelUnitPpt(row.id)
+    toast.warn('已取消生成')
+    await loadPlan(course.value?.id ?? '')
+  } catch (error) {
+    toast.error(errorText(error))
   }
 }
 
@@ -89,6 +297,7 @@ async function removeCourse() {
 }
 
 onMounted(load)
+onBeforeUnmount(() => { disposed = true; stopPolling() })
 </script>
 
 <template>
@@ -117,9 +326,9 @@ onMounted(load)
           <h1>{{ course.title }}</h1>
           <div class="detail-tags">
             <span v-if="course.subject">{{ course.subject }}</span>
-            <span>{{ course.chapters.length }} 个单元 · {{ lessonCount }} 个小节</span>
-            <span>{{ slideCount }} 页课件</span>
-            <span>已学 {{ percent }}%</span>
+            <span>{{ course.chapters.length }} 章 · {{ totalUnits }} 个小节</span>
+            <span>课件 {{ readyUnits }} / {{ totalUnits }}</span>
+            <span v-if="outlineMeta">{{ outlineMeta }}</span>
           </div>
         </div>
         <div class="detail-hero-art" aria-hidden="true">
@@ -155,52 +364,128 @@ onMounted(load)
             <p>{{ goalText }}</p>
           </section>
 
-          <section class="detail-section">
+          <section class="detail-section outline-section">
             <div class="detail-section-heading">
               <div>
                 <span class="section-kicker">COURSE OUTLINE</span>
                 <h2>课程大纲</h2>
               </div>
-              <span class="outline-count">{{ course.chapters.length }} 个单元 · {{ lessonCount }} 个小节</span>
+              <span class="outline-count">{{ course.chapters.length }} 章 · {{ totalUnits }} 个小节</span>
             </div>
-            <ol class="unit-list">
-              <li v-for="(chapter, chapterIndex) in course.chapters" :key="chapter.title + chapterIndex" class="unit-item">
-                <div class="unit-heading">
-                  <span class="unit-copy">
-                    <span class="unit-label">第 {{ chapterIndex + 1 }} 单元 · {{ chapter.units.length }} 个小节</span>
+
+            <!-- PPT 进度条：只在"有课件要生成 / 正在生成"时出现 -->
+            <div class="ppt-strip">
+              <div class="ppt-strip-copy">
+                <strong>课件进度 {{ readyUnits }} / {{ totalUnits }}</strong>
+                <span v-if="runningRow">
+                  正在生成「{{ runningRow.title }}」{{ runningRow.jobStage ? ' · ' + runningRow.jobStage : '' }}
+                </span>
+                <span v-else-if="nextUnit">
+                  下一课：{{ nextUnit.title }}（上到哪一课，就生成哪一课）
+                </span>
+                <span v-else>全部单元的课件都已生成，可以直接上课</span>
+              </div>
+              <div class="ppt-strip-actions">
+                <template v-if="runningRow">
+                  <span class="ppt-percent">{{ Math.round(runningRow.jobPercent) }}%</span>
+                  <button class="btn" type="button" @click="cancelRunning()">取消</button>
+                </template>
+                <button
+                  v-else-if="nextUnit && canGenerate"
+                  class="btn btn-primary"
+                  type="button"
+                  :disabled="starting"
+                  @click="generateNext()"
+                >
+                  {{ starting ? '正在启动…' : '生成下一课 PPT' }}
+                </button>
+              </div>
+            </div>
+
+            <ol class="chapter-list">
+              <li v-for="chapter in chapters" :key="chapter.index" class="chapter-block">
+                <button class="chapter-head" type="button" @click="toggleChapter(String(chapter.index))">
+                  <span class="chapter-no" aria-hidden="true">{{ chapter.index + 1 }}</span>
+                  <span class="chapter-copy">
                     <strong>{{ chapter.title }}</strong>
+                    <small>{{ chapter.units.length }} 个小节 · {{ chapter.units.filter((u) => u.hasPpt).length }} 个已有课件</small>
                   </span>
-                </div>
-                <ol class="lesson-list" :aria-label="`${chapter.title}的小节`">
-                  <li v-for="(unit, unitIndex) in chapter.units" :key="unit.id">
-                    <div class="lesson-entry">
+                  <span class="chapter-chevron" :class="{ 'chapter-chevron--closed': collapsed[String(chapter.index)] }" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></svg>
+                  </span>
+                </button>
+
+                <ol v-show="!collapsed[String(chapter.index)]" class="unit-list">
+                  <li v-for="row in chapter.units" :key="row.id" class="unit-row">
+                    <span
+                      class="unit-dot"
+                      :class="row.hasPpt ? 'unit-dot--ready' : 'unit-dot--pending'"
+                      :title="row.hasPpt ? '课件已生成' : '课件还没生成'"
+                      aria-hidden="true"
+                    >
+                      <template v-if="row.hasPpt">✓</template>
+                      <template v-else>{{ row.unitIndex + 1 }}</template>
+                    </span>
+
+                    <RouterLink
+                      v-if="row.hasPpt"
+                      class="unit-main"
+                      :to="unitRoute(row)"
+                      :aria-label="`${row.title}，${unitStatusText({ percent: row.progressPercent, last_slide: 0, status: row.progressStatus }).label}，进入学习`"
+                    >
+                      <span class="unit-title">{{ row.title }}</span>
+                      <span class="unit-meta">
+                        <template v-if="row.jobStatus === 'running'">生成中 {{ Math.round(row.jobPercent) }}%</template>
+                        <template v-else-if="row.progressPercent > 0">{{ row.progressPercent }}%</template>
+                        <template v-else>未开始</template>
+                      </span>
+                    </RouterLink>
+                    <span v-else class="unit-main unit-main--pending">
+                      <span class="unit-title">{{ row.title }}</span>
+                      <span class="unit-meta">
+                        <template v-if="row.jobStatus === 'running' || row.jobStatus === 'queued'">
+                          {{ row.jobStage || '排队中' }} {{ Math.round(row.jobPercent) }}%
+                        </template>
+                        <template v-else-if="row.jobStatus === 'failed'">生成失败</template>
+                        <template v-else>课件待生成</template>
+                      </span>
+                    </span>
+
+                    <span v-if="row.kp.length" class="unit-kp">
+                      <span v-for="(kp, kpIndex) in row.kp.slice(0, 4)" :key="kpIndex" class="kp-chip">{{ kp }}</span>
+                      <span v-if="row.kp.length > 4" class="kp-chip kp-chip--more">+{{ row.kp.length - 4 }}</span>
+                    </span>
+
+                    <span class="unit-actions">
                       <RouterLink
-                        class="lesson-main"
-                        :to="unitRoute(chapterIndex, unitIndex)"
-                        :aria-label="`${unit.title}，第 ${chapterIndex + 1} 单元第 ${unitIndex + 1} 小节，${unitStatusText(unit.progress).label}，进入学习`"
-                      >
-                        <span
-                          class="lesson-status"
-                          :class="`lesson-status--${unitStatusText(unit.progress).tone}`"
-                          aria-hidden="true"
-                        >{{ unit.progress?.status === 'completed' ? '✓' : '未' }}</span>
-                        <span class="lesson-index" aria-hidden="true">{{ chapterIndex + 1 }}.{{ unitIndex + 1 }}</span>
-                        <span class="lesson-title">{{ unit.title }}</span>
-                        <span class="lesson-meta">
-                          {{ unit.slides || 0 }} 页<template v-if="unit.progress?.status === 'in_progress'"> · 进行中</template><template v-else-if="unit.progress?.status === 'paused'"> · 已暂停</template>
-                        </span>
-                        <span class="lesson-action">进入学习<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg></span>
-                      </RouterLink>
+                        v-if="row.hasPpt"
+                        class="unit-action"
+                        :to="unitRoute(row)"
+                      >进入学习</RouterLink>
+                      <button
+                        v-else-if="canGenerate"
+                        class="unit-action unit-action--primary"
+                        type="button"
+                        :disabled="starting || !!runningRow"
+                        @click="generateOne(row)"
+                      >生成课件</button>
                       <RouterLink
-                        class="lesson-outline"
-                        :to="{ name: 'app-unit-outline', params: { unitId: unit.id } }"
-                        :aria-label="`查看「${unit.title}」的单元大纲`"
+                        v-if="row.hasPpt"
+                        class="unit-action unit-action--ghost"
+                        :to="{ name: 'app-unit-outline', params: { unitId: row.id } }"
                       >大纲</RouterLink>
-                    </div>
+                    </span>
+
+                    <p v-if="row.jobStatus === 'failed' && row.error" class="unit-error">{{ row.error }}</p>
                   </li>
                 </ol>
               </li>
             </ol>
+
+            <p v-if="!canGenerate" class="outline-note">
+              这门课没有结构化大纲（扫描或导入得来的），所以只能上已经备好课的单元。
+              想要"一课一课生成课件"，请在「生成课堂」里重新建一门课。
+            </p>
           </section>
         </main>
 
@@ -210,10 +495,11 @@ onMounted(load)
             <dl>
               <div><dt>课程来源</dt><dd>{{ sourceLabel(course.source) }}</dd></div>
               <div><dt>学科</dt><dd>{{ course.subject || '未标注' }}</dd></div>
-              <div><dt>单元 / 小节</dt><dd>{{ course.chapters.length }} / {{ lessonCount }}</dd></div>
+              <div><dt>章 / 小节</dt><dd>{{ course.chapters.length }} / {{ totalUnits }}</dd></div>
+              <div><dt>已生成课件</dt><dd>{{ readyUnits }} / {{ totalUnits }}</dd></div>
               <div><dt>课件页数</dt><dd>{{ slideCount }} 页</dd></div>
               <div><dt>预计时长</dt><dd>{{ duration }}</dd></div>
-              <div><dt>已完成</dt><dd>{{ completedCount }} / {{ lessonCount }}</dd></div>
+              <div><dt>已完成</dt><dd>{{ completedCount }} / {{ totalUnits }}</dd></div>
             </dl>
             <div class="info-progress" aria-hidden="true"><i :style="{ width: `${percent}%` }" /></div>
           </section>
@@ -270,32 +556,52 @@ onMounted(load)
 .detail-section-heading h2 { margin-top: 5px; font-size: 18px; font-weight: 650; }
 .outline-count { padding: 6px 9px; border: 1px solid var(--border-soft); border-radius: 7px; color: var(--muted); font-size: 10px; }
 .overview-copy { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
-.unit-list { display: flex; flex-direction: column; gap: 18px; margin: 0; padding: 0; list-style: none; }
-.unit-item { min-width: 0; }
-.unit-heading { display: grid; width: 100%; min-height: 72px; grid-template-columns: minmax(0, 1fr); align-items: center; padding: 12px 15px; border: 1px solid var(--border); border-radius: 12px; background: color-mix(in oklch, var(--surface) 88%, var(--border-soft)); color: var(--fg); text-align: left; }
-.unit-copy { display: flex; min-width: 0; flex-direction: column; gap: 5px; }
-.unit-label { color: var(--meta); font-size: 10px; }
-.unit-copy strong { font-size: 13px; font-weight: 600; line-height: 1.5; }
-.lesson-list { display: flex; flex-direction: column; gap: 2px; margin: 8px 0 0 18px; padding: 1px 0 1px 29px; border-left: 1px solid var(--border-soft); list-style: none; }
-.lesson-list li { display: flex; align-items: baseline; gap: 10px; padding: 5px 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
-.lesson-index { flex: none; color: var(--meta); font-family: var(--font-mono); font-size: 9px; }
-.lesson-entry { display: flex; min-height: 38px; align-items: center; gap: 4px; padding: 1px 4px 1px 0; border-radius: 8px; transition: background 140ms ease; }
-.lesson-entry:hover { background: color-mix(in oklch, var(--accent) 7%, var(--surface)); }
-.lesson-main { display: flex; min-width: 0; flex: 1; align-items: center; gap: 10px; padding: 4px 6px; border-radius: 7px; color: var(--muted); font-size: 11px; line-height: 1.55; transition: color 140ms ease; }
-.lesson-entry:hover .lesson-main { color: var(--fg); }
-.lesson-main:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; color: var(--fg); }
-.lesson-title { flex: 1; }
-.lesson-meta { flex: none; color: var(--meta); font-size: 9px; white-space: nowrap; }
-.lesson-outline { flex: none; margin-right: 4px; padding: 3px 7px; border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-size: 9px; white-space: nowrap; transition: border-color 140ms ease, color 140ms ease; }
-.lesson-outline:hover { border-color: var(--accent); color: var(--accent); }
-.lesson-status { display: grid; width: 21px; height: 21px; flex: none; place-items: center; border: 1px solid transparent; border-radius: 50%; font-size: 8px; font-weight: 700; }
-.lesson-status--todo { border-color: #f5d7a9; background: #fff5e5; color: #d98216; }
-.lesson-status--progress { border-color: #c9d9f5; background: #eef4ff; color: #2563c9; font-size: 8px; }
-.lesson-status--paused { border-color: #f0d8b8; background: #fdf5e9; color: #b47616; }
-.lesson-status--done { border-color: #b9e5ca; background: #eaf7ef; color: #16864a; font-size: 12px; }
-.lesson-action { display: inline-flex; align-items: center; gap: 3px; color: var(--accent); font-size: 10px; white-space: nowrap; opacity: .82; }
-.lesson-action svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
 .goal-section > p { color: var(--muted); font-size: 13px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* ── 课件进度条 ───────────────────────────────────────────────── */
+.ppt-strip { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; padding: 11px 13px; border: 1px solid color-mix(in oklch, var(--accent) 16%, var(--border)); border-radius: 11px; background: color-mix(in oklch, var(--accent) 4%, var(--bg)); }
+.ppt-strip-copy { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
+.ppt-strip-copy strong { font-size: 11.5px; font-weight: 650; }
+.ppt-strip-copy span { color: var(--muted); font-size: 10.5px; line-height: 1.5; }
+.ppt-strip-actions { display: flex; flex: none; align-items: center; gap: 8px; }
+.ppt-strip-actions .btn { padding: 6px 11px; font-size: 11px; }
+.ppt-percent { color: var(--accent); font-family: var(--font-mono); font-size: 11px; }
+
+/* ── 章 → 单元（截图里那套层级）────────────────────────────────── */
+.chapter-list { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.chapter-block { min-width: 0; }
+.chapter-head { display: flex; width: 100%; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; background: color-mix(in oklch, var(--surface) 88%, var(--border-soft)); color: var(--fg); cursor: pointer; font: inherit; text-align: left; transition: border-color 140ms ease; }
+.chapter-head:hover { border-color: color-mix(in oklch, var(--accent) 35%, var(--border)); }
+.chapter-no { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border-radius: 10px; background: var(--bg); color: var(--accent); font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+.chapter-copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 3px; }
+.chapter-copy strong { font-size: 13.5px; font-weight: 650; line-height: 1.4; }
+.chapter-copy small { color: var(--meta); font-size: 10px; }
+.chapter-chevron { flex: none; color: var(--meta); transition: transform 180ms ease; }
+.chapter-chevron svg { display: block; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+.chapter-chevron--closed { transform: rotate(-90deg); }
+
+.unit-list { display: flex; flex-direction: column; gap: 2px; margin: 6px 0 0 18px; padding: 2px 0 2px 26px; border-left: 1px dashed var(--border); list-style: none; }
+.unit-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 7px 6px 7px 0; border-radius: 8px; transition: background 140ms ease; }
+.unit-row:hover { background: color-mix(in oklch, var(--accent) 5%, var(--surface)); }
+.unit-dot { display: grid; width: 22px; height: 22px; flex: none; place-items: center; border-radius: 50%; font-family: var(--font-mono); font-size: 10px; font-weight: 700; }
+.unit-dot--ready { border: 1px solid color-mix(in oklch, var(--success) 42%, var(--border)); background: color-mix(in oklch, var(--success) 14%, var(--bg)); color: color-mix(in oklch, var(--success) 72%, #0f5132); }
+.unit-dot--pending { border: 1px solid color-mix(in oklch, var(--warn) 45%, var(--border)); background: color-mix(in oklch, var(--warn) 13%, var(--bg)); color: color-mix(in oklch, var(--warn) 78%, #7a4c00); }
+.unit-main { display: flex; min-width: 0; flex: 1; align-items: center; gap: 10px; padding: 2px 4px; color: var(--fg); font-size: 12px; line-height: 1.55; text-decoration: none; }
+.unit-main--pending { color: var(--muted); }
+.unit-main:hover { color: var(--accent); }
+.unit-title { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.unit-meta { flex: none; color: var(--meta); font-size: 9.5px; white-space: nowrap; }
+.unit-kp { display: flex; flex-wrap: wrap; gap: 4px; width: 100%; padding-left: 32px; }
+.kp-chip { padding: 2px 7px; border: 1px solid var(--border-soft); border-radius: 999px; background: var(--bg); color: var(--muted); font-size: 9px; }
+.kp-chip--more { color: var(--meta); }
+.unit-actions { display: flex; flex: none; align-items: center; gap: 5px; }
+.unit-action { padding: 4px 9px; border: 1px solid var(--border); border-radius: 7px; background: var(--bg); color: var(--muted); cursor: pointer; font: inherit; font-size: 9.5px; text-decoration: none; transition: border-color 130ms ease, color 130ms ease; }
+.unit-action:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.unit-action--primary { border-color: color-mix(in oklch, var(--accent) 40%, var(--border)); color: var(--accent); }
+.unit-action--ghost { color: var(--meta); }
+.unit-action:disabled { cursor: not-allowed; opacity: .45; }
+.unit-error { width: 100%; margin: 2px 0 0 32px; color: var(--danger); font-size: 10px; line-height: 1.5; overflow-wrap: anywhere; }
+.outline-note { margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--border-soft); color: var(--meta); font-size: 10.5px; line-height: 1.7; }
 
 .detail-sidebar { position: sticky; top: 80px; }
 .course-info-card { padding: 18px; }
@@ -330,11 +636,8 @@ onMounted(load)
   .detail-layout { grid-template-columns: minmax(0, 1fr); }
   .detail-sidebar { position: static; grid-row: 1; }
   .detail-section { padding: 18px 16px; }
-  .unit-heading { grid-template-columns: minmax(0, 1fr); padding-inline: 11px; }
-  .lesson-entry { gap: 7px; padding-inline: 7px; }
-  /* 窄屏只留箭头（与旧仓库一致）：文字收成 0 号字，图标保持可见 */
-  .lesson-meta { display: none; }
-  .lesson-action { font-size: 0; }
-  .lesson-action svg { width: 16px; height: 16px; }
+  .unit-list { margin-left: 8px; padding-left: 14px; }
+  .unit-kp { padding-left: 0; }
+  .unit-meta { display: none; }
 }
 </style>

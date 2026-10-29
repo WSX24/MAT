@@ -27,6 +27,8 @@ export interface ClassroomSnapshot {
   transcript: TranscriptEntry[]
   caption: string
   rate: Rate
+  /** 讲解音量 0~1（只作用于本机的 audio 元素，不改变服务端合成）。 */
+  volume: number
   recap: Recap | null
   autoplayBlocked: boolean
   retries: number
@@ -45,6 +47,7 @@ const INITIAL: ClassroomSnapshot = {
   transcript: [],
   caption: '',
   rate: 1,
+  volume: 1,
   recap: null,
   autoplayBlocked: false,
   retries: 0,
@@ -60,6 +63,7 @@ export function useClassroom(options: {
   state: ClassroomSnapshot
   control: (cmd: 'pause' | 'resume' | 'next' | 'prev' | 'finish') => void
   setRate: (value: Rate) => void
+  setVolume: (value: number) => void
   ask: (text: string) => void
   retryAudio: () => void
 } {
@@ -154,6 +158,8 @@ export function useClassroom(options: {
     /* ---------------------------------------------------------------- 音频 */
     const element = new Audio()
     element.preload = 'auto'
+    // 音量只作用于本机播放：服务端合成的音频是同一份，调小只影响这一台设备
+    element.volume = state.volume
     audio = element
     element.onended = () => {
       const seq = pendingAudioSeq
@@ -216,6 +222,13 @@ export function useClassroom(options: {
     send({ t: 'rate', value })
   }
 
+  /** 音量 0~1：clamp 在本机做，服务端不参与（它只按语速合成音频）。 */
+  const setVolume = (value: number) => {
+    const next = Math.min(1, Math.max(0, Number.isFinite(value) ? value : 1))
+    state.volume = next
+    if (audio) audio.volume = next
+  }
+
   const ask = (text: string) => {
     const question = text.trim()
     if (!question) return
@@ -236,5 +249,5 @@ export function useClassroom(options: {
     )
   }
 
-  return { state, control, setRate, ask, retryAudio }
+  return { state, control, setRate, setVolume, ask, retryAudio }
 }

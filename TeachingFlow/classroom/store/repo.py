@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import json
 import sqlite3
 import uuid
@@ -248,6 +249,22 @@ def course_unit_counts(conn: sqlite3.Connection, course_id: str) -> tuple[int, i
     return int(row["total"] or 0), int(row["ready"] or 0)
 
 
+def course_ppt_counts(conn: sqlite3.Connection, course_id: str) -> tuple[int, int]:
+    """(单元总数, 已有课件的单元数)。
+
+    判据是 ``pptx_path`` 非空而不是"磁盘上文件此刻还在"：列表页每次刷新都去
+    ``is_file()`` 一遍，等于把一次 SELECT 变成 N 次磁盘探测（课件在机械盘/网络盘
+    上时肉眼可见地慢）。而 ``pptx_path`` 只在"这一课真的产出了片"时才写 ——
+    它本身就是那份账本。
+    """
+    row = conn.execute(
+        "SELECT COUNT(*) AS total, "
+        "SUM(CASE WHEN COALESCE(TRIM(pptx_path), '') <> '' THEN 1 ELSE 0 END) AS with_ppt "
+        "FROM units WHERE course_id=?", (course_id,)
+    ).fetchone()
+    return int(row["total"] or 0), int(row["with_ppt"] or 0)
+
+
 def delete_course(conn: sqlite3.Connection, course_id: str) -> dict:
     """删课程 + 它的单元 + 这些单元的会话/进度/事件。返回各表删了多少（便于自检）。"""
     unit_ids = [r["id"] for r in conn.execute(
@@ -263,9 +280,27 @@ def delete_course(conn: sqlite3.Connection, course_id: str) -> dict:
     conn.execute("DELETE FROM progress WHERE unit_id IN "
                  "(SELECT id FROM units WHERE course_id=?)", (course_id,))
     conn.execute("DELETE FROM units WHERE course_id=?", (course_id,))
+    # 单课出片任务与建课会话也是这门课的孩子：
+    #   · 任务行留着会变成"永远在跑"的孤儿 —— 它占着「一次只做一课」的名额，
+    #     用户从此点不动「生成下一课」（对账只在服务启动时跑，救不了这一次）；
+    #   · 会话留着会指向一门不存在的课，前端点「去课程页」就是 404。
+    # 会话本身不删（聊天记录还在），只把 course_id 断掉。
+    with _suppress_missing_table():
+        conn.execute("DELETE FROM unit_ppt_jobs WHERE course_id=?", (course_id,))
+        conn.execute("UPDATE course_builder_sessions SET course_id='' WHERE course_id=?",
+                     (course_id,))
     conn.execute("DELETE FROM courses WHERE id=?", (course_id,))
     conn.commit()
     return {"units": len(unit_ids), "sessions": len(session_ids)}
+
+
+@contextlib.contextmanager
+def _suppress_missing_table():
+    """老库还没跑到建课那一步时，这两张表可能不存在 —— 删除课程不该因此失败。"""
+    try:
+        yield
+    except sqlite3.OperationalError:
+        pass
 
 
 # ===========================================================================

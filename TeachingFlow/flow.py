@@ -176,11 +176,15 @@ def main(argv: list[str] | None = None) -> int:
         for target in targets:
             uid = target["unit_id"]
             outline_path = run.path(f"04_outline_{uid}.result.md")
+            unit_path = run.path(f"03_unit_{uid}.result.md")
             skip_unit = outline_path.is_file()          # --resume：大纲已在，不重跑 S3/S4
             if skip_unit:
                 print(f"【S3/S4】{uid} 已有大纲，跳过（--resume）")
-                unit_text = run.path(f"03_unit_{uid}.result.md").read_text(
-                    encoding="utf-8") if run.path(f"03_unit_{uid}.result.md").is_file() else ""
+                unit_text = unit_path.read_text(
+                    encoding="utf-8") if unit_path.is_file() else ""
+            elif args.resume and unit_path.is_file():
+                print(f"【S3】{uid} 复用已有单元知识清单与教学设计 03_unit_{uid}.result.md")
+                unit_text = unit_path.read_text(encoding="utf-8")
             else:
                 # ---------------- S3 ----------------
                 _, unit_text = s3_unit.run(course, target, run, llm)

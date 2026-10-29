@@ -103,12 +103,16 @@ Copy-Item .env.example PPT-Agent\.env    # 然后在 PPT-Agent\.env 里填 DEEPS
 
 ## 5. 课程（单元）从哪来
 
-1. **TeachingFlow 的 run**：`TeachingFlow/runs/<日期>/<课程名>/` 里有出片产物时，
+1. **对话式建课**（登录后的第一条主线）：在「生成课堂」里说一句想学什么，模型先问清
+   程度 / 基础 / 周期；你确认需求 → 它排章 / 单元大纲 → 你改完再确认 → 逐章设计每一课 →
+   存进课程库。**PPT 是一课一课生成的**（上到哪一课，生成哪一课）。
+   细节见 [docs/课程生成与渐进式课件.md](docs/课程生成与渐进式课件.md)。
+2. **TeachingFlow 的 run**：`TeachingFlow/runs/<日期>/<课程名>/` 里有出片产物时，
    首页点「重新扫描」（或 `POST /api/v1/courses/scan`）就进课程库。
-2. **导入 pptx**：首页「导入课件」上传一份 `.pptx`（或 `POST /api/v1/courses/import`），
+3. **导入 pptx**：首页「导入课件」上传一份 `.pptx`（或 `POST /api/v1/courses/import`），
    立刻出现在课程库，并顺手备一次课。
 
-两条路最后都落在同一批产物上：
+三条路最后都落在同一批产物上：
 
 ```
 TeachingFlow/classroom/pptx/          课件源库（上传的副本；.pptx 不入库）
@@ -133,6 +137,7 @@ python -m pytest tests/test_api_contract.py   # 只跑 API/WS 契约
 |---|---|
 | API + WS 契约（设计文档 §4 逐条） | `tests/test_api_contract.py` |
 | 端到端主线（导入 → 上课 → 小结 → 续学） | `tests/test_end_to_end_flow.py` |
+| 对话式建课 + 渐进式出片 | `tests/test_course_builder.py` |
 | 内容管线（扫描 / 备课 / 大纲） | `tests/test_studio_*.py` |
 | 引擎（状态机 / 备课 / 课件 / 导演 / 预处理 / MCP） | 其余 `tests/test_*.py` |
 
@@ -157,6 +162,7 @@ python -m pytest tests/test_api_contract.py   # 只跑 API/WS 契约
 | 文档 | 讲什么 |
 |---|---|
 | [docs/正式版设计.md](docs/正式版设计.md) | **唯一事实源**：目录 / 数据模型 / 契约 / 完成标准 |
+| [docs/课程生成与渐进式课件.md](docs/课程生成与渐进式课件.md) | 对话式建课：提问工具 / 需求确认 / 大纲编辑 / 逐课出片 |
 | [docs/使用说明.md](docs/使用说明.md) | 面向使用者：启动 → 导入 → 上课 → 续学 → 换档案 |
 | [docs/课堂状态机规范.md](docs/课堂状态机规范.md) | 状态机与阶段回调 |
 | [docs/分支机制说明.md](docs/分支机制说明.md) | 预置路线（skip / revisit）与停产的就地变体 |

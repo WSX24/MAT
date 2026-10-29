@@ -14,11 +14,13 @@ import os
 
 from fastapi import FastAPI
 
+import course_builder
 import generation
 
 from . import deps, ws
 from .errors import install_error_handlers
 from .routes import (
+    builder,
     courses,
     dev,
     generations,
@@ -86,6 +88,12 @@ async def _lifespan(_app: FastAPI):
         generation.reconcile()
     except Exception as e:          # 库坏了也不许连累启动：健康检查得先活着
         log.error("出片对账失败 err=%s: %s", type(e).__name__, e)
+    # 课程生成 / 单课 PPT 的对账同理：库里停在"运行中"的行会变成永远不动的进度条，
+    # 而且占着"一次只做一课"的名额 —— 用户从此点不动「生成下一课」。
+    try:
+        course_builder.reconcile()
+    except Exception as e:
+        log.error("课程生成对账失败 err=%s: %s", type(e).__name__, e)
     yield
     log.info("课堂服务停止")
 
@@ -100,6 +108,7 @@ def create_app() -> FastAPI:
     api.include_router(units.router)
     api.include_router(sessions.router)
     api.include_router(generations.router)
+    api.include_router(builder.router)           # 交互式课程生成 + 渐进式单课 PPT
     api.include_router(model_providers.router)  # 服务商中枢（明文 key 不出 HTTP）
     api.include_router(dev.router)              # 默认 404，见 routes/dev.py
     api.add_api_websocket_route("/ws/classroom/{session_id}", ws.classroom_ws)

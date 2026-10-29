@@ -192,6 +192,109 @@
 .btn-danger-sm:disabled { cursor: not-allowed; opacity: .5; }
 .btn-danger-sm svg { width: 14px; height: 14px; fill: currentColor; stroke: none; }
 
+.btn-soft-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  transition: border-color 140ms ease, color 140ms ease, background 140ms ease;
+}
+.btn-soft-sm:hover { border-color: var(--accent); color: var(--accent); }
+.btn-soft-sm[aria-pressed="true"] {
+  border-color: color-mix(in oklch, var(--accent) 45%, var(--border));
+  background: color-mix(in oklch, var(--accent) 8%, var(--bg));
+  color: var(--accent);
+}
+.btn-soft-sm svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+
+/* ── 全屏演示 ──────────────────────────────────────────────────────
+ * 对齐原型 #fsroot.fs 的两个决定：
+ *   · **整个屏幕都给课件**：标题栏、侧栏、控制条全部让位，课件按 16:9 顶满屏幕的
+ *     一个方向，另一边留等宽黑边（做不到又不变形，这是投影仪的标准做法）；
+ *   · 字幕叠在课件上、控制收进右下角浮窗（见 ClassroomFab.vue）。
+ * 真全屏由 Fullscreen API 撑满屏幕；浏览器不允许时退化成 .classroom-route--fallback
+ * 自己 fixed 铺满，功能一个不少。
+ */
+.classroom-route--presenting {
+  min-height: 100dvh;
+  padding: 0;
+  background: #0c0d11;
+}
+.classroom-route--fallback {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  overflow: hidden;
+}
+/* 演示态没有标题栏：页面信息（第几页）在浮窗里，退出在浮窗与 F / Esc 上 */
+.classroom-route--presenting .classroom-head { display: none; }
+.classroom-route--presenting .conn-banner {
+  position: absolute;
+  z-index: 95;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 8px 24px rgb(15 23 42 / 12%);
+}
+
+.classroom-route--presenting .classroom-body {
+  display: block;
+  height: 100dvh;
+}
+.classroom-route--presenting .classroom-sidebar { display: none; }
+.classroom-route--presenting .stage-wrap { position: relative; height: 100%; gap: 0; }
+.classroom-route--presenting .stage {
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+/* 16:9 顶满：宽度取「视口宽」与「按高度反推的宽」的小值，另一边自然留边 */
+.classroom-route--presenting .stage .deck-host {
+  width: min(100%, calc(100dvh * 16 / 9));
+  max-width: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 叠加字幕：轻白片 + 可调字号/颜色；右侧把浮窗那一整条让出来，长句也不会压到按钮上 */
+.fs-caption {
+  position: absolute;
+  right: max(8%, 348px);
+  bottom: 20px;
+  left: 5%;
+  margin: 0;
+  padding: 8px 18px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 78%);
+  backdrop-filter: blur(3px) saturate(140%);
+  color: var(--fg);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.55;
+  text-align: center;
+  text-wrap: balance;
+  box-shadow: 0 6px 20px rgb(15 23 42 / 22%);
+  pointer-events: none;
+}
+.fs-caption--top { top: 20px; bottom: auto; right: 5%; }
+.fs-caption:empty { display: none; }
+
+@media (max-width: 900px) {
+  /* 窄屏浮窗占满右下角，字幕挪到浮窗上面 */
+  .fs-caption { right: 5%; left: 5%; bottom: 78px; font-size: 16px !important; }
+  .fs-caption--top { top: 12px; bottom: auto; }
+}
+
 /* ── 字幕与提问 ──────────────────────────────────────────────────── */
 .classroom-sidebar {
   display: flex;

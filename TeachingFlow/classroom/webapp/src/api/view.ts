@@ -8,6 +8,8 @@ export interface CourseCardView {
   source: string
   unitCount: number
   readyCount: number
+  /** 已有 PPT 的单元数 / 单元总数（渐进式生成：上到哪一课才出哪一课的片）。 */
+  pptReady: number
   percent: number
   updatedAt: string
   /** 卡片上那句说明（旧设计的 goal 位置）。真实课用可核对的概述，不编学习目标。 */
@@ -20,7 +22,11 @@ export function toCourseCard(course: CourseSummary): CourseCardView {
   const percent = Math.round(course.progress?.percent ?? 0)
   const subject = (course.subject || '').trim()
   const prefix = subject ? `${subject} · ` : ''
-  const prepared = total > 0 ? `${ready}/${total} 个单元已备课` : '还没有解析出单元'
+  const pptReady = course.ppt_ready_count ?? ready
+  const prepared = total > 0
+    ? `${ready}/${total} 个单元已备课`
+    : '还没有解析出单元'
+  const pptLine = total > 0 ? `，已出片 ${pptReady}/${total} 课` : ''
   return {
     id: course.id,
     title: course.title || '未命名课程',
@@ -28,11 +34,14 @@ export function toCourseCard(course: CourseSummary): CourseCardView {
     source: course.source || 'run',
     unitCount: total,
     readyCount: ready,
+    pptReady,
     percent,
     updatedAt: course.updated_at || '',
     summary: course.source === 'import'
-      ? `${prefix}${prepared}，可直接进入课堂学习。`
-      : `${prefix}由出片流水线生成，${prepared}。`,
+      ? `${prefix}${prepared}${pptLine}，可直接进入课堂学习。`
+      : course.source === 'builder'
+        ? `${prefix}按你的需求整理成 ${total} 个单元${pptLine}，上到哪一课生成哪一课。`
+        : `${prefix}由出片流水线生成，${prepared}${pptLine}。`,
   }
 }
 

@@ -51,5 +51,6 @@ export function statusLabel(status: string | null | undefined): { label: string;
 
 export function sourceLabel(source: string | null | undefined): string {
   if (source === 'import') return '导入课件'
+  if (source === 'builder') return 'AI 生成课程'
   return '出片课程'
 }

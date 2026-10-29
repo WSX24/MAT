@@ -22,7 +22,8 @@ from pathlib import Path
 #: 当前 schema 版本。加一条迁移就 +1，并在 migrate() 里补 {旧版本: 语句}。
 #: 2 = 出片任务表 generations（见 schema.sql）
 #: 3 = 模型服务商中枢两张表 model_providers / app_settings（见 schema.sql 末尾）
-SCHEMA_VERSION = 3
+#: 4 = 交互式课程生成会话 course_builder_sessions 与渐进式单课 PPT 生成任务 unit_ppt_jobs
+SCHEMA_VERSION = 4
 
 HERE = Path(__file__).resolve().parent
 #: TeachingFlow/classroom/store → TeachingFlow/classroom

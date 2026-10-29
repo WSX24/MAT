@@ -15,7 +15,7 @@ import { toast } from '@/state/toast'
  * 数据换成真实课程（来源 / 单元数 / 进度 / 更新时间），并把旧的「学习周期」筛选
  * 换成同样交互的「来源」筛选 —— 真实契约里没有学习周期，编一个只会骗人。
  */
-type SourceFilter = 'all' | 'run' | 'import'
+type SourceFilter = 'all' | 'builder' | 'run' | 'import'
 
 const router = useRouter()
 const courses = ref<CourseCardView[]>([])
@@ -84,7 +84,7 @@ onMounted(load)
       <div>
         <span class="eyebrow">MY CLASSROOM</span>
         <h1 class="page-title">我的课堂</h1>
-        <p class="lead">把出片产物和导入的课件收在这里，随时回来查看学习大纲。</p>
+        <p class="lead">在「生成课堂」里和模型聊出来的课程、出片产物、导入的课件，都收在这里。</p>
       </div>
       <div class="heading-actions">
         <button class="btn" type="button" :disabled="scanning" @click="scan">
@@ -153,6 +153,7 @@ onMounted(load)
 
           <div class="filter-row" role="group" aria-label="按来源筛选">
             <button class="filter-chip" type="button" :aria-pressed="sourceFilter === 'all'" @click="sourceFilter = 'all'">全部</button>
+            <button class="filter-chip" type="button" :aria-pressed="sourceFilter === 'builder'" @click="sourceFilter = 'builder'">AI 生成课程</button>
             <button class="filter-chip" type="button" :aria-pressed="sourceFilter === 'run'" @click="sourceFilter = 'run'">出片课程</button>
             <button class="filter-chip" type="button" :aria-pressed="sourceFilter === 'import'" @click="sourceFilter = 'import'">导入课件</button>
           </div>
@@ -189,6 +190,12 @@ onMounted(load)
                 <span>更新于 {{ formatDate(course.updatedAt) }}</span>
                 <span>{{ course.unitCount }} 个单元</span>
               </footer>
+              <div class="card-ppt">
+                <span class="card-ppt-track" aria-hidden="true">
+                  <i :style="{ width: `${course.unitCount ? Math.round((course.pptReady / course.unitCount) * 100) : 0}%` }" />
+                </span>
+                <span class="card-ppt-text">课件 {{ course.pptReady }} / {{ course.unitCount }}</span>
+              </div>
               <span class="card-progress" aria-hidden="true"><i :style="{ width: `${course.percent}%` }" /></span>
             </div>
           </RouterLink>
@@ -306,7 +313,11 @@ onMounted(load)
 .classroom-goal { display: -webkit-box; min-height: 39px; overflow: hidden; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.65; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
 .classroom-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 14px; padding-top: 11px; border-top: 1px solid var(--border-soft); }
 .classroom-card-footer > span { color: var(--meta); font-size: 9px; }
-.card-progress { display: block; height: 2px; margin-top: 9px; border-radius: 2px; background: var(--border-soft); }
+.card-ppt { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+.card-ppt-track { display: block; height: 3px; flex: 1; overflow: hidden; border-radius: 2px; background: var(--border-soft); }
+.card-ppt-track i { display: block; height: 100%; border-radius: 2px; background: color-mix(in oklch, var(--accent) 55%, var(--border)); transition: width 200ms ease; }
+.card-ppt-text { flex: none; color: var(--meta); font-family: var(--font-mono); font-size: 9px; }
+.card-progress { display: block; height: 2px; margin-top: 6px; border-radius: 2px; background: var(--border-soft); }
 .card-progress i { display: block; height: 100%; border-radius: 2px; background: var(--accent); }
 
 .empty-library { display: flex; min-height: min(64vh, 590px); flex-direction: column; align-items: center; justify-content: center; padding: 30px 20px 52px; text-align: center; }
