@@ -37,6 +37,33 @@ def _bootstrap() -> None:
         print("提示：没找到 .env（模型与 TTS 会降级，但服务照常能起）")
 
 
+def _tts_lines(configured: bool) -> list[str]:
+    """语音那几行：说实话，而不是照着配置念。
+
+    "配置里开着"和"真的能出声"是两件事 —— edge-tts 版本太旧时每一句都 403，
+    配置照样是开的，学生听到的是没有声音（只有字幕）。启动横幅是启动期唯一的自述，
+    它要是只报配置，这个故障就得等课堂上学生开口才发现。
+
+    探测只用 import 进来的版本号，**不建实例、不碰磁盘**（和 /api/health 同理）。
+    """
+    try:
+        from speech import UPGRADE_HINT, edge_tts_version, version_problem
+    except Exception as e:                     # 语音模块本身坏了不该拦启动
+        return [f"  语音(edge-tts) ?（读不出语音模块：{type(e).__name__}: {e}）"]
+
+    version = edge_tts_version()
+    if not version:
+        return ["  语音(edge-tts) 关（没装，课堂只有字幕）",
+                f"  提示          装它：{UPGRADE_HINT}"]
+    problem = version_problem()
+    if problem:
+        return [f"  语音(edge-tts) 关（{problem}）",
+                f"  提示          升级后重启：{UPGRADE_HINT}"]
+    if not configured:
+        return [f"  语音(edge-tts) {version}（TTS_ENABLED=0：只有字幕）"]
+    return [f"  语音(edge-tts) {version}（开）"]
+
+
 def _ready_lines(host: str, port: int, *, env_path) -> list[str]:
     """启动横幅的内容：地址、课程库、引擎、TTS、以及"缺什么、会降级成什么"。
 
@@ -89,7 +116,7 @@ def _ready_lines(host: str, port: int, *, env_path) -> list[str]:
     except Exception as e:
         lines.append(f"  ⚠️ 配置读不出来（{type(e).__name__}: {e}）—— 备课会走规则兜底")
     lines.append(f"  引擎          {provider} / {model}")
-    lines.append(f"  语音(edge-tts) {'开' if tts else '关（只有字幕，纯文字上课）'}")
+    lines.extend(_tts_lines(tts))
 
     if courses == "?" or provider == "?":
         lines.append("  提示          服务照常能起；上面那几行 ⚠️ 说明降级在哪一项")

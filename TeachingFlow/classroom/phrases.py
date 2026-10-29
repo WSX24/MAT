@@ -690,7 +690,11 @@ class FastIntentRouter:
             base_url=base_url,
             api_key=api_key,
             timeout=min(6.0, getattr(settings, "timeout", 30.0)),
-            default_headers=prof.headers if base_url == prof.base_url else None,
+            # identity 头是**并进**服务商固定头里的：覆盖掉的话 Go 的会话头就没了。
+            # httpx2 2.16.0 的 C 解压器不收 output_buffer_limit 关键字参数，
+            # 服务端一回压缩内容就 TypeError。
+            default_headers={**(prof.headers if base_url == prof.base_url else {}),
+                             "Accept-Encoding": "identity"},
         )
         user_msg = f"当前课件页：{slide_title or '课堂讲授中'}\n学生说：{raw}"
         kwargs: dict[str, Any] = {

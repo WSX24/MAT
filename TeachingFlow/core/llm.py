@@ -64,7 +64,10 @@ class LLM:
         except ImportError:
             return self._fail(step, "未安装 openai：pip install openai")
 
-        client = OpenAI(api_key=key, base_url=base_url, timeout=600)
+        # httpx2 2.16.0 的 C 解压器不收 output_buffer_limit 关键字参数（process() 只认位置参数），
+        # 压缩响应必抛 TypeError —— 不请求压缩就不走解压路径
+        client = OpenAI(api_key=key, base_url=base_url, timeout=600,
+                        default_headers={"Accept-Encoding": "identity"})
         try:
             resp = client.chat.completions.create(
                 model=model,

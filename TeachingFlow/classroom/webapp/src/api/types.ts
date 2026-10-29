@@ -158,3 +158,119 @@ export interface Health {
   courses: number
   engine: { provider: string; model: string; tts: string | boolean }
 }
+
+/** 出片任务（§4 generations 契约）：页面只读快照，不自己拼命令。 */
+export type GenerationStatus = 'queued' | 'running' | 'succeeded' | 'failed' | 'cancelled' | 'interrupted'
+export type GenerationMode = 'real' | 'mock'
+export type GenerationTerm = 'long' | 'short'
+export type GenerationLevel = 'beginner' | 'intermediate'
+export type GenerationStage = '小学' | '初中' | '高中' | '大学' | '考研'
+
+export interface GenerationConfig {
+  ready: boolean
+  has_key: boolean
+  model: string
+  base_url: string
+  mock_allowed: boolean
+  mode: GenerationMode | string
+  reason: string
+}
+
+export interface GenerationProgress {
+  done: number
+  total: number
+  percent: number
+}
+
+export interface GenerationScan {
+  added: number
+  updated: number
+  total: number
+}
+
+export interface GenerationResult {
+  course_id: string
+  course_title: string
+  pptx: string[]
+  scan: GenerationScan
+}
+
+export interface GenerationSnapshot {
+  id: string
+  goal: string
+  status: GenerationStatus | string
+  mode: GenerationMode | string
+  stage: string
+  stage_label: string
+  progress: GenerationProgress
+  /** 第一条是后端真正执行的命令行原文，页面「高级」区要原样展示。 */
+  log_tail: string[]
+  started_at: string | null
+  finished_at: string | null
+  elapsed_sec: number
+  result: GenerationResult | null
+  error: string
+}
+
+export interface GenerationList {
+  items: GenerationSnapshot[]
+  active: GenerationSnapshot | null
+}
+
+/** §4 model-providers 契约：页面只拿得到掩码 key，明文 key 只在提交时上送。 */
+export type ModelProviderKind = 'deepseek' | 'openai' | 'ollama' | 'openrouter' | 'custom'
+export type ModelsSource = 'provider' | 'manual' | ''
+
+export interface ModelProvider {
+  id: string
+  name: string
+  kind: string
+  base_url: string
+  api_key_masked: string
+  has_key: boolean
+  models: string[]
+  models_source: ModelsSource | string
+  created_at: string
+  updated_at: string
+}
+
+export interface ModelDefault {
+  provider_id: string
+  model: string
+  provider: ModelProvider
+}
+
+export interface ModelProviderList {
+  items: ModelProvider[]
+  default: ModelDefault | null
+}
+
+export interface ModelFetchResult {
+  models: string[]
+  models_source: ModelsSource | string
+  fetched_at: string
+}
+
+/**
+ * POST /model-providers/{id}/probe：真发一次对话。
+ * 拉模型清单只要有 key 就 200，余额不足只有真发一次对话才暴露，所以这里问的是「能不能对话」。
+ * 探测结论一律 200 返回：ok=false 是结论不是请求错误；status=0 表示连不上服务商/超时。
+ */
+export interface ModelProbeResult {
+  ok: boolean
+  status: number
+  message: string
+  hint: string
+}
+
+export interface ModelDefaultResult extends ModelDefault {
+  /** 后端提醒（例如这个模型不在拉取到的清单里）：有内容就必须让用户看见。 */
+  warning: string
+}
+
+export interface ModelEnvExport {
+  /** .env 的绝对路径：用户要知道到底写进了哪一个文件。 */
+  path: string
+  written: string[]
+  skipped: string[]
+}

@@ -4,7 +4,7 @@ import { RouterLink, useRouter } from 'vue-router'
 import ImportCourseModal from '@/components/ImportCourseModal.vue'
 import { api } from '@/api/client'
 import { errorText, formatDate, sourceLabel } from '@/api/format'
-import { demoCourseCard, toCourseCard, type CourseCardView } from '@/api/view'
+import { toCourseCard, type CourseCardView } from '@/api/view'
 import { activeProfile } from '@/state/app'
 import { toast } from '@/state/toast'
 
@@ -23,7 +23,6 @@ const loading = ref(true)
 const loadError = ref('')
 const searchText = ref('')
 const sourceFilter = ref<SourceFilter>('all')
-const showDemo = ref(false)
 const showImport = ref(false)
 const scanning = ref(false)
 
@@ -70,12 +69,7 @@ const visibleCourses = computed(() => {
   })
 })
 
-const demoCard = computed(() => (showDemo.value ? demoCourseCard() : null))
-const totalCount = computed(() => courses.value.length + (demoCard.value ? 1 : 0))
-
-function openCourse(id: string) {
-  void router.push({ name: 'app-course-detail', params: { id } })
-}
+const totalCount = computed(() => courses.value.length)
 
 function afterImport(courseId: string) {
   void router.push({ name: 'app-course-detail', params: { id: courseId } })
@@ -125,12 +119,10 @@ onMounted(load)
         </svg>
       </div>
       <h2>课程库没有响应</h2>
-      <p>{{ loadError }}。<br>请确认课堂服务在运行（<code>python app.py</code>），或先看一份离线示例。</p>
+      <p>{{ loadError }}。<br>请确认课堂服务在运行（<code>python app.py</code>），然后重试。</p>
       <div class="empty-actions">
         <button class="btn btn-primary" type="button" @click="load">重试</button>
-        <button class="btn" type="button" @click="showDemo = !showDemo">
-          {{ showDemo ? '收起离线示例' : '查看离线示例' }}
-        </button>
+        <RouterLink class="btn" :to="{ name: 'app-generate' }">生成新课堂</RouterLink>
       </div>
     </section>
 
@@ -151,7 +143,7 @@ onMounted(load)
           <div class="library-title-row">
             <div>
               <h2>全部课堂</h2>
-              <span>{{ visibleCourses.length + (demoCard ? 1 : 0) }} 门</span>
+              <span>{{ visibleCourses.length }} 门</span>
             </div>
             <label class="course-search">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 4 4" /></svg>
@@ -166,7 +158,7 @@ onMounted(load)
           </div>
         </div>
 
-        <div v-if="visibleCourses.length || demoCard" class="classroom-grid">
+        <div v-if="visibleCourses.length" class="classroom-grid">
           <RouterLink
             v-for="(course, index) in visibleCourses"
             :key="course.id"
@@ -201,36 +193,6 @@ onMounted(load)
             </div>
           </RouterLink>
 
-          <a
-            v-if="demoCard"
-            class="classroom-card classroom-card--demo"
-            href="#"
-            @click.prevent="openCourse(demoCard.id)"
-          >
-            <div class="classroom-cover classroom-cover--demo" aria-hidden="true">
-              <span class="cover-kicker">OFFLINE SAMPLE</span>
-              <svg class="cover-illustration" viewBox="0 0 160 112">
-                <path class="cover-book-shadow" d="M80 34c-15-12-34-14-54-8v54c19-6 38-4 54 8 16-12 35-14 54-8V26c-20-6-39-4-54 8Z" />
-                <path class="cover-book-page" d="M80 37c-14-11-31-12-48-7v43c17-5 34-3 48 8V37Z" />
-                <path class="cover-book-page cover-book-page--right" d="M80 37c14-11 31-12 48-7v43c-17-5-34-3-48 8V37Z" />
-                <path class="cover-book-line" d="M43 43c10-2 19-1 27 3M43 53c10-2 19-1 27 3M90 46c8-4 17-5 27-3M90 56c8-4 17-5 27-3" />
-                <path class="cover-book-spine" d="M80 37v44" />
-              </svg>
-              <span class="cover-index">00</span>
-              <span class="cover-cycle">离线示例</span>
-            </div>
-            <div class="classroom-card-body">
-              <div class="course-card-heading">
-                <span class="course-kind"><i />个性化课堂</span>
-              </div>
-              <h3>{{ demoCard.title }}</h3>
-              <p class="classroom-goal">{{ demoCard.summary }}</p>
-              <footer class="classroom-card-footer">
-                <span>不影响真实课程库</span>
-                <span>{{ demoCard.unitCount }} 个单元</span>
-              </footer>
-            </div>
-          </a>
         </div>
 
         <div v-else class="no-results">
@@ -258,9 +220,10 @@ onMounted(load)
         <span class="empty-art-star empty-art-star--two">✦</span>
       </div>
       <h2>你的课堂会收纳在这里</h2>
-      <p>跑一次出片流水线，或直接导入一份 .pptx。课程会按「课程 → 章 → 单元」列在这里，点进去就能上课。</p>
+      <p>课程要么由出片流水线生成，要么直接导入一份 .pptx。生成之前要先在 <code>PPT-Agent/.env</code> 里配好模型 Key（<code>DEEPSEEK_API_KEY</code>）；导入课件不需要模型，导入后即可进入课程。</p>
       <div class="empty-actions">
-        <button class="btn btn-primary" type="button" @click="showImport = true">导入一份课件</button>
+        <RouterLink class="btn btn-primary" :to="{ name: 'app-generate' }">生成新课堂</RouterLink>
+        <button class="btn" type="button" @click="showImport = true">导入一份课件</button>
         <button class="btn" type="button" :disabled="scanning" @click="scan">重新扫描出片产物</button>
       </div>
     </section>
@@ -319,7 +282,6 @@ onMounted(load)
 .classroom-cover--1::before, .classroom-cover--1::after { border-color: rgb(56 115 151 / 15%); }
 .classroom-cover--2 { background-color: #f3eadf; background-image: linear-gradient(90deg, rgb(162 112 60 / 5%) 1px, transparent 1px), linear-gradient(rgb(162 112 60 / 5%) 1px, transparent 1px), radial-gradient(ellipse at 68% 28%, rgb(255 255 255 / 75%), transparent 48%); background-size: 28px 28px, 28px 28px, auto; }
 .classroom-cover--2::before, .classroom-cover--2::after { border-color: rgb(162 112 60 / 14%); }
-.classroom-cover--demo { background-color: #eceff3; background-image: linear-gradient(90deg, rgb(92 108 130 / 5%) 1px, transparent 1px), linear-gradient(rgb(92 108 130 / 5%) 1px, transparent 1px); }
 .cover-illustration { position: relative; z-index: 1; width: 132px; height: 94px; margin-top: 8px; filter: drop-shadow(0 7px 8px rgb(29 25 39 / 10%)); }
 .cover-book-shadow { fill: rgb(107 82 151 / 26%); }
 .cover-book-page { fill: #fffdfd; stroke: rgb(91 75 120 / 21%); stroke-width: 1.2; }

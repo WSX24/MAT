@@ -1,6 +1,5 @@
 /** 列表页/详情页的视图模型：把 HTTP 契约翻译成旧设计的展示口径。 */
 import type { CourseDetail, CourseSummary, UnitProgress } from './types'
-import { demoCourseSummary } from '@/data/demoCourses'
 
 export interface CourseCardView {
   id: string
@@ -13,7 +12,6 @@ export interface CourseCardView {
   updatedAt: string
   /** 卡片上那句说明（旧设计的 goal 位置）。真实课用可核对的概述，不编学习目标。 */
   summary: string
-  offline: boolean
 }
 
 export function toCourseCard(course: CourseSummary): CourseCardView {
@@ -35,16 +33,6 @@ export function toCourseCard(course: CourseSummary): CourseCardView {
     summary: course.source === 'import'
       ? `${prefix}${prepared}，可直接进入课堂学习。`
       : `${prefix}由出片流水线生成，${prepared}。`,
-    offline: false,
-  }
-}
-
-export function demoCourseCard(): CourseCardView {
-  const card = toCourseCard(demoCourseSummary)
-  return {
-    ...card,
-    summary: '离线示例：后端未连接时用来预览界面，不会保存到课程库。',
-    offline: true,
   }
 }
 

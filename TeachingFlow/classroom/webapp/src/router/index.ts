@@ -8,6 +8,7 @@ import LandingView from '../views/LandingView.vue'
 import LearnRedirectView from '../views/LearnRedirectView.vue'
 import LessonLearningView from '../views/LessonLearningView.vue'
 import OutlineView from '../views/OutlineView.vue'
+import SettingsView from '../views/SettingsView.vue'
 import SummaryView from '../views/SummaryView.vue'
 
 const router = createRouter({
@@ -19,6 +20,7 @@ const router = createRouter({
       component: LandingView,
       meta: { bodyClass: 'landing' },
     },
+    // 旧链接 /auth 仍要能打开：这里没有登录流程，只是指向工作区的入口页。
     {
       path: '/auth',
       name: 'auth',
@@ -69,6 +71,12 @@ const router = createRouter({
           name: 'app-session-summary',
           component: SummaryView,
           meta: { title: '课后小结' },
+        },
+        {
+          path: 'settings',
+          name: 'app-settings',
+          component: SettingsView,
+          meta: { title: '设置' },
         },
       ],
     },

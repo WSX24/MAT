@@ -145,7 +145,8 @@ python -m pytest tests/test_api_contract.py   # 只跑 API/WS 契约
 | 首页 404 / 空白 | `webapp/dist/index.html` 在不在（`npm run build`）；`/api/health` 返回什么 |
 | 课程库为空 | 有没有 `TeachingFlow/runs/*/` 出片产物；`.env` 的 `RUNS` 是否指对；直接导入一份 pptx 试 |
 | 单元"未准备"、大纲空 | `decks/<deck_id>/` 里 deck.json / plan.json 是否生成；`python run.py plan <deck_id>` 手动跑一次 |
-| 只有字幕没有语音 | `edge-tts` 版本（≥7.3.1）与网络；`/api/health` 的 `engine.tts` |
+| 只有字幕没有语音 | `edge-tts` 版本（≥7.3.1，启动横幅会直接报出来）与网络；`/api/health` 的 `engine.tts` |
+| 控制台刷 `ConnectionResetError: [WinError 10054]` | 浏览器中途掐断了 poster 视频的连接，是 CPython proactor 的拆连接噪声（已过滤；`CLASSROOM_LOG_LEVEL=debug` 才看得见）。服务没坏，206 会继续正常返回 |
 | 讲得干巴巴 | 没配模型 key → 规则兜底（照读课件）。配 `DEEPSEEK_API_KEY` 后 `python run.py plan` 重备 |
 | 诊断事件（备课计划 / 会话事件） | `CLASSROOM_DEV=1` 起服务，再访问 `/dev/units/{id}/plan`、`/dev/sessions/{id}/events` |
 

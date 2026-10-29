@@ -79,6 +79,21 @@ class patch_tts:
         speech.edge_tts = speech._real_edge
         return False
 
+class patch_version:
+    """临时把 edge_tts 的版本号换掉（测版本闸门）。替身默认没有 __version__ = 放行。"""
+
+    def __init__(self, version: str) -> None:
+        self.version = version
+
+    def __enter__(self):
+        speech._real_edge = speech.edge_tts
+        speech.edge_tts = SimpleNamespace(Communicate=FakeCommunicate, __version__=self.version)
+        return self
+
+    def __exit__(self, *exc):
+        speech.edge_tts = speech._real_edge
+        return False
+
 
 def make_tts(tmp: Path) -> TTS:
     return TTS(True, "zh-CN-YunxiNeural", "+0%", tmp)
@@ -243,6 +258,47 @@ def test_startup_sweeps_leftovers() -> None:
     print("[T7] 启动自动清理残留")
 
 
+def test_too_old_edge_tts_closes_voice_upfront() -> None:
+    """版本太旧 = 语音能力**等于没有**，要在启动时就说清楚。
+
+    现象：edge-tts 7.2.8 算的是微软已经不认的 v1 Sec-MS-GEC 令牌，握手一律 403。
+    那不是抖动，是每一句都失败、重试救不了；学生看到的是"只有字幕、没有声音"。
+    所以这里不是"照打不误再降级"，而是当场关掉并把修法写进 status()。
+    """
+    with tempfile.TemporaryDirectory() as d, patch_version("7.2.8"):
+        FakeCommunicate.mode = "ok"
+        FakeCommunicate.calls = 0
+        tts = make_tts(Path(d))
+        assert tts.enabled is False, "版本太旧必须直接关掉语音（403 是必然的，不是抖动）"
+        status = tts.status()
+        assert status["version"] == "7.2.8", status
+        assert "7.3.1" in status["reason"], f"要说出怎么修：{status['reason']}"
+        assert asyncio.run(tts.synth(TEXT)) is None
+        assert FakeCommunicate.calls == 0, "403 是必然的，就不该再去打网络"
+    print("[T10] edge-tts 太旧时当场关语音，并说清怎么升")
+
+
+def test_new_enough_edge_tts_keeps_voice_on() -> None:
+    """够新的版本不能被闸门误伤（闸门只挡"确定太旧"那一档）。"""
+    with tempfile.TemporaryDirectory() as d, patch_version("7.3.1"):
+        FakeCommunicate.mode = "ok"
+        tts = make_tts(Path(d))
+        assert tts.enabled is True
+        assert tts.status()["version"] == "7.3.1"
+        got = asyncio.run(tts.synth(TEXT))
+        assert got is not None and got.stat().st_size > 0
+    print("[T11] 够新的 edge-tts 正常出声")
+
+
+def test_unknown_version_is_not_blocked() -> None:
+    """认不出版本号就放行：测试替身和将来换写法都不该被这条路卡死。"""
+    with tempfile.TemporaryDirectory() as d, patch_tts():       # 替身没有 __version__
+        tts = make_tts(Path(d))
+        assert tts.enabled is True, "认不出版本号不该当成太旧"
+        assert tts.status()["reason"] == ""
+    print("[T12] 认不出版本号时放行")
+
+
 ALL = [test_zero_byte_cache_is_not_valid,
        test_interrupted_synthesis_never_pollutes_cache,
        test_success_is_atomic_and_reusable,
@@ -251,7 +307,10 @@ ALL = [test_zero_byte_cache_is_not_valid,
        test_cancelled_synthesis_cleans_up,
        test_transient_failure_is_retried,
        test_failure_is_not_a_permanent_mute,
-       test_startup_sweeps_leftovers]
+       test_startup_sweeps_leftovers,
+       test_too_old_edge_tts_closes_voice_upfront,
+       test_new_enough_edge_tts_keeps_voice_on,
+       test_unknown_version_is_not_blocked]
 
 
 def main() -> int:

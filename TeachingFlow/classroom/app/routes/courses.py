@@ -62,9 +62,13 @@ def list_courses(profile_id: str = "", conn=Depends(deps.get_conn)) -> list[dict
     return out
 
 
-@router.post("/courses/scan")
-def scan_courses(conn=Depends(deps.get_conn)) -> dict:
-    """扫描 runs 目录 → 入库。W3 未就绪时返回 0 条 + 一条人话（不是 500）。"""
+def scan_and_upsert(conn) -> dict:
+    """扫描 runs 目录 → 入库，返回 {added, updated, total, warnings}。
+
+    抽成独立函数的唯一理由：出片成功后要自动登记这次产出的课程（generation.py 直接调它），
+    而"扫什么、怎么计数、哪些警告要带上"只能有一份口径 —— 页面上的"重新扫描"按钮
+    与"出片完成自动登记"两条路径各写一遍，迟早出现"按钮扫得到、出片扫不到"。
+    """
     found, warnings = deps.scan_runs()
     added = updated = 0
     for course in found:
@@ -99,6 +103,12 @@ def scan_courses(conn=Depends(deps.get_conn)) -> dict:
     log.info("扫描完成 added=%s updated=%s total=%s warnings=%s",
              added, updated, len(found), len(warnings))
     return {"added": added, "updated": updated, "total": len(found), "warnings": warnings}
+
+
+@router.post("/courses/scan")
+def scan_courses(conn=Depends(deps.get_conn)) -> dict:
+    """扫描 runs 目录 → 入库。W3 未就绪时返回 0 条 + 一条人话（不是 500）。"""
+    return scan_and_upsert(conn)
 
 
 def _looks_like_pptx(path: Path) -> bool:

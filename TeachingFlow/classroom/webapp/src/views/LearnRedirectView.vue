@@ -3,7 +3,6 @@ import { onMounted, ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { api } from '@/api/client'
 import { errorText } from '@/api/format'
-import { DEMO_COURSE_ID } from '@/data/demoCourses'
 
 /**
  * 兼容 MAT 文档里的深链 `/learn/<unitId>`（设计文档 §6 的「上课」地址）。
@@ -61,7 +60,6 @@ onMounted(async () => {
       <p>{{ error }}</p>
       <RouterLink class="btn btn-primary" :to="{ name: 'app-courses' }">回我的课堂</RouterLink>
     </section>
-    <span class="hidden-demo" aria-hidden="true">{{ DEMO_COURSE_ID }}</span>
   </div>
 </template>
 
@@ -75,5 +73,4 @@ onMounted(async () => {
 .learn-panel h1 { margin-top: 14px; font-size: 20px; }
 .learn-panel p { max-width: 48ch; margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .learn-panel .btn { margin-top: 16px; }
-.hidden-demo { display: none; }
 </style>

@@ -1,20 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import robotAuthUrl from '@/assets/robot-auth.png'
 
 /**
- * 登录 / 注册。
+ * 入口页（旧链接 `/auth` 仍然可达）。
  *
- * 平台没有账号体系（学习档案在课堂里切换），所以这里的表单只做入口演示：
- * 提交后直接进工作区，不校验、不建账号。页内提示文案与旧仓库逐字一致，不在这里改写。
+ * 平台没有账号体系 —— 学习档案在课堂里切换，所以这里不放登录/注册表单：没有校验可做，
+ * 放了就是假交互。只留一个真正能进工作区的入口，不承诺不存在的账号服务。
  */
-const activeTab = ref<'login' | 'register'>('login')
-const router = useRouter()
-
-function enterWorkspace() {
-  void router.push({ name: 'app-generate' })
-}
 </script>
 
 <template>
@@ -49,78 +42,13 @@ function enterWorkspace() {
 
     <section class="auth-main">
       <div class="auth-card">
-        <div class="tabs" role="tablist" aria-label="登录或注册">
-          <button
-            class="tab"
-            type="button"
-            role="tab"
-            :aria-selected="activeTab === 'login'"
-            @click="activeTab = 'login'"
-          >登录</button>
-          <button
-            class="tab"
-            type="button"
-            role="tab"
-            :aria-selected="activeTab === 'register'"
-            @click="activeTab = 'register'"
-          >注册</button>
+        <h2>从这里开始</h2>
+        <p class="sub">平台没有账号体系：学习进度按学习档案保存，切换档案就在课堂左下角。</p>
+        <div class="auth-actions">
+          <RouterLink class="btn btn-primary btn-lg btn-block" :to="{ name: 'app-generate' }">进入工作区</RouterLink>
+          <RouterLink class="btn btn-block" :to="{ name: 'app-courses' }">查看我的课堂</RouterLink>
         </div>
-
-        <section v-if="activeTab === 'login'" role="tabpanel">
-          <h2>欢迎回来</h2>
-          <p class="sub">用邮箱继续你的学习计划</p>
-          <form class="auth-form" @submit.prevent="enterWorkspace">
-            <div class="field">
-              <label for="loginEmail" style="font-weight: bold;">邮箱：</label>
-              <input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com">
-            </div>
-            <div class="field">
-              <label for="loginPassword" style="font-weight: bold;">密码：</label>
-              <input id="loginPassword" type="password" autocomplete="current-password" placeholder="至少 8 位">
-            </div>
-            <div class="auth-actions">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">登录</button>
-              <div class="auth-alt">
-                <button type="button">使用验证码登录</button>
-                <a href="#" @click.prevent>忘记密码</a>
-              </div>
-            </div>
-            <p class="auth-note">演示模式：提交后进入工作区，暂不校验账号。</p>
-          </form>
-        </section>
-
-        <section v-else role="tabpanel">
-          <h2>创建账号</h2>
-          <p class="sub">快来加入我们一起学习吧</p>
-          <form class="auth-form" @submit.prevent="enterWorkspace">
-            <div class="field">
-              <label for="regEmail" style="font-weight: bold;">邮箱：</label>
-              <input id="regEmail" type="email" placeholder="you@example.com" autocomplete="email">
-            </div>
-            <div class="field">
-              <label for="regPassword" style="font-weight: bold;">密码：</label>
-              <input id="regPassword" type="password" placeholder="至少 8 位，含数字" autocomplete="new-password">
-              <p class="field-hint">强度：弱 · 中 · 强</p>
-            </div>
-            <div class="field">
-              <label for="regCode" style="font-weight: bold;">邮箱验证码：</label>
-              <div class="auth-row">
-                <input id="regCode" inputmode="numeric" placeholder="6 位数字">
-                <button class="btn" type="button">发送验证码</button>
-              </div>
-            </div>
-
-            <label class="switch" style="margin-top: 20px">
-              <input type="checkbox" checked>
-              <span class="track" aria-hidden="true"></span>
-              <span>我已阅读并同意《服务条款》与《隐私政策》</span>
-            </label>
-            <div class="auth-actions">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">注册</button>
-            </div>
-            <p class="auth-note">演示模式：提交后进入工作区，暂不创建真实账号。</p>
-          </form>
-        </section>
+        <p class="auth-note">第一次来，建议先在「生成课堂」里挑好模型与教学周期，再回课程库上课。</p>
       </div>
     </section>
   </div>

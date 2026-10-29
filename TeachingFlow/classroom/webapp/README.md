@@ -1,12 +1,12 @@
 # 课堂前端（classroom-webapp）
 
 MAT「课堂」学生端界面：Vue 3 + TypeScript + Vite。`src/views` 里的 6 个页面
-（落地页 / 登录 / 我的课堂 / 课程详情 / 生成课堂 / 小节学习）复刻自旧仓库
+（落地页 / 入口 / 我的课堂 / 课程详情 / 生成课堂 / 小节学习）复刻自旧仓库
 `Multi-agent-Eduacation-System/frontend/src`，另外 3 页（单元大纲、课后小结、课堂深链跳转）
 承接后端独有能力。
 
-数据层以真实 API（`/api/v1`）为主；`src/data/demoCourses.ts` 只在后端不可达时
-提供一个标注了 OFFLINE SAMPLE 的离线示例，不写库、不保存进度。
+数据层只认真实 API（`/api/v1`），没有任何内置课程或假登录：平台没有账号体系，
+`/auth` 是一个直通工作区的入口页；课程库为空时显示空态并引导去生成或导入。
 
 ## 开发
 
@@ -80,9 +80,9 @@ const videoUrl = new URL('../assets/motion-baked-desktop.mp4', import.meta.url).
 
 ## 后端没起来时
 
-`fetch` 失败统一抛 `ApiError(status=0)`（`src/api/client.ts`）。课程库页面会显示错误态
-与一张离线示例卡片，课程详情 / 小节页显示「离线示例」占位并说明要先 `python app.py`。
-这套兜底只是演示用，不冒充真实课程。
+`fetch` 失败统一抛 `ApiError(status=0)`（`src/api/client.ts`）。课程库页面显示错误态与
+重试按钮，课程详情 / 小节页说明失败原因并提示先 `python app.py`；不拿任何本地内容顶上，
+页面看到的课程一定来自课程库。
 
 ## 目录
 
@@ -90,7 +90,6 @@ const videoUrl = new URL('../assets/motion-baked-desktop.mp4', import.meta.url).
 src/api/            HTTP 契约类型、fetch 封装、视图模型翻译
 src/components/     应用外壳、档案菜单、导入课件弹窗、Toast
 src/composables/    落地页动效（滚轮驱动逐帧视频）
-src/data/           离线示例课程
 src/features/deck/  课件重绘（SlideView）
 src/features/classroom/  课堂会话、WebSocket 传输、控制条、字幕
 src/styles/         prototype/*、workspace.css、style.css（与旧仓库同源）

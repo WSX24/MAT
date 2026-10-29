@@ -6,7 +6,7 @@ import os
 import re
 import sys
 import uuid
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 
@@ -398,6 +398,82 @@ def deepseek_profile() -> ProviderProfile:
     )
 
 
+#: 库里默认服务商的 kind → 内置档案名。表里没有的 kind（openrouter / 自建网关）走
+#: DB_CUSTOM_PROVIDER：这类端点就是"一个 OpenAI 兼容地址"，没有内置档案那套特例
+#: （opencode_go 的 x-opencode-session 是端点强制的），硬借一个内置名只会把别人的
+#: 请求头带给它。
+_DB_KIND_PROVIDER: dict[str, str] = {
+    "deepseek": "deepseek",
+    "ollama": "ollama",
+    "opencode": "opencode",
+    "opencode_go": "opencode_go",
+}
+DB_CUSTOM_PROVIDER = "custom"
+
+
+def _db_default() -> dict | None:
+    """库里的默认服务商（含明文 key）；读不到库 / 没有默认都返回 None。
+
+    导入放在函数里：config 是本目录所有模块的公共依赖（连 store 的迁移都经由别处
+    import 它），把 sqlite 拖进导入期只会让"配置读不了"升级成"进程起不来"。
+    任何异常都必须退回按 env 走的老路 —— 那是这一层今天的行为，库坏掉不该把它弄没。
+    """
+    try:
+        import modelconfig
+        from store import db as db_mod
+
+        conn = db_mod.connect()
+        try:
+            return modelconfig.get_default(conn)
+        finally:
+            conn.close()
+    except Exception as exc:              # 旧库没这两张表 / 路径不可写 / 文件被占
+        print(f"[config] ⚠ 读不到库里的默认服务商，按 env 走：{type(exc).__name__}: {exc}")
+        return None
+
+
+def _keep(value, fallback: str) -> str:
+    """库里的值非空就用它，否则留着 env/内置那份。
+
+    空值不是"清空"，是"这儿没填"：拿空 key 盖掉 env 里那把能用的，课堂就静默退化了
+    —— modelconfig.export_env_file 不补空值也是同一个理由。
+    """
+    text = value.strip() if isinstance(value, str) else ""
+    return text or fallback
+
+
+def _overlay_db_default(chosen: str, providers: dict[str, ProviderProfile]
+                        ) -> tuple[str, dict[str, ProviderProfile]]:
+    """库 > env > 内置默认：库里有默认服务商就让它说话，没有就原样返回。
+
+    只覆盖 base_url / api_key / model 三样；请求头与思考口径仍按 kind 对应档案走 ——
+    那是端点属性（Go 缺 x-opencode-session 直接 400），不是用户能配的字段。
+    返回的 provider 名也换成 kind 那一家：Settings.active 由此命中库里的配置。
+    """
+    default = _db_default()
+    if default is None:
+        return chosen, providers
+    provider = default.get("provider") or {}
+    kind = str(provider.get("kind") or "")
+    name = _DB_KIND_PROVIDER.get(kind, DB_CUSTOM_PROVIDER)
+    base = providers.get(name)
+    if base is None and name == "deepseek":
+        base = deepseek_profile()         # 按需出现的档案，见 load_settings 里的说明
+    if base is None:
+        # 没见过的 kind：思考口径给 off。兼容端点未必认 reasoning_effort，
+        # 多塞一个字段换来的是 400，而不是"想得更深"。
+        base = ProviderProfile(name=name, base_url="", api_key="", model="",
+                               thinking_style="off")
+    merged = replace(
+        base,
+        base_url=_keep(provider.get("base_url"), base.base_url),
+        api_key=_keep(provider.get("api_key"), base.api_key),
+        model=_keep(default.get("model"), base.model),
+    )
+    print(f"[config] 生效模型 provider={name} model={merged.model} 来源=settings")
+    return name, {**providers, name: merged}
+
+
 def load_settings(provider: str | None = None) -> Settings:
     """读当前配置。
 
@@ -452,6 +528,9 @@ def load_settings(provider: str | None = None) -> Settings:
     # Settings.active 解得开、面板不多一行；没选中时要用它，直接调 deepseek_profile()。
     if chosen == "deepseek":
         providers["deepseek"] = deepseek_profile()
+    # 库 > env：库里设了默认服务商就以它为准（没有就一个字都不改）。
+    # 这一步必须在 providers 装配完之后 —— 它要拿 kind 对应的档案当壳。
+    chosen, providers = _overlay_db_default(chosen, providers)
     thinking = (_env("LLM_THINKING", "off") or "off").lower()
     if thinking not in THINKING_MODES:
         print(f"[config] ⚠ LLM_THINKING={thinking!r} 不认识，按 off 处理"

@@ -30,6 +30,50 @@ try:
 except Exception:  # pragma: no cover
     edge_tts = None
 
+#: 微软已经只认 v2 的 Sec-MS-GEC 令牌（`Sec-MS-GEC-Version: 2-…`）。7.2.x 及更早算的是
+#: v1，握手回来一律 403 —— 这不是网络抖动，**每一句都会失败**，重试也救不了。
+#: requirements.txt 已经钉了版本；这里再挡一次，是因为"装了但装旧了"从现象上只表现成
+#: "只有字幕、没有声音"，等到课堂上学生开口才发现，代价太高。
+MIN_VERSION = (7, 3, 1)
+#: 升级命令只写一处：改版本号时不会漏掉某一句提示
+UPGRADE_HINT = 'python -m pip install -U "edge-tts>={}"'.format(
+    ".".join(str(n) for n in MIN_VERSION))
+
+
+def edge_tts_version() -> str:
+    """装着的 edge-tts 版本号；没装给空字符串。"""
+    return str(getattr(edge_tts, "__version__", "") or "")
+
+
+def _version_tuple(text: str) -> tuple[int, ...]:
+    """"7.2.8" → (7, 2, 8)；认不出来给空元组（见 version_problem 的放行规则）。"""
+    parts: list[int] = []
+    for chunk in text.split("."):
+        digits = ""
+        for ch in chunk:
+            if not ch.isdigit():
+                break
+            digits += ch
+        if not digits:
+            break
+        parts.append(int(digits))
+    return tuple(parts)
+
+
+def version_problem() -> str:
+    """版本太旧就给一句原因；够用（或认不出来）给空字符串。
+
+    认不出来放行是有意的：测试替身没有 `__version__`，不该被这个检查拦成"语音关闭"。
+    这里只负责挡住**确定太旧**的那一档。
+    """
+    got = _version_tuple(edge_tts_version())
+    if not got or got >= MIN_VERSION:
+        return ""
+    want = ".".join(str(n) for n in MIN_VERSION)
+    return (f"edge-tts {edge_tts_version()} 太旧，需 >= {want}：微软已改用 v2 的 "
+            f"Sec-MS-GEC 令牌，旧版每一句都 403")
+
+
 #: 合成中的临时文件后缀（不在最终缓存路径上）
 PART_SUFFIX = ".part"
 #: 单次合成的尝试次数。edge-tts 是**在线**服务，偶发 `NoAudioReceived`/连接抖动很常见
@@ -42,7 +86,10 @@ FAIL_RETRY_AFTER = 60.0
 
 class TTS:
     def __init__(self, enabled: bool, voice: str, rate: str, cache_dir: Path):
-        self.enabled = bool(enabled) and edge_tts is not None
+        #: 版本太旧时这一句非空 —— 那种情况下语音能力**等于没有**：旧版算的令牌微软不认，
+        #: 每句话都白跑一趟网络再降级。当场关掉，比课堂上刷 403 诚实。
+        self.problem = version_problem()
+        self.enabled = bool(enabled) and edge_tts is not None and not self.problem
         self.voice = voice
         self.rate = rate
         self.dir = cache_dir / "tts"
@@ -54,6 +101,9 @@ class TTS:
         self.broken_found = 0
         # 启动时清掉上次被中断留下的残留
         self._sweep()
+        if enabled and self.problem:
+            print(f"[tts] 语音已关闭：{self.problem}\n"
+                  f"      升级后重启：{UPGRADE_HINT}", flush=True)
 
     def _sweep(self) -> None:
         """清掉中断残留：`.part` 临时文件、以及历史遗留的 0 字节缓存。"""
@@ -153,7 +203,7 @@ class TTS:
         if "403" in str(last_exc):
             hint = ("\n      ⚠ 403 = 握手被拒，通常是 edge-tts 版本太旧"
                     "（微软已改用 v2 的 Sec-MS-GEC 令牌）。升级即可：\n"
-                    "        .\\.venv\\Scripts\\python.exe -m pip install -U \"edge-tts>=7.3.1\"")
+                    f"        {UPGRADE_HINT}")
         # 以前这里是 `except Exception: pass` —— TTS 坏了完全查不出来
         print(f"[tts] 合成失败（试了 {SYNTH_ATTEMPTS} 次），这一段降级为纯文字："
               f"{self.last_error}{hint}\n"
@@ -186,6 +236,7 @@ class TTS:
     def status(self) -> dict:
         return {
             "enabled": self.enabled,
+            "version": edge_tts_version(),
             "voice": self.voice,
             "rate": self.rate,
             "cached": len(list(self.dir.glob("*.mp3"))) if self.dir.exists() else 0,
@@ -193,7 +244,7 @@ class TTS:
             "broken_found": self.broken_found,
             "last_error": self.last_error,
             "reason": "" if self.enabled else (
-                "edge-tts 未安装（pip install edge-tts）或 TTS_ENABLED=0" if edge_tts is None
-                else "TTS_ENABLED=0"
+                self.problem
+                or (f"edge-tts 未安装（{UPGRADE_HINT}）" if edge_tts is None else "TTS_ENABLED=0")
             ),
         }

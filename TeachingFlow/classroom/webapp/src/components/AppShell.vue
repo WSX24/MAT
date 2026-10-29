@@ -52,6 +52,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', closeOnEscape))
           </svg>
           <span>我的课堂</span>
         </RouterLink>
+        <RouterLink class="nav-item" :to="{ name: 'app-settings' }" @click="isNavOpen = false">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.1" />
+            <path d="M12 4v2M12 18v2M4.9 12h-2M21.1 12h-2M6.7 6.7 5.3 5.3M18.7 18.7l-1.4-1.4M17.3 6.7l1.4-1.4M5.3 18.7l1.4-1.4" />
+          </svg>
+          <span>设置</span>
+        </RouterLink>
       </nav>
 
       <div class="side-foot">

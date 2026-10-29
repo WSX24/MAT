@@ -69,7 +69,7 @@ const steps = [
         <a href="#agents" data-scroll-to="agents">专业团队</a>
         <a href="#loop" data-scroll-to="loop">学习闭环</a>
       </nav>
-      <RouterLink class="btn btn-sm" to="/auth">进入系统</RouterLink>
+      <RouterLink class="btn btn-sm" :to="{ name: 'app-generate' }">进入系统</RouterLink>
     </header>
 
     <main>
@@ -108,7 +108,7 @@ const steps = [
                 <li data-stagger>随时学习</li>
               </ul>
               <div id="filmCta" class="film-cta" data-stagger>
-                <RouterLink class="btn btn-sky btn-lg" to="/auth">开始学习</RouterLink>
+                <RouterLink class="btn btn-sky btn-lg" :to="{ name: 'app-generate' }">开始学习</RouterLink>
               </div>
             </div>
           </div>
@@ -157,7 +157,7 @@ const steps = [
             <span class="nb">每一步都算数。</span>
           </h2>
           <div class="row row--wrap">
-            <RouterLink class="btn btn-primary btn-lg" to="/auth">开始学习</RouterLink>
+            <RouterLink class="btn btn-primary btn-lg" :to="{ name: 'app-generate' }">开始学习</RouterLink>
           </div>
         </div>
       </section>

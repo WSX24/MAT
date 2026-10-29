@@ -20,7 +20,9 @@ import sqlite3
 from pathlib import Path
 
 #: 当前 schema 版本。加一条迁移就 +1，并在 migrate() 里补 {旧版本: 语句}。
-SCHEMA_VERSION = 1
+#: 2 = 出片任务表 generations（见 schema.sql）
+#: 3 = 模型服务商中枢两张表 model_providers / app_settings（见 schema.sql 末尾）
+SCHEMA_VERSION = 3
 
 HERE = Path(__file__).resolve().parent
 #: TeachingFlow/classroom/store → TeachingFlow/classroom
@@ -88,8 +90,13 @@ def migrate(conn: sqlite3.Connection) -> int:
         return current if current else SCHEMA_VERSION
 
     # 版本 1 = 初始结构（schema.sql 已建好）。以后新增版本时在这里补：
-    #     if current < 2:
+    #     if current < 3:
     #         conn.execute("ALTER TABLE units ADD COLUMN ...")
+    #
+    # 版本 2（出片任务表）与版本 3（模型服务商中枢的表）**都没有增量语句**：
+    # 它们全是整张新表，而上面那句 executescript 已经把 schema.sql 全文跑过了
+    # （全 IF NOT EXISTS），老库到这一行时表已经在了。
+    # 增量区留给"改既有表"那种必须 ALTER 的情况 —— 那种才需要在版本分支里写。
     conn.execute(
         "INSERT INTO meta(key, value) VALUES('schema_version', ?) "
         "ON CONFLICT(key) DO UPDATE SET value=excluded.value",

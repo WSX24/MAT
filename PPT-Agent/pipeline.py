@@ -1625,7 +1625,10 @@ def main(task, role, topic, pages, subject, level, unit_file, sets,
                 _cache["c"] = None
             else:
                 from openai import OpenAI
-                _cache["c"] = OpenAI(api_key=key, base_url=base_url)
+                # httpx2 2.16.0 的 C 解压器不收 output_buffer_limit 关键字参数（process() 只认位置参数），
+                # 压缩响应必抛 TypeError —— 不请求压缩就不走解压路径
+                _cache["c"] = OpenAI(api_key=key, base_url=base_url,
+                                     default_headers={"Accept-Encoding": "identity"})
         return _cache["c"]
 
     def llm_fill(sentence: str) -> dict:

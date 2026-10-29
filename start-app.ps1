@@ -89,10 +89,26 @@ if ($missing.Count -gt 0) {
 }
 Write-Host "  ✓ 依赖齐全（fastapi / uvicorn / python-pptx / python-dotenv / lxml / Pillow / python-multipart）"
 
-# 语音与 WS 客户端是"少了也能上"的降级项，只提示不拦
-& $py.Source -c "import edge_tts" 2>$null
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ! 没装 edge-tts：课堂只有字幕、没有语音（pip install 'edge-tts>=7.3.1'）" -ForegroundColor Yellow
+# 语音是"少了也能上"的降级项，只提示不拦 —— 但**版本要卡**：
+# edge-tts < 7.3.1 算的还是微软已经不认的 v1 令牌，握手回来一律 403。那不是抖动，
+# 是**每一句都失败**（重试救不了），课堂上表现为"只有字幕、没有声音"。
+# 装旧版比没装更坑：没装至少这行提示会出来，旧版会一路静默到学生开口。
+$edgeMin = [version]"7.3.1"
+$pipUp = "{0} -m pip install -U ""edge-tts>={1}""" -f $py.Source, $edgeMin
+$ttsVer = "$(& $py.Source -c "import edge_tts; print(edge_tts.__version__)" 2>$null)".Trim()
+if ($LASTEXITCODE -ne 0 -or -not $ttsVer) {
+    Write-Host "  ! 没装 edge-tts：课堂只有字幕、没有语音" -ForegroundColor Yellow
+    Write-Host ("    装它：{0}" -f $pipUp)
+} else {
+    $ttsOk = $true
+    try { $ttsOk = ([version]$ttsVer -ge $edgeMin) } catch { $ttsOk = $true }   # 认不出的版本放行
+    if ($ttsOk) {
+        Write-Host ("  ✓ 语音：edge-tts {0}" -f $ttsVer)
+    } else {
+        Write-Host ("  ! 语音：edge-tts {0} 太旧（需 >= {1}）—— 微软已改用 v2 令牌，旧版每一句都 403" -f $ttsVer, $edgeMin) -ForegroundColor Yellow
+        Write-Host "    课堂照样能起，但只有字幕、没有声音。升级后重启："
+        Write-Host ("      {0}" -f $pipUp)
+    }
 }
 
 # ---- 3) .env ---------------------------------------------------------------

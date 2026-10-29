@@ -907,9 +907,12 @@ class PPTAgent:
         self.tool_map: Dict[str, Callable] = {
             func.__name__: func for func in self.tools.public_tools(include_ask_user=(profile == "default"))
         }
+        # httpx2 2.16.0 的 C 解压器不收 output_buffer_limit 关键字参数（process() 只认位置参数），
+        # 压缩响应必抛 TypeError —— 不请求压缩就不走解压路径
         self.client = OpenAI(
             base_url=self.provider.base_url,
             api_key=self.provider.api_key,
+            default_headers={"Accept-Encoding": "identity"},
         )
 
     # ------------------------------------------------------------ 连通性

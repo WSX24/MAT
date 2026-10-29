@@ -2,10 +2,9 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { api } from '@/api/client'
-import { errorText, formatDate, formatDuration, sourceLabel } from '@/api/format'
+import { errorText, formatDuration, sourceLabel } from '@/api/format'
 import { totalSeconds, totalSlides, unitStatusText } from '@/api/view'
 import type { CourseDetail, CourseUnit } from '@/api/types'
-import { DEMO_COURSE_ID, demoCourseDetail, physicsDemoCourse } from '@/data/demoCourses'
 import { toast } from '@/state/toast'
 
 /**
@@ -16,7 +15,7 @@ import { toast } from '@/state/toast'
  *  - 旧「第 N 单元」= 第 N 章；
  *  - 旧「小节」= 真实单元，状态直接用 progress.status（已完成 / 进行中 / 未完成）。
  * 概述与学习目标在真实课程里没有对应字段，用**可核对的数据**（章数、单元数、页数、时长、
- * 进度）拼出来，不编造学习目标；离线示例才展示旧仓库原文。
+ * 进度）拼出来，不编造学习目标。
  */
 const route = useRoute()
 const router = useRouter()
@@ -26,33 +25,25 @@ const loading = ref(true)
 const loadError = ref('')
 const deleting = ref(false)
 
-const isDemo = computed(() => String(route.params.id ?? '') === DEMO_COURSE_ID)
 const units = computed<CourseUnit[]>(() =>
   course.value ? course.value.chapters.flatMap((chapter) => chapter.units) : [],
 )
 const lessonCount = computed(() => units.value.length)
 const slideCount = computed(() => (course.value ? totalSlides(course.value) : 0))
-const duration = computed(() => formatDuration(totalSeconds(course.value ?? demoCourseDetail)))
+const duration = computed(() => (course.value ? formatDuration(totalSeconds(course.value)) : '—'))
 const completedCount = computed(() => units.value.filter((unit) => unit.progress?.status === 'completed').length)
 const percent = computed(() => {
   if (!units.value.length) return 0
   const sum = units.value.reduce((total, unit) => total + (unit.progress?.percent ?? 0), 0)
   return Math.round(sum / units.value.length)
 })
-const updatedAt = computed(() => {
-  if (!course.value) return ''
-  return isDemo.value ? physicsDemoCourse.updatedAt : ''
-})
-
 const overviewText = computed(() => {
   if (!course.value) return ''
-  if (isDemo.value) return physicsDemoCourse.overview
   return `本课程共 ${course.value.chapters.length} 章、${lessonCount.value} 个单元，覆盖约 ${slideCount.value} 页课件，预计学习 ${duration.value}。当前完成 ${completedCount.value} 个单元，整体进度 ${percent.value}%。`
 })
 
 const goalText = computed(() => {
   if (!course.value) return ''
-  if (isDemo.value) return physicsDemoCourse.goal
   const minutes = Math.max(1, Math.round(totalSeconds(course.value) / Math.max(1, lessonCount.value) / 60))
   return `完成全部 ${lessonCount.value} 个单元后，可覆盖本课程的全部课件内容。建议按「章 → 单元」顺序学习，每个单元约 ${minutes} 分钟；学完可直接进入课堂做课后小结。`
 })
@@ -72,11 +63,6 @@ async function load() {
   const id = String(route.params.id ?? '')
   loading.value = true
   loadError.value = ''
-  if (id === DEMO_COURSE_ID) {
-    course.value = demoCourseDetail
-    loading.value = false
-    return
-  }
   try {
     course.value = await api.getCourse(id)
   } catch (error) {
@@ -228,7 +214,6 @@ onMounted(load)
               <div><dt>课件页数</dt><dd>{{ slideCount }} 页</dd></div>
               <div><dt>预计时长</dt><dd>{{ duration }}</dd></div>
               <div><dt>已完成</dt><dd>{{ completedCount }} / {{ lessonCount }}</dd></div>
-              <div v-if="isDemo"><dt>更新时间</dt><dd>{{ formatDate(updatedAt) }}</dd></div>
             </dl>
             <div class="info-progress" aria-hidden="true"><i :style="{ width: `${percent}%` }" /></div>
           </section>
@@ -236,7 +221,7 @@ onMounted(load)
             返回我的课堂
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
           </RouterLink>
-          <button v-if="!isDemo" class="remove-course" type="button" :disabled="deleting" @click="removeCourse">
+          <button class="remove-course" type="button" :disabled="deleting" @click="removeCourse">
             {{ deleting ? '正在移除…' : '从课程库移除' }}
           </button>
         </aside>

@@ -566,8 +566,12 @@ class LLM:
             api_key=self.profile.api_key or "not-set",
             timeout=settings.timeout,
             # 服务商要求的固定请求头（OpenCode Go 的 x-opencode-session 就在这里；
-            # 没有它 Go 会直接 400，连"模型名对不对"都轮不到判断）
-            default_headers=self.profile.headers or None,
+            # 没有它 Go 会直接 400，连"模型名对不对"都轮不到判断）。
+            # 与 identity 头**合并**而不是二选一：合并掉了 Go 的会话头就没了。
+            # 加 identity 是因为 httpx2 2.16.0 的 C 解压器不收 output_buffer_limit
+            # 这个关键字参数 —— 服务端一回压缩内容就 TypeError。
+            default_headers={**(self.profile.headers or {}),
+                             "Accept-Encoding": "identity"},
         )
         #: 已经确认连不上（预检失败或连续失败）→ 不再去等注定失败的连接。
         #: 学生不会因为"等一个死掉的服务超时"而多等好几秒，而是立刻听到预置话术。
