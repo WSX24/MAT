@@ -476,6 +476,13 @@ def _parse_line(sp_pr, theme: _Theme, warn) -> LineStyle | None:
     if pd is not None:
         v = str(pd.get("val") or "")
         ls.dash = "" if v == "solid" else v
+    else:
+        # 自定义虚线：<a:custDash><a:ds d="400000" sp="266667"/></a:custDash>
+        # PowerPoint 按它画（实线段=400%线宽、间隔=266%），只认 prstDash 会把
+        # 虚线框画成实线 —— 一份课件的 6 页里都能看到这种框。
+        cd = _kid(ln, "custDash", ns=_A)
+        if cd is not None and _kids(cd, "ds", ns=_A):
+            ls.dash = "custom"
 
     head = _kid(ln, "headEnd", ns=_A)
     tail = _kid(ln, "tailEnd", ns=_A)

@@ -60,6 +60,12 @@ npm run build</pre>
 """
 
 
+#: HTML 一律不缓存：`dist/index.html` 里写的是**带哈希的** JS/CSS 文件名，
+#: 一旦浏览器留着旧 HTML，重建之后它请求的就是已经被 vite 删掉的那份 —— 页面能开
+#: （SPA 兜底）但跑的是旧逻辑，表现是"改了没生效"。assets 是内容哈希，可以长缓存。
+_HTML_HEADERS = {"Cache-Control": "no-store, must-revalidate"}
+
+
 def _dist() -> Path:
     return deps.dist_root()
 
@@ -67,8 +73,8 @@ def _dist() -> Path:
 def _serve_or_placeholder() -> Response:
     index = _dist() / "index.html"
     if index.is_file():
-        return FileResponse(index, media_type="text/html; charset=utf-8")
-    return HTMLResponse(MISSING_HTML, status_code=200)
+        return FileResponse(index, media_type="text/html; charset=utf-8", headers=_HTML_HEADERS)
+    return HTMLResponse(MISSING_HTML, status_code=200, headers=_HTML_HEADERS)
 
 
 @router.get("/assets/audio/{name}")

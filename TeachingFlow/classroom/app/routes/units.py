@@ -3,6 +3,9 @@
 三个接口的分工：`GET` 是行数据、`outline` 是"这单元讲什么"（来自 plan.json，
 W3 的 `studio.outline`）、`prepare` 是"把课件备好"（解析 + 备课，W3 的 `studio.materialize`）。
 
+`graph` 是**旁路**：它只读（不写库、不建运行器、不推进状态机），把主线节点、预置路线与
+当前进度指针一次给前端画「课堂走向图」—— 所以它会被轮询，形状错了比慢一点严重得多。
+
 `prepare` 里那句 `mark_unit_prepared` 不能省：备课是**副作用在磁盘上**的事
 （deck.json / plan.json），不落库的话下一次打开列表看到还是"未准备"，
 学生会以为按钮没生效 —— 而它其实已经备好了。
@@ -59,6 +62,43 @@ def unit_detail(unit_id: str, profile_id: str = "", conn=Depends(deps.get_conn))
 def unit_outline(unit_id: str, conn=Depends(deps.get_conn)) -> dict:
     row = _unit_or_404(conn, unit_id)
     return deps.build_outline(row)
+
+
+@router.get("/units/{unit_id}/graph")
+def unit_graph(unit_id: str, profile_id: str = "", conn=Depends(deps.get_conn)) -> dict:
+    """课堂走向图：主线节点 + 预置路线 + 当前进度指针（只读，前端轮询它）。
+
+    为什么惰性 import `studio.graph`：那一步会把课件装配（含状态机/模型依赖）拉起来，
+    而单元列表与 `/api/health` 跟走向图一点关系都没有 —— 它们不该为这一条接口承担
+    启动成本（deps._w3 对内容管线用的是同一条理由，这里只是换个方向）。
+    """
+    row = _unit_or_404(conn, unit_id)
+    from studio import graph
+
+    course, reason = graph.load_unit_course(row, deps.get_settings())
+    payload = graph.build_unit_graph(
+        course, live=_live_snapshot(), conn=conn,
+        profile_id=(profile_id or "").strip(), unit_id=unit_id,
+        title=str(row.get("title") or ""), reason=reason,
+    )
+    log.info("走向图 unit=%s ok=%s nodes=%s routes=%s live=%s",
+             unit_id, payload["ok"], payload["totals"]["nodes"],
+             payload["totals"]["routes"], payload["live"]["source"])
+    return payload
+
+
+def _live_snapshot() -> dict:
+    """本进程正在跑的会话（LIVE 的浅拷贝）。
+
+    拷贝而不是直接递过去：同步路由跑在线程池里，而 WS 协程随时在增删 LIVE。
+    读不到就当一个都没在跑 —— 一张没有指针的图，比一个 500 好得多。
+    """
+    try:
+        from .. import ws
+
+        return dict(ws.LIVE)
+    except Exception:
+        return {}
 
 
 @router.get("/units/{unit_id}/media/{name}")

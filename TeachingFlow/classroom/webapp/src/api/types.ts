@@ -485,3 +485,89 @@ export interface UnitPptState {
   slides: number
   job: UnitPptJob | null
 }
+
+// ===========================================================================
+// 课堂走向图（GET /units/{id}/graph）
+// 一条主线（讲解单元）+ 预置分支路线 + 当前讲到哪。ok=false 是降级态（HTTP 仍是 200）：
+// hint 是一句人话，nodes/routes 为空、totals 全 0 —— 页面据此显示提示而不是空画布。
+// ===========================================================================
+
+export interface GraphUnitRef {
+  id: string
+  title: string
+}
+
+export interface GraphTotals {
+  nodes: number
+  routes: number
+  slides: number
+  est_sec: number
+}
+
+/** 主线一格 = 一个讲解单元。 */
+export interface GraphNode {
+  /** 格号，**0 基**：n === 它在 script.units 里的下标（与状态机 order_index 同源）。显示时 +1。 */
+  n: number
+  unit_id: string
+  slide: number
+  page: number
+  page_title: string
+  summary: string
+  preview: string
+  est_sec: number
+  kp: string[]
+  /** 这一格是所在页的最后一格，页标尺上要标页末。 */
+  page_end: boolean
+}
+
+/** skip 跳讲 / revisit 补回头 / finish 提前收尾。 */
+export type GraphRouteKind = 'skip' | 'revisit' | 'finish'
+
+/** finish 路线要重讲的一格（unit_id 指回主线里的那一格）。 */
+export interface GraphRouteStep {
+  unit_id: string
+  label: string
+  text: string
+  est_sec: number
+}
+
+export interface GraphRoute {
+  route_id: string
+  kind: GraphRouteKind | string
+  label: string
+  /** 岔出格的格下标（0 起）：几何从这里起画。 */
+  fork_node: number
+  /** 汇回格的格下标（0 起）；等于总格数表示汇回课尾（之后不再回主线）。 */
+  merge_node: number
+  span: number
+  skipped: number
+  repeats: number
+  est_sec: number
+  summary: string
+  reason: string
+  steps: GraphRouteStep[]
+}
+
+export interface GraphLive {
+  running: boolean
+  /** live 正在上 / progress 只读到上次进度 / none 没上过。 */
+  source: 'live' | 'progress' | 'none' | string
+  session_id: string
+  /** 当前格号，与 GraphNode.n 同一个 **0 基** 口径（不是页面数组下标）；解析不到时为 null。 */
+  node: number | null
+  slide: number | null
+  phase: string
+  comprehension: number | null
+}
+
+export interface UnitGraph {
+  ok: boolean
+  mode: string
+  /** ok=false 时的一句中文人话；正常时为空。 */
+  hint: string
+  unit: GraphUnitRef
+  totals: GraphTotals
+  nodes: GraphNode[]
+  routes: GraphRoute[]
+  live: GraphLive
+}

@@ -100,7 +100,7 @@ class LineStyle:
     color: str = "#000000"
     alpha: float = 1.0
     width_px: float = 0.0
-    dash: str = ""            # "" | dash | dot | lgDash | sysDash
+    dash: str = ""            # "" | dash | dot | lgDash | sysDash | custom（custDash 自定义虚线）
     cap: str = "flat"         # flat | round | square
     arrow: str = ""           # "" | triangle 等（线条类形状用）
 

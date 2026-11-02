@@ -8,7 +8,7 @@
  * CellNode / SvgNode 几个子组件；单文件 SFC 里按同样的分支顺序内联，
  * 下面每个函数对应其中一个子组件，方便与 SlideView.tsx 逐行对照。
  */
-import { computed, onBeforeUnmount, onMounted, ref, useId, watch, type CSSProperties } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, useId, watch, type CSSProperties } from 'vue'
 import type {
   DeckBox,
   DeckCell,
@@ -27,13 +27,22 @@ import {
   fontStack,
   lineCss,
   paraBaseStyle,
+  paraSizePt,
   paraStyle,
   resolveImageSrc,
   roundedStyle,
   runStyle,
 } from './style'
 
-const props = defineProps<{ slide: DeckSlide | null }>()
+const props = defineProps<{
+  slide: DeckSlide | null
+  /** 当前讲解锚点（元素 id 或段落 id）：随 segment_start.marker 逐句移动。 */
+  anchor?: string | null
+  /** 本页翻页时应先藏起来的 id（page.reveal） */
+  hidden?: string[]
+  /** 已经讲出来（step/reveal 过）的 id */
+  revealed?: string[]
+}>()
 
 /* ---- useScale：1280×720 逻辑画布按容器缩放 ---- */
 
@@ -59,6 +68,7 @@ onMounted(() => {
   measure()
   observer = new ResizeObserver(measure)
   observer.observe(host)
+  scheduleMarker()
 })
 
 // 逻辑尺寸变了要重新量一次（对应原 useLayoutEffect 的依赖数组）
@@ -80,6 +90,75 @@ const canvasStyle = computed<CSSProperties>(() => ({
 
 /** 版式/母版装饰先画、slide 元素后画：与原组件两个 .map() 的 DOM 顺序一致。 */
 const elementGroups = computed(() => [props.slide?.decorations ?? [], props.slide?.elements ?? []])
+
+/* ---- 分步显示 + 逐句光标（课堂运行时） ---- */
+
+/** 该 id 是否还在「本页尚未讲到」的隐藏集合里。 */
+const isHidden = (id?: string | null): boolean =>
+  Boolean(id && props.hidden?.includes(id) && !props.revealed?.includes(id))
+
+const canvasEl = ref<HTMLDivElement | null>(null)
+
+/** 光标位置（画布坐标系 1280×720；由外层 transform 统一缩放，无需再乘 scale）。 */
+const marker = reactive({ x: 0, y: 0, on: false })
+
+const anchorNode = (id: string): HTMLElement | null => {
+  const canvas = canvasEl.value
+  if (!canvas) return null
+  // 段落锚点优先：同一页里段落 id（…-p03）比形状 id 更精确。
+  const byPara = canvas.querySelector<HTMLElement>(`[data-anchor-id="${id}"]`)
+  if (byPara) return byPara
+  return canvas.querySelector<HTMLElement>(`[data-element-id="${id}"]`)
+}
+
+const placeMarker = (): void => {
+  const id = props.anchor
+  const canvas = canvasEl.value
+  if (!id || !canvas) {
+    marker.on = false
+    return
+  }
+  const node = anchorNode(id)
+  if (!node) {
+    marker.on = false
+    return
+  }
+  // 被 step 藏起来、还没轮到的元素不指：灯先亮在看不见的地方只会让人以为没高亮。
+  if (getComputedStyle(node).visibility === 'hidden') {
+    marker.on = false
+    return
+  }
+  const cr = canvas.getBoundingClientRect()
+  const nr = node.getBoundingClientRect()
+  const s = scale.value || cr.width / width.value || 1
+  const x = (nr.left - cr.left) / s
+  const y = (nr.top - cr.top) / s
+  const h = nr.height / s
+  // 落在实际文字行的左侧起点（与老原型 deck.js 的 placeMarker 同一口径），
+  // 不压住正文。多行段落按行高取第一行的中线；量不到行高才退回整块高度的 52%。
+  const lineHeight = parseFloat(getComputedStyle(node).lineHeight)
+  const offset = Number.isFinite(lineHeight) && lineHeight > 0
+    ? Math.min(lineHeight * 0.52, 30)
+    : Math.min(h * 0.52, 30)
+  marker.x = Math.max(10, x - 14)
+  marker.y = y + offset
+  marker.on = true
+}
+
+/** DOM 更新完再量：翻页/揭示/行距变化都会改变锚点位置。 */
+const scheduleMarker = (): void => {
+  void nextTick(() => {
+    placeMarker()
+    // 字体异步补齐（SimSun 等本地字体）会改变行盒高度，再补量一次。
+    requestAnimationFrame(() => placeMarker())
+  })
+}
+
+watch(
+  [() => props.anchor, () => props.slide, () => props.revealed, scale],
+  scheduleMarker,
+  { deep: false },
+)
 
 /* ---- ElementNode ---- */
 
@@ -136,13 +215,19 @@ const textScaleOf = (element: DeckElement): number => {
   return fontScale && fontScale !== 1 ? fontScale : 1
 }
 
-/** 文本层：内边距跟着 font_scale 缩放，anchor 决定垂直对齐。 */
+/** 文本层：内边距按原值（normAutofit 只缩字，不缩内边距），anchor 决定垂直对齐。
+ *
+ * 关键三条：
+ * - `overflow: visible`：PowerPoint 的文本框不裁剪溢出的文字，裁了就是「字少一截」；
+ * - `white-space: pre`：解析器里 wrap=false 的形状在 PowerPoint 里不自动换行，
+ *   只认显式的 <a:br>（解析成 "\n"）。用 normal 会把长句折行、把行数撑多再裁掉；
+ * - 内边距不乘 font_scale：那是 normAutofit 的缩字比例，与框内边距无关。
+ */
 const textLayerStyle = (element: DeckElement): CSSProperties => {
   const text = element.text
   if (!text) return {}
   const insets =
     text.insets_px && text.insets_px.length === 4 ? text.insets_px : [9.6, 4.8, 9.6, 4.8]
-  const scaleValue = textScaleOf(element)
   return {
     position: 'absolute',
     inset: 0,
@@ -150,15 +235,16 @@ const textLayerStyle = (element: DeckElement): CSSProperties => {
     flexDirection: 'column',
     justifyContent:
       text.anchor === 'middle' ? 'center' : text.anchor === 'bottom' ? 'flex-end' : 'flex-start',
-    padding: insets.map((value) => (value * scaleValue).toFixed(2) + 'px').join(' '),
-    overflow: 'hidden',
+    padding: insets.map((value) => (value || 0).toFixed(2) + 'px').join(' '),
+    overflow: 'visible',
+    whiteSpace: text.wrap === false ? 'pre' : 'pre-wrap',
   }
 }
 
 /** 段落样式：段落默认样式（defRPr）覆盖段落自身的行距/缩进等（顺序同原实现）。 */
 const textParaStyle = (para: DeckPara, scaleValue: number): CSSProperties => ({
   ...paraStyle(para, scaleValue),
-  ...paraBaseStyle(para, scaleValue),
+  ...paraBaseStyle(para, scaleValue, paraSizePt(para)),
 })
 
 const paraRuns = (para: DeckPara): DeckRun[] => para.runs ?? []
@@ -253,7 +339,7 @@ const cellStyle = (cell: DeckCell): CSSProperties => {
 
 /** 单元格里的段落：合并顺序与原组件相反（paraStyle 覆盖 paraBaseStyle）。 */
 const cellParaStyle = (para: DeckPara): CSSProperties => ({
-  ...paraBaseStyle(para, 1),
+  ...paraBaseStyle(para, 1, paraSizePt(para)),
   ...paraStyle(para, 1),
 })
 
@@ -329,10 +415,15 @@ const svgSize = (element: DeckElement): { w: number; h: number } => {
     <div v-if="!slide" class="deck-placeholder">
       <span>正在载入课件…</span>
     </div>
-    <div v-else class="deck-canvas" :style="canvasStyle">
+    <div v-else ref="canvasEl" class="deck-canvas" :style="canvasStyle">
       <template v-for="(group, groupIndex) in elementGroups" :key="groupIndex">
         <template v-for="element in group" :key="element.element_id">
-          <div class="deck-el" :style="elementStyle(element)">
+          <div
+            class="deck-el"
+            :class="{ 'is-hidden': isHidden(element.element_id) }"
+            :data-element-id="element.element_id"
+            :style="elementStyle(element)"
+          >
             <!-- picture -->
             <template v-if="element.kind === 'picture'">
               <div
@@ -382,6 +473,8 @@ const svgSize = (element: DeckElement): { w: number; h: number } => {
                           <div
                             v-for="(para, paraIndex) in cellParas(cell)"
                             :key="para.pid || paraIndex"
+                            :data-anchor-id="para.pid"
+                            :class="{ 'is-hidden': isHidden(para.pid) }"
                             :style="cellParaStyle(para)"
                           >
                             <span
@@ -407,7 +500,7 @@ const svgSize = (element: DeckElement): { w: number; h: number } => {
               <svg
                 :viewBox="`0 0 ${Math.max(1, svgSize(element).w)} ${Math.max(1, svgSize(element).h)}`"
                 preserveAspectRatio="none"
-                style="position: absolute; inset: 0; width: 100%; height: 100%"
+                style="position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible"
               >
                 <defs v-if="usesGradient(element)">
                   <linearGradient :id="gradientId(element)" v-bind="gradientVector(element)">
@@ -448,6 +541,8 @@ const svgSize = (element: DeckElement): { w: number; h: number } => {
                 <div
                   v-for="(para, paraIndex) in textParas(element)"
                   :key="para.pid || paraIndex"
+                  :data-anchor-id="para.pid"
+                  :class="{ 'is-hidden': isHidden(para.pid) }"
                   :style="textParaStyle(para, textScaleOf(element))"
                 >
                   <span
@@ -470,6 +565,14 @@ const svgSize = (element: DeckElement): { w: number; h: number } => {
           </div>
         </template>
       </template>
+
+      <!-- 逐句光标：红色脉冲点，落在当前这句的锚点文字左侧（老原型的 #marker） -->
+      <div
+        class="deck-marker"
+        :class="{ 'is-on': marker.on }"
+        :style="{ left: marker.x + 'px', top: marker.y + 'px' }"
+        aria-hidden="true"
+      />
     </div>
   </div>
 </template>

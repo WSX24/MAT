@@ -125,9 +125,21 @@ export interface DeckSlide {
   background?: DeckFill | null
   elements?: DeckElement[]
   decorations?: DeckElement[]
+  /** 本页要分步出现的元素/段落 id（page 帧的 reveal；手动翻页时为空） */
+  reveal?: string[]
   width?: number
   height?: number
   width_px?: number
   height_px?: number
   media_base?: string
+}
+
+/** 课件操作（plan.json 的 ops / segment_start.ops 同一形状）。 */
+export interface DeckOp {
+  op: string
+  target?: string
+  targets?: string[]
+  at_sentence?: number
+  mode?: string
+  scale?: number
 }

@@ -21,6 +21,12 @@ export interface ClassroomSnapshot {
   slide: DeckSlide | null
   slideIndex: number
   slideCount: number
+  /** 本页要先藏起来、等 step/reveal 才出现的 id（page.reveal） */
+  hidden: string[]
+  /** 已经讲出来（step/reveal 过）的 id */
+  revealed: string[]
+  /** 当前这句指向的锚点（段落/形状 id）；null = 这句不指任何地方 */
+  anchor: string | null
   position: SessionPosition | null
   authorName: string | null
   comprehension: number | null
@@ -41,6 +47,9 @@ const INITIAL: ClassroomSnapshot = {
   slide: null,
   slideIndex: 0,
   slideCount: 0,
+  hidden: [],
+  revealed: [],
+  anchor: null,
   position: null,
   authorName: null,
   comprehension: null,
@@ -90,6 +99,57 @@ export function useClassroom(options: {
     state.transcript = [...state.transcript, entry].slice(-MAX_TRANSCRIPT)
   }
 
+  /**
+   * 这一句要动课件：先按 ops 揭示/高亮，再按 marker 把光标落过去。
+   *
+   * 为什么把 ops 也在这里做：`page.reveal` 只说明"哪些元素该藏"，真正让它们出现
+   * 得靠逐句的 reveal/step。旧原型在 index.html 里就是这三行（highlight/applyOps/marker），
+   * 换到 Vue 之后整段丢了 —— 学生看到的就是"课件一直整页摊着、没人指"。
+   */
+  const applySegment = (frame: Extract<ServerFrame, { kind: 'segment_start' }>) => {
+    const revealed = new Set(state.revealed)
+    let anchor: string | null = null
+    let anchored = false
+
+    for (const op of frame.ops ?? []) {
+      const targets = op.targets?.length ? op.targets : op.target ? [op.target] : []
+      switch (op.op) {
+        case 'reveal':
+        case 'step':
+          for (const id of targets) revealed.add(id)
+          break
+        case 'hide':
+          for (const id of targets) revealed.delete(id)
+          break
+        case 'highlight':
+        case 'focus':
+        case 'point':
+          if (targets.length) {
+            anchor = targets[0]
+            anchored = true
+          }
+          break
+        case 'unfocus':
+        case 'clear':
+          anchor = null
+          anchored = true
+          break
+        default:
+          break
+      }
+    }
+
+    if (frame.marker?.element_id) {
+      anchor = frame.marker.element_id
+      anchored = true
+    }
+
+    state.revealed = [...revealed]
+    // 这一句既没有 marker 也没有指点的 op：光标收起来。留着上一句的落点，
+    // 学生会以为老师还在讲刚才那一行。
+    state.anchor = anchored ? anchor : null
+  }
+
   const handleFrame = (frame: ServerFrame) => {
     switch (frame.kind) {
       case 'hello': {
@@ -102,11 +162,15 @@ export function useClassroom(options: {
         state.slide = frame.slide ?? null
         state.slideIndex = frame.slide_index ?? frame.slide?.index ?? state.slideIndex
         state.slideCount = frame.slide_count ?? state.slideCount
+        state.hidden = [...(frame.slide?.reveal ?? [])]
+        state.revealed = []
+        state.anchor = null
         break
       case 'segment_start':
         state.caption = frame.text
         state.phase = 'playing'
         state.paused = false
+        applySegment(frame)
         break
       case 'segment_end':
         state.caption = ''

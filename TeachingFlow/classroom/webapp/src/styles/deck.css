@@ -22,6 +22,80 @@
   pointer-events: none;
 }
 
+/* 分步显示：page.reveal 里的元素先藏起来。用 visibility 而不是 display ——
+   藏起来的行不参与重排，讲到第 3 行时前两行不会跳位（与老原型一致）。 */
+.is-hidden {
+  visibility: hidden;
+}
+
+/* 逐句光标：红色脉冲点。坐标是画布坐标（1280×720），随画布整体缩放；
+   过渡让它在句子之间平移而不是瞬移，学生能跟上"老师现在指到哪一行"。 */
+.deck-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 200000;
+  transition:
+    left 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    top 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease;
+}
+
+.deck-marker.is-on {
+  opacity: 1;
+}
+
+.deck-marker::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ff7875, #f5222d 70%);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgb(245 34 45 / 55%), 0 0 0 2px rgb(245 34 45 / 22%);
+}
+
+.deck-marker::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2.5px solid rgb(245 34 45 / 65%);
+  animation: deck-marker-pulse 1.5s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes deck-marker-pulse {
+  0% {
+    transform: scale(0.45);
+    opacity: 0.95;
+  }
+  70% {
+    transform: scale(1.45);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(1.75);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-marker,
+  .deck-marker::after {
+    transition: none;
+    animation: none;
+  }
+}
+
 .deck-bullet {
   display: inline-block;
   margin-right: 0.45em;

@@ -352,6 +352,7 @@ onBeforeUnmount(() => {
             <path d="M9 4H5.5A1.5 1.5 0 0 0 4 5.5V9M15 4h3.5A1.5 1.5 0 0 1 20 5.5V9M20 15v3.5a1.5 1.5 0 0 1-1.5 1.5H15M4 15v3.5A1.5 1.5 0 0 0 5.5 20H9" />
           </svg>
         </button>
+        <router-link class="btn" :to="{ name: 'app-unit-graph', params: { unitId: props.unit.id } }">走向图</router-link>
         <router-link class="btn" :to="{ name: 'app-unit-outline', params: { unitId: props.unit.id } }">单元大纲</router-link>
         <button class="btn sidebar-toggle" type="button" :aria-expanded="drawerOpen" aria-controls="classroom-sidebar" @click="drawerOpen = !drawerOpen">
           字幕与提问
@@ -371,7 +372,13 @@ onBeforeUnmount(() => {
     <div class="classroom-body">
       <div class="stage-wrap">
         <div class="stage">
-          <SlideView v-if="state.slide" :slide="state.slide" />
+          <SlideView
+            v-if="state.slide"
+            :slide="state.slide"
+            :anchor="state.anchor"
+            :hidden="state.hidden"
+            :revealed="state.revealed"
+          />
           <div v-else class="stage-empty">
             <span class="dot" aria-hidden="true" />
             <span>正在准备这一页的课件…</span>

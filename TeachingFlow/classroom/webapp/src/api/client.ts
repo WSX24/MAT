@@ -156,6 +156,12 @@ export const api = {
     return request<T.Outline>(V1 + `/units/${encodeURIComponent(id)}/outline`)
   },
 
+  /** 走向图：ok=false 也是 200（降级态在 body 的 hint 里，页面按人话显示）。 */
+  getUnitGraph(id: string, profileId?: string): Promise<T.UnitGraph> {
+    const query = profileId ? '?profile_id=' + encodeURIComponent(profileId) : ''
+    return request<T.UnitGraph>(V1 + `/units/${encodeURIComponent(id)}/graph` + query)
+  },
+
   prepareUnit(id: string): Promise<T.PrepareResult> {
     return request<T.PrepareResult>(V1 + `/units/${encodeURIComponent(id)}/prepare`, jsonBody('POST', {}))
   },

@@ -3,9 +3,20 @@
  * 沿用旧仓库的视觉语言：白底、细边框、圆角 14、等宽小字标注。
  * ─────────────────────────────────────────────────────────────────── */
 
+/* 课堂页整块定高，让整页不再滚动 —— 这是被字幕条数逼出来的决定：
+ * 字幕只增不减，若高度由内容决定，讲得越久这一页越长；网格那条 auto 行会把
+ * 左侧 .stage 一起拉成几千像素，而 .deck-host 又用 place-items:center 垂直居中，
+ * 课件就被推到这个超长白框的正中间（越讲越往下漂，一节课下来要不停往下翻）。
+ * 定高之后多出来的高度只能落在 .transcript 自己身上（它本来就有 overflow-y:auto），
+ * 课件在整节课里位置固定不动。
+ * 132px 是既有口径：悬浮顶栏(~50) + .page 上内边距(24) + 下内边距(48)，实测留 ~10px 余量。
+ *   实测见 .work 里的 harness：1600×1000 下顶栏 49.75 + 24 + 48 = 121.75。 */
 .classroom-route {
   display: flex;
-  min-height: calc(100dvh - 132px);
+  height: calc(100dvh - 132px);
+  /* 小屏兜底：再矮也不低于 520px（约「头顶栏 + 控制条 + 一屏 16:9 课件」的高度），
+     否则小视口会把舞台压成一条缝；这种极端情况下宁可让整页滚一点。 */
+  min-height: 520px;
   flex-direction: column;
   gap: 14px;
 }
@@ -14,7 +25,12 @@
 .classroom-head {
   display: flex;
   align-items: center;
-  gap: 13px;
+  /* 允许换行：窄屏（<=390）时「返回 + 标题 + 操作」这一行本来就装不下 ——
+   * 不换行就只能让 .classroom-head-actions 顶出视口右缘（实测 390 宽下 actions 右缘到 437，
+   * 页面横向滚 47px）。换行后 actions 落到第二行，视口不再被撑破。
+   * 行间距收成 8px（列间距仍是 13px），两行时的竖向空隙不刺眼。 */
+  flex-wrap: wrap;
+  gap: 8px 13px;
   min-width: 0;
   padding: 2px 0 0;
 }
@@ -53,7 +69,19 @@
 }
 .classroom-head-meta > span:not(.phase-chip) { display: inline-flex; align-items: center; gap: 5px; }
 .classroom-head-spacer { flex: 1; }
-.classroom-head-actions { display: flex; align-items: center; gap: 8px; }
+.classroom-head-actions {
+  display: flex;
+  /* 自己也能换行：360 宽下按钮组本身就有 348px（约 = 内容宽 318 以上），
+   * 只让外层换行仍会剩下 30px 的横向溢出，所以按钮组内部也允许折行。
+   * 单个按钮最宽的是「字幕与提问」(113)，远小于窄屏内容宽，能安全折。 */
+  flex-wrap: wrap;
+  align-items: center;
+  /* 折行后每一行都贴右，与外层 .classroom-head-spacer 的右对齐保持一致 */
+  justify-content: flex-end;
+  gap: 8px;
+  /* 换到第二行时仍贴住右缘；同一行时 spacer(flex:1) 先吃掉余量，这里等同于 0 边距，桌面观感不变 */
+  margin-left: auto;
+}
 
 .phase-chip {
   padding: 3px 7px;
@@ -87,6 +115,12 @@
   flex: 1;
   min-height: 0;
   grid-template-columns: minmax(0, 1fr) 336px;
+  /* 这一行必须显式写成 minmax(0, 1fr)，这是「让面板内部滚起来」的关键：
+   * 不写就等于一条 auto 隐式行，行高由内容（.transcript 里上百条 .line）决定，
+   * 于是 .classroom-sidebar 永远不会比内容矮 → 侧栏的 overflow-y: auto 永不触发，
+   * 反过来把 .stage-wrap / .stage 撑到同样高度（这就是整页变长的直接原因）。
+   * 下限 0 是必须的：grid 项的 min-height:auto 会按内容顶住，只写 1fr 仍会被顶大。 */
+  grid-template-rows: minmax(0, 1fr);
   gap: 16px;
 }
 .stage-wrap { display: flex; min-width: 0; flex-direction: column; gap: 11px; }
@@ -224,6 +258,9 @@
  * 自己 fixed 铺满，功能一个不少。
  */
 .classroom-route--presenting {
+  /* 基础规则已改成定高 calc(100dvh - 132px)，演示态必须自己顶回满屏：
+     否则里面 .classroom-body 的 height:100dvh 会比容器高 132px，铺满模式下整页又能滚。 */
+  height: 100dvh;
   min-height: 100dvh;
   padding: 0;
   background: #0c0d11;
@@ -406,7 +443,10 @@
   .sidebar-toggle { display: inline-flex; }
 }
 @media (max-width: 760px) {
-  .classroom-route { min-height: calc(100dvh - 116px); }
+  /* 这里原来还有一条 .classroom-route { min-height: calc(100dvh - 116px) }：
+     定高之后它就成了「比 height 还大的最小高度」（116 < 132 → 盒子反而被顶高 16px），
+     实测 760×900 下页面会多出 2px 滚动。小屏不需要单独的口径，去掉，
+     让它沿用基础规则的 height，同时保住 min-height: 520px 的下限。 */
   .classroom-head-title { font-size: 13px; }
   .classroom-head-meta { font-size: 9px; }
   .stage { padding: 8px; }

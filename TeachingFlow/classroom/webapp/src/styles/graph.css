@@ -1,0 +1,191 @@
+/* ─────────────────────────────────────────────────────────────────────
+ * 课堂走向图（src/views/UnitGraphView.vue + src/features/graph/*）
+ *
+ * 选择器一律收在 .unit-graph 下、一律 ug- 前缀：classroom.css / workspace.css
+ * 里已经有 .bar .chip .row .card 这类全局类名，撞上就会把这一页的元素变成别的东西。
+ *
+ * 三层结构：
+ *   主线 —— 一排可读的卡片（第 N 页 · 格号 + 摘要），顶部一条页标尺
+ *   支线 —— 卡片右缘 45° 折进泳道，泳道中点挂一个 chip，再 45° 折回汇合格的左缘
+ *   当前 —— 屏幕层的竖线 + 「你现在在这里」气泡（不随缩放变小，缩到 2% 也读得出）
+ *
+ * 颜色/圆角/间距全部走 tokens.css；三种路线颜色从 token 用 color-mix 派生。
+ * ─────────────────────────────────────────────────────────────────────── */
+
+/* 视口内定高：这一页只有一张图，画布高度必须是「顶部之后还剩多少」，而不是一个
+   跟内容无关的 56vh —— 窄屏工具栏一换行，固定高度就把整页顶出视口（实测 390×844 溢出 51px）。
+   132 = 顶栏约 50 + .page 上下内边距 24 / 48；用 dvh 是为了手机上地址栏收起时高度不跳。
+   子项按 flex 排：标题/工具条/提示不参与压缩，剩余高度全给画布（min-height: 0 才能真的让出去）。 */
+.unit-graph { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; height: calc(100dvh - 132px); }
+
+.ug-back { flex: none; align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; transition: color 140ms ease; }
+.ug-back:hover { color: var(--accent); }
+.ug-back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+
+.ug-head { flex: none; padding-bottom: var(--space-1); }
+.ug-eyebrow { color: var(--accent); font-family: var(--font-mono); font-size: 9px; letter-spacing: .08em; }
+.ug-head h1 { margin-top: 7px; font-size: clamp(20px, 2.8vw, 28px); font-weight: 670; letter-spacing: -.03em; line-height: 1.28; }
+.ug-sub { margin-top: 6px; color: var(--muted); font-size: 12px; }
+
+/* ===== 工具条：三个缩放按钮 + 缩放百分比 + 一行统计 + 课堂状态 ===== */
+.ug-toolbar { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); padding: var(--space-2) var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); }
+.ug-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.ug-btn { padding: 4px 11px; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--bg); color: var(--fg); font-size: 11px; cursor: pointer; transition: border-color 120ms ease, color 120ms ease; }
+.ug-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.ug-btn:disabled { border-color: var(--border-soft); color: var(--meta); cursor: not-allowed; }
+.ug-zoom { min-width: 44px; color: var(--accent); font-family: var(--font-mono); font-size: 11px; font-variant-numeric: tabular-nums; }
+
+.ug-stats { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 0 auto; padding: 0; list-style: none; }
+.ug-stats li { padding: 3px 8px; border: 1px solid var(--border); border-radius: 7px; background: var(--bg); color: var(--muted); font-size: 10px; }
+
+.ug-state { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; }
+.ug-state-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--meta); }
+.ug-state.is-live { color: var(--accent); }
+.ug-state.is-live .ug-state-dot { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 18%, transparent); }
+
+/* ===== 画布：只有一层 transform，卡片 left/top 是布局算死的定值 ===== */
+/* flex: 1 吃掉剩余高度；min-height: 320px 是下限 —— 再矮的画布只剩一条缝，图就白画了。
+   取舍：视口比「320 + 上面那些」还矮时（老式 800×600、手机横屏），整页会滚动一点点，
+   这是有意的：宁可滚，也不要一张 90px 高、什么也看不见的画布。 */
+.ug-viewport { position: relative; flex: 1 1 auto; min-height: 320px; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); cursor: default; user-select: none; touch-action: none; }
+/* grab 手型只在真的有东西可拖时出现：整节课都已经在画布内还摆出一只抓手，就是骗人 */
+.ug-viewport.is-pannable { cursor: grab; }
+.ug-viewport.is-pannable.is-dragging { cursor: grabbing; }
+.ug-canvas { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }
+
+/* 页标尺压在最底层：段落底色比卡片淡，卡片盖上去还是卡片自己在说话 */
+.ug-pages { position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 0; pointer-events: none; }
+/* 30px 与 geometry.ts 的 PAGE_RULER_H 是一对数，改一处要改两处 */
+.ug-page { position: absolute; top: 0; height: 30px; border-left: 1px solid var(--border); border-bottom: 1px solid var(--border-soft); }
+.ug-page.is-alt { background: color-mix(in oklch, var(--border-soft) 55%, var(--surface)); }
+.ug-page-label { position: absolute; left: 8px; top: 5px; max-width: calc(100% - 16px); color: var(--meta); font-size: 10px; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ===== 主线横线与支线折线 ===== */
+.ug-wires { position: absolute; left: 0; top: 0; z-index: 1; overflow: visible; pointer-events: none; }
+.ug-mainline { fill: none; stroke: var(--border); stroke-width: 2; }
+/* 命中区比可见线粗得多：2px 的线鼠标基本点不中 */
+.ug-wire-hit { fill: none; stroke: transparent; stroke-width: 16; pointer-events: stroke; cursor: pointer; }
+.ug-wire-line { fill: none; stroke-width: 2; stroke-linejoin: miter; transition: stroke-width 120ms ease; }
+.ug-wire.is-skip .ug-wire-line { stroke: color-mix(in oklch, var(--warn) 82%, var(--fg)); }
+.ug-wire.is-revisit .ug-wire-line { stroke: var(--accent); }
+.ug-wire.is-finish .ug-wire-line { stroke: color-mix(in oklch, var(--success) 72%, var(--fg)); }
+.ug-wire.is-hot .ug-wire-line { stroke-width: 3; }
+
+/* ===== 主线卡片 ===== */
+.ug-node { position: absolute; display: block; width: 120px; height: 52px; box-sizing: border-box; padding: 4px 7px; overflow: visible; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg); color: var(--fg); font: inherit; text-align: left; cursor: pointer; z-index: 2; transition: border-color 120ms ease, background 120ms ease; }
+.ug-node:hover { border-color: var(--accent); }
+.ug-node-tag { display: block; color: var(--meta); font-size: 9px; line-height: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ug-node-sum { display: -webkit-box; margin-top: 2px; overflow: hidden; color: var(--fg); font-size: 10px; line-height: 13px; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+/* 岔出/汇回格：卡片右缘一个小圆点，提示「这一格有线连着」 */
+.ug-node.has-branch::after { content: ""; position: absolute; right: -4px; top: 50%; width: 7px; height: 7px; transform: translateY(-50%); border: 1px solid var(--accent); border-radius: 50%; background: var(--bg); }
+/* 页末：右下角一个细小角标，页标尺之外唯一还在卡片上的页边界 */
+.ug-node.is-page-end::before { content: ""; position: absolute; right: 0; bottom: 0; border-style: solid; border-width: 0 0 7px 7px; border-color: transparent transparent var(--muted) transparent; }
+.ug-node.is-current { border-color: var(--accent); background: color-mix(in oklch, var(--accent) 6%, var(--bg)); box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent) 42%, transparent); }
+.ug-node.is-selected { border-color: var(--fg); }
+/* 「回到当前」的回应：位置没变的时候（本来就居中）也要让用户看见这一下点击生效了 */
+@keyframes ug-pulse {
+  from { box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent) 55%, transparent); }
+  to { box-shadow: 0 0 0 14px transparent; }
+}
+.ug-node.is-pulse { animation: ug-pulse 700ms ease-out; }
+
+/* ===== 路线 chip：线中点那一小块，写字也当按钮 ===== */
+.ug-chip { position: absolute; z-index: 3; max-width: 128px; padding: 1px 7px; transform: translate(-50%, -50%); overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--bg); color: var(--muted); font-size: 9px; line-height: 14px; white-space: nowrap; text-overflow: ellipsis; cursor: pointer; }
+.ug-chip.is-skip { border-color: color-mix(in oklch, var(--warn) 52%, var(--border)); color: color-mix(in oklch, var(--warn) 62%, var(--fg)); }
+.ug-chip.is-revisit { border-color: color-mix(in oklch, var(--accent) 52%, var(--border)); color: var(--accent); }
+.ug-chip.is-finish { border-color: color-mix(in oklch, var(--success) 52%, var(--border)); color: color-mix(in oklch, var(--success) 55%, var(--fg)); }
+.ug-chip.is-hot { box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent) 22%, transparent); }
+
+/* ===== 指针：画在屏幕层（在 .ug-canvas 外面），不跟着缩放变小 ===== */
+.ug-pointer { position: absolute; top: 0; bottom: 0; z-index: 4; width: 2px; transform: translateX(-1px); background: var(--accent); opacity: .5; pointer-events: none; transition: left 220ms ease; }
+.ug-bubble { position: absolute; z-index: 5; max-width: 236px; padding: 3px 9px; transform: translate(-50%, -100%); overflow: hidden; border: 1px solid var(--accent); border-radius: var(--radius-md); background: var(--bg); box-shadow: 0 4px 14px color-mix(in oklch, var(--fg) 8%, transparent); color: var(--accent); font-size: 11px; line-height: 18px; white-space: nowrap; text-overflow: ellipsis; pointer-events: none; transition: left 220ms ease, top 220ms ease; }
+/* 卡片贴到画布顶上时气泡翻到卡片下面：翻一下比被裁掉一条强 */
+.ug-bubble.is-below { transform: translate(-50%, 0); }
+
+/* ===== 低缩放退化成色块：只改外观，left/top 一个字都不动（指针因此不会跳） =====
+   盒子的尺寸也不动 —— 只是把可见部分换成「反补缩放」的一小段：宽高写成 calc(Npx / --ug-k)，
+   乘上画布的 scale(k) 之后在屏幕上永远是 N px。2% 时主线读起来就是一排等距的刻痕；
+   若按 120×52 直接缩下去，那会是 2.7×1px 的糊点，「这节课长什么样」一个字都读不出来。 */
+.ug-canvas.is-compact .ug-node { padding: 0; border-color: transparent; background: none; box-shadow: none; }
+.ug-canvas.is-compact .ug-node::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(3px / var(--ug-k, 1));
+  height: calc(9px / var(--ug-k, 1));
+  transform: translate(-50%, -50%);
+  border-radius: calc(1px / var(--ug-k, 1));
+  background: color-mix(in oklch, var(--fg) 34%, var(--bg));
+}
+.ug-canvas.is-compact .ug-node > * { display: none; }
+.ug-canvas.is-compact .ug-node.has-branch::after,
+.ug-canvas.is-compact .ug-node.is-page-end::before { display: none; }
+.ug-canvas.is-compact .ug-node.is-current::before { background: var(--accent); }
+.ug-canvas.is-compact .ug-node.is-selected::before { background: color-mix(in oklch, var(--fg) 70%, var(--bg)); }
+.ug-canvas.is-compact .ug-chip,
+.ug-canvas.is-compact .ug-page-label { display: none; }
+/* 线也一样反补缩放：2px 的线缩到 2% 是 0.04px，等于没有 */
+.ug-canvas.is-compact .ug-mainline { stroke-width: calc(1px / var(--ug-k, 1)); }
+.ug-canvas.is-compact .ug-wire-line { stroke-width: calc(2px / var(--ug-k, 1)); }
+.ug-canvas.is-compact .ug-wire-hit { pointer-events: none; }
+/* 这一档里页边界只剩明暗交替还看得出来（1px 边框早缩没了） */
+.ug-canvas.is-compact .ug-page { border-left-width: 0; border-bottom-width: 0; }
+.ug-canvas.is-compact .ug-page.is-alt { background: color-mix(in oklch, var(--fg) 9%, var(--surface)); }
+
+/* ===== 状态：加载 / 失败 / 降级 / 空 ===== */
+.ug-loading { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-8) var(--space-1); color: var(--muted); font-size: 12px; }
+.ug-loading-bar { width: 42px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--border), var(--accent), var(--border)); background-size: 200% 100%; animation: ug-bar 1.2s linear infinite; }
+@keyframes ug-bar { to { background-position: -200% 0; } }
+
+.ug-panel { display: flex; min-height: 38vh; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.ug-panel--inline { min-height: unset; padding: var(--space-6) var(--space-5); border: 1px dashed var(--border); border-radius: var(--radius-lg); background: var(--surface); }
+.ug-panel-mark { display: grid; width: 42px; height: 42px; place-items: center; border-radius: var(--radius-lg); background: color-mix(in oklch, var(--accent) 9%, var(--surface)); color: var(--accent); font-size: 17px; }
+.ug-panel h2 { margin-top: var(--space-3); font-size: 17px; font-weight: 650; }
+.ug-panel p { max-width: 52ch; margin-top: var(--space-2); color: var(--muted); font-size: 12px; line-height: 1.7; }
+.ug-panel .btn { margin-top: var(--space-4); }
+
+.ug-tip { flex: none; color: var(--meta); font-size: 10px; }
+
+/* ===== 详情面板：固定右下角，只读 ===== */
+.ug-detail { position: fixed; right: var(--space-4); bottom: var(--space-4); z-index: 60; width: min(520px, calc(100vw - var(--space-8))); max-height: min(70vh, 560px); overflow: auto; padding: var(--space-3) var(--space-4) var(--space-4); border: 1px solid var(--accent); border-radius: var(--radius-lg); background: var(--bg); box-shadow: 0 18px 48px color-mix(in oklch, var(--fg) 14%, transparent); color: var(--fg); font-size: 12px; }
+.ug-detail-head { display: flex; align-items: center; gap: var(--space-2); }
+.ug-detail-kind { color: var(--meta); font-family: var(--font-mono); font-size: 9px; letter-spacing: .08em; }
+.ug-detail-close { margin-left: auto; padding: 1px 7px; border: 1px solid var(--border); border-radius: 7px; background: var(--bg); color: var(--muted); font-size: 11px; cursor: pointer; }
+.ug-detail-close:hover { border-color: var(--accent); color: var(--accent); }
+.ug-detail-title { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: var(--space-2); font-size: 14px; font-weight: 650; line-height: 1.5; overflow-wrap: anywhere; }
+
+.ug-kind { padding: 1px 7px; border: 1px solid var(--border); border-radius: var(--radius-pill); font-size: 10px; font-weight: 500; }
+.ug-kind.is-skip { border-color: color-mix(in oklch, var(--warn) 52%, var(--border)); color: color-mix(in oklch, var(--warn) 62%, var(--fg)); }
+.ug-kind.is-revisit { border-color: color-mix(in oklch, var(--accent) 52%, var(--border)); color: var(--accent); }
+.ug-kind.is-finish { border-color: color-mix(in oklch, var(--success) 52%, var(--border)); color: color-mix(in oklch, var(--success) 55%, var(--fg)); }
+
+.ug-kv { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 2px var(--space-3); margin: var(--space-2) 0 0; }
+.ug-kv > div { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline; }
+.ug-kv dt { color: var(--meta); font-size: 11px; }
+.ug-kv dd { margin: 0; color: var(--fg); font-size: 11px; overflow-wrap: anywhere; }
+
+.ug-detail-sum { margin-top: var(--space-2); font-size: 12px; line-height: 1.7; overflow-wrap: anywhere; }
+.ug-detail-text { margin-top: var(--space-2); padding: var(--space-2) var(--space-3); border: 1px solid var(--border-soft); border-radius: var(--radius-md); background: var(--surface); color: var(--muted); font-size: 11px; line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.ug-kp { display: flex; flex-wrap: wrap; gap: 5px; margin-top: var(--space-2); }
+.ug-kp-chip { padding: 2px 7px; border: 1px solid var(--border-soft); border-radius: var(--radius-pill); background: var(--surface); color: var(--meta); font-size: 9px; }
+
+.ug-steps { margin: var(--space-2) 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--space-2); }
+.ug-steps li { padding: var(--space-2) var(--space-3); border: 1px solid var(--border-soft); border-radius: var(--radius-md); background: var(--surface); }
+.ug-step-head { display: flex; align-items: baseline; gap: var(--space-2); }
+.ug-step-label { color: var(--fg); font-size: 11px; font-weight: 600; }
+.ug-step-time { margin-left: auto; color: var(--meta); font-family: var(--font-mono); font-size: 9px; }
+.ug-step-text { margin-top: 3px; color: var(--muted); font-size: 11px; line-height: 1.7; overflow-wrap: anywhere; }
+
+.ug-btn:focus-visible,
+.ug-node:focus-visible,
+.ug-chip:focus-visible,
+.ug-detail-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ===== 窄屏：横向布局与拖动都保留，卡片宽度不变（压窄了就什么也读不出来） ===== */
+@media (max-width: 1080px) {
+  .ug-stats { margin-left: 0; }
+  .ug-state { margin-left: auto; }
+  .ug-detail { right: var(--space-2); bottom: var(--space-2); width: calc(100vw - var(--space-4)); }
+}

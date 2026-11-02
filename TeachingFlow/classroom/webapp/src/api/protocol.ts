@@ -1,5 +1,5 @@
 /** §4 WS 协议：/ws/classroom/{session_id} */
-import type { DeckSlide } from '@/features/deck/types'
+import type { DeckOp, DeckSlide } from '@/features/deck/types'
 import type { Recap, SessionPosition } from './types'
 
 export type ClientFrame =
@@ -27,8 +27,18 @@ export interface ClassroomState {
 
 export type ServerFrame =
   | { kind: 'hello'; unit?: HelloUnit | string; profile?: HelloProfile | string; position?: SessionPosition }
-  | { kind: 'page'; slide_index?: number; slide_count?: number; slide: DeckSlide }
-  | { kind: 'segment_start'; seq: number; text: string }
+  | { kind: 'page'; slide_index?: number; slide_count?: number; slide: DeckSlide; media_base?: string }
+  | {
+      kind: 'segment_start'
+      seq: number
+      text: string
+      /** 这一句对应哪些锚点（段落 id 优先） */
+      anchor_ids?: string[]
+      /** 这一句要执行的课件操作（step/reveal/highlight/focus…） */
+      ops?: DeckOp[]
+      /** 这一句的落点（逐句光标）；没有就说明这句不指任何地方 */
+      marker?: { element_id?: string } | null
+    }
   | { kind: 'audio'; seq: number; url?: string; b64?: string; mime?: string }
   | { kind: 'segment_end'; seq: number; text: string }
   | { kind: 'transcript'; speaker?: string; text: string }

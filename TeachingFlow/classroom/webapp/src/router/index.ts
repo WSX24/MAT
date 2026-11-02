@@ -10,6 +10,7 @@ import LessonLearningView from '../views/LessonLearningView.vue'
 import OutlineView from '../views/OutlineView.vue'
 import SettingsView from '../views/SettingsView.vue'
 import SummaryView from '../views/SummaryView.vue'
+import UnitGraphView from '../views/UnitGraphView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,6 +66,13 @@ const router = createRouter({
           name: 'app-unit-outline',
           component: OutlineView,
           meta: { title: '单元大纲' },
+        },
+        {
+          // 只读：这一页不产生任何写入，课堂在跑时也只是每 5 秒读一次 live。
+          path: 'units/:unitId/graph',
+          name: 'app-unit-graph',
+          component: UnitGraphView,
+          meta: { title: '课堂走向图' },
         },
         {
           path: 'sessions/:id/summary',
