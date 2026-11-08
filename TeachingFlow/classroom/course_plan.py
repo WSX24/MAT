@@ -26,6 +26,14 @@ from __future__ import annotations
 import re
 from typing import Any
 
+#: TeachingFlow 的 S0 范围解析（``core/scope.py``）。学段/学科/水平/周期/强度**只认它**，
+#: 这里不再维护第二套正则 —— 同一个用户在两套正则下被排成两种课程，是实际发生过的 bug。
+#: 拿不到它（文件被挑走 / 依赖缺）就退回本文件自己的旧规则，课堂不能因此开不了课。
+try:
+    import scope_bridge
+except Exception:                              # pragma: no cover - 只在环境残缺时发生
+    scope_bridge = None  # type: ignore[assignment]
+
 # ===========================================================================
 # 常量（与 TeachingFlow/core/scope.py 同一口径，改这里要连着改那边）
 # ===========================================================================
@@ -35,6 +43,12 @@ STAGES: tuple[str, ...] = ("小学", "初中", "高中", "大学", "考研")
 LEVELS: tuple[str, ...] = ("入门", "基础", "中等", "进阶", "竞赛")
 
 #: 章 / 单元的数量边界：LLM 很容易一口气排 20 章，那不是课程的粒度
+#: 「快速 / 一次课」这种轻量请求的周课时封顶：预算小，才排得出短课。
+LIGHT_HOURS_PER_WEEK = 2
+#: 一个单元最少占用多少课时。单元是「一次课」（见 ``_outline_messages`` 第 1 条），
+#: 所以课时预算 / 这个数 = 大纲里**最多**能放几个单元。
+MIN_UNIT_HOURS = 1.0
+
 MAX_CHAPTERS = 8
 MAX_UNITS_PER_CHAPTER = 6
 MIN_CHAPTERS = 1
@@ -165,7 +179,21 @@ def _looks_like_outline(data: Any) -> bool:
 # 需求
 # ===========================================================================
 
+def _scope_hints(text: str) -> dict:
+    """TeachingFlow 的 S0 判读结果；桥不可用就是空字典。"""
+    if scope_bridge is None:
+        return {}
+    try:
+        return scope_bridge.hints(text) or {}
+    except Exception:                              # noqa: BLE001 — 桥出错就退回本地规则
+        return {}
+
+
 def infer_stage(text: str, default: str = "高中") -> str:
+    """学段：先问 core.scope（与 flow.py 同一张表），问不到再用本地旧规则。"""
+    hint = _scope_hints(text)
+    if hint.get("stage_known") and hint.get("stage") in STAGES:
+        return str(hint["stage"])
     for stage, rx in _STAGE_HINTS:
         if rx.search(text or ""):
             return stage
@@ -173,6 +201,9 @@ def infer_stage(text: str, default: str = "高中") -> str:
 
 
 def infer_level(text: str, default: str = "基础") -> str:
+    hint = _scope_hints(text)
+    if hint.get("level") in LEVELS:
+        return str(hint["level"])
     for level, rx in _LEVEL_HINTS:
         if rx.search(text or ""):
             return level
@@ -180,6 +211,14 @@ def infer_level(text: str, default: str = "基础") -> str:
 
 
 def infer_weeks(text: str, default: int = 6) -> int:
+    """周期：句子里的显式周期 > 强度信号（快速/突击/一次课 → 按最小闭环）> 默认值。
+
+    「快速」这类词必须能把它压短：早先只认「N 周/月/天」，于是「我想快速学习
+    初中生物光合作用实验课」被排成了 6 周 18 课时。
+    """
+    hint = _scope_hints(text)
+    if hint.get("weeks"):
+        return _as_int(hint["weeks"], default, 1, MAX_WEEKS)
     raw = text or ""
     m = _WEEK_RE.search(raw)
     if m:
@@ -200,6 +239,11 @@ def infer_weeks(text: str, default: int = 6) -> int:
     return default
 
 
+def _light_request(hint: dict) -> bool:
+    """用户是不是只要求「快速 / 一次课 / 了解一下」——课时预算必须跟着变小。"""
+    return hint.get("effort") == "轻" or hint.get("intensity") in ("一次课", "单篇")
+
+
 def normalize_requirements(raw: Any, fallback_text: str = "") -> dict:
     """把模型（或规则）整理出的需求压成唯一形状。
 
@@ -208,6 +252,8 @@ def normalize_requirements(raw: Any, fallback_text: str = "") -> dict:
     """
     data = raw if isinstance(raw, dict) else {}
     seed = _text(fallback_text, 400)
+    hint = _scope_hints(seed)
+    light = _light_request(hint)
 
     title = _clean_name(data.get("course_title") or data.get("title"), "")
     if not title:
@@ -221,16 +267,26 @@ def normalize_requirements(raw: Any, fallback_text: str = "") -> dict:
     if level not in LEVELS:
         level = infer_level(f"{seed} {_text(data.get('prerequisite'))}")
 
-    subject = _clean_name(data.get("subject"), "") or "通用"
+    subject = (_clean_name(data.get("subject"), "")
+               or (str(hint.get("subject")) if hint.get("subject_known") else "")
+               or "通用")
     goal = _text(data.get("goal") or data.get("learning_goal"), 600)
     if not goal:
         goal = f"系统掌握《{title}》的核心内容，能独立完成相关练习与典型问题。"
 
     weeks = _as_int(data.get("weeks") or data.get("total_weeks"),
                     infer_weeks(seed), 1, MAX_WEEKS)
+    weeks_source = "模型/用户" if data.get("weeks") or data.get("total_weeks") else \
+        str(hint.get("weeks_source") or "默认值")
+    # 「快速 / 一次课」是用户的硬意图：模型（或默认 6 周）不能在它之上把周期拉长
+    if light and hint.get("weeks"):
+        weeks = min(weeks, _as_int(hint["weeks"], weeks, 1, MAX_WEEKS))
     hours = _as_int(data.get("hours_per_week") or data.get("weekly_hours"),
                     _as_int(_hour_hint(seed), 3, 1, MAX_HOURS_PER_WEEK),
                     1, MAX_HOURS_PER_WEEK)
+    # 用户没明说周课时时，轻量请求一律压到 2：1 周×3 课时仍然能排出 3 节课，与「快速」不符
+    if light and not _HOUR_RE.search(seed):
+        hours = min(hours, LIGHT_HOURS_PER_WEEK)
 
     key_topics = _str_list(data.get("key_topics") or data.get("topics"), limit=16)
     summary = _text(data.get("summary"), 400)
@@ -248,6 +304,11 @@ def normalize_requirements(raw: Any, fallback_text: str = "") -> dict:
         "hours_per_week": hours,
         "key_topics": key_topics,
         "summary": summary,
+        # 强度/周期口径来自 core.scope（TeachingFlow 的 S0），大纲阶段靠它们把课排短
+        "intensity": str(hint.get("intensity") or ""),
+        "effort": str(hint.get("effort") or ""),
+        "term": str(hint.get("term") or ("短期" if weeks <= 4 else "长期")),
+        "weeks_source": weeks_source,
     }
 
 
@@ -274,6 +335,15 @@ def normalize_outline(raw: Any, requirements: dict) -> dict:
         raise PlanError("大纲缺少 chapters 数组")
 
     req = requirements or {}
+    # 周期/周课时：用户说了「快速 / 一次课」就不允许模型把账算大（那是这条需求的硬约束）
+    req_weeks = _as_int(req.get("weeks"), 6, 1, MAX_WEEKS)
+    req_hours = _as_int(req.get("hours_per_week"), 3, 1, MAX_HOURS_PER_WEEK)
+    short = _light_request(req)
+    weeks = req_weeks if short else _as_int(
+        data.get("weeks") or data.get("total_weeks"), req_weeks, 1, MAX_WEEKS)
+    hours_per_week = req_hours if short else _as_int(
+        data.get("hours_per_week") or data.get("weekly_hours"), req_hours,
+        1, MAX_HOURS_PER_WEEK)
     chapters_in = data.get("chapters") or []
     chapters: list[dict] = []
     for index, chapter in enumerate(chapters_in):
@@ -325,16 +395,127 @@ def normalize_outline(raw: Any, requirements: dict) -> dict:
         "student_level": _text(data.get("student_level")) if _text(data.get("student_level")) in LEVELS
         else (req.get("student_level") or "基础"),
         "summary": _text(data.get("summary"), 600) or req.get("summary", ""),
-        "weeks": _as_int(data.get("weeks") or data.get("total_weeks"),
-                         _as_int(req.get("weeks"), 6, 1, MAX_WEEKS), 1, MAX_WEEKS),
-        "hours_per_week": _as_int(data.get("hours_per_week") or data.get("weekly_hours"),
-                                  _as_int(req.get("hours_per_week"), 3, 1, MAX_HOURS_PER_WEEK),
-                                  1, MAX_HOURS_PER_WEEK),
+        "weeks": weeks,
+        "hours_per_week": hours_per_week,
         "chapters": chapters,
     }
+    outline = cap_units(outline, req)
     outline = balance_hours(outline)
     outline["chapter_count"] = len(outline["chapters"])
     outline["unit_count"] = sum(len(c["units"]) for c in outline["chapters"])
+    return outline
+
+
+def unit_capacity(weeks: int, hours_per_week: int) -> int:
+    """课时预算能放下几个单元（单元 = 一次课，最少 ``MIN_UNIT_HOURS`` 课时）。"""
+    budget = max(MIN_UNIT_HOURS, float(weeks) * float(hours_per_week))
+    return max(1, int(budget // MIN_UNIT_HOURS))
+
+
+def _merge_unit(into: dict, extra: dict) -> None:
+    """把 ``extra`` 并进 ``into``：标题接上（太长就写「合并 N 课」）、课时相加、知识点去重。"""
+    into["hours"] = round(float(into.get("hours") or 0) + float(extra.get("hours") or 0), 1)
+    points = list(into.get("knowledge_points") or [])
+    for point in extra.get("knowledge_points") or []:
+        if point not in points:
+            points.append(point)
+    into["knowledge_points"] = points[:12]
+    if not into.get("summary"):
+        into["summary"] = extra.get("summary") or ""
+    merged = int(into.get("merged_count") or 0) + 1
+    into["merged_count"] = merged
+    base = str(into.get("title") or "")
+    add = str(extra.get("title") or "")
+    joined = f"{base}、{add}".strip("、")
+    into["title"] = joined[:60] if len(joined) <= 60 else f"{base[:40]}（合并 {merged + 1} 课）"
+
+
+def _allocate(sizes: list[int], cap: int) -> list[int]:
+    """把 ``cap`` 个单元名额分给各章：先按规模给"值得留"的章各 1 个，余下按比例。
+
+    必须保证 ``sum(结果) == min(cap, 原有总数)`` —— 早先「每章至少 1 个」会让 3 章的课
+    在 cap=2 时仍留 3 个单元，等于上限没生效。
+    """
+    total = sum(sizes)
+    if total <= cap:
+        return list(sizes)
+    base = [0] * len(sizes)
+    remaining = min(cap, total)
+    for index in sorted((i for i, size in enumerate(sizes) if size > 0),
+                        key=lambda i: -sizes[i]):
+        if remaining <= 0:
+            break
+        base[index] = 1
+        remaining -= 1
+    if remaining > 0:
+        raw = [size * cap / total if total else 0.0 for size in sizes]
+        while remaining > 0:
+            candidates = [i for i, size in enumerate(sizes) if size > base[i]]
+            if not candidates:
+                break
+            index = max(candidates, key=lambda i: raw[i] - base[i])
+            base[index] += 1
+            remaining -= 1
+    return base
+
+
+def cap_units(outline: dict, requirements: dict | None = None) -> dict:
+    """单元数不得超过课时预算能放的个数：超出就**在本章内往后合并**，不是默默删掉。
+
+    为什么必须有：``balance_hours`` 只会把课时平摊到**已有**单元上，从不减单元。
+    于是「快速学一下光合作用实验」（1 周×2 课时）也能排出 12 个单元，每节 0.5 课时
+    —— 那就不是「快速」，而是把一学期的内容压进一周。
+
+    为什么不是删：删掉的单元内容没有任何人看得见；合并至少把知识点留在了前一课里，
+    标题在大纲页也看得见（「A、B」），用户想拆回去随时能拆。
+    """
+    req = requirements or {}
+    weeks = _as_int(outline.get("weeks") or req.get("weeks"), 6, 1, MAX_WEEKS)
+    per_week = _as_int(outline.get("hours_per_week") or req.get("hours_per_week"),
+                       3, 1, MAX_HOURS_PER_WEEK)
+    cap = unit_capacity(weeks, per_week)
+    chapters = outline.get("chapters") or []
+    sizes = [len(chapter.get("units") or []) for chapter in chapters]
+    total = sum(sizes)
+    if total <= cap:
+        return outline
+
+    quotas = _allocate(sizes, cap)
+    merged: list[dict] = []
+    spill: list[dict] = []                      # 名额被分到 0 的章，整体并进前一章
+    for index, chapter in enumerate(chapters):
+        units = list(chapter.get("units") or [])
+        quota = quotas[index]
+        if quota <= 0:
+            spill.extend(units)
+            continue
+        kept = [dict(unit) for unit in units[:quota]]
+        for unit in units[quota:]:
+            _merge_unit(kept[-1], unit)
+        if spill:
+            for unit in spill:
+                _merge_unit(kept[-1], unit)
+            spill = []
+        merged.append({
+            "title": chapter.get("title") or f"第{len(merged) + 1}章",
+            "summary": chapter.get("summary") or "",
+            "units": kept,
+        })
+    if spill and merged:                        # 只有最后一章被并空时才可能走到这里
+        for unit in spill:
+            _merge_unit(merged[-1]["units"][-1], unit)
+
+    # 合并后章号/单元号必须重编：``ch01-u2`` 是 flow.py ``--unit`` 的唯一标识
+    for chapter_index, chapter in enumerate(merged):
+        chapter["id"] = f"ch{chapter_index + 1:02d}"
+        chapter["number"] = chapter_index + 1
+        for unit_index, unit in enumerate(chapter["units"]):
+            unit["id"] = f"{chapter['id']}-u{unit_index + 1}"
+            unit["number"] = unit_index + 1
+
+    outline["chapters"] = merged
+    outline["unit_cap"] = cap
+    outline["units_merged"] = total - cap
     return outline
 
 
@@ -747,6 +928,7 @@ def offline_questions(requirements: dict, asked: set[str]) -> list[dict]:
             "question": "你打算用多长时间学完？",
             "multiple": False,
             "options": [
+                {"label": "几次课就够（1 周内）", "description": "只想快速过一遍"},
                 {"label": "2 周内速成", "description": "时间紧，只抓重点"},
                 {"label": "1 个月左右", "description": "每周几小时，稳步推进"},
                 {"label": "2~3 个月", "description": "系统学，配套练习"},
