@@ -657,11 +657,41 @@ def _slot_answers(messages: list[dict]) -> dict[str, str]:
     return out
 
 
+#: 开头可以剥掉的客气话与动词。**长的必须排在前面**，因为正则的备选是从左到右试的：
+#: 把「快速学」排在「快速学习」前面，就会把「我想快速学习 X」喃成「习 X」——
+#: 2026-11-07 那门叫「习初中生物光合作用实验课」的课就是这么来的。
+_LEAD_WORDS = [
+    # 客气话
+    "请帮我", "我想要", "我想", "我要", "帮我", "给我", "请", "想", "准备", "打算",
+    # 动词
+    "系统学习", "系统学", "快速学习", "快速学", "简单学习", "简单学",
+    "深入学习", "深入学", "重新学习", "重新学", "补习", "学习", "了解", "掌握",
+    "复习", "突击", "补一下",
+]
+_LEAD_RE = re.compile(r"^[\s，。！？、]*(?:%s)?\s*" % "|".join(
+    sorted(_LEAD_WORDS, key=len, reverse=True)))
+
+#: 光秃秃的「学」「补」也能当动词（「我想学信息安全」），但不能误伤课名：
+#: 「学生心理健康」「学费规划」得原样留着；「学习」也算留——它由 _LEAD_RE 整体剥，
+#: 这里把「习」也排除掉，否则「我想学习信息安全」会变成「习信息安全」。
+_BARE_VERB_RE = re.compile(r"^[\s，。！？、]*(?:学(?!生|期|院|校|位|分|费|习)|补(?!习|丁))\s*")
+
+
 def _title_from(text: str) -> str:
-    s = re.sub(r"^[\s，。！？、]*(?:我想|我想要|我要|帮我|请|想|准备|打算)?\s*"
-               r"(?:学习|学|了解|系统学|系统学习|掌握|补|复习|突击|快速学)?\s*", "", text or "")
-    s = s.strip(" 　，。！？、~～")
-    s = re.sub(r"^(一下|一些|一点)", "", s).strip()
+    """从第一句人话里抠出课名：只剥开头的客气话与动词，不动后面一个字。
+
+    剥多轮是因为会连着写（「想学了解离散数学」＝ 想 + 学 + 了解）。每一轮都必须
+    真变短才继续，否则「学」自己剥自己会死循环。
+    """
+    s = (text or "").strip()
+    for _ in range(4):
+        before = s
+        s = _LEAD_RE.sub("", s, count=1)
+        s = _BARE_VERB_RE.sub("", s, count=1)
+        s = s.strip(" 　，。！？、~～")
+        s = re.sub(r"^(一下|一些|一点)", "", s).strip()
+        if not s or s == before:
+            break
     return (s or "我的课程")[:30]
 
 
@@ -989,6 +1019,10 @@ async def _job_outline(session_id: str) -> None:
                 data = await _ask_json(target, _outline_messages(req), max_tokens=6000)
                 outline = course_plan.normalize_outline(data, req)
                 _task_log(row, f"模型排出 {outline['chapter_count']} 章 / {outline['unit_count']} 单元")
+                if outline.get("units_merged"):
+                    _task_log(row, f"课时预算 {outline['weeks']} 周 × {outline['hours_per_week']} 课时"
+                                   f"只放得下 {outline['unit_cap']} 个单元，已合并"
+                                   f" {outline['units_merged']} 个（内容进了前一课）")
             except Exception as exc:               # noqa: BLE001
                 log.warning("课程生成：大纲失败 id=%s err=%s: %s", session_id, type(exc).__name__, exc)
                 _task_log(row, f"模型生成大纲失败（{type(exc).__name__}），改用规则排课")
@@ -1025,30 +1059,42 @@ async def _job_outline(session_id: str) -> None:
 
 
 def _outline_messages(req: dict) -> list[dict]:
-    """排大纲的提示词：只要结构化结果，章/单元粒度和截图一致（章 → 单元）。"""
-    system = """\
+    """排大纲的提示词：只要结构化结果，章/单元粒度和截图一致（章 → 单元）。
+
+    课时预算是**硬约束**，不是背景信息：单元＝一次课（至少 1 课时），所以「几周 × 每周
+    几课时」直接决定了大纲最多能有几个单元。用户说「快速」时，这里必须把上限写死，
+    否则模型会照旧铺出 3 章 12 单元（那就是把一学期压进一周）。
+    """
+    weeks = max(1, int(req.get("weeks") or 6))
+    per_week = max(1, int(req.get("hours_per_week") or 3))
+    budget = weeks * per_week
+    cap = course_plan.unit_capacity(weeks, per_week)
+    light = (req.get("effort") == "轻") or (req.get("intensity") in ("一次课", "单篇"))
+    system = f"""\
 你是一位课程设计专家。请根据用户确认过的学习需求，排出一份**章 → 单元**两级结构的课程大纲。
 
 要求：
-1. 章是主题块（3~6 个单元），单元是一次课（1~2 课时能讲完）。
+1. 章是主题块，单元是一次课（1~2 课时能讲完）。
 2. 单元标题要具体到"这一节课讲什么"，不要写"第一章内容"这种空话。
 3. 每个单元给 2~5 个知识点（knowledge_points），它们是后面出 PPT 的知识清单。
 4. 章的划分要符合学科自身的逻辑顺序（先基础后综合，先概念后方法）。
-5. 章数控制在 2~6 章，每章 2~5 个单元；总课时要贴近"周期 × 每周课时"。
-6. 只输出 JSON，不要解释、不要 markdown 围栏。
+5. **硬约束：这次排课的课时预算只有 {budget} 课时（{weeks} 周 × 每周 {per_week} 课时），
+   所以单元数最多 {cap} 个（单元按最少 1 课时算）。宁可少而精，超出就只能砍内容。**
+{('6. 用户只要「快速过一遍」：只保留最必要的 ' + str(cap) + ' 个单元（或更少），不要铺开整门课。') if light else '6. 章数控制在 2~6 章；每章单元数按预算分配。'}
+7. 只输出 JSON，不要解释、不要 markdown 围栏。
 
 JSON 形状：
-{"course_title": "…", "subject": "…", "stage": "高中", "goal": "…",
+{{"course_title": "…", "subject": "…", "stage": "高中", "goal": "…",
  "student_level": "基础", "summary": "两三句话的课程说明",
- "weeks": 6, "hours_per_week": 3,
+ "weeks": {weeks}, "hours_per_week": {per_week},
  "chapters": [
-   {"title": "章标题", "summary": "这一章解决什么问题",
+   {{"title": "章标题", "summary": "这一章解决什么问题",
     "units": [
-      {"title": "单元标题", "type": "新授|巩固|复习", "hours": 1.0,
+      {{"title": "单元标题", "type": "新授|巩固|复习", "hours": 1.0,
        "summary": "这一节课的一句话说明",
-       "knowledge_points": ["知识点1", "知识点2"]}
-    ]}
- ]}
+       "knowledge_points": ["知识点1", "知识点2"]}}
+    ]}}
+ ]}}
 """
     user = [
         f"课程名：{req.get('course_title')}",
@@ -1057,7 +1103,11 @@ JSON 形状：
         f"学习者水平：{req.get('student_level')}",
         f"已有基础：{req.get('prerequisite') or '未特别说明'}",
         f"学习目标：{req.get('goal')}",
-        f"周期：{req.get('weeks')} 周 × 每周 {req.get('hours_per_week')} 课时",
+        f"周期：{weeks} 周 × 每周 {per_week} 课时（共 {budget} 课时；"
+        f"{req.get('weeks_source') or '未标注来源'}）",
+        f"强度：{req.get('intensity') or req.get('effort') or '未特别说明'}"
+        f"（{req.get('term') or '未标注'}）",
+        f"单元数上限：{cap} 个",
         f"重点内容：{'、'.join(req.get('key_topics') or []) or '未特别指定'}",
         "",
         "请排出课程大纲（JSON）。",
@@ -1894,9 +1944,11 @@ async def _run_flow_for_unit(job: _PptJob, conn, run_dir: Path) -> tuple[Path | 
     if job.finished:                              # 取消路径已经结算过
         return None, "已取消"
     rc = proc.returncode if proc.returncode is not None else await proc.wait()
-    produced = _deliverable_from_manifest(run_dir, str(plan_unit["unit_id"]))
+    produced = _deliverable_from_manifest(run_dir, str(plan_unit["unit_id"]), plan_unit)
     if rc != 0:
-        return produced, f"流水线退出码 {rc}"
+        # 退出码非 0 就当没出片。把产物交出去会让调用方以为成功、跳过兜底，而这份
+        # 产物要么是渲染到一半的、要么是上一课的 —— 宁可重合成一份本课的。
+        return None, f"流水线退出码 {rc}"
     return produced, "" if produced else "流水线退出码 0，但没有产出 PPTX"
 
 
@@ -1981,21 +2033,43 @@ async def _pump_flow(job: _PptJob, conn, proc) -> None:
     await proc.wait()
 
 
-def _deliverable_from_manifest(run_dir: Path, unit_id: str) -> Path | None:
-    """从 manifest 的 ``s5_render:<uid>`` 拿交付件；退一步按命名口径找。"""
+def _unit_deliverable(run_dir: Path, plan_unit: dict) -> Path:
+    """本课交付件的**唯一**路径口径：``<课程>/第N章-章名/第M单元-单元名.pptx``。
+
+    与 ``core/naming.py::deliverable`` 逐字节同口径，兜底合成都走它 —— 这样"这一课的
+    文件叫什么"只有一处定义，不会出现两条路径算出两个名字、互相覆盖。
+    """
+    chapter_dir = run_dir / _chapter_dirname({
+        "number": plan_unit["chapter_order"], "title": plan_unit["chapter_title"]})
+    return chapter_dir / _unit_filename({
+        "number": int(plan_unit["unit_index"]) + 1,
+        "title": plan_unit["unit_title"] or plan_unit["unit_id"]})
+
+
+def _deliverable_from_manifest(run_dir: Path, unit_id: str,
+                               plan_unit: dict | None = None) -> Path | None:
+    """本课自己的交付件；名字对不上就返回 ``None``（绝不退给别的课）。
+
+    为什么最后一步不再是 ``rglob("*.pptx")[-1]``：那个兜底会把**任意一课**的产物当成
+    本课的结果。前一课已经出过片时，``--unit ch01-u2`` 渲染失败就会把第一节的 pptx
+    登记成第二节的课件 —— 学生看到的表现是"不管哪一节，都是第一节那一份"。
+    所以只认名字对得上的那份；对不上返回 None，让调用方走兜底合成（兜底的文件名
+    按本课算，不会顶替别人）。
+    """
+    expected = _unit_deliverable(run_dir, plan_unit) if plan_unit else None
     manifest_path = run_dir / "manifest.json"
     if manifest_path.is_file():
         data = _loads(manifest_path.read_text(encoding="utf-8", errors="replace"), {})
         step = ((data.get("steps") or {}).get(f"s5_render:{unit_id}") or {})
         for item in step.get("artifacts") or []:
-            path = Path(str(item))
-            if path.suffix.lower() == ".pptx" and path.is_file():
-                return path
-            candidate = run_dir / str(item)
-            if candidate.suffix.lower() == ".pptx" and candidate.is_file():
-                return candidate
-    hits = sorted(p for p in run_dir.rglob("*.pptx") if not p.name.startswith("~$"))
-    return hits[-1] if hits else None
+            for candidate in (Path(str(item)), run_dir / str(item)):
+                if candidate.suffix.lower() != ".pptx" or not candidate.is_file():
+                    continue
+                if expected is None or candidate.resolve() == expected.resolve():
+                    return candidate
+    if expected is not None and expected.is_file():
+        return expected
+    return None
 
 
 def _synthesize_pptx(job: _PptJob, run_dir: Path) -> Path:
@@ -2059,12 +2133,8 @@ def _synthesize_pptx(job: _PptJob, run_dir: Path) -> Path:
     if design.get("summary"):
         _add("小结", [str(design["summary"])], kicker="小结")
 
-    chapter_dir = run_dir / _chapter_dirname({
-        "number": plan_unit["chapter_order"], "title": plan_unit["chapter_title"]})
-    chapter_dir.mkdir(parents=True, exist_ok=True)
-    target = chapter_dir / _unit_filename({
-        "number": int(plan_unit["unit_index"]) + 1,
-        "title": plan_unit["unit_title"] or plan_unit["unit_id"]})
+    target = _unit_deliverable(run_dir, plan_unit)
+    target.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(target))
     return target
 
