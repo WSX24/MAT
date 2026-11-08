@@ -665,9 +665,12 @@ onBeforeUnmount(() => { disposed = true; stopPolling() })
 
 .ready-card { margin-top: 12px; padding: 14px 15px; border: 1px solid color-mix(in oklch, var(--accent) 22%, var(--border)); border-radius: 13px; background: color-mix(in oklch, var(--accent) 4%, var(--surface)); }
 .ready-head { display: flex; align-items: center; gap: 11px; }
-.ready-mark { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border-radius: 50%; background: color-mix(in oklch, var(--success) 18%, var(--bg)); color: var(--success); font-size: 14px; font-weight: 700; }
+.ready-mark { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border-radius: 50%; background: color-mix(in oklch, var(--success) 18%, var(--bg)); color: var(--success); font-size: 14px; font-weight: 700; line-height: 1; }
+/* 这一条只能作用于“标题下面那行灰字”。写成 .ready-head span 会连 ✓ 徽标一起命中：
+   它的 display: block / margin-top 会盖掉 .ready-mark 的 display: grid + place-items: center，
+   勾就跑到圆圈左上角。用 > div 限定只命中文字那块。 */
+.ready-head > div > span { display: block; margin-top: 2px; color: var(--muted); font-size: 10.5px; }
 .ready-head strong { display: block; font-size: 13px; font-weight: 650; }
-.ready-head span { display: block; margin-top: 2px; color: var(--muted); font-size: 10.5px; }
 .ready-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
 
 .btn-solid { padding: 8px 13px; border: 1px solid transparent; border-radius: 9px; background: var(--accent); color: #fff; cursor: pointer; font: inherit; font-size: 11.5px; font-weight: 600; transition: background 130ms ease; }
