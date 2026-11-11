@@ -1348,6 +1348,11 @@ def self_check(lib: PromptLib, profile: Optional[RoleProfile] = None) -> None:
     print("   ⑫ 函数图像几何 OK：割线斜率收敛到切线 1.4 + 多切点 P1~P3 + 尖点 + 圆锥曲线 + 标注推荐位置；"
           "3 类非法声明 + 缺省均降级不中断")
 
+    # ⑫b 几何审计/自动重画：光把坐标算给模型还不够——它会写歪
+    #     （2026-11-08：「斜率 2」的切线折成 1.67、还偏到切点下方 21px，仍能导出）
+    import plot_audit
+    plot_audit.self_check()
+
     # ⑬ 容器框自动修复：P4 的第一道闸，不花模型调用
     #    （实测：18 次调用里 8 次是逐页返工这类纯几何错，每次 ~80s）
     import bounds_fix

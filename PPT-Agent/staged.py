@@ -2852,6 +2852,46 @@ class StagedRunner:
         else:
             self._log(f"   ⚠️ 代码修复已收敛，仍有 {total_before} 个 blocking，交模型处理")
 
+    def _auto_fix_plots(self) -> None:
+        """P4 的第二道代码闸：把画错的切线按**曲线自身的局部斜率**挪回去。
+
+        为什么需要（2026-11-08 导数课实测）：标注"斜率 2"的切线，端点折成数学斜率
+        只有 1.67，还整体偏到切点下方 21px——它压根不是切线。而 `svg_quality_checker`
+        只查排版（越界/重叠/字号/对比度），**不查数学**，于是这种错能一路顺利导出。
+
+        为什么不交给模型：坐标是它算出来的，再问一次只会换个错法（且一次调用 ~80s）。
+        而 SVG 里切线的唯一正确解是确定的：过切点 + 斜率等于曲线在该点的局部斜率，
+        后者从曲线折线采样直接差分即可（不需要知道 f(x)，也不需要轴的比例）。
+        详见 plot_audit 模块的 docstring。
+
+        安全性：只改 `<line>` 的四个坐标属性，不删元素、不动文字；找不到曲线或切点就
+        原样保留并说明原因。
+        """
+        import plot_audit
+
+        svg_dir = self.project_path / "svg_output"
+        if not svg_dir.is_dir():
+            return
+        repaired_pages = 0
+        for path in sorted(svg_dir.glob("*.svg")):
+            raw = path.read_text(encoding="utf-8", errors="replace")
+            new, notes = plot_audit.repair_svg(raw)
+            if new == raw:
+                continue
+            path.write_text(new, encoding="utf-8")
+            repaired_pages += 1
+            for note in notes:
+                self._log(f"     [几何] {path.name} {note}")
+        # 修不了的（线竖直/没找到切点）也要说出来，别让"没日志"看起来像"没问题"
+        for path in sorted(svg_dir.glob("*.svg")):
+            issues, stats = plot_audit.audit_svg(
+                path.read_text(encoding="utf-8", errors="replace"))
+            for issue in issues:
+                self._log(f"     [几何] {path.name} 仍未修：{issue['message']}")
+        if repaired_pages:
+            self._log(f"   函数图像几何：{repaired_pages} 页切线已按曲线局部斜率重画"
+                      "（0 次模型调用）")
+
     def phase_verify(self) -> None:
         """代码校验 + 模型只修**有 blocking 错误**的页。
 
@@ -2863,6 +2903,7 @@ class StagedRunner:
 
         if self.max_page_repairs <= 0:
             self._auto_fix_bounds()
+            self._auto_fix_plots()
             passed, grouped = self._run_checker("final")
             if passed and not grouped:
                 self._log("   ✅ 最终校验通过：0 个 blocking 错误")
@@ -2889,6 +2930,7 @@ class StagedRunner:
             # 模型的修复输出是整页替换，不是局部补丁，所以代码的修改必须放在
             # “模型可能重写页面”的**每一次之后**。代价是每轮多跑一次 checker（~1s）。
             self._auto_fix_bounds()
+            self._auto_fix_plots()
             passed, grouped = self._run_checker("final")
             if passed and not grouped:
                 self._log("   ✅ 最终校验通过：0 个 blocking 错误")
