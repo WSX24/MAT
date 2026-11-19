@@ -1,0 +1,2910 @@
+{
+ "deck_id": "第1单元_连通度_κ_λ_δ_与_Menger_定理",
+ "source": "llm",
+ "model": "deepseek · deepseek-flash · https://api.deepseek.com/v1 · key:已设置 · 思考:off",
+ "session_goals": [
+  "先问一个问题：",
+  "κ(G) 与 λ(G) 的定义：先写删除对象，",
+  "链式关系 κ ≤ λ ≤ δ 的证明主线",
+  "使用条件与常见误用：错例与正例对照",
+  "割点与割边：连通度思想的具体落点"
+ ],
+ "units": [
+  {
+   "slide": 0,
+   "text": "图论 · 连通度。连通度 κ、λ、δ。知识路线。与 Menger 定理。κ / λ / δ 链式关系。1。割点割边与割集。2。本课目标：一条完整的证据链。定义 κ(G)、λ(G)，证明 κ ≤ λ ≤ δ。Menger 定理。3。割点、割边与两类割集的判别。路径例题。4。Menger 定理的点形式与边形式。要求：不背结论，说清依据。不相交路径例题：条件→结论→依据。",
+   "anchors": [
+    {
+     "element_id": "s01-sh02-g01-p01",
+     "text_hint": "图论 · 连通度",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-g02-p01",
+     "text_hint": "连通度 κ、λ、δ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g02-p01",
+     "text_hint": "知识路线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-g03-p01",
+     "text_hint": "与 Menger 定理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g04-p01",
+     "text_hint": "κ / λ / δ 链式关系",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g03-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g07-p01",
+     "text_hint": "割点割边与割集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g06-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-g05-p01",
+     "text_hint": "本课目标：一条完整的证据链",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g01-g02-p01",
+     "text_hint": "定义 κ(G)、λ(G)，证明 κ ≤ λ ≤ ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g10-p01",
+     "text_hint": "Menger 定理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g09-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g02-g02-p01",
+     "text_hint": "割点、割边与两类割集的判别",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g13-p01",
+     "text_hint": "路径例题",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g03-g12-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g03-g02-p01",
+     "text_hint": "Menger 定理的点形式与边形式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh21-g05-p01",
+     "text_hint": "要求：不背结论，说清依据",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g04-g02-p01",
+     "text_hint": "不相交路径例题：条件→结论→依据",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s01-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s01-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s01-sh21-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s01-sh02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s01-sh21-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s01-sh21-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s01-sh21-g03-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s01-sh21-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s01-sh02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s01-sh08-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s01-sh21-g03-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s01-sh21-g03-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s01-sh08-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s01-sh21-g03-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s01-sh21-g03-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s01-sh08-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s01-sh21-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s01-sh08-g04-g02-p01"
+    }
+   ],
+   "kp": [
+    "P01-图论连通度"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "图论 · 连通度。"
+  },
+  {
+   "slide": 1,
+   "text": "先问一个问题：。一张图有多抗破坏？。从图里拿掉一些点、或一些边，剩下的图还连通吗？。预告。同一个问题，换一个删除对象，答案就不同。点失效会连带删掉。它身上的所有边。判别框架。①。锁定删除对象。顶点集 S，还是边集 B？。所以点比边更贵。②。检查剩余图。G−S 或 G−B 是否仍连通？。这正是链式关系的来源。K₄：删任一顶点仍连通。κ ≤ λ ≤ δ。κ(K₄)=3。",
+   "anchors": [
+    {
+     "element_id": "s02-sh02-g01-p01",
+     "text_hint": "先问一个问题：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh02-g02-p01",
+     "text_hint": "一张图有多抗破坏？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g03-p01",
+     "text_hint": "从图里拿掉一些点、或一些边，剩下的图还连通吗？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh29-g02-p01",
+     "text_hint": "预告",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g04-p01",
+     "text_hint": "同一个问题，换一个删除对象，答案就不同。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh29-g03-p01",
+     "text_hint": "点失效会连带删掉",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh29-g04-p01",
+     "text_hint": "它身上的所有边。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-g01-p01",
+     "text_hint": "判别框架",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-g02-g01-p01",
+     "text_hint": "①",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-g02-g02-p01",
+     "text_hint": "锁定删除对象",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-g02-g03-p01",
+     "text_hint": "顶点集 S，还是边集 B？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh29-g06-p01",
+     "text_hint": "所以点比边更贵。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-g03-g01-p01",
+     "text_hint": "②",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-g03-g02-p01",
+     "text_hint": "检查剩余图",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh10-g03-g03-p01",
+     "text_hint": "G−S 或 G−B 是否仍连通？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh29-g07-p01",
+     "text_hint": "这正是链式关系的来源",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh21-g01-g01-p01",
+     "text_hint": "K₄：删任一顶点仍连通",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh29-g08-p01",
+     "text_hint": "κ ≤ λ ≤ δ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh21-g01-g02-p01",
+     "text_hint": "κ(K₄)=3",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh29-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh29-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s02-sh29-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh10-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh10-g02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh10-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s02-sh10-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s02-sh29-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s02-sh10-g03-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s02-sh10-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s02-sh10-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s02-sh29-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s02-sh21-g01-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s02-sh29-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s02-sh21-g01-g02-p01"
+    }
+   ],
+   "kp": [
+    "P02-先问一个问题"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "先问一个问题：。"
+  },
+  {
+   "slide": 1,
+   "text": "删任一边仍连通，λ(K₄)=3。C₄：删一个顶点，剩下一条路径。该顶点就是割点。第 2 页 · 引入。",
+   "anchors": [
+    {
+     "element_id": "s02-sh21-g01-g03-p01",
+     "text_hint": "删任一边仍连通，λ(K₄)=3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh21-g02-g01-p01",
+     "text_hint": "C₄：删一个顶点，剩下一条路径",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh21-g02-g02-p01",
+     "text_hint": "该顶点就是割点。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh38-g02-p01",
+     "text_hint": "第 2 页 · 引入",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh21-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh21-g02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh21-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh38-g02-p01"
+    }
+   ],
+   "kp": [
+    "P02-先问一个问题-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "删任一边仍连通，λ(K₄)=3。"
+  },
+  {
+   "slide": 2,
+   "text": "上一页我们在 K₄ 和 C₄ 上看过删点删边的效果。现在把这套操作写成正式定义。标题其实已经把口诀说出来了：先写删除对象，再写剩余图的条件。两个定义都是这个结构，先看删什么，再看删完剩下来的图要满足什么。",
+   "anchors": [
+    {
+     "element_id": "s03-sh01-g02-p01",
+     "text_hint": "κ(G) 与 λ(G) 的定义：先写删除对象，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh01-g03-p01",
+     "text_hint": "再写剩余图条件",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "kappa-lambda-def"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "先写删除对象再写剩余图条件的定义结构"
+  },
+  {
+   "slide": 2,
+   "text": "先看点连通度 κ(G)。删除对象是点集 S，S 是 V(G) 的子集，也就是从顶点里挑出一批来删掉。注意写的是 S ⊂ V(G)，删的是顶点，不是边。删完得到剩余图 G−S，这就是刚才说的第二个空：剩下来的图要满足什么条件。",
+   "anchors": [
+    {
+     "element_id": "s03-sh06-g03-p01",
+     "text_hint": "点连通度 κ(G)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g04-p01",
+     "text_hint": "κ(G) = min{ |S| :",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g05-p01",
+     "text_hint": "S ⊂ V(G)，且 G−S 不连通",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "删除对象是点集 S",
+     "target": "s03-sh06-g07-p01"
+    }
+   ],
+   "kp": [
+    "kappa-lambda-def"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "点连通度删的是点集 S，剩 G−S"
+  },
+  {
+   "slide": 2,
+   "text": "条件是两个之一：G−S 不连通，或者 G−S 只剩一个顶点。为什么要加后面这条？因为完全图你怎么删点，剩下的都还连通，最后会落到单个顶点上。单个顶点谈不上连通不连通，所以我们约定它也算达到了断开的效果。κ(G) 就是满足这个条件的 S 里，|S| 最小的那个值。",
+   "anchors": [
+    {
+     "element_id": "s03-sh06-g05-p01",
+     "text_hint": "S ⊂ V(G)，且 G−S 不连通",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g06-p01",
+     "text_hint": "或只剩一个顶点 }",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g04-p01",
+     "text_hint": "κ(G) = min{ |S| :",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "unfocus",
+     "at_sentence": 1,
+     "at_text": "条件是两个之一",
+     "target": "s03-sh06-g07-p01"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "只剩一个顶点",
+     "target": "s03-sh06-g06-p01"
+    }
+   ],
+   "kp": [
+    "kappa-lambda-def"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "G−S 不连通或只剩一个顶点"
+  },
+  {
+   "slide": 2,
+   "text": "边连通度完全是同一套句式，只把点换成边。删除对象是边集 B，B ⊂ E(G)；剩余图是 G−B。λ(G) 就是让 G−B 不连通的最小的 |B|。你对照上下两栏看，位置一一对应，唯一变的就是 V 换成 E、S 换成 B。",
+   "anchors": [
+    {
+     "element_id": "s03-sh14-g03-p01",
+     "text_hint": "边连通度 λ(G)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh14-g04-p01",
+     "text_hint": "λ(G) = min{ |B| :",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh14-g05-p01",
+     "text_hint": "B ⊂ E(G)，且 G−B 不连通 }",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh14-g06-p01",
+     "text_hint": "删除对象：边集 B；剩余图：G−B",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "删除对象是边集 B",
+     "target": "s03-sh14-g06-p01"
+    }
+   ],
+   "kp": [
+    "kappa-lambda-def"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "边连通度把点集 S 换成边集 B"
+  },
+  {
+   "slide": 2,
+   "text": "所以读这两个定义的方法，就是填两个空：删什么对象、剩余图要满足什么条件。你把这两个空填上，定义就复述出来了。割点、割边、点割集、边割集，用的全是这一句判别句式，只是删的东西多少不一样。割点就是 |S| 等于 1 时的那个点。",
+   "anchors": [
+    {
+     "element_id": "s03-sh21-g02-p01",
+     "text_hint": "读法：填两个空 —— 删什么对象、剩余图要满足什",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh21-g03-p01",
+     "text_hint": "割点、割边、点割集、边割集都沿用同一判别句式",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "cut-vertex-bridge"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "填两个空：删什么、剩余图满足什么"
+  },
+  {
+   "slide": 2,
+   "text": "最后两条约定要记牢。第一，G 本来就不连通的时候，不用删就已经不连通了，所以约定 κ(G) 和 λ(G) 都等于 0。第二，完全图 κ(Kₙ) 等于 n−1，因为你要删到只剩一个顶点才算数。这里的 δ(G) 是最小度，不是平均度，而且恒有 δ(G) ≤ n−1，下一节我们就用它。",
+   "anchors": [
+    {
+     "element_id": "s03-sh25-g02-p01",
+     "text_hint": "约定：G 不连通时 κ(G) = λ(G) = ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh25-g03-p01",
+     "text_hint": "δ(G) 是最小度，不是平均度，且恒有 δ(G)",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "是最小度，不是平均度",
+     "target": "s03-sh25-g03-p01"
+    }
+   ],
+   "kp": [
+    "convention-delta"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "不连通取 0，完全图 κ 为 n−1"
+  },
+  {
+   "slide": 3,
+   "text": "链式关系 κ ≤ λ ≤ δ 的证明主线。两边不等式各用一条显式构造，每一步都挂上定义。① λ ≤ δ。② κ ≤ λ。取最小度顶点 v，删去其 δ 条关联边。取最小边割集 B，|B| = λ。v 成为孤立点，G 不再连通。B 每边各取一端点，组成点集 S。依据：λ 是破坏连通所需删去的最少边数。删去 S 即破坏 B 中全部边，故 κ ≤ |S| ≤ λ。结论：λ ≤ δ。",
+   "anchors": [
+    {
+     "element_id": "s04-sh01-g02-p01",
+     "text_hint": "链式关系 κ ≤ λ ≤ δ 的证明主线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh01-g03-p01",
+     "text_hint": "两边不等式各用一条显式构造，每一步都挂上定义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g02-p01",
+     "text_hint": "① λ ≤ δ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh14-g02-p01",
+     "text_hint": "② κ ≤ λ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g03-p01",
+     "text_hint": "取最小度顶点 v，删去其 δ 条关联边",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh14-g03-p01",
+     "text_hint": "取最小边割集 B，|B| = λ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g04-p01",
+     "text_hint": "v 成为孤立点，G 不再连通",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh14-g04-p01",
+     "text_hint": "B 每边各取一端点，组成点集 S",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g06-p01",
+     "text_hint": "依据：λ 是破坏连通所需删去的最少边数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh14-g06-p01",
+     "text_hint": "删去 S 即破坏 B 中全部边，故 κ ≤ |S",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g07-p01",
+     "text_hint": "结论：λ ≤ δ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh14-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s04-sh14-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s04-sh14-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s04-sh06-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s04-sh14-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s04-sh06-g07-p01"
+    }
+   ],
+   "kp": [
+    "P04-链式关系κλδ的证明主线"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "链式关系 κ ≤ λ ≤ δ 的证明主线。"
+  },
+  {
+   "slide": 3,
+   "text": "依据：κ 是破坏连通所需删去的最少点数。合成结论。κ(G) ≤ λ(G) ≤ δ(G)。禁止跳步。特殊情形逐项核对。不能由「看起来更脆弱」。完全图 Kₙ：三者同为 n−1。直接写出不等号。树 T：三者同为 1；单点图按约定处理。必须：条件 → 结论 → 依据。04。",
+   "anchors": [
+    {
+     "element_id": "s04-sh14-g07-p01",
+     "text_hint": "依据：κ 是破坏连通所需删去的最少点数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh22-g01-p01",
+     "text_hint": "合成结论",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh22-g02-p01",
+     "text_hint": "κ(G) ≤ λ(G) ≤ δ(G)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g02-p01",
+     "text_hint": "禁止跳步",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh26-g01-p01",
+     "text_hint": "特殊情形逐项核对",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g03-p01",
+     "text_hint": "不能由「看起来更脆弱」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh26-g02-p01",
+     "text_hint": "完全图 Kₙ：三者同为 n−1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g04-p01",
+     "text_hint": "直接写出不等号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh26-g03-p01",
+     "text_hint": "树 T：三者同为 1；单点图按约定处理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g05-p01",
+     "text_hint": "必须：条件 → 结论 → 依据",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh36-p01",
+     "text_hint": "04",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh14-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh22-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh22-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh30-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh26-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh30-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh26-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s04-sh30-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh26-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s04-sh30-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s04-sh36-p01"
+    }
+   ],
+   "kp": [
+    "P04-链式关系κλδ的证明主线-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "依据：κ 是破坏连通所需删去的最少点数。"
+  },
+  {
+   "slide": 4,
+   "text": "使用条件与常见误用：错例与正例对照。链式关系不是背出来的，而是条件核对过之后推出来的。三个高频误用。使用前先核对三项。把 δ 当平均度；不连通图硬套式。1 G 连通吗？。条件不成立，结论无从谈起。2 δ 是最小度，不是平均度。删边证明搬到删点上。3 顶点与图的形式合本课约定。删除对象一旦混用，推理即刻失效。三项缺一，后面的推导都不成立。只写 κ ≤ λ，不写依据。正例句式。",
+   "anchors": [
+    {
+     "element_id": "s05-sh01-g02-p01",
+     "text_hint": "使用条件与常见误用：错例与正例对照",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh01-g04-p01",
+     "text_hint": "链式关系不是背出来的，而是条件核对过之后推出来的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g01-p01",
+     "text_hint": "三个高频误用",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g03-p01",
+     "text_hint": "使用前先核对三项",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g02-g02-p01",
+     "text_hint": "把 δ 当平均度；不连通图硬套式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g04-g01-p01",
+     "text_hint": "1 G 连通吗？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g02-g03-p01",
+     "text_hint": "条件不成立，结论无从谈起",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g04-g02-p01",
+     "text_hint": "2 δ 是最小度，不是平均度",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g04-g02-p01",
+     "text_hint": "删边证明搬到删点上",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g04-g03-p01",
+     "text_hint": "3 顶点与图的形式合本课约定",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g04-g03-p01",
+     "text_hint": "删除对象一旦混用，推理即刻失效",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g06-p01",
+     "text_hint": "三项缺一，后面的推导都不成立",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g06-g02-p01",
+     "text_hint": "只写 κ ≤ λ，不写依据",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh37-g01-p01",
+     "text_hint": "正例句式",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh16-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh16-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s05-sh06-g04-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh16-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh06-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s05-sh16-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s05-sh06-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s05-sh16-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s05-sh06-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s05-sh16-g06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s05-sh37-g01-p01"
+    }
+   ],
+   "kp": [
+    "P05-使用条件与常见误用错例与"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "使用条件与常见误用：错例与正例对照。"
+  },
+  {
+   "slide": 4,
+   "text": "一被追问就失分：依据必须落在定义上。因 B 是最小边割集，\n删去 B 后图不连通，\n故由 λ 的定义得 λ = |B|。以为等号必须取等。任一处都可不取等，需给图例支撑。条件 → 结论 → 依据，三段写全。图论 · 连通度与 Menger 定理。05 / 12。",
+   "anchors": [
+    {
+     "element_id": "s05-sh16-g06-g03-p01",
+     "text_hint": "一被追问就失分：依据必须落在定义上",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh37-g04-p01",
+     "text_hint": "因 B 是最小边割集，\n删去 B 后图不连通，\n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g08-g02-p01",
+     "text_hint": "以为等号必须取等",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh16-g08-g03-p01",
+     "text_hint": "任一处都可不取等，需给图例支撑",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh37-g05-p01",
+     "text_hint": "条件 → 结论 → 依据，三段写全。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh43-g02-p01",
+     "text_hint": "图论 · 连通度与 Menger 定理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh43-g03-p01",
+     "text_hint": "05 / 12",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh16-g06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh37-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh16-g08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh16-g08-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh37-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s05-sh43-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh43-g03-p01"
+    }
+   ],
+   "kp": [
+    "P05-使用条件与常见误用错例与-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "一被追问就失分：依据必须落在定义上。"
+  },
+  {
+   "slide": 5,
+   "text": "割点与割边：连通度思想的具体落点。06。「关键」不是感觉，而是删除前后连通分支数的比较。割点 v。割边 e。判别流程。删顶点 v，看剩余图：。删边 e，看剩余图：。锁定删除对象。1。ω(G−v) > ω(G)。ω(G−e) > ω(G)。比较前后连通性。2。G 连通时，即 G−v 不连通。等价于 e 不在 G 的任何圈中。对应：κ(G) = 1。对应：λ(G) = 1。顶点→割点，边→割边。",
+   "anchors": [
+    {
+     "element_id": "s06-sh01-g02-p01",
+     "text_hint": "割点与割边：连通度思想的具体落点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh01-g04-p01",
+     "text_hint": "06",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g03-p01",
+     "text_hint": "「关键」不是感觉，而是删除前后连通分支数的比较",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh10-g02-p01",
+     "text_hint": "割点 v",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh18-g02-p01",
+     "text_hint": "割边 e",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh26-g02-p01",
+     "text_hint": "判别流程",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh10-g04-p01",
+     "text_hint": "删顶点 v，看剩余图：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh18-g04-p01",
+     "text_hint": "删边 e，看剩余图：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh26-g06-p01",
+     "text_hint": "锁定删除对象",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh26-g05-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh10-g05-p01",
+     "text_hint": "ω(G−v) > ω(G)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh18-g05-p01",
+     "text_hint": "ω(G−e) > ω(G)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh26-g10-p01",
+     "text_hint": "比较前后连通性",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh26-g09-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh10-g06-p01",
+     "text_hint": "G 连通时，即 G−v 不连通",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh18-g06-p01",
+     "text_hint": "等价于 e 不在 G 的任何圈中",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh10-g07-p01",
+     "text_hint": "对应：κ(G) = 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh18-g07-p01",
+     "text_hint": "对应：λ(G) = 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh26-g11-p01",
+     "text_hint": "顶点→割点，边→割边",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh10-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh18-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh26-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh10-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s06-sh18-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s06-sh26-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s06-sh26-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s06-sh10-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s06-sh18-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s06-sh26-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s06-sh26-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s06-sh10-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s06-sh18-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s06-sh10-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s06-sh18-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s06-sh26-g11-p01"
+    }
+   ],
+   "kp": [
+    "P06-割点与割边连通度思想的具"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "割点与割边：连通度思想的具体落点。"
+  },
+  {
+   "slide": 5,
+   "text": "典型图象。提醒。树：非叶顶点都是割点，每条边都是割边。割边的端点未必是割点；。圈 C。两者不能互相代替。n：既无割点，也无割边。06 / 12。",
+   "anchors": [
+    {
+     "element_id": "s06-sh38-g01-p01",
+     "text_hint": "典型图象",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh44-g02-p01",
+     "text_hint": "提醒",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh38-g03-p01",
+     "text_hint": "树：非叶顶点都是割点，每条边都是割边",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh44-g03-p01",
+     "text_hint": "割边的端点未必是割点；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh38-g04-p01",
+     "text_hint": "圈 C",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh44-g04-p01",
+     "text_hint": "两者不能互相代替。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh38-g05-p01",
+     "text_hint": "n：既无割点，也无割边",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh49-g02-p01",
+     "text_hint": "06 / 12",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh38-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh44-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh38-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh44-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh38-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh44-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s06-sh38-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s06-sh49-g02-p01"
+    }
+   ],
+   "kp": [
+    "P06-割点与割边连通度思想的具-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "典型图象。提醒。"
+  },
+  {
+   "slide": 6,
+   "text": "点割集与边割集：从单个对象扩展到集合。κ 与 λ 分别是两类「极小割集」的最小基数。点割集 S。边割集 B。G − S 不连通或为平凡图，。G − B 不连通，且 B 关于此。且 S 关于此性质极小。性质极小（真子集不再具备）。κ(G) = 最小点割集基数。λ(G) = 最小边割集基数。割点 = |S| = 1 的特殊情形。割边 = |B| = 1 的特殊情形。",
+   "anchors": [
+    {
+     "element_id": "s07-sh01-g02-p01",
+     "text_hint": "点割集与边割集：从单个对象扩展到集合",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh05-g03-p01",
+     "text_hint": "κ 与 λ 分别是两类「极小割集」的最小基数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh09-g02-p01",
+     "text_hint": "点割集 S",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh18-g02-p01",
+     "text_hint": "边割集 B",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh09-g04-p01",
+     "text_hint": "G − S 不连通或为平凡图，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh18-g04-p01",
+     "text_hint": "G − B 不连通，且 B 关于此",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh09-g05-p01",
+     "text_hint": "且 S 关于此性质极小。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh18-g05-p01",
+     "text_hint": "性质极小（真子集不再具备）。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh09-g06-p01",
+     "text_hint": "κ(G) = 最小点割集基数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh18-g06-p01",
+     "text_hint": "λ(G) = 最小边割集基数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh09-g07-p01",
+     "text_hint": "割点 = |S| = 1 的特殊情形",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh18-g07-p01",
+     "text_hint": "割边 = |B| = 1 的特殊情形",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh18-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s07-sh09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s07-sh18-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s07-sh09-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s07-sh18-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s07-sh09-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s07-sh18-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s07-sh09-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s07-sh18-g07-p01"
+    }
+   ],
+   "kp": [
+    "P07-点割集与边割集从单个对象"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "点割集与边割集：从单个对象扩展到集合。"
+  },
+  {
+   "slide": 6,
+   "text": "删点会连带删除其全部关联边。删边不影响顶点集。判别两问：删的是点还是边？删完以后连通性怎样？。极小不是最小。先写删除对象，再写剩余图条件。两类割集不可互换——删除对象不同，剩余图也不同。07 / 12。",
+   "anchors": [
+    {
+     "element_id": "s07-sh09-g08-p01",
+     "text_hint": "删点会连带删除其全部关联边",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh18-g08-p01",
+     "text_hint": "删边不影响顶点集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh29-g01-p01",
+     "text_hint": "判别两问：删的是点还是边？删完以后连通性怎样？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh32-g02-p01",
+     "text_hint": "极小不是最小",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh32-g03-p01",
+     "text_hint": "先写删除对象，再写剩余图条件",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh29-g02-p01",
+     "text_hint": "两类割集不可互换——删除对象不同，剩余图也不同。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh36-p01",
+     "text_hint": "07 / 12",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh09-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh18-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh29-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s07-sh32-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s07-sh32-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s07-sh29-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s07-sh36-p01"
+    }
+   ],
+   "kp": [
+    "P07-点割集与边割集从单个对象-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "删点会连带删除其全部关联边。"
+  },
+  {
+   "slide": 7,
+   "text": "Menger 定理的陈述：点形式与边形式。路径条数与被删数量，是同一个数。不相交路径的最大条数 = 分离所需删除的最少量。点形式。内部不相交的 u-v 路径最大条数 = 分离 u、v 最少删点数。路径内部不共点，端点 u、v 可共用。边形式。边不相交的 u-v 路径最大条数 = 分离 u、v 最少删边数。路径不共边，顶点完全可以共用。全局形式。用之前。",
+   "anchors": [
+    {
+     "element_id": "s08-sh01-g02-p01",
+     "text_hint": "Menger 定理的陈述：点形式与边形式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh01-g03-p01",
+     "text_hint": "路径条数与被删数量，是同一个数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh06-g03-p01",
+     "text_hint": "不相交路径的最大条数 = 分离所需删除的最少量",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g02-p01",
+     "text_hint": "点形式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g03-p01",
+     "text_hint": "内部不相交的 u-v 路径最大条数 = 分离 u",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g04-p01",
+     "text_hint": "路径内部不共点，端点 u、v 可共用",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g06-p01",
+     "text_hint": "边形式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g07-p01",
+     "text_hint": "边不相交的 u-v 路径最大条数 = 分离 u、",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g08-p01",
+     "text_hint": "路径不共边，顶点完全可以共用",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh19-g01-p01",
+     "text_hint": "全局形式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh25-g02-p01",
+     "text_hint": "用之前",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s08-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh10-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh10-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s08-sh10-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s08-sh10-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s08-sh10-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s08-sh10-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s08-sh19-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s08-sh25-g02-p01"
+    }
+   ],
+   "kp": [
+    "P08-Menger定理的陈述点"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "Menger 定理的陈述：点形式与边形式。"
+  },
+  {
+   "slide": 7,
+   "text": "G 是 k-连通 ⟺ 任意两点间至少 k 条内部不相交路径。先分清点形式还是边形式，。再核对条件是否满足。最干净的陈述条件。不核条件就套结论，是最常见的失分点。先取 u、v 不相邻；相邻时点形式须排除边 uv 本身。08 / 12。",
+   "anchors": [
+    {
+     "element_id": "s08-sh19-g02-p01",
+     "text_hint": "G 是 k-连通 ⟺ 任意两点间至少 k 条内部",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh25-g03-p01",
+     "text_hint": "先分清点形式还是边形式，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh25-g04-p01",
+     "text_hint": "再核对条件是否满足。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh19-g04-p01",
+     "text_hint": "最干净的陈述条件",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh25-g05-p01",
+     "text_hint": "不核条件就套结论，是最常见的失分点。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh19-g05-p01",
+     "text_hint": "先取 u、v 不相邻；相邻时点形式须排除边 uv",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh31-p01",
+     "text_hint": "08 / 12",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh19-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s08-sh25-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh25-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh19-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s08-sh25-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s08-sh19-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s08-sh31-p01"
+    }
+   ],
+   "kp": [
+    "P08-Menger定理的陈述点-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "G 是 k-连通 ⟺ 任意两点间至少 k 条内部不相交路径。"
+  },
+  {
+   "slide": 8,
+   "text": "证明思路：路径侧与割集侧的双向夹逼。一侧用割集限制路径条数，另一侧用路径不足构造割集，两侧夹出等号。要证：最多路径条数 = 最小分离集大小。方向一 · 易。方向二 · 难。≤。≥。割集限制路径条数。路径不足构造割集。设 S 为分离 u、v 的顶点集，。若最多只有 k 条内部不相交路径，。则每条 u-v 路径必过 S 中一点。则存在不超过 k 个顶点的分离集。",
+   "anchors": [
+    {
+     "element_id": "s09-sh01-g02-p01",
+     "text_hint": "证明思路：路径侧与割集侧的双向夹逼",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh01-g03-p01",
+     "text_hint": "一侧用割集限制路径条数，另一侧用路径不足构造割集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh06-g03-p01",
+     "text_hint": "要证：最多路径条数 = 最小分离集大小",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh10-g02-p01",
+     "text_hint": "方向一 · 易",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh19-g02-p01",
+     "text_hint": "方向二 · 难",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh10-g03-p01",
+     "text_hint": "≤",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh19-g03-p01",
+     "text_hint": "≥",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh10-g04-p01",
+     "text_hint": "割集限制路径条数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh19-g04-p01",
+     "text_hint": "路径不足构造割集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh10-g05-p01",
+     "text_hint": "设 S 为分离 u、v 的顶点集，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh19-g05-p01",
+     "text_hint": "若最多只有 k 条内部不相交路径，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh10-g06-p01",
+     "text_hint": "则每条 u-v 路径必过 S 中一点。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh19-g06-p01",
+     "text_hint": "则存在不超过 k 个顶点的分离集。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s09-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh10-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh19-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh10-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh19-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh10-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh19-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s09-sh10-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s09-sh19-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh10-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s09-sh19-g06-p01"
+    }
+   ],
+   "kp": [
+    "P09-证明思路路径侧与割集侧的"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "证明思路：路径侧与割集侧的双向夹逼。"
+  },
+  {
+   "slide": 8,
+   "text": "故路径条数 ≤ |S|，对最小 S 取等号。用可达集扩张把它找出来。构造手法与归纳。每步都要保留的条件。u 与 v 不邻接。取条数最多的一组内部不相交路径。1。图连通。从 u 出发扩张可达集，收集边界顶点。2。路径组已取到最大。对路径条数归纳，每轮收缩一段并保留端点关系。3。两方向不等号合并，即得等号，定理成立。09 / 12。",
+   "anchors": [
+    {
+     "element_id": "s09-sh10-g08-p01",
+     "text_hint": "故路径条数 ≤ |S|，对最小 S 取等号。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh19-g08-p01",
+     "text_hint": "用可达集扩张把它找出来。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g01-p01",
+     "text_hint": "构造手法与归纳",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh40-g02-p01",
+     "text_hint": "每步都要保留的条件",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh40-g03-p01",
+     "text_hint": "u 与 v 不邻接",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g05-p01",
+     "text_hint": "取条数最多的一组内部不相交路径",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g04-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh40-g04-p01",
+     "text_hint": "图连通",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g08-p01",
+     "text_hint": "从 u 出发扩张可达集，收集边界顶点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g07-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh40-g05-p01",
+     "text_hint": "路径组已取到最大",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g11-p01",
+     "text_hint": "对路径条数归纳，每轮收缩一段并保留端点关系",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g10-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh46-g02-p01",
+     "text_hint": "两方向不等号合并，即得等号，定理成立",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh46-g03-p01",
+     "text_hint": "09 / 12",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh10-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh19-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s09-sh28-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh40-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh40-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh28-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh28-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh40-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh28-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s09-sh28-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s09-sh40-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s09-sh28-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh28-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh46-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s09-sh46-g03-p01"
+    }
+   ],
+   "kp": [
+    "P09-证明思路路径侧与割集侧的-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "故路径条数 ≤ |S|，对最小 S 取等号。"
+  },
+  {
+   "slide": 9,
+   "text": "例题：用不相交路径证明图连通度。从图中读出删除对象，再用 Menger 把路径条数翻译成 κ、λ 的取值。目标。格式：三步各自成段，不许只写一个数值，也不许写「显然连通」。① 条件。② 点形式推 κ。③ 边形式推 λ。读图定四件事：\n阶数 n、连通性、\n最小度 δ（≤ n−1）、\n有无割点或割边。",
+   "anchors": [
+    {
+     "element_id": "s10-sh01-g02-p01",
+     "text_hint": "例题：用不相交路径证明图连通度",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh05-g04-p01",
+     "text_hint": "从图中读出删除对象，再用 Menger 把路径条",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh05-g03-p01",
+     "text_hint": "目标",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh05-g05-p01",
+     "text_hint": "格式：三步各自成段，不许只写一个数值，也不许写「",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh11-g02-p01",
+     "text_hint": "① 条件",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh17-g02-p01",
+     "text_hint": "② 点形式推 κ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh23-g02-p01",
+     "text_hint": "③ 边形式推 λ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh11-g04-p01",
+     "text_hint": "读图定四件事：\n阶数 n、连通性、\n最小度 δ（",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh05-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh11-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh17-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s10-sh23-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s10-sh11-g04-p01"
+    }
+   ],
+   "kp": [
+    "P10-例题用不相交路径证明图连"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "例题：用不相交路径证明图连通度。"
+  },
+  {
+   "slide": 9,
+   "text": "找出 n 个点的点割集，\n得 κ(G) ≤ n；\n再给 n 条内部不相交\nu-v 路径，得 κ(G) ≥ n。同一套路换到边上：\nn 条边割集给 λ ≤ n，\nn 条边不相交路径\n给 λ ≥ n。δ 是上界，先把数记下来。两条一夹，κ(G) 就定死了。点、边两种形式都要写依据。",
+   "anchors": [
+    {
+     "element_id": "s10-sh17-g04-p01",
+     "text_hint": "找出 n 个点的点割集，\n得 κ(G) ≤ n；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh23-g04-p01",
+     "text_hint": "同一套路换到边上：\nn 条边割集给 λ ≤ n，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh11-g05-p01",
+     "text_hint": "δ 是上界，先把数记下来。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh17-g05-p01",
+     "text_hint": "两条一夹，κ(G) 就定死了。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh23-g05-p01",
+     "text_hint": "点、边两种形式都要写依据。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh17-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh23-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh11-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s10-sh17-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s10-sh23-g05-p01"
+    }
+   ],
+   "kp": [
+    "P10-例题用不相交路径证明图连-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "找出 n 个点的点割集， 得 κ(G) ≤ n；"
+  },
+  {
+   "slide": 9,
+   "text": "例：立方体图 Q₃，δ = 3，任一对顶点间有\n3 条内部不相交路径，故 κ = λ = δ = 3。写完自检：三步、三句、。每句都带一个依据。依据写全：δ = 3 给上界，3 条不相交路径给下界。10。",
+   "anchors": [
+    {
+     "element_id": "s10-sh29-g02-p01",
+     "text_hint": "例：立方体图 Q₃，δ = 3，任一对顶点间有\n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh33-g02-p01",
+     "text_hint": "写完自检：三步、三句、",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh33-g03-p01",
+     "text_hint": "每句都带一个依据。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh29-g03-p01",
+     "text_hint": "依据写全：δ = 3 给上界，3 条不相交路径给",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh37-p01",
+     "text_hint": "10",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh29-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh33-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh33-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh29-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s10-sh37-p01"
+    }
+   ],
+   "kp": [
+    "P10-例题用不相交路径证明图连-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "例：立方体图 Q₃，δ = 3，任一对顶点间有 3 条内部…"
+  },
+  {
+   "slide": 10,
+   "text": "好，上节课的图我们一步步推完了。这一页换一道变式：图换了，但考点没换。左端加一个割点，右端加一条割边，重新求 κ、λ、δ 三个值。注意，依据必须重新落回定义或者定理，不能照抄上一题的说法。我们还是走同样的三步：定位考点、写条件、补依据。",
+   "anchors": [
+    {
+     "element_id": "s11-sh01-g02-p01",
+     "text_hint": "变式练习：替换图例后重做三步",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh01-g03-p01",
+     "text_hint": "换的是图形，不换考点；依据必须重新落到定义或定理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g03-p01",
+     "text_hint": "变式：左端加一个割点，右端加一条割边，重求 κ、",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g04-p01",
+     "text_hint": "结构已知，三步不变：定位考点 → 写条件 → 补",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "左端加一个割点",
+     "target": "s11-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "同样的三步",
+     "target": "s11-sh06-g04-p01"
+    }
+   ],
+   "kp": [
+    "variant-three-steps"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "变式题：换图不换考点，仍走三步"
+  },
+  {
+   "slide": 10,
+   "text": "第一步，定位考点。不管图长什么样，问的还是那三件最小的事：最小点割集、最小边割集，还有 Menger 定理里的路径条数。你在图上找的时候，就盯着这三样东西看，别的先放一放。",
+   "anchors": [
+    {
+     "element_id": "s11-sh11-g04-p01",
+     "text_hint": "定位考点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh11-g06-p01",
+     "text_hint": "仍是最小三件事：\n最小点割集、\n最小边割集、\nM",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "第一步，定位考点",
+     "target": "s11-sh11-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "三件最小的事",
+     "target": "s11-sh11-g06-p01"
+    }
+   ],
+   "kp": [
+    "variant-three-steps"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第一步定位考点：最小点割集、边割集、路径条数"
+  },
+  {
+   "slide": 10,
+   "text": "第二步，写条件。读到左边那个割点，马上写 κ = 1；读到右边那条割边，就写 λ = 1。这两个是白送的。δ 要单独看，去找最小度的那个顶点，把它的度数读出来，就是 δ 的取值。",
+   "anchors": [
+    {
+     "element_id": "s11-sh18-g04-p01",
+     "text_hint": "写条件",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh18-g06-p01",
+     "text_hint": "读到割点：κ = 1\n读到割边：λ = 1\n再核",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "第二步，写条件",
+     "target": "s11-sh18-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "读到左边那个割点",
+     "target": "s11-sh18-g06-p01"
+    }
+   ],
+   "kp": [
+    "cut-vertex-edge"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第二步写条件：割点给 κ=1，割边给 λ=1，δ 看最小度"
+  },
+  {
+   "slide": 10,
+   "text": "第三步，补依据，这一步最容易被扣分。κ = 1，依据是存在一个单点的点割集；λ = 1，依据是存在一条单边的边割集；δ 呢，由最小度顶点直接读出，这是定义给的。每条结论都要指着定义说，不能只写个数就说完了。",
+   "anchors": [
+    {
+     "element_id": "s11-sh25-g04-p01",
+     "text_hint": "补依据",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh25-g06-p01",
+     "text_hint": "κ = 1：存在单点的点割集\nλ = 1：存在单",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "第三步，补依据",
+     "target": "s11-sh25-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "κ = 1，依据是",
+     "target": "s11-sh25-g06-p01"
+    }
+   ],
+   "kp": [
+    "justify-by-definition"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "第三步补依据：每条结论都指回定义"
+  },
+  {
+   "slide": 10,
+   "text": "这里有个特别常见的失分点，你看一下：把「存在 k 条路径」写成「任意 k 条路径」。一字之差，意思全变了——漏掉了极小性，Menger 定理就不成立了。写的时候一定盯住「存在」这两个字。",
+   "anchors": [
+    {
+     "element_id": "s11-sh32-g01-p01",
+     "text_hint": "常见失分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh32-g02-p01",
+     "text_hint": "把「存在 k 条路径」写成\n「任意 k 条路径」",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "特别常见的失分点",
+     "target": "s11-sh32-g02-p01"
+    }
+   ],
+   "kp": [
+    "menger-existence"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "常见失分：把存在写成任意，漏掉极小性"
+  },
+  {
+   "slide": 10,
+   "text": "做完之后用三问自检。一、条件读全了吗？二、结论对准对象了吗——说的是点还是边？三、依据指到定义或定理了吗？三问都过关，这道变式才算写完。",
+   "anchors": [
+    {
+     "element_id": "s11-sh35-g02-p01",
+     "text_hint": "自检三问",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh35-g03-p01",
+     "text_hint": "一、条件读全了吗？\n二、结论对准对象了吗？\n三、",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "unfocus",
+     "at_sentence": 1,
+     "at_text": "做完之后用三问自检",
+     "target": "s11-sh32-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "一、条件读全了吗",
+     "target": "s11-sh35-g03-p01"
+    }
+   ],
+   "kp": [
+    "self-check"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "自检三问：条件、对象、依据"
+  },
+  {
+   "slide": 11,
+   "text": "好，这一节我们收个尾。整页记住一句话就够了：定义立对象，链式给界，Menger 给等号，例题给依据。四个字一组，回头看整章，其实就这四件事在转。",
+   "anchors": [
+    {
+     "element_id": "s12-sh05-g02-p01",
+     "text_hint": "定义立对象，链式给界，Menger 给等号，例题",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "chapter-summary"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "四句话概括整章主线"
+  },
+  {
+   "slide": 11,
+   "text": "第一块，定义与链式界。κ、λ 的定义式要会背，更要有那两段构造证明：κ ≤ λ ≤ δ。写的时候顺序别乱，先写删除对象，再写剩余图条件，这两步写反了，阅卷老师一眼就看出来。",
+   "anchors": [
+    {
+     "element_id": "s12-sh08-g01-g04-p01",
+     "text_hint": "定义与链式界",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g01-g05-p01",
+     "text_hint": "κ、λ 的定义式，以及 κ ≤ λ ≤ δ 的两",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g01-g06-p01",
+     "text_hint": "先写删除对象，再写剩余图条件",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "definition-chain"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "回顾定义式与两段构造证明"
+  },
+  {
+   "slide": 11,
+   "text": "第二块，割点、割边与割集。你会发现从单个对象到集合，用的是同一套判别语言：都是先看删掉之后连通性变没变，再看基数是不是极小。所以割点你早就会了，割集只是把语言换了个量词。",
+   "anchors": [
+    {
+     "element_id": "s12-sh08-g02-g04-p01",
+     "text_hint": "割点、割边与割集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g02-g05-p01",
+     "text_hint": "单个对象到集合，同一套判别语言",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g02-g06-p01",
+     "text_hint": "先看连通性，再看极小基数",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "cut-vertex-set"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "割点割边到割集同一套语言"
+  },
+  {
+   "slide": 11,
+   "text": "第三块，Menger 定理。点形式和边形式都要记，核心是路径条数等于删量。证明是双向夹逼：一边用割集去限路径，另一边路径不够就造出一个割集。这两句能说出来，定理才算真懂。",
+   "anchors": [
+    {
+     "element_id": "s12-sh08-g03-g04-p01",
+     "text_hint": "Menger 定理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g03-g05-p01",
+     "text_hint": "点形式与边形式，路径条数等于删量",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g03-g06-p01",
+     "text_hint": "双向夹逼：割集限路径，路径不足造割集",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "menger"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "Menger 的点形式边形式与夹逼"
+  },
+  {
+   "slide": 11,
+   "text": "第四块，作答三步：条件、结论、依据。依据要写成具体的路径或者割集，千万别写「显然」两个字。你写显然，说明你自己也没说清依据是什么，这一步是要扣分的。",
+   "anchors": [
+    {
+     "element_id": "s12-sh08-g04-g04-p01",
+     "text_hint": "作答三步",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g04-g05-p01",
+     "text_hint": "条件 → 结论 → 依据",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh08-g04-g06-p01",
+     "text_hint": "依据写成路径或割集，不写「显然」",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "answer-steps"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "作答三步与依据不能写显然"
+  },
+  {
+   "slide": 11,
+   "text": "再往下想一想，k-连通其实和网络冗余度是一一对应的：要毁掉 k 个对象才断开，就说明还留着 k 条退路。所以 κ 管点、λ 管边，二者之差恰恰说明破坏是发生在枢纽上还是线路上。越小的 κ、λ，图越脆弱。",
+   "anchors": [
+    {
+     "element_id": "s12-sh37-g04-p01",
+     "text_hint": "k-连通与网络冗余度一一对应：",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "redundancy"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "k-连通与冗余度，κ 与 λ 之差"
+  },
+  {
+   "slide": 11,
+   "text": "作业来了：自选一个图，按「条件→结论→依据」写出 κ 与 λ 的完整依据，不允许只写结论。写完拿三问自检一遍。下课。",
+   "anchors": [
+    {
+     "element_id": "s12-sh37-g02-p01",
+     "text_hint": "延伸思考",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "homework"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "自选一图写出 κ 与 λ 完整依据"
+  }
+ ],
+ "warnings": [
+  "❌ 第 1 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 368 (char 367)）",
+  "⚠️ 第 1 页第 1 次尝试无有效单元",
+  "❌ 第 1 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 331 (char 330)）",
+  "⚠️ 第 1 页第 2 次尝试无有效单元",
+  "⚠️ 第 1 页已回退为规则兜底",
+  "❌ 第 2 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 2 页第 1 次尝试无有效单元",
+  "❌ 第 2 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 2 页第 2 次尝试无有效单元",
+  "⚠️ 第 2 页已回退为规则兜底",
+  "❌ 第 3 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 3 页第 1 次尝试无有效单元",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 1 次尝试无有效单元",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 2 次尝试无有效单元",
+  "⚠️ 第 4 页已回退为规则兜底",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 5 页第 1 次尝试无有效单元",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 5 页第 2 次尝试无有效单元",
+  "⚠️ 第 5 页已回退为规则兜底",
+  "❌ 第 6 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 6 页第 1 次尝试无有效单元",
+  "❌ 第 6 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 6 页第 2 次尝试无有效单元",
+  "⚠️ 第 6 页已回退为规则兜底",
+  "❌ 第 7 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 7 页第 1 次尝试无有效单元",
+  "❌ 第 7 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 7 页第 2 次尝试无有效单元",
+  "⚠️ 第 7 页已回退为规则兜底",
+  "❌ 第 8 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 8 页第 1 次尝试无有效单元",
+  "❌ 第 8 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 8 页第 2 次尝试无有效单元",
+  "⚠️ 第 8 页已回退为规则兜底",
+  "❌ 第 9 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 9 页第 1 次尝试无有效单元",
+  "❌ 第 9 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 9 页第 2 次尝试无有效单元",
+  "⚠️ 第 9 页已回退为规则兜底",
+  "❌ 第 10 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 10 页第 1 次尝试无有效单元",
+  "❌ 第 10 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 10 页第 2 次尝试无有效单元",
+  "⚠️ 第 10 页已回退为规则兜底",
+  "❌ 第 11 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 2 (char 1)）",
+  "⚠️ 第 11 页第 1 次尝试无有效单元",
+  "❌ 第 12 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 879 (char 878)）",
+  "⚠️ 第 12 页第 1 次尝试无有效单元"
+ ],
+ "created_at": "2026-10-31T19:54:37",
+ "coverage": {
+  "slides": 12,
+  "units": 37,
+  "chars": 4464,
+  "est_sec": 892.8,
+  "longest_unit_sec": 39.4,
+  "units_over_hard_max": 0,
+  "units_with_anchor": 37,
+  "anchors": 239,
+  "anchor_hit": 239,
+  "anchor_hit_rate": 1.0,
+  "para_level_anchors": 239,
+  "low_confidence_anchors": 0,
+  "ops": 210,
+  "ops_invalid": 0
+ },
+ "routes": [
+  {
+   "route_id": "p-r-skip-23-7",
+   "kind": "skip",
+   "fork_node": 23,
+   "merge_node": 30,
+   "steps": [],
+   "est_sec": -111.4,
+   "reason": "变式练习换图例重做三步，跟得上的学生容易觉得重复而走神",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  }
+ ]
+}

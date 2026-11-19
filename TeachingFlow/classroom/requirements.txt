@@ -1,0 +1,23 @@
+# 课堂交互原型依赖
+# 安装：pip install -r requirements.txt
+
+fastapi>=0.110
+# 上传接口（POST 表单里的 pptx 文件）靠 Starlette 的 multipart 解析，
+# 不装它 UploadFile 一接收就报 "python-multipart is required"
+python-multipart>=0.0.9
+uvicorn[standard]>=0.27
+openai>=1.30            # 两个服务商都走 OpenAI 兼容接口
+python-dotenv>=1.0
+# edge-tts 必须 >= 7.3.1：微软把 Sec-MS-GEC 换成了 v2 令牌
+# （`Sec-MS-GEC-Version: 2-…`，值是 "<16位>-<64位>" 两段摘要）。
+# 7.2.x 及更早只会算 v1（纯 SHA256），握手一律被回 403 ——
+# 表现是"只有字幕、没有语音"，而且**每一句都失败**（不是偶发抖动，重试也没用）。
+edge-tts>=7.3.1         # 免费 TTS；装不上会自动降级为纯文字
+websockets>=12.0        # uvicorn[standard] 已含，显式列出以防环境差异
+python-pptx>=1.0        # 真实 PPT 课件解析（deck/pptx_ingest.py）
+Pillow>=10.0            # 课件图片尺寸读取（deck/pptx_ingest.py）
+lxml>=5.0               # DrawingML XML 解析（deck/pptx_ingest.py）
+
+# 可选：pytest 跑 tests/ 下的用例（也可直接 python tests/test_machine.py）
+pytest>=8.0
+pytest-asyncio>=0.23

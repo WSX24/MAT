@@ -1,0 +1,3885 @@
+{
+ "deck_id": "第1单元_导数与微分及其应用_重点_概念与表示",
+ "source": "llm",
+ "model": "deepseek · deepseek-flash · https://api.deepseek.com/v1 · key:已设置 · 思考:off",
+ "session_goals": [
+  "第一章 · 导数与微分",
+  "导数 = 切线斜率",
+  "本课先不背公式，只抓住三个关键词：变化率、极限、线性主部。",
+  "学完应当能说清五个问题 ——",
+  "导数既是瞬时变化率，也是曲线在该点的切线斜率。",
+  "按定义三步求导：求增量、算比值、取极限。"
+ ],
+ "units": [
+  {
+   "slide": 0,
+   "text": "第一章 · 导数与微分。学习目标。导数 = 切线斜率。本课先不背公式，只抓住三个关键词：变化率、极限、线性主部。学完应当能说清五个问题 ——。是什么。1。导数既是瞬时变化率，也是曲线在该点的切线斜率。怎么算。2。按定义三步求导：求增量、算比值、取极限。怎么写。P。3。掌握 f′(x)、y′、dy/dx、Df(x)，分清 f′(x₀) 与 f′(x)。什么关系。4。",
+   "anchors": [
+    {
+     "element_id": "s01-sh02-g01-p01",
+     "text_hint": "第一章 · 导数与微分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-g02-p01",
+     "text_hint": "学习目标",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh34-g02-p01",
+     "text_hint": "导数 = 切线斜率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-g04-p01",
+     "text_hint": "本课先不背公式，只抓住三个关键词：变化率、极限、",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh02-g05-p01",
+     "text_hint": "学完应当能说清五个问题 ——",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g01-g03-p01",
+     "text_hint": "是什么",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g01-g04-p01",
+     "text_hint": "导数既是瞬时变化率，也是曲线在该点的切线斜率。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g02-g03-p01",
+     "text_hint": "怎么算",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g02-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g02-g04-p01",
+     "text_hint": "按定义三步求导：求增量、算比值、取极限。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g03-g03-p01",
+     "text_hint": "怎么写",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh34-g08-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g03-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g03-g04-p01",
+     "text_hint": "掌握 f′(x)、y′、dy/dx、Df(x)，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g04-g03-p01",
+     "text_hint": "什么关系",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g04-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s01-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s01-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s01-sh34-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s01-sh02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s01-sh02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s01-sh08-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s01-sh08-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s01-sh08-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s01-sh08-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s01-sh08-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s01-sh08-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s01-sh08-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s01-sh34-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s01-sh08-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s01-sh08-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s01-sh08-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s01-sh08-g04-g02-p01"
+    }
+   ],
+   "kp": [
+    "P01-第一章导数与微分"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "第一章 · 导数与微分。"
+  },
+  {
+   "slide": 0,
+   "text": "可导必连续，连续未必可导；一元中可导 ⇔ 可微。曲线 y = f(x) 与点 P 处的切线。微分。5。dy 是 Δy 的线性主部，且 dy = f′(x)dx。导数与微分 · 学习目标。01 / 16。",
+   "anchors": [
+    {
+     "element_id": "s01-sh08-g04-g04-p01",
+     "text_hint": "可导必连续，连续未必可导；一元中可导 ⇔ 可微。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh34-g09-p01",
+     "text_hint": "曲线 y = f(x) 与点 P 处的切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g05-g03-p01",
+     "text_hint": "微分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g05-g02-p01",
+     "text_hint": "5",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g05-g04-p01",
+     "text_hint": "dy 是 Δy 的线性主部，且 dy = f′(",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh44-g02-p01",
+     "text_hint": "导数与微分 · 学习目标",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh44-g03-p01",
+     "text_hint": "01 / 16",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s01-sh08-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s01-sh34-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s01-sh08-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s01-sh08-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s01-sh08-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s01-sh44-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s01-sh44-g03-p01"
+    }
+   ],
+   "kp": [
+    "P01-第一章导数与微分-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "可导必连续，连续未必可导；"
+  },
+  {
+   "slide": 1,
+   "text": "平均变化率：割线斜率。y。自变量的改变量 Δx，函数的改变量：。1。Δy = f(x₀+Δx) − f(x₀)。平均变化率就是差商（Δx ≠ 0）：。2。Δy/Δx = [f(x₀+Δx) − f(x₀)] / Δx。Q。几何上即过 P、Q 两点的割线斜率 k_PQ。3。Δy。这一段上函数值变化的平均快慢，。4。斜率越大，变化越快。Δx。P。局限。只是「平均」，回答不了某一点的瞬时快慢。x。x₀。",
+   "anchors": [
+    {
+     "element_id": "s02-sh02-g01-p01",
+     "text_hint": "平均变化率：割线斜率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g04-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g01-g03-p01",
+     "text_hint": "自变量的改变量 Δx，函数的改变量：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g01-g04-p01",
+     "text_hint": "Δy = f(x₀+Δx) − f(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g02-g03-p01",
+     "text_hint": "平均变化率就是差商（Δx ≠ 0）：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g02-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g02-g04-p01",
+     "text_hint": "Δy/Δx = [f(x₀+Δx) − f(x₀",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g09-g02-p01",
+     "text_hint": "Q",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g03-g03-p01",
+     "text_hint": "几何上即过 P、Q 两点的割线斜率 k_PQ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g03-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g09-g06-p01",
+     "text_hint": "Δy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g04-g03-p01",
+     "text_hint": "这一段上函数值变化的平均快慢，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g04-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g04-g04-p01",
+     "text_hint": "斜率越大，变化越快。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g09-g05-p01",
+     "text_hint": "Δx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g09-g01-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g05-g03-p01",
+     "text_hint": "局限",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh05-g05-g04-p01",
+     "text_hint": "只是「平均」，回答不了某一点的瞬时快慢",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g03-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g09-g03-p01",
+     "text_hint": "x₀",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh30-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh05-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh05-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh05-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh05-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh05-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh05-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s02-sh30-g09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s02-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh05-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh30-g09-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh05-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s02-sh05-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s02-sh05-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s02-sh30-g09-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s02-sh30-g09-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s02-sh05-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s02-sh05-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s02-sh30-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s02-sh30-g09-g03-p01"
+    }
+   ],
+   "kp": [
+    "P02-平均变化率割线斜率"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "平均变化率：割线斜率。"
+  },
+  {
+   "slide": 1,
+   "text": "x₀+Δx。割线 PQ（斜率 k_PQ）。P 处切线。",
+   "anchors": [
+    {
+     "element_id": "s02-sh30-g09-g04-p01",
+     "text_hint": "x₀+Δx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g10-g02-p01",
+     "text_hint": "割线 PQ（斜率 k_PQ）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh30-g10-g04-p01",
+     "text_hint": "P 处切线",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh30-g09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh30-g10-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh30-g10-g04-p01"
+    }
+   ],
+   "kp": [
+    "P02-平均变化率割线斜率-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "x₀+Δx。割线 PQ（斜率 k_PQ）。"
+  },
+  {
+   "slide": 2,
+   "text": "从平均变化率到瞬时变化率。Δx 越来越小，割线逼近切线。切线（Δx→0 的极限）。Δx 变小，Q 沿曲线滑向 P。1。割线 PQ（Δx 逐步变小）。割线 PQ 逐渐贴近 P 处的切线。割线斜率 → 切线斜率。2。Q₄。取 Δx→0 的极限，得 f′(x₀)。两个「变」要分开看。3。先看 Δx 变小，再让 Δx 趋于 0。一个是区间，一个是点。4。Q₃。平均变化率在区间上，瞬时变化率在点上。",
+   "anchors": [
+    {
+     "element_id": "s03-sh02-g01-p01",
+     "text_hint": "从平均变化率到瞬时变化率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh02-g02-p01",
+     "text_hint": "Δx 越来越小，割线逼近切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g10-g02-p01",
+     "text_hint": "切线（Δx→0 的极限）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g01-g03-p01",
+     "text_hint": "Δx 变小，Q 沿曲线滑向 P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g10-g04-p01",
+     "text_hint": "割线 PQ（Δx 逐步变小）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g01-g04-p01",
+     "text_hint": "割线 PQ 逐渐贴近 P 处的切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g03-g03-p01",
+     "text_hint": "割线斜率 → 切线斜率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g03-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g09-g05-p01",
+     "text_hint": "Q₄",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g03-g04-p01",
+     "text_hint": "取 Δx→0 的极限，得 f′(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g05-g03-p01",
+     "text_hint": "两个「变」要分开看",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g05-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g05-g04-p01",
+     "text_hint": "先看 Δx 变小，再让 Δx 趋于 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g07-g03-p01",
+     "text_hint": "一个是区间，一个是点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g07-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g09-g04-p01",
+     "text_hint": "Q₃",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g07-g04-p01",
+     "text_hint": "平均变化率在区间上，瞬时变化率在点上",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s03-sh35-g10-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s03-sh05-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s03-sh05-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s03-sh35-g10-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s03-sh05-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s03-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s03-sh05-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s03-sh35-g09-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s03-sh05-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s03-sh05-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s03-sh05-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s03-sh05-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s03-sh05-g07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s03-sh05-g07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s03-sh35-g09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s03-sh05-g07-g04-p01"
+    }
+   ],
+   "kp": [
+    "P03-从平均变化率到瞬时变化率"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "从平均变化率到瞬时变化率。"
+  },
+  {
+   "slide": 2,
+   "text": "下一步。P。把极限写成统一定义。即下一页的导数定义。Q₂。Q₁。y = f(x)，P 处 f′(x₀) = 切线斜率。",
+   "anchors": [
+    {
+     "element_id": "s03-sh29-g03-p01",
+     "text_hint": "下一步",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g09-g01-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh29-g04-p01",
+     "text_hint": "把极限写成统一定义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh29-g05-p01",
+     "text_hint": "即下一页的导数定义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g09-g03-p01",
+     "text_hint": "Q₂",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g09-g02-p01",
+     "text_hint": "Q₁",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh35-g11-p01",
+     "text_hint": "y = f(x)，P 处 f′(x₀) = 切线",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh29-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh35-g09-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh29-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh29-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s03-sh35-g09-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s03-sh35-g09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s03-sh35-g11-p01"
+    }
+   ],
+   "kp": [
+    "P03-从平均变化率到瞬时变化率-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "下一步。P。把极限写成统一定义。"
+  },
+  {
+   "slide": 3,
+   "text": "导数定义。差商先取比值，再让 Δx 趋于 0。定义。f(x₀+Δx) − f(x₀)。f′(x₀) =。lim。瞬时变化率。Δx。Δx→0。y=f(x)。先有比值，再取极限。1。几何意义。切线。Δy/Δx 是差商，极限在它之后。极限存在，才叫可导。2。该极限值就是 f′(x₀)；否则不可导。P。两条理解通道。3。变化率看是瞬时；图形看是切线斜率。f′(x₀) 等于过 P 点的切线斜率。",
+   "anchors": [
+    {
+     "element_id": "s04-sh02-g01-p01",
+     "text_hint": "导数定义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh02-g02-p01",
+     "text_hint": "差商先取比值，再让 Δx 趋于 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g03-p01",
+     "text_hint": "定义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g07-p01",
+     "text_hint": "f(x₀+Δx) − f(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g04-p01",
+     "text_hint": "f′(x₀) =",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g05-p01",
+     "text_hint": "lim",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g10-p01",
+     "text_hint": "瞬时变化率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g08-p01",
+     "text_hint": "Δx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g06-p01",
+     "text_hint": "Δx→0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh35-g09-p01",
+     "text_hint": "y=f(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g01-g03-p01",
+     "text_hint": "先有比值，再取极限",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh35-g02-p01",
+     "text_hint": "几何意义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh35-g10-p01",
+     "text_hint": "切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g01-g04-p01",
+     "text_hint": "Δy/Δx 是差商，极限在它之后",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g02-g03-p01",
+     "text_hint": "极限存在，才叫可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g02-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g02-g04-p01",
+     "text_hint": "该极限值就是 f′(x₀)；否则不可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh35-g08-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g03-g03-p01",
+     "text_hint": "两条理解通道",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g03-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh17-g03-g04-p01",
+     "text_hint": "变化率看是瞬时；图形看是切线斜率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh35-g11-p01",
+     "text_hint": "f′(x₀) 等于过 P 点的切线斜率",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh06-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh06-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh06-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh06-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh06-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s04-sh35-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s04-sh17-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh17-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh35-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh35-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s04-sh17-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s04-sh17-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s04-sh17-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s04-sh17-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s04-sh35-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s04-sh17-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s04-sh17-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s04-sh17-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s04-sh35-g11-p01"
+    }
+   ],
+   "kp": [
+    "P04-导数定义"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "导数定义。差商先取比值，再让 Δx 趋于 0。"
+  },
+  {
+   "slide": 3,
+   "text": "下一页把定义拆成三步：取增量 · 算差商 · 求极限。",
+   "anchors": [
+    {
+     "element_id": "s04-sh17-g05-p01",
+     "text_hint": "下一页把定义拆成三步：取增量 · 算差商 · 求",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh17-g05-p01"
+    }
+   ],
+   "kp": [
+    "P04-导数定义-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "下一页把定义拆成三步：取增量 · 算差商 · 求极限。"
+  },
+  {
+   "slide": 4,
+   "text": "定义求导的三步与切线斜率。求增量 → 算比值 → 取极限，极限值就是切线斜率。y。求增量。y = f(x)。1。写出 Δy = f(x₀+Δx) − f(x₀)，展开化简到能消去 Δx。切线。算比值。2。写成 Δy/Δx，约分整理成只含 Δx 的表达式。k = f′(x₀)。取极限。3。P。令 Δx → 0，极限值就是 f′(x₀)。书写要求。三行齐全、过程可查，不允许直接跳到答案。x。x₀。",
+   "anchors": [
+    {
+     "element_id": "s05-sh02-g01-p01",
+     "text_hint": "定义求导的三步与切线斜率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh02-g03-p01",
+     "text_hint": "求增量 → 算比值 → 取极限，极限值就是切线斜",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g05-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g05-p01",
+     "text_hint": "求增量",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g14-p01",
+     "text_hint": "y = f(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g04-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g06-p01",
+     "text_hint": "写出 Δy = f(x₀+Δx) − f(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g16-p01",
+     "text_hint": "切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g11-p01",
+     "text_hint": "算比值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g10-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g12-p01",
+     "text_hint": "写成 Δy/Δx，约分整理成只含 Δx 的表达式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g12-p01",
+     "text_hint": "k = f′(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g17-p01",
+     "text_hint": "取极限",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g16-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g10-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh06-g18-p01",
+     "text_hint": "令 Δx → 0，极限值就是 f′(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh42-g03-p01",
+     "text_hint": "书写要求",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh42-g04-p01",
+     "text_hint": "三行齐全、过程可查，不允许直接跳到答案",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g04-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g11-p01",
+     "text_hint": "x₀",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh25-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh06-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh25-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh06-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh25-g16-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh06-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh06-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s05-sh06-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh25-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh06-g17-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh06-g16-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh25-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s05-sh06-g18-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s05-sh42-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s05-sh42-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s05-sh25-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s05-sh25-g11-p01"
+    }
+   ],
+   "kp": [
+    "P05-定义求导的三步与切线斜率"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "定义求导的三步与切线斜率。"
+  },
+  {
+   "slide": 5,
+   "text": "导数的表示方法。四种记号，同一个极限。拉格朗日记号。莱布尼茨记号。莱布尼茨记号。f′(x)　y′。书写最短，适合在函数表达式旁直接标注。例：求 y=x² 的导数，写作 y′=2x。dy。dx。四种写法指向同一个极限；考试按题目给出的记号作答。",
+   "anchors": [
+    {
+     "element_id": "s06-sh02-g01-p01",
+     "text_hint": "导数的表示方法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh02-g02-p01",
+     "text_hint": "四种记号，同一个极限",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g03-p01",
+     "text_hint": "拉格朗日记号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g03-p01",
+     "text_hint": "莱布尼茨记号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g07-p01",
+     "text_hint": "莱布尼茨记号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g04-p01",
+     "text_hint": "f′(x)　y′",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g05-p01",
+     "text_hint": "书写最短，适合在函数表达式旁直接标注。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g06-p01",
+     "text_hint": "例：求 y=x² 的导数，写作 y′=2x。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g04-p01",
+     "text_hint": "dy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g05-p01",
+     "text_hint": "dx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh22-p01",
+     "text_hint": "四种写法指向同一个极限；考试按题目给出的记号作答",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh06-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh06-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh06-g02-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh06-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s06-sh06-g01-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s06-sh06-g01-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s06-sh06-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s06-sh06-g02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s06-sh22-p01"
+    }
+   ],
+   "kp": [
+    "P06-导数的表示方法"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "导数的表示方法。"
+  },
+  {
+   "slide": 6,
+   "text": "某点导数与导函数。先问「要数还是要函数」，再动笔。y。f′(x₀) —— 一个数。f(x)。把 x 固定为 x₀，算出导数值，\n即过该点切线的斜率。f′(x) —— 一个函数。让 x 在可导区间上变化，\n得到新的函数，称导函数。P（x=1）。f(x)=x²：f′(2)=4（数）\nf′(x)=2x（函数）。切线斜率 = f′(1)。x。",
+   "anchors": [
+    {
+     "element_id": "s07-sh02-g01-p01",
+     "text_hint": "某点导数与导函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh02-g02-p01",
+     "text_hint": "先问「要数还是要函数」，再动笔",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g12-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh06-g03-p01",
+     "text_hint": "f′(x₀) —— 一个数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g09-p01",
+     "text_hint": "f(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh06-g04-p01",
+     "text_hint": "把 x 固定为 x₀，算出导数值，\n即过该点切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh11-g03-p01",
+     "text_hint": "f′(x) —— 一个函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh11-g04-p01",
+     "text_hint": "让 x 在可导区间上变化，\n得到新的函数，称导函",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g08-p01",
+     "text_hint": "P（x=1）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh16-g02-p01",
+     "text_hint": "f(x)=x²：f′(2)=4（数）\nf′(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g10-p01",
+     "text_hint": "切线斜率 = f′(1)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g11-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh21-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s07-sh21-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s07-sh06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s07-sh11-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s07-sh11-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s07-sh21-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s07-sh16-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s07-sh21-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s07-sh21-g11-p01"
+    }
+   ],
+   "kp": [
+    "P07-某点导数与导函数"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "某点导数与导函数。"
+  },
+  {
+   "slide": 6,
+   "text": "问「x=2 处的导数」→ 答数；\n问「f′(x)」→ 答表达式。",
+   "anchors": [
+    {
+     "element_id": "s07-sh19-g01-p01",
+     "text_hint": "问「x=2 处的导数」→ 答数；\n问「f′(x)",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh19-g01-p01"
+    }
+   ],
+   "kp": [
+    "P07-某点导数与导函数-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "问「x=2 处的导数」→ 答数；"
+  },
+  {
+   "slide": 7,
+   "text": "可导与连续。定理（单向关系）。可导是更强的条件。成立。f 在 x₀ 可导 ⇒ f 在 x₀ 连续。箭头只能从左指向右。不成立。连续只保证图像「不断开」。1。连续但不光滑：尖点处无切线。不断开不保证切线方向唯一。2。P。切线只是竖直线，导数不存在。3。常见错误。见到「连续」就写「可导」。曲线在 P 处连续，但切线趋于竖直。",
+   "anchors": [
+    {
+     "element_id": "s08-sh02-g01-p01",
+     "text_hint": "可导与连续",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g03-p01",
+     "text_hint": "定理（单向关系）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g08-p01",
+     "text_hint": "可导是更强的条件",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g06-g01-p01",
+     "text_hint": "成立",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g04-p01",
+     "text_hint": "f 在 x₀ 可导 ⇒ f 在 x₀ 连续",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g09-p01",
+     "text_hint": "箭头只能从左指向右",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g06-g02-p01",
+     "text_hint": "不成立",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh22-g01-g03-p01",
+     "text_hint": "连续只保证图像「不断开」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh22-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh40-g02-p01",
+     "text_hint": "连续但不光滑：尖点处无切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh22-g02-g03-p01",
+     "text_hint": "不断开不保证切线方向唯一",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh22-g02-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh40-g08-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh22-g03-g03-p01",
+     "text_hint": "切线只是竖直线，导数不存在",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh22-g03-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh35-g03-p01",
+     "text_hint": "常见错误",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh35-g04-p01",
+     "text_hint": "见到「连续」就写「可导」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh40-g09-p01",
+     "text_hint": "曲线在 P 处连续，但切线趋于竖直",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s08-sh05-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh05-g06-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh05-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s08-sh05-g06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s08-sh22-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s08-sh22-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s08-sh40-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s08-sh22-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s08-sh22-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s08-sh40-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s08-sh22-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s08-sh22-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s08-sh35-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s08-sh35-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s08-sh40-g09-p01"
+    }
+   ],
+   "kp": [
+    "P08-可导与连续"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "可导与连续。定理（单向关系）。"
+  },
+  {
+   "slide": 8,
+   "text": "连续不一定可导：|x| 在 0 点。y。f(x)=|x|。在 0 点连续：图像不断开。1。左右割线。f(0)=0，左右极限都是 0。Q₁。Q₂。但 0 点不可导：左右差商不等。2。右差商恒为 1，左差商恒为 −1。图像表现为「尖点」。3。两侧斜率不同，没有唯一切线。连续推不出可导。4。尖点。判可导须回定义或查左右导数。x。迁移：分段函数在分段点处，务必把左右两侧分开检查。",
+   "anchors": [
+    {
+     "element_id": "s09-sh02-g01-p01",
+     "text_hint": "连续不一定可导：|x| 在 0 点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh31-g04-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh31-g09-g02-p01",
+     "text_hint": "f(x)=|x|",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g03-p01",
+     "text_hint": "在 0 点连续：图像不断开",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh31-g09-g04-p01",
+     "text_hint": "左右割线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g04-p01",
+     "text_hint": "f(0)=0，左右极限都是 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh31-g08-g01-p01",
+     "text_hint": "Q₁",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh31-g08-g02-p01",
+     "text_hint": "Q₂",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g03-p01",
+     "text_hint": "但 0 点不可导：左右差商不等",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g04-p01",
+     "text_hint": "右差商恒为 1，左差商恒为 −1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g07-g03-p01",
+     "text_hint": "图像表现为「尖点」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g07-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g07-g04-p01",
+     "text_hint": "两侧斜率不同，没有唯一切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g09-g03-p01",
+     "text_hint": "连续推不出可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g09-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh31-g08-g03-p01",
+     "text_hint": "尖点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g09-g04-p01",
+     "text_hint": "判可导须回定义或查左右导数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh31-g03-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh52-g01-p01",
+     "text_hint": "迁移：分段函数在分段点处，务必把左右两侧分开检查",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh31-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh31-g09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s09-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh05-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh31-g09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh05-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh31-g08-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh31-g08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh05-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh05-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh05-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh05-g07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s09-sh05-g07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s09-sh05-g07-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s09-sh05-g09-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh05-g09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh31-g08-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh05-g09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s09-sh31-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s09-sh52-g01-p01"
+    }
+   ],
+   "kp": [
+    "P09-连续不一定可导x在0点"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "连续不一定可导：|x| 在 0 点。"
+  },
+  {
+   "slide": 9,
+   "text": "左右导数与分段点。分段点可导的判据：左右导数都存在且相等。分段函数在 x₀ 处的左右逼近。判据。y。f 在 x₀ 可导 ⇔ 左导数 f′₋(x₀) 与右导数。f′₊(x₀) 都存在，且两者相等。x > x₀。检查顺序。P。先看分段点是否连续。1。左右极限存在且相等，并且等于函数值。再分别求左、右导数并比较。2。连续是先决条件，不连续则必不可导。x < x₀。两处易错。x。",
+   "anchors": [
+    {
+     "element_id": "s10-sh02-g01-p01",
+     "text_hint": "左右导数与分段点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh02-g03-p01",
+     "text_hint": "分段点可导的判据：左右导数都存在且相等",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g02-p01",
+     "text_hint": "分段函数在 x₀ 处的左右逼近",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh06-g03-p01",
+     "text_hint": "判据",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g06-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh06-g04-p01",
+     "text_hint": "f 在 x₀ 可导 ⇔ 左导数 f′₋(x₀) ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh06-g05-p01",
+     "text_hint": "f′₊(x₀) 都存在，且两者相等",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g16-p01",
+     "text_hint": "x > x₀",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh12-g01-p01",
+     "text_hint": "检查顺序",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g14-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh12-g04-p01",
+     "text_hint": "先看分段点是否连续",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh12-g03-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh12-g05-p01",
+     "text_hint": "左右极限存在且相等，并且等于函数值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh12-g08-p01",
+     "text_hint": "再分别求左、右导数并比较",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh12-g07-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh12-g09-p01",
+     "text_hint": "连续是先决条件，不连续则必不可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g15-p01",
+     "text_hint": "x < x₀",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh22-g03-p01",
+     "text_hint": "两处易错",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g05-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh28-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh28-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s10-sh06-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s10-sh28-g16-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s10-sh12-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s10-sh28-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s10-sh12-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s10-sh12-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s10-sh12-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s10-sh12-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s10-sh12-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s10-sh12-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s10-sh28-g15-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s10-sh22-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s10-sh28-g05-p01"
+    }
+   ],
+   "kp": [
+    "P10-左右导数与分段点"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "左右导数与分段点。"
+  },
+  {
+   "slide": 9,
+   "text": "两侧表达式不同，须各代各区间的式子。x₀。左侧分支。右侧分支。不能只算一侧，也不能忘记比较是否相等。左极限、右极限分开写明，不用一个「总极限」直接下结论。",
+   "anchors": [
+    {
+     "element_id": "s10-sh22-g04-p01",
+     "text_hint": "两侧表达式不同，须各代各区间的式子",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g12-p01",
+     "text_hint": "x₀",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g18-p01",
+     "text_hint": "左侧分支",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g20-p01",
+     "text_hint": "右侧分支",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh22-g05-p01",
+     "text_hint": "不能只算一侧，也不能忘记比较是否相等",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh49-g02-p01",
+     "text_hint": "左极限、右极限分开写明，不用一个「总极限」直接下",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh22-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh28-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh28-g18-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh28-g20-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh22-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh49-g02-p01"
+    }
+   ],
+   "kp": [
+    "P10-左右导数与分段点-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "两侧表达式不同，须各代各区间的式子。"
+  },
+  {
+   "slide": 10,
+   "text": "微分定义。微分的定义：从函数增量出发。起点：Δy = f(x₀+Δx) − f(x₀)。若 Δy = AΔx + o(Δx)（A 与 Δx 无关），则称 f 在 x₀ 可微。线性部分记作 dy = AΔx，称为 f 在 x₀ 的微分。增量的分解。一元函数的关键结论。可微 ⇔ 可导。Δy。dy。且系数 A 就是 f′(x₀)。o(Δx)。dy = f′(x₀)dx。",
+   "anchors": [
+    {
+     "element_id": "s11-sh02-g01-p01",
+     "text_hint": "微分定义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh05-g03-p01",
+     "text_hint": "微分的定义：从函数增量出发",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh05-g04-p01",
+     "text_hint": "起点：Δy = f(x₀+Δx) − f(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh05-g05-p01",
+     "text_hint": "若 Δy = AΔx + o(Δx)（A 与 Δ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh05-g06-p01",
+     "text_hint": "线性部分记作 dy = AΔx，称为 f 在 x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh24-g02-p01",
+     "text_hint": "增量的分解",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh12-g03-p01",
+     "text_hint": "一元函数的关键结论",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh12-g04-p01",
+     "text_hint": "可微 ⇔ 可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh24-g04-p01",
+     "text_hint": "Δy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh24-g07-p01",
+     "text_hint": "dy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh12-g05-p01",
+     "text_hint": "且系数 A 就是 f′(x₀)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh24-g09-p01",
+     "text_hint": "o(Δx)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh12-g06-p01",
+     "text_hint": "dy = f′(x₀)dx",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s11-sh05-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s11-sh05-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s11-sh24-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s11-sh12-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s11-sh12-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s11-sh24-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s11-sh24-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s11-sh12-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s11-sh24-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s11-sh12-g06-p01"
+    }
+   ],
+   "kp": [
+    "P11-微分定义"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "微分定义。微分的定义：从函数增量出发。"
+  },
+  {
+   "slide": 10,
+   "text": "Δy 拆成两部分：线性主部 dy。线性主部。加上 Δx 的高阶无穷小 o(Δx)。Δy 可能很复杂，。当 Δx → 0，o(Δx) 可忽略。但 Δx 很小时起主要作用的是 dy。微分是函数增量的线性主部。",
+   "anchors": [
+    {
+     "element_id": "s11-sh24-g11-p01",
+     "text_hint": "Δy 拆成两部分：线性主部 dy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh12-g09-p01",
+     "text_hint": "线性主部",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh24-g12-p01",
+     "text_hint": "加上 Δx 的高阶无穷小 o(Δx)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh12-g10-p01",
+     "text_hint": "Δy 可能很复杂，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh24-g13-p01",
+     "text_hint": "当 Δx → 0，o(Δx) 可忽略",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh12-g11-p01",
+     "text_hint": "但 Δx 很小时起主要作用的是 dy。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh38-p01",
+     "text_hint": "微分是函数增量的线性主部",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh24-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh12-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh24-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s11-sh12-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s11-sh24-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s11-sh12-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s11-sh38-p01"
+    }
+   ],
+   "kp": [
+    "P11-微分定义-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "Δy 拆成两部分：线性主部 dy。"
+  },
+  {
+   "slide": 11,
+   "text": "可导与可微的关系。一元函数里，它们是同一件事的两种说法。等价关系。同一坐标上的两种读法。y。f 在 x₀ 可导。f 在 x₀ 可微。f′(x₀) 存在。Δy 有线性主部。两者互相推出，不是两套独立概念（本课只讨论一元函数）。dy。分工。导数是系数：给出线性主部的斜率。P。切线。微分是线性增量本身：dy = f′(x)dx。dx。x。x₀。关系链：先有 f′(x) → 乘上 dx → 得到 dy。",
+   "anchors": [
+    {
+     "element_id": "s12-sh02-g01-p01",
+     "text_hint": "可导与可微的关系",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh02-g03-p01",
+     "text_hint": "一元函数里，它们是同一件事的两种说法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g03-p01",
+     "text_hint": "等价关系",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g02-p01",
+     "text_hint": "同一坐标上的两种读法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g03-g06-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g04-g02-p01",
+     "text_hint": "f 在 x₀ 可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g04-g05-p01",
+     "text_hint": "f 在 x₀ 可微",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g04-g03-p01",
+     "text_hint": "f′(x₀) 存在",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g04-g06-p01",
+     "text_hint": "Δy 有线性主部",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g05-p01",
+     "text_hint": "两者互相推出，不是两套独立概念（本课只讨论一元函",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g06-g08-p01",
+     "text_hint": "dy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh26-g03-p01",
+     "text_hint": "分工",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh26-g04-g01-p01",
+     "text_hint": "导数是系数：给出线性主部的斜率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g04-g03-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g05-g03-p01",
+     "text_hint": "切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh26-g04-g02-p01",
+     "text_hint": "微分是线性增量本身：dy = f′(x)dx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g06-g04-p01",
+     "text_hint": "dx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g03-g05-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g04-g05-p01",
+     "text_hint": "x₀",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh26-g04-g03-p01",
+     "text_hint": "关系链：先有 f′(x) → 乘上 dx → 得",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s12-sh02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s12-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s12-sh37-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s12-sh37-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s12-sh06-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s12-sh06-g04-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s12-sh06-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s12-sh06-g04-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s12-sh06-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s12-sh37-g06-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s12-sh26-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s12-sh26-g04-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s12-sh37-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s12-sh37-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s12-sh26-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s12-sh37-g06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s12-sh37-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s12-sh37-g04-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s12-sh26-g04-g03-p01"
+    }
+   ],
+   "kp": [
+    "P12-可导与可微的关系"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "可导与可微的关系。"
+  },
+  {
+   "slide": 11,
+   "text": "曲线 y=f(x)。切线。别把两者各背一套：它们互相推出，考的是同一条链。注：多元函数中「可导⇔可微」不再成立，此处不展开。",
+   "anchors": [
+    {
+     "element_id": "s12-sh37-g07-g02-p01",
+     "text_hint": "曲线 y=f(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh37-g07-g04-p01",
+     "text_hint": "切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh26-g07-p01",
+     "text_hint": "别把两者各背一套：它们互相推出，考的是同一条链",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh74-g01-p01",
+     "text_hint": "注：多元函数中「可导⇔可微」不再成立，此处不展开",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s12-sh37-g07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s12-sh37-g07-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s12-sh26-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s12-sh74-g01-p01"
+    }
+   ],
+   "kp": [
+    "P12-可导与可微的关系-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "曲线 y=f(x)。"
+  },
+  {
+   "slide": 12,
+   "text": "微分的几何意义。Δy：曲线上的纵坐标增量。1。dy = f′(x₀)·Δx。从 x₀ 到 x₀+Δx，曲线实际升高多少。dy：切线上的纵坐标增量。2。走同样的 Δx，切线升高 f′(x₀)·Δx。小增量下曲线与切线几乎重合。于是 Δy ≈ dy，误差是比 Δx 高阶的无穷小。dy。这正是微分用于近似计算的依据。4。P。Δx。f(x₀+Δx) ≈ f(x₀) + f′(x₀)Δx。Δy。",
+   "anchors": [
+    {
+     "element_id": "s13-sh02-g01-p01",
+     "text_hint": "微分的几何意义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g01-g03-p01",
+     "text_hint": "Δy：曲线上的纵坐标增量",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g14-p01",
+     "text_hint": "dy = f′(x₀)·Δx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g01-g04-p01",
+     "text_hint": "从 x₀ 到 x₀+Δx，曲线实际升高多少",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g02-g03-p01",
+     "text_hint": "dy：切线上的纵坐标增量",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g02-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g02-g04-p01",
+     "text_hint": "走同样的 Δx，切线升高 f′(x₀)·Δx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g03-g02-p01",
+     "text_hint": "小增量下曲线与切线几乎重合",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g03-g03-p01",
+     "text_hint": "于是 Δy ≈ dy，误差是比 Δx 高阶的无穷",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g13-p01",
+     "text_hint": "dy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g04-g03-p01",
+     "text_hint": "这正是微分用于近似计算的依据",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g04-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g10-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g11-p01",
+     "text_hint": "Δx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g04-g04-p01",
+     "text_hint": "f(x₀+Δx) ≈ f(x₀) + f′(x₀",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g12-p01",
+     "text_hint": "Δy",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh05-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh05-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh30-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s13-sh05-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s13-sh05-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s13-sh05-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s13-sh05-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s13-sh05-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s13-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s13-sh30-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s13-sh05-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s13-sh05-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s13-sh30-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s13-sh30-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s13-sh05-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s13-sh30-g12-p01"
+    }
+   ],
+   "kp": [
+    "P13-微分的几何意义"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "微分的几何意义。"
+  },
+  {
+   "slide": 12,
+   "text": "易混提醒。Δy 与 dy 不是同一个量，只是小增量下近似相等。y=f(x)。切线。水平距离 Δx。Δy 沿曲线量，dy 沿切线量；两者之差 o(Δx) 随 Δx 趋于 0 而更快趋于 0。",
+   "anchors": [
+    {
+     "element_id": "s13-sh25-g03-p01",
+     "text_hint": "易混提醒",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh25-g04-p01",
+     "text_hint": "Δy 与 dy 不是同一个量，只是小增量下近似相",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g15-g02-p01",
+     "text_hint": "y=f(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g15-g04-p01",
+     "text_hint": "切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh30-g15-g06-p01",
+     "text_hint": "水平距离 Δx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh52-g01-p01",
+     "text_hint": "Δy 沿曲线量，dy 沿切线量；两者之差 o(Δ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh25-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh25-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh30-g15-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh30-g15-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh30-g15-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s13-sh52-g01-p01"
+    }
+   ],
+   "kp": [
+    "P13-微分的几何意义-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "易混提醒。Δy 与 dy 不是同一个量，只是小增量下近似相…"
+  },
+  {
+   "slide": 13,
+   "text": "例题：定义求导与微分。y = x²。k = 4。题目：设 f(x)=x²，求 f′(2) 与 x=2 处的微分。y。求增量：Δy = (2+Δx)² − 4 = 4Δx + (Δx)²。1。算比值：Δy ÷ Δx = 4 + Δx（Δx ≠ 0）。2。P(2, 4)。取极限：Δx→0 得 f′(2) = 4，切线斜率即 4。3。x。微分：dy = f′(2)dx = 4dx。",
+   "anchors": [
+    {
+     "element_id": "s14-sh01-g02-p01",
+     "text_hint": "例题：定义求导与微分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh29-g02-g09-g02-p01",
+     "text_hint": "y = x²",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh29-g02-g09-g04-p01",
+     "text_hint": "k = 4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g03-g01-p01",
+     "text_hint": "题目：设 f(x)=x²，求 f′(2) 与 x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh29-g02-g08-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g04-g03-p01",
+     "text_hint": "求增量：Δy = (2+Δx)² − 4 = 4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g04-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g03-p01",
+     "text_hint": "算比值：Δy ÷ Δx = 4 + Δx（Δx ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh29-g02-g06-p01",
+     "text_hint": "P(2, 4)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g06-g03-p01",
+     "text_hint": "取极限：Δx→0 得 f′(2) = 4，切线斜",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g06-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh29-g02-g07-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g07-g03-p01",
+     "text_hint": "微分：dy = f′(2)dx = 4dx",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s14-sh29-g02-g09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s14-sh29-g02-g09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s14-sh05-g03-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s14-sh29-g02-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s14-sh05-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s14-sh05-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s14-sh05-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s14-sh05-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s14-sh29-g02-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s14-sh05-g06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s14-sh05-g06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s14-sh29-g02-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s14-sh05-g07-g03-p01"
+    }
+   ],
+   "kp": [
+    "P14-例题定义求导与微分"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "例题：定义求导与微分。"
+  },
+  {
+   "slide": 13,
+   "text": "按定义三步作答：求增量 → 算比值 → 取极限；微分由 dy = f′(x₀)dx 直接写出。",
+   "anchors": [
+    {
+     "element_id": "s14-sh45-g01-p01",
+     "text_hint": "按定义三步作答：求增量 → 算比值 → 取极限；",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh45-g01-p01"
+    }
+   ],
+   "kp": [
+    "P14-例题定义求导与微分-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "按定义三步作答：求增量 → 算比值 → 取极限；"
+  },
+  {
+   "slide": 14,
+   "text": "易错点。五个边界最常失分：记号、单向关系、Δy 与 dy、分段点、点与函数。记号错误。1。交卷前自检清单。dy/dx 是整体记号，不能拆开相除，也不能约掉 d。写法规范。关系错误。2。连续推不出可导（|x| 在 0 点），只有可导 ⇒ 连续。方向说清。概念错误。3。增量分开。Δy 是增量、dy 是微分，仅 |Δx| 很小时近似相等。左右都算。过程错误。4。",
+   "anchors": [
+    {
+     "element_id": "s15-sh02-g01-p01",
+     "text_hint": "易错点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh02-g02-p01",
+     "text_hint": "五个边界最常失分：记号、单向关系、Δy 与 dy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g01-g05-p01",
+     "text_hint": "记号错误",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g01-g04-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh43-g02-p01",
+     "text_hint": "交卷前自检清单",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g01-g06-p01",
+     "text_hint": "dy/dx 是整体记号，不能拆开相除，也不能约掉",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh43-g04-g03-p01",
+     "text_hint": "写法规范",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g02-g05-p01",
+     "text_hint": "关系错误",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g02-g04-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g02-g06-p01",
+     "text_hint": "连续推不出可导（|x| 在 0 点），只有可导 ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh43-g06-g03-p01",
+     "text_hint": "方向说清",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g03-g05-p01",
+     "text_hint": "概念错误",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g03-g04-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh43-g08-g03-p01",
+     "text_hint": "增量分开",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g03-g06-p01",
+     "text_hint": "Δy 是增量、dy 是微分，仅 |Δx| 很小时",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh43-g10-g03-p01",
+     "text_hint": "左右都算",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g04-g05-p01",
+     "text_hint": "过程错误",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g04-g04-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh07-g01-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh07-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh43-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s15-sh07-g01-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s15-sh43-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s15-sh07-g02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s15-sh07-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s15-sh07-g02-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s15-sh43-g06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s15-sh07-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s15-sh07-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s15-sh43-g08-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s15-sh07-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s15-sh43-g10-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s15-sh07-g04-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s15-sh07-g04-g04-p01"
+    }
+   ],
+   "kp": [
+    "P15-易错点"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "易错点。五个边界最常失分：记号、单向关系、Δy 与 dy、…"
+  },
+  {
+   "slide": 14,
+   "text": "分段点求导必须比较左右导数，只算一侧不得分。对象分明。对象错误。5。一处含糊，整题失分。f′(x₀) 是数、f′(x) 是函数，看清题目要哪一个。第一章 导数与微分 · 易错点梳理。15。",
+   "anchors": [
+    {
+     "element_id": "s15-sh07-g04-g06-p01",
+     "text_hint": "分段点求导必须比较左右导数，只算一侧不得分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh43-g12-g03-p01",
+     "text_hint": "对象分明",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g05-g05-p01",
+     "text_hint": "对象错误",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g05-g04-p01",
+     "text_hint": "5",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh43-g14-p01",
+     "text_hint": "一处含糊，整题失分。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g05-g06-p01",
+     "text_hint": "f′(x₀) 是数、f′(x) 是函数，看清题目",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh73-g01-p01",
+     "text_hint": "第一章 导数与微分 · 易错点梳理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh73-g02-p01",
+     "text_hint": "15",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh07-g04-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh43-g12-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh07-g05-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s15-sh07-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s15-sh43-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s15-sh07-g05-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s15-sh73-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s15-sh73-g02-p01"
+    }
+   ],
+   "kp": [
+    "P15-易错点-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "分段点求导必须比较左右导数，只算一侧不得分。"
+  },
+  {
+   "slide": 15,
+   "text": "小结：可导、可微与 dy=f′(x)dx。变化率 → 极限 → 导数 → 微分。平均变化率取 Δx→0 的极限，得导数。1。导数是差商的极限。切线纵坐标增量 dy。两种身份：瞬时变化率、切线斜率。2。y=f(x)。f′(x₀) 是一个数，f′(x) 是一个函数。切线。可导必连续，连续不一定可导。3。反例：|x| 在 x=0 处不可导。一元函数可导 ⇔ 可微。4。",
+   "anchors": [
+    {
+     "element_id": "s16-sh02-g01-p01",
+     "text_hint": "小结：可导、可微与 dy=f′(x)dx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh02-g02-p01",
+     "text_hint": "变化率 → 极限 → 导数 → 微分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g01-g03-p01",
+     "text_hint": "平均变化率取 Δx→0 的极限，得导数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g01-g04-p01",
+     "text_hint": "导数是差商的极限",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh40-g02-p01",
+     "text_hint": "切线纵坐标增量 dy",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g02-g03-p01",
+     "text_hint": "两种身份：瞬时变化率、切线斜率",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g02-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh40-g12-p01",
+     "text_hint": "y=f(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g02-g04-p01",
+     "text_hint": "f′(x₀) 是一个数，f′(x) 是一个函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh40-g14-p01",
+     "text_hint": "切线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g03-g03-p01",
+     "text_hint": "可导必连续，连续不一定可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g03-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g03-g04-p01",
+     "text_hint": "反例：|x| 在 x=0 处不可导",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g04-g03-p01",
+     "text_hint": "一元函数可导 ⇔ 可微",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g04-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh06-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s16-sh06-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s16-sh06-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s16-sh40-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s16-sh06-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s16-sh06-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s16-sh40-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s16-sh06-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s16-sh40-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s16-sh06-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s16-sh06-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s16-sh06-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s16-sh06-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s16-sh06-g04-g02-p01"
+    }
+   ],
+   "kp": [
+    "P16-小结可导可微与dyfxd"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "小结：可导、可微与 dy=f′(x)dx。"
+  },
+  {
+   "slide": 15,
+   "text": "dy 是 Δy 的线性主部：dy = f′(x)dx。几何收束：dy 是切线的纵坐标增量。5。P。|Δx| 很小时 Δy ≈ dy，可用于近似计算。核心：dy = f′(x)dx。",
+   "anchors": [
+    {
+     "element_id": "s16-sh06-g04-g04-p01",
+     "text_hint": "dy 是 Δy 的线性主部：dy = f′(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g05-g03-p01",
+     "text_hint": "几何收束：dy 是切线的纵坐标增量",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g05-g02-p01",
+     "text_hint": "5",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh40-g10-p01",
+     "text_hint": "P",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh06-g05-g04-p01",
+     "text_hint": "|Δx| 很小时 Δy ≈ dy，可用于近似计算",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh36-g03-p01",
+     "text_hint": "核心：dy = f′(x)dx",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh06-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh06-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh06-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh40-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh06-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s16-sh36-g03-p01"
+    }
+   ],
+   "kp": [
+    "P16-小结可导可微与dyfxd-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "dy 是 Δy 的线性主部：dy = f′(x)dx。"
+  }
+ ],
+ "warnings": [
+  "❌ 第 1 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 1 页第 1 次尝试无有效单元",
+  "❌ 第 1 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 1 页第 2 次尝试无有效单元",
+  "⚠️ 第 1 页已回退为规则兜底",
+  "❌ 第 2 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 216 (char 215)）",
+  "⚠️ 第 2 页第 1 次尝试无有效单元",
+  "❌ 第 2 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 242 (char 241)）",
+  "⚠️ 第 2 页第 2 次尝试无有效单元",
+  "⚠️ 第 2 页已回退为规则兜底",
+  "❌ 第 3 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 3 页第 1 次尝试无有效单元",
+  "❌ 第 3 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 3 页第 2 次尝试无有效单元",
+  "⚠️ 第 3 页已回退为规则兜底",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 1 次尝试无有效单元",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 2 次尝试无有效单元",
+  "⚠️ 第 4 页已回退为规则兜底",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 5 页第 1 次尝试无有效单元",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 5 页第 2 次尝试无有效单元",
+  "⚠️ 第 5 页已回退为规则兜底",
+  "❌ 第 6 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 6 页第 1 次尝试无有效单元",
+  "❌ 第 6 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 6 页第 2 次尝试无有效单元",
+  "⚠️ 第 6 页已回退为规则兜底",
+  "❌ 第 7 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 7 页第 1 次尝试无有效单元",
+  "❌ 第 7 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 7 页第 2 次尝试无有效单元",
+  "⚠️ 第 7 页已回退为规则兜底",
+  "❌ 第 8 页：模型输出不是合法 JSON（Expecting property name enclosed in double quotes: line 1 column 261 (char 260)）",
+  "⚠️ 第 8 页第 1 次尝试无有效单元",
+  "❌ 第 8 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 8 页第 2 次尝试无有效单元",
+  "⚠️ 第 8 页已回退为规则兜底",
+  "❌ 第 9 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 915 (char 914)）",
+  "⚠️ 第 9 页第 1 次尝试无有效单元",
+  "❌ 第 9 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 9 页第 2 次尝试无有效单元",
+  "⚠️ 第 9 页已回退为规则兜底",
+  "❌ 第 10 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 170 (char 169)）",
+  "⚠️ 第 10 页第 1 次尝试无有效单元",
+  "❌ 第 10 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 10 页第 2 次尝试无有效单元",
+  "⚠️ 第 10 页已回退为规则兜底",
+  "❌ 第 11 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 11 页第 1 次尝试无有效单元",
+  "❌ 第 11 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 11 页第 2 次尝试无有效单元",
+  "⚠️ 第 11 页已回退为规则兜底",
+  "❌ 第 12 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 12 页第 1 次尝试无有效单元",
+  "❌ 第 12 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 12 页第 2 次尝试无有效单元",
+  "⚠️ 第 12 页已回退为规则兜底",
+  "❌ 第 13 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 13 页第 1 次尝试无有效单元",
+  "❌ 第 13 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 13 页第 2 次尝试无有效单元",
+  "⚠️ 第 13 页已回退为规则兜底",
+  "❌ 第 14 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 14 页第 1 次尝试无有效单元",
+  "❌ 第 14 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 14 页第 2 次尝试无有效单元",
+  "⚠️ 第 14 页已回退为规则兜底",
+  "❌ 第 15 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 592 (char 591)）",
+  "⚠️ 第 15 页第 1 次尝试无有效单元",
+  "❌ 第 15 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 15 页第 2 次尝试无有效单元",
+  "⚠️ 第 15 页已回退为规则兜底",
+  "❌ 第 16 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 16 页第 1 次尝试无有效单元",
+  "❌ 第 16 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 16 页第 2 次尝试无有效单元",
+  "⚠️ 第 16 页已回退为规则兜底"
+ ],
+ "created_at": "2026-11-01T04:07:28",
+ "coverage": {
+  "slides": 16,
+  "units": 28,
+  "chars": 3733,
+  "est_sec": 746.6,
+  "longest_unit_sec": 40.0,
+  "units_over_hard_max": 0,
+  "units_with_anchor": 28,
+  "anchors": 335,
+  "anchor_hit": 335,
+  "anchor_hit_rate": 1.0,
+  "para_level_anchors": 335,
+  "low_confidence_anchors": 0,
+  "ops": 335,
+  "ops_invalid": 0
+ },
+ "routes": []
+}

@@ -1,0 +1,6124 @@
+{
+ "deck_id": "第1单元_函数复习与基本初等函数",
+ "source": "llm",
+ "model": "deepseek · deepseek-flash · https://api.deepseek.com/v1 · key:已设置 · 思考:off",
+ "session_goals": [
+  "今天的学习路线",
+  "函数三要素",
+  "区间记号",
+  "定义域四大限制",
+  "分母与偶次根式"
+ ],
+ "units": [
+  {
+   "slide": 0,
+   "text": "好，我们开始。这一讲讲“函数复习与基本初等函数”。别紧张，这不是新授课，是把你们以前学过的东西重新串成一条线。所以今天不是学新知识，是回头把散落的点连起来。",
+   "anchors": [
+    {
+     "element_id": "s01-sh22-g01-p01",
+     "text_hint": "函数复习与",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh22-g02-p01",
+     "text_hint": "基本初等函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh28-g01-p01",
+     "text_hint": "不是新授课，是把学过的东西重新串成一条线。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "course-intro"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "开场：本讲是复习串线"
+  },
+  {
+   "slide": 0,
+   "text": "这条线怎么串呢？一节课里我们要走过三要素、区间、定义域和值域，再往后是五类基本初等函数的图像，最后是复合函数与分段函数。你看，从概念到图像到组合，正好是一条路。",
+   "anchors": [
+    {
+     "element_id": "s01-sh25-g01-p01",
+     "text_hint": "入门档 · 一节课串起三要素、区间、定义域值域、",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh25-g02-p01",
+     "text_hint": "五类图像、复合与分段",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh30-g02-p01",
+     "text_hint": "三要素",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "一节课里我们要走过三要素",
+     "target": "s01-sh25-g01-p01"
+    }
+   ],
+   "kp": [
+    "course-roadmap"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "本讲路线：三要素到复合分段"
+  },
+  {
+   "slide": 0,
+   "text": "我把三要素、五类图像、复合与分段这三个词单拎出来，是想让你们心里有个地图。听到哪个词卡住了，你就知道该翻回哪一块去补，不至于一整节课听下来只是觉得乱。",
+   "anchors": [
+    {
+     "element_id": "s01-sh30-g02-p01",
+     "text_hint": "三要素",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh30-g03-p01",
+     "text_hint": "五类图像",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh30-g04-p01",
+     "text_hint": "复合与分段",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "我把三要素、五类图像",
+     "target": "s01-sh30-g02-p01"
+    },
+    {
+     "op": "unfocus",
+     "at_sentence": 1,
+     "at_text": "听到哪个词卡住了"
+    }
+   ],
+   "kp": [
+    "course-roadmap"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "三个关键词作为复习地图"
+  },
+  {
+   "slide": 0,
+   "text": "最后说一下这一讲的定位。它面向入门档的同学，也就是基础还需要再过一遍的。日期那一栏先空着，你们自己填。我们下一句就正式进入函数本身。",
+   "anchors": [
+    {
+     "element_id": "s01-sh38-g02-p01",
+     "text_hint": "适用对象：入门档学生",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh38-g04-p01",
+     "text_hint": "日期：________",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh38-g03-p01",
+     "text_hint": "第 01 讲 · 函数与极限",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "course-intro"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "适用对象与日期栏说明"
+  },
+  {
+   "slide": 1,
+   "text": "今天的学习路线。三段推进：先打地基，再画图像，最后套用。01。02。03。三要素 · 区间。五类基本。复合函数。定义域与值域。初等函数图像。与分段函数。同一函数判定。幂 · 指 · 对。内外层拆分。区间开闭。三角 · 反三角。先定段再代入。四大限制。关键点与单调性。一个函数两套式。地基。后面都建在这里。路线清楚了，就从最容易混淆的问题开始：。两个式子长得一样，真的是同一个函数吗？。",
+   "anchors": [
+    {
+     "element_id": "s02-sh01-g08-g02-p01",
+     "text_hint": "今天的学习路线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g08-g03-p01",
+     "text_hint": "三段推进：先打地基，再画图像，最后套用",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g09-g03-p01",
+     "text_hint": "01",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g11-g03-p01",
+     "text_hint": "02",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g12-g03-p01",
+     "text_hint": "03",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g09-g04-p01",
+     "text_hint": "三要素 · 区间",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g11-g04-p01",
+     "text_hint": "五类基本",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g12-g04-p01",
+     "text_hint": "复合函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g09-g05-p01",
+     "text_hint": "定义域与值域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g11-g05-p01",
+     "text_hint": "初等函数图像",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g12-g05-p01",
+     "text_hint": "与分段函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g09-g07-p01",
+     "text_hint": "同一函数判定",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g11-g07-p01",
+     "text_hint": "幂 · 指 · 对",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g12-g07-p01",
+     "text_hint": "内外层拆分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g09-g08-p01",
+     "text_hint": "区间开闭",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g11-g08-p01",
+     "text_hint": "三角 · 反三角",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g12-g08-p01",
+     "text_hint": "先定段再代入",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g09-g09-p01",
+     "text_hint": "四大限制",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g11-g09-p01",
+     "text_hint": "关键点与单调性",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g12-g09-p01",
+     "text_hint": "一个函数两套式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g10-g02-p01",
+     "text_hint": "地基",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g10-g03-p01",
+     "text_hint": "后面都建在这里",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g15-g02-p01",
+     "text_hint": "路线清楚了，就从最容易混淆的问题开始：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh01-g15-g03-p01",
+     "text_hint": "两个式子长得一样，真的是同一个函数吗？",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh01-g08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh01-g08-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh01-g09-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh01-g11-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh01-g12-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh01-g09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh01-g11-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh01-g12-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s02-sh01-g09-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s02-sh01-g11-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh01-g12-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh01-g09-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s02-sh01-g11-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s02-sh01-g12-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s02-sh01-g09-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s02-sh01-g11-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s02-sh01-g12-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s02-sh01-g09-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s02-sh01-g11-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s02-sh01-g12-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s02-sh01-g10-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s02-sh01-g10-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s02-sh01-g15-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s02-sh01-g15-g03-p01"
+    }
+   ],
+   "kp": [
+    "P02-今天的学习路线"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "今天的学习路线。"
+  },
+  {
+   "slide": 2,
+   "text": "函数三要素。定义域与对应法则都相同，才是同一个函数。y。三要素。y = x² 与 y = x²（x ≥ 0）。定义域。自变量能取的全部值。1。对应法则。把 x 变成 y 的规则。2。只取右半支。值域。由前两条唯一决定，不必单独看。3。判定标准。左半支不在定义域内。定义域相同，且对应法则相同。字母写成 x 还是 t，不影响结论。x。O。反例：y = x² 与 y = x²（x ≥ 0）。",
+   "anchors": [
+    {
+     "element_id": "s03-sh01-g02-p01",
+     "text_hint": "函数三要素",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh01-g03-p01",
+     "text_hint": "定义域与对应法则都相同，才是同一个函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh30-g10-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g01-p01",
+     "text_hint": "三要素",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh30-g02-p01",
+     "text_hint": "y = x² 与 y = x²（x ≥ 0）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g02-g03-p01",
+     "text_hint": "定义域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g02-g04-p01",
+     "text_hint": "自变量能取的全部值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g02-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g03-g03-p01",
+     "text_hint": "对应法则",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g03-g04-p01",
+     "text_hint": "把 x 变成 y 的规则",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g03-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh30-g13-p01",
+     "text_hint": "只取右半支",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g04-g03-p01",
+     "text_hint": "值域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g04-g04-p01",
+     "text_hint": "由前两条唯一决定，不必单独看",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g04-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g06-p01",
+     "text_hint": "判定标准",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh30-g14-p01",
+     "text_hint": "左半支不在定义域内",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g07-p01",
+     "text_hint": "定义域相同，且对应法则相同。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g08-p01",
+     "text_hint": "字母写成 x 还是 t，不影响结论。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh30-g09-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh30-g11-p01",
+     "text_hint": "O",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh06-g10-p01",
+     "text_hint": "反例：y = x² 与 y = x²（x ≥ 0",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh30-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh06-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh30-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s03-sh06-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s03-sh06-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s03-sh06-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s03-sh06-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s03-sh06-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s03-sh06-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s03-sh30-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s03-sh06-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s03-sh06-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s03-sh06-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s03-sh06-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s03-sh30-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s03-sh06-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s03-sh06-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s03-sh30-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s03-sh30-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s03-sh06-g10-p01"
+    }
+   ],
+   "kp": [
+    "P03-函数三要素"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "函数三要素。定义域与对应法则都相同，才是同一个函数。"
+  },
+  {
+   "slide": 2,
+   "text": "后者只取右半支，定义域不同，不是同一函数。写函数，必须把定义域一起写上。",
+   "anchors": [
+    {
+     "element_id": "s03-sh06-g11-p01",
+     "text_hint": "后者只取右半支，定义域不同，不是同一函数。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh30-g16-p01",
+     "text_hint": "写函数，必须把定义域一起写上。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh06-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh30-g16-p01"
+    }
+   ],
+   "kp": [
+    "P03-函数三要素-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "后者只取右半支，定义域不同，不是同一函数。"
+  },
+  {
+   "slide": 3,
+   "text": "区间记号。开闭看端点能否取到，无穷端一律圆括号。数轴画法：实心 = 取到，空心 = 不取。圆括号 = 端点取不到　方括号 = 端点取到。(a, b)。两端都取不到。a。b。(a, b]。空心圈 · 空心圈。[a, b]。两端都取到。无穷端永远用圆括号。实心点 · 实心点。±∞ 不是具体数值，无法被「取到」：如 [1, +∞)。[a, b)。左取到、右取不到。",
+   "anchors": [
+    {
+     "element_id": "s04-sh06-g02-p01",
+     "text_hint": "区间记号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh06-g03-p01",
+     "text_hint": "开闭看端点能否取到，无穷端一律圆括号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh28-g01-p01",
+     "text_hint": "数轴画法：实心 = 取到，空心 = 不取",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g03-p01",
+     "text_hint": "圆括号 = 端点取不到　方括号 = 端点取到",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g04-g01-p01",
+     "text_hint": "(a, b)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g04-g02-p01",
+     "text_hint": "两端都取不到",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh28-g09-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh28-g10-p01",
+     "text_hint": "b",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh28-g11-p01",
+     "text_hint": "(a, b]",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g04-g03-p01",
+     "text_hint": "空心圈 · 空心圈",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g05-g01-p01",
+     "text_hint": "[a, b]",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g05-g02-p01",
+     "text_hint": "两端都取到",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh40-g03-p01",
+     "text_hint": "无穷端永远用圆括号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g05-g03-p01",
+     "text_hint": "实心点 · 实心点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh40-g04-p01",
+     "text_hint": "±∞ 不是具体数值，无法被「取到」：如 [1, ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g06-g01-p01",
+     "text_hint": "[a, b)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g06-g02-p01",
+     "text_hint": "左取到、右取不到",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh28-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh10-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh10-g04-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh10-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh28-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh28-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh28-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s04-sh10-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh10-g05-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh10-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s04-sh40-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s04-sh10-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s04-sh40-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s04-sh10-g06-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s04-sh10-g06-g02-p01"
+    }
+   ],
+   "kp": [
+    "P04-区间记号"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "区间记号。开闭看端点能否取到，无穷端一律圆括号。"
+  },
+  {
+   "slide": 3,
+   "text": "例：定义域 (1, 3] 即 1 < x ≤ 3。实心点 · 空心圈。比一串不等式更清楚，也更省字。书写要求：定义域与值域的答案尽量写成集合或区间，不要只丢下一个不等式就结束。04 / 22。",
+   "anchors": [
+    {
+     "element_id": "s04-sh45-g01-p01",
+     "text_hint": "例：定义域 (1, 3] 即 1 < x ≤ 3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh10-g06-g03-p01",
+     "text_hint": "实心点 · 空心圈",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh45-g02-p01",
+     "text_hint": "比一串不等式更清楚，也更省字",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh48-g02-p01",
+     "text_hint": "书写要求：定义域与值域的答案尽量写成集合或区间，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh48-g03-p01",
+     "text_hint": "04 / 22",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh45-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh10-g06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh45-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh48-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh48-g03-p01"
+    }
+   ],
+   "kp": [
+    "P04-区间记号-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "例：定义域 (1, 3] 即 1 < x ≤ 3。"
+  },
+  {
+   "slide": 4,
+   "text": "定义域四大限制。先认限制，再列不等式。分式。偶次根式。对数。反三角。1。2。3。4。1。log。x。arcsin h(x)。2。√。g(x) ≥ 0。a。f(x)。a > 0, a ≠ 1。−1 ≤ h(x) ≤ 1。分母不能为 0。被开方数 ≥ 0。f(x) ≠ 0。g(x) ≥ 0。真数 x > 0。arccos 同理。多条件 → 每个限制单独列一条，再取 交集。",
+   "anchors": [
+    {
+     "element_id": "s05-sh07-g02-p01",
+     "text_hint": "定义域四大限制",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh07-g03-p01",
+     "text_hint": "先认限制，再列不等式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh11-g03-p01",
+     "text_hint": "分式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh23-g03-p01",
+     "text_hint": "偶次根式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh33-g03-p01",
+     "text_hint": "对数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh43-g03-p01",
+     "text_hint": "反三角",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh11-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh23-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh33-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh43-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh11-g05-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh33-g04-p01",
+     "text_hint": "log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh33-g06-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh43-g04-p01",
+     "text_hint": "arcsin h(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh23-g07-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh23-g04-p01",
+     "text_hint": "√",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh23-g06-p01",
+     "text_hint": "g(x) ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh33-g05-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh11-g06-p01",
+     "text_hint": "f(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh33-g08-p01",
+     "text_hint": "a > 0, a ≠ 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh43-g06-p01",
+     "text_hint": "−1 ≤ h(x) ≤ 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh11-g07-p01",
+     "text_hint": "分母不能为 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh23-g08-p01",
+     "text_hint": "被开方数 ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh11-g08-p01",
+     "text_hint": "f(x) ≠ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh23-g09-p01",
+     "text_hint": "g(x) ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh33-g09-p01",
+     "text_hint": "真数 x > 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh43-g07-p01",
+     "text_hint": "arccos 同理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh51-g03-p01",
+     "text_hint": "多条件 → 每个限制单独列一条，再取 交集",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh11-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh23-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh33-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh43-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh11-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh23-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh33-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh43-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh11-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s05-sh33-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s05-sh33-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s05-sh43-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh23-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh23-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh23-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh33-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh11-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh33-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s05-sh43-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s05-sh11-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s05-sh23-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s05-sh11-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s05-sh23-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s05-sh33-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s05-sh43-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s05-sh51-g03-p01"
+    }
+   ],
+   "kp": [
+    "P05-定义域四大限制"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "定义域四大限制。"
+  },
+  {
+   "slide": 5,
+   "text": "分母与偶次根式。定义域的局部约束 · 第 6 页。分母整块 ≠ 0，偶次根号内 ≥ 0。01　分母：整块式子 ≠ 0。02　偶次根式：根号内 ≥ 0。划掉的是整个分母，不是其中某一个字母。平方根内为负数时，没有实数结果。2。x ≥ 1。√。x − 1。≥ 0。令分母为零。1。x ≠ 2。x − 2。03　两条同时出现：根号在分母上。既要根号内 ≥ 0，又要分母 ≠ 0。常见毛病。1。",
+   "anchors": [
+    {
+     "element_id": "s06-sh05-g02-p01",
+     "text_hint": "分母与偶次根式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh08-g01-p01",
+     "text_hint": "定义域的局部约束 · 第 6 页",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh08-g02-p01",
+     "text_hint": "分母整块 ≠ 0，偶次根号内 ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh11-g01-p01",
+     "text_hint": "01　分母：整块式子 ≠ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh25-g01-p01",
+     "text_hint": "02　偶次根式：根号内 ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh11-g02-p01",
+     "text_hint": "划掉的是整个分母，不是其中某一个字母",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh25-g02-p01",
+     "text_hint": "平方根内为负数时，没有实数结果",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh25-g07-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh25-g11-p01",
+     "text_hint": "x ≥ 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh25-g04-p01",
+     "text_hint": "√",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh25-g06-p01",
+     "text_hint": "x − 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh25-g08-p01",
+     "text_hint": "≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh11-g07-p01",
+     "text_hint": "令分母为零",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh11-g03-g01-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh11-g08-p01",
+     "text_hint": "x ≠ 2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh11-g03-g03-p01",
+     "text_hint": "x − 2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g03-p01",
+     "text_hint": "03　两条同时出现：根号在分母上",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g05-p01",
+     "text_hint": "既要根号内 ≥ 0，又要分母 ≠ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g09-p01",
+     "text_hint": "常见毛病",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g04-g01-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh08-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh11-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s06-sh25-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s06-sh11-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s06-sh25-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s06-sh25-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s06-sh25-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s06-sh25-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s06-sh25-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s06-sh25-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s06-sh11-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s06-sh11-g03-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s06-sh11-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s06-sh11-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s06-sh37-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s06-sh37-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s06-sh37-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s06-sh37-g04-g01-p01"
+    }
+   ],
+   "kp": [
+    "P06-分母与偶次根式"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "分母与偶次根式。"
+  },
+  {
+   "slide": 5,
+   "text": "合起来：3 − x > 0。只写根号内 ≥ 0，。2。√。3 − x。忘了它同时是分母，。x < 3。结果多算了 x = 3 这一点。",
+   "anchors": [
+    {
+     "element_id": "s06-sh37-g06-p01",
+     "text_hint": "合起来：3 − x > 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g10-p01",
+     "text_hint": "只写根号内 ≥ 0，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g04-g06-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g04-g03-p01",
+     "text_hint": "√",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g04-g05-p01",
+     "text_hint": "3 − x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g11-p01",
+     "text_hint": "忘了它同时是分母，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g07-p01",
+     "text_hint": "x < 3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh37-g12-p01",
+     "text_hint": "结果多算了 x = 3 这一点。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh37-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh37-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh37-g04-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh37-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh37-g04-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh37-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s06-sh37-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s06-sh37-g12-p01"
+    }
+   ],
+   "kp": [
+    "P06-分母与偶次根式-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "合起来：3 − x > 0。"
+  },
+  {
+   "slide": 6,
+   "text": "对数与反三角。对数：两条一起记。反三角：输入落在 [−1, 1]。y。y = logₐx。输入范围。−1。1。图像只在 y 轴右侧。同样看括号里的整块。0。x。arcsin(x/2) → −2 ≤ x ≤ 2。真数 > 0，底数 > 0 且 ≠ 1。arcsin、arccos 的输入都在 [−1, 1]。看的是整块真数，不是单个 x。",
+   "anchors": [
+    {
+     "element_id": "s07-sh01-g02-p01",
+     "text_hint": "对数与反三角",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g02-p01",
+     "text_hint": "对数：两条一起记",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g02-p01",
+     "text_hint": "反三角：输入落在 [−1, 1]",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g03-g08-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g05-p01",
+     "text_hint": "y = logₐx",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g03-g11-p01",
+     "text_hint": "输入范围",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g03-g09-p01",
+     "text_hint": "−1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g03-g10-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g06-p01",
+     "text_hint": "图像只在 y 轴右侧",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g04-p01",
+     "text_hint": "同样看括号里的整块",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g03-g06-p01",
+     "text_hint": "0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g03-g07-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g05-p01",
+     "text_hint": "arcsin(x/2) → −2 ≤ x ≤ 2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g07-p01",
+     "text_hint": "真数 > 0，底数 > 0 且 ≠ 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g06-p01",
+     "text_hint": "arcsin、arccos 的输入都在 [−1,",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh04-g08-p01",
+     "text_hint": "看的是整块真数，不是单个 x",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s07-sh21-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh04-g03-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s07-sh04-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s07-sh21-g03-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s07-sh21-g03-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s07-sh21-g03-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s07-sh04-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s07-sh21-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s07-sh04-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s07-sh04-g03-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s07-sh21-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s07-sh04-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s07-sh21-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s07-sh04-g08-p01"
+    }
+   ],
+   "kp": [
+    "P07-对数与反三角"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "对数与反三角。对数：两条一起记。"
+  },
+  {
+   "slide": 6,
+   "text": "高频错例：ln(x−1) 写成 x > 0；正确是 x − 1 > 0，即 x > 1。",
+   "anchors": [
+    {
+     "element_id": "s07-sh39-g02-p01",
+     "text_hint": "高频错例：ln(x−1) 写成 x > 0；正确",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s07-sh39-g02-p01"
+    }
+   ],
+   "kp": [
+    "P07-对数与反三角-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "高频错例：ln(x−1) 写成 x > 0；"
+  },
+  {
+   "slide": 7,
+   "text": "例题：定义域混合型。三个条件同时满足，取交集。x。题目。求下列函数的定义域：。f(x) =。ln(x − 1)。+ arcsin(x/2)。√(3 − x)。条件 ① 对数真数。条件 ② 根号在分母。条件 ③ 反三角输入。x − 1 > 0。3 − x > 0。−1 ≤ x/2 ≤ 1。x > 1。x < 3。−2 ≤ x ≤ 2。根号有意义且分母不为零。1。3。−2。2。三条数轴取公共部分。",
+   "anchors": [
+    {
+     "element_id": "s08-sh05-g02-p01",
+     "text_hint": "例题：定义域混合型",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g03-p01",
+     "text_hint": "三个条件同时满足，取交集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh09-g05-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh09-g03-p01",
+     "text_hint": "题目",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh09-g04-p01",
+     "text_hint": "求下列函数的定义域：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh09-g06-p01",
+     "text_hint": "f(x) =",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh09-g07-p01",
+     "text_hint": "ln(x − 1)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh09-g10-p01",
+     "text_hint": "+ arcsin(x/2)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh09-g09-p01",
+     "text_hint": "√(3 − x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g01-g01-p01",
+     "text_hint": "条件 ① 对数真数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g03-g01-p01",
+     "text_hint": "条件 ② 根号在分母",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g05-g01-p01",
+     "text_hint": "条件 ③ 反三角输入",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g01-g02-p01",
+     "text_hint": "x − 1 > 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g03-g02-p01",
+     "text_hint": "3 − x > 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g05-g02-p01",
+     "text_hint": "−1 ≤ x/2 ≤ 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g01-g03-p01",
+     "text_hint": "x > 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g03-g03-p01",
+     "text_hint": "x < 3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g05-g03-p01",
+     "text_hint": "−2 ≤ x ≤ 2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g03-g04-p01",
+     "text_hint": "根号有意义且分母不为零",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g06-g01-g04-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g06-g02-g04-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g06-g03-g04-p01",
+     "text_hint": "−2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh20-g06-g03-g06-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh58-g03-p01",
+     "text_hint": "三条数轴取公共部分",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s08-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh09-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh09-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh09-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh09-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s08-sh09-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s08-sh09-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s08-sh20-g01-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s08-sh20-g03-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s08-sh20-g05-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s08-sh20-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s08-sh20-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s08-sh20-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s08-sh20-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s08-sh20-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s08-sh20-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s08-sh20-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s08-sh20-g06-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s08-sh20-g06-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s08-sh20-g06-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s08-sh20-g06-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s08-sh58-g03-p01"
+    }
+   ],
+   "kp": [
+    "P08-例题定义域混合型"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "例题：定义域混合型。"
+  },
+  {
+   "slide": 7,
+   "text": "定义域 = (1, 2]，即 {x | 1 < x ≤ 2}。下面转向值域 →。定义域会求了，接下来看值域。08 / 22。",
+   "anchors": [
+    {
+     "element_id": "s08-sh58-g04-p01",
+     "text_hint": "定义域 = (1, 2]，即 {x | 1 < ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh58-g05-p01",
+     "text_hint": "下面转向值域 →",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh64-g02-p01",
+     "text_hint": "定义域会求了，接下来看值域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh64-g03-p01",
+     "text_hint": "08 / 22",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s08-sh58-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s08-sh58-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s08-sh64-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s08-sh64-g03-p01"
+    }
+   ],
+   "kp": [
+    "P08-例题定义域混合型-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "定义域 = (1, 2]，即 {x | 1 < x ≤ 2…"
+  },
+  {
+   "slide": 8,
+   "text": "值域怎么求。先看结构再选方法：单调代端点、二次看顶点。01。02。03。04。单调函数。二次函数。含根号。分式。两端点直接代入。配方，看顶点位置。换元，设成新变量 t。分离常数后再判断。区间内一直升或一直降。顶点在区间内取顶点值。先把 t 的范围定下来。化成常数加真分式。取最小、最大值。顶点在外取端点值。t ≥ 0，再转成二次。值域不取那条水平线。为什么要分方法。",
+   "anchors": [
+    {
+     "element_id": "s09-sh01-g02-p01",
+     "text_hint": "值域怎么求",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh01-g03-p01",
+     "text_hint": "先看结构再选方法：单调代端点、二次看顶点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g02-g01-p01",
+     "text_hint": "01",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g02-p01",
+     "text_hint": "02",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g02-p01",
+     "text_hint": "03",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g02-p01",
+     "text_hint": "04",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g02-g02-p01",
+     "text_hint": "单调函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g03-p01",
+     "text_hint": "二次函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g03-p01",
+     "text_hint": "含根号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g03-p01",
+     "text_hint": "分式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g02-g03-p01",
+     "text_hint": "两端点直接代入",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g04-p01",
+     "text_hint": "配方，看顶点位置",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g04-p01",
+     "text_hint": "换元，设成新变量 t",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g04-p01",
+     "text_hint": "分离常数后再判断",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g02-g04-p01",
+     "text_hint": "区间内一直升或一直降",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g05-p01",
+     "text_hint": "顶点在区间内取顶点值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g05-p01",
+     "text_hint": "先把 t 的范围定下来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g05-p01",
+     "text_hint": "化成常数加真分式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g02-g08-p01",
+     "text_hint": "取最小、最大值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-g10-p01",
+     "text_hint": "顶点在外取端点值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g08-p01",
+     "text_hint": "t ≥ 0，再转成二次",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-g10-p01",
+     "text_hint": "值域不取那条水平线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh47-g03-p01",
+     "text_hint": "为什么要分方法",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh05-g02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh05-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh05-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s09-sh05-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s09-sh05-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh05-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh05-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh05-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh05-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh05-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s09-sh05-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s09-sh05-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh05-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s09-sh05-g04-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s09-sh05-g05-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s09-sh05-g02-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s09-sh05-g03-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s09-sh05-g04-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s09-sh05-g05-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s09-sh47-g03-p01"
+    }
+   ],
+   "kp": [
+    "P09-值域怎么求"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "值域怎么求。先看结构再选方法：单调代端点、二次看顶点。"
+  },
+  {
+   "slide": 8,
+   "text": "不同结构卡住的地方不同，一上来硬算往往算不动。先认清结构，再挑方法，一步就到位。",
+   "anchors": [
+    {
+     "element_id": "s09-sh47-g04-p01",
+     "text_hint": "不同结构卡住的地方不同，一上来硬算往往算不动。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh47-g05-p01",
+     "text_hint": "先认清结构，再挑方法，一步就到位。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh47-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh47-g05-p01"
+    }
+   ],
+   "kp": [
+    "P09-值域怎么求-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "不同结构卡住的地方不同，一上来硬算往往算不动。"
+  },
+  {
+   "slide": 9,
+   "text": "值域结果写区间。值域是一个清楚的数集：端点能取到用方括号，取不到用圆括号。只写不等式或一串过程，答案不完整。例 1　最小值取不到。例 2　两端都能取到。例 3　左闭右开。值域。值域。值域。(0, +∞)。[0, 1]。[−1, 2)。容易丢分。下一步。范围算对了，却忘了写开闭，答案不完整。五类基本初等函数，先看幂函数。",
+   "anchors": [
+    {
+     "element_id": "s10-sh06-g02-p01",
+     "text_hint": "值域结果写区间",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh09-g01-p01",
+     "text_hint": "值域是一个清楚的数集：端点能取到用方括号，取不到",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh09-g02-p01",
+     "text_hint": "只写不等式或一串过程，答案不完整。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh13-g02-p01",
+     "text_hint": "例 1　最小值取不到",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g02-p01",
+     "text_hint": "例 2　两端都能取到",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh23-g02-p01",
+     "text_hint": "例 3　左闭右开",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh13-g03-p01",
+     "text_hint": "值域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g03-p01",
+     "text_hint": "值域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh23-g03-p01",
+     "text_hint": "值域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh13-g04-p01",
+     "text_hint": "(0, +∞)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g04-p01",
+     "text_hint": "[0, 1]",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh23-g04-p01",
+     "text_hint": "[−1, 2)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g02-p01",
+     "text_hint": "容易丢分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh32-g01-p01",
+     "text_hint": "下一步",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh28-g03-p01",
+     "text_hint": "范围算对了，却忘了写开闭，答案不完整。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh32-g02-p01",
+     "text_hint": "五类基本初等函数，先看幂函数。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh09-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s10-sh13-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s10-sh18-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s10-sh23-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s10-sh13-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s10-sh18-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s10-sh23-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s10-sh13-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s10-sh18-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s10-sh23-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s10-sh28-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s10-sh32-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s10-sh28-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s10-sh32-g02-p01"
+    }
+   ],
+   "kp": [
+    "P10-值域结果写区间"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "值域结果写区间。"
+  },
+  {
+   "slide": 10,
+   "text": "幂函数 y = x^a。形状随指数变，但有一件事永远不变。形如 y = x^a，底数是变量，指数是常数。代表曲线：y = √x。a > 0：在 (0,+∞) 上递增。1。a < 0：在 (0,+∞) 上递减。(1, 1)。x⁰ 要求 x ≠ 0：0 的 0 次方无意义。2。x^(1/2) = √x 要求 x ≥ 0。先看指数符号定单调性。3。再查定义域有没有被指数限制。换指数也过这一点。",
+   "anchors": [
+    {
+     "element_id": "s11-sh01-g02-p01",
+     "text_hint": "幂函数 y = x^a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh01-g03-p01",
+     "text_hint": "形状随指数变，但有一件事永远不变",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g01-g01-p01",
+     "text_hint": "形如 y = x^a，底数是变量，指数是常数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh25-g02-p01",
+     "text_hint": "代表曲线：y = √x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g02-g03-p01",
+     "text_hint": "a > 0：在 (0,+∞) 上递增",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g02-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g02-g04-p01",
+     "text_hint": "a < 0：在 (0,+∞) 上递减",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh25-g08-p01",
+     "text_hint": "(1, 1)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g03-g03-p01",
+     "text_hint": "x⁰ 要求 x ≠ 0：0 的 0 次方无意义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g03-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g03-g04-p01",
+     "text_hint": "x^(1/2) = √x 要求 x ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g04-g03-p01",
+     "text_hint": "先看指数符号定单调性",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g04-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g04-g04-p01",
+     "text_hint": "再查定义域有没有被指数限制",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh25-g09-p01",
+     "text_hint": "换指数也过这一点",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s11-sh06-g01-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s11-sh25-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s11-sh06-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s11-sh06-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s11-sh06-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s11-sh25-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s11-sh06-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s11-sh06-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s11-sh06-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s11-sh06-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s11-sh06-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s11-sh06-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s11-sh25-g09-p01"
+    }
+   ],
+   "kp": [
+    "P11-幂函数yxa"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "幂函数 y = x^a。"
+  },
+  {
+   "slide": 11,
+   "text": "前面几页我们一直在处理定义域和指数运算，现在把这些收拾好的工具用到一类新函数上——指数函数。先看名字，指数函数 y 等于 a 的 x 次方，自变量 x 长在指数位置上，这一点是它和幂函数最根本的区别，考试里最爱在这上面设陷阱。",
+   "anchors": [
+    {
+     "element_id": "s12-sh01-g02-p01",
+     "text_hint": "指数函数 y = a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh01-g03-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "exp-func-def"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "指数函数定义与自变量位置"
+  },
+  {
+   "slide": 11,
+   "text": "不过这个 a 不是随便取的，前提是 a 大于 0 且 a 不等于 1。为什么不能等于 1？因为 1 的任何次方都是 1，那画出来就是一条水平直线，谈不上增也谈不上减。为什么不能是负数？负数开偶次方就跑到实数外面去了，所以底数必须是个正数。",
+   "anchors": [
+    {
+     "element_id": "s12-sh01-g04-p01",
+     "text_hint": "前提 a > 0 且 a ≠ 1；底数落在 1 ",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "exp-base-restriction"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "底数 a 的限制与原因"
+  },
+  {
+   "slide": 11,
+   "text": "再看它的图像性质。定义域是全体实数 R，值域是 0 到正无穷，注意是开区间，0 取不到。图像永远在 x 轴上方，x 轴就是它的水平渐近线，曲线无限靠近却永远碰不到，这个“碰不到”在解不等式的时候特别关键。",
+   "anchors": [
+    {
+     "element_id": "s12-sh06-g02-g02-p01",
+     "text_hint": "定义域 R，值域 (0, +∞)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g02-g03-p01",
+     "text_hint": "图像永远在 x 轴上方，x 轴是水平渐近线，碰不",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "exp-graph"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "定义域值域与水平渐近线"
+  },
+  {
+   "slide": 11,
+   "text": "还有一个点必须牢牢记住：图像恒过定点 0 逗号 1。道理很简单，任何非零底数的 0 次方都等于 1，所以不管 a 取几，x 等于 0 时 y 一定是 1。这个定点是画草图和判图的抓手，看到指数函数图像先找它。",
+   "anchors": [
+    {
+     "element_id": "s12-sh06-g03-g02-p01",
+     "text_hint": "恒过定点 (0, 1)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g03-g03-p01",
+     "text_hint": "任何非零底数的 0 次方都等于 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh24-g07-p01",
+     "text_hint": "(0, 1)",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "exp-fixed-point"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "恒过定点 (0,1) 及其来由"
+  },
+  {
+   "slide": 11,
+   "text": "那到底增还是减？判别只看底数 a 落在 1 的哪一边：a 大于 1 就递增，0 小于 a 小于 1 就递减。别去背图像形状，先看底数。比如 y 等于 2 的 x 次方，底数 2 大于 1，是往上走的增函数。",
+   "anchors": [
+    {
+     "element_id": "s12-sh06-g04-g02-p01",
+     "text_hint": "a > 1 递增，0 < a < 1 递减",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g04-g03-p01",
+     "text_hint": "判别只看底数 a 落在 1 的哪一边",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh24-g08-p01",
+     "text_hint": "y = 2",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "exp-monotonic"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用底数与 1 的大小判单调性"
+  },
+  {
+   "slide": 11,
+   "text": "那递减的样子长什么样？把 y 等于 2 的 x 次方换成 y 等于二分之一的 x 次方，曲线就左右翻折过来，从左上往右下走。但它仍然过 0 逗号 1，仍然以 x 轴为渐近线，刚才那几条性质一条都没丢。",
+   "anchors": [
+    {
+     "element_id": "s12-sh24-g09-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh24-g10-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh24-g07-p01",
+     "text_hint": "(0, 1)",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "exp-monotonic"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "底数小于 1 时图像左右翻折"
+  },
+  {
+   "slide": 11,
+   "text": "最后串联一下，为什么值域取不到 0 和负数？因为正数的任何次方结果都是正的，底数正、指数随便取，出来的永远是正数。所以记住一条线：定义域全体实数，值域大于零，过 0 逗号 1，底数跟 1 比大小定增减。",
+   "anchors": [
+    {
+     "element_id": "s12-sh06-g05-g02-p01",
+     "text_hint": "取不到 0 与负数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g05-g03-p01",
+     "text_hint": "正数的任何次方结果都是正的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh06-g05-g01-p01",
+     "text_hint": "04",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "exp-graph"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "值域为正的原因与整页小结"
+  },
+  {
+   "slide": 12,
+   "text": "对数函数 y = log。x。a。指数函数的反函数，镜像而来。y。定义域 (0,+∞)，值域 R。y = log。x。x。2。1。y = 2。图像恒过 (1,0)。x。与 y = a。关于直线 y = x 对称。2。(0,1) 与 (1,0) 互为镜像点。y = x。单调性同样看底数。3。a > 1 递增，0 < a < 1 递减。(1,0)。(0,1)。y 轴左侧没有图像。4。",
+   "anchors": [
+    {
+     "element_id": "s13-sh08-g02-p01",
+     "text_hint": "对数函数 y = log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh08-g04-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh08-g03-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh08-g05-p01",
+     "text_hint": "指数函数的反函数，镜像而来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g09-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g01-g03-p01",
+     "text_hint": "定义域 (0,+∞)，值域 R",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g12-p01",
+     "text_hint": "y = log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g14-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g11-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g13-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g10-p01",
+     "text_hint": "y = 2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g01-g04-p01",
+     "text_hint": "图像恒过 (1,0)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g03-g04-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g03-g03-p01",
+     "text_hint": "与 y = a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g03-g05-p01",
+     "text_hint": "关于直线 y = x 对称",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g03-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g03-g06-p01",
+     "text_hint": "(0,1) 与 (1,0) 互为镜像点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g15-p01",
+     "text_hint": "y = x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g05-g03-p01",
+     "text_hint": "单调性同样看底数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g05-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g05-g04-p01",
+     "text_hint": "a > 1 递增，0 < a < 1 递减",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g06-g04-p01",
+     "text_hint": "(1,0)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g06-g02-p01",
+     "text_hint": "(0,1)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g07-g03-p01",
+     "text_hint": "y 轴左侧没有图像",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh14-g07-g02-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh08-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh08-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh08-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh40-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh14-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s13-sh40-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s13-sh40-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s13-sh40-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s13-sh40-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s13-sh14-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s13-sh40-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s13-sh14-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s13-sh14-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s13-sh14-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s13-sh14-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s13-sh14-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s13-sh14-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s13-sh40-g15-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s13-sh14-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s13-sh14-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s13-sh14-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s13-sh40-g06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s13-sh40-g06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s13-sh14-g07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s13-sh14-g07-g02-p01"
+    }
+   ],
+   "kp": [
+    "P13-对数函数ylog"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "对数函数 y = log。"
+  },
+  {
+   "slide": 12,
+   "text": "见到 log，第一步就写真数 > 0。O。x。蓝线为镜像所得，灰线为原始指数曲线。",
+   "anchors": [
+    {
+     "element_id": "s13-sh14-g07-g04-p01",
+     "text_hint": "见到 log，第一步就写真数 > 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g07-p01",
+     "text_hint": "O",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh40-g08-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh64-g02-p01",
+     "text_hint": "蓝线为镜像所得，灰线为原始指数曲线",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh14-g07-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh40-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh40-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh64-g02-p01"
+    }
+   ],
+   "kp": [
+    "P13-对数函数ylog-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "见到 log，第一步就写真数 > 0。"
+  },
+  {
+   "slide": 13,
+   "text": "对数运算律。积变和、商变差、幂次提前；换底别写反方向。01。换底公式。log。(MN) = log。M + log。N。积变和。a。a。a。ln b。上：目标真数。log。b =。02。a。下：原底数。ln a。log。(M/N) = log。M − log。N。商变差。a。a。a。最容易写反的一步。03。= n·log。M。n。log。M。幂次提前。a。a。同名底合并成一条，指数不论正负都往外提。3。例。log。8 = 3。log。",
+   "anchors": [
+    {
+     "element_id": "s14-sh05-g02-p01",
+     "text_hint": "对数运算律",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g03-p01",
+     "text_hint": "积变和、商变差、幂次提前；换底别写反方向",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g01-p01",
+     "text_hint": "01",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g01-p01",
+     "text_hint": "换底公式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g03-p01",
+     "text_hint": "log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g05-p01",
+     "text_hint": "(MN) = log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g07-p01",
+     "text_hint": "M + log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g09-p01",
+     "text_hint": "N",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g02-p01",
+     "text_hint": "积变和",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g04-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g06-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g01-g08-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g06-p01",
+     "text_hint": "ln b",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g09-p01",
+     "text_hint": "上：目标真数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g03-p01",
+     "text_hint": "log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g05-p01",
+     "text_hint": "b =",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g01-p01",
+     "text_hint": "02",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g04-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g10-p01",
+     "text_hint": "下：原底数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g08-p01",
+     "text_hint": "ln a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g03-p01",
+     "text_hint": "log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g05-p01",
+     "text_hint": "(M/N) = log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g07-p01",
+     "text_hint": "M − log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g09-p01",
+     "text_hint": "N",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g02-p01",
+     "text_hint": "商变差",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g04-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g06-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g02-g08-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh45-g11-p01",
+     "text_hint": "最容易写反的一步",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g01-p01",
+     "text_hint": "03",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g07-p01",
+     "text_hint": "= n·log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g09-p01",
+     "text_hint": "M",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g06-p01",
+     "text_hint": "n",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g03-p01",
+     "text_hint": "log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g05-p01",
+     "text_hint": "M",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g02-p01",
+     "text_hint": "幂次提前",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g08-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g03-g04-p01",
+     "text_hint": "a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh10-g04-p01",
+     "text_hint": "同名底合并成一条，指数不论正负都往外提",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g13-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g02-p01",
+     "text_hint": "例",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g03-p01",
+     "text_hint": "log",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g05-p01",
+     "text_hint": "8 = 3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g08-p01",
+     "text_hint": "log",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s14-sh10-g01-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s14-sh45-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s14-sh10-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s14-sh10-g01-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s14-sh10-g01-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s14-sh10-g01-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s14-sh10-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s14-sh10-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s14-sh10-g01-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s14-sh10-g01-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s14-sh45-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s14-sh45-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s14-sh45-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s14-sh45-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s14-sh10-g02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s14-sh45-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s14-sh45-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s14-sh45-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s14-sh10-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s14-sh10-g02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s14-sh10-g02-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s14-sh10-g02-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s14-sh10-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s14-sh10-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s14-sh10-g02-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s14-sh10-g02-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s14-sh45-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s14-sh10-g03-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s14-sh10-g03-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s14-sh10-g03-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s14-sh10-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s14-sh10-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s14-sh10-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s14-sh10-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s14-sh10-g03-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 18,
+     "target": "s14-sh10-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 18,
+     "target": "s14-sh10-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 19,
+     "target": "s14-sh57-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 19,
+     "target": "s14-sh57-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 19,
+     "target": "s14-sh57-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 20,
+     "target": "s14-sh57-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 20,
+     "target": "s14-sh57-g08-p01"
+    }
+   ],
+   "kp": [
+    "P14-对数运算律"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "对数运算律。积变和、商变差、幂次提前；"
+  },
+  {
+   "slide": 13,
+   "text": "8 = ln8/ln4 = 3/2。ln e。= 3。因 2³ = 8。指数直接落地。2。4。",
+   "anchors": [
+    {
+     "element_id": "s14-sh57-g10-p01",
+     "text_hint": "8 = ln8/ln4 = 3/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g12-p01",
+     "text_hint": "ln e",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g14-p01",
+     "text_hint": "= 3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g06-p01",
+     "text_hint": "因 2³ = 8",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g15-p01",
+     "text_hint": "指数直接落地",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g04-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh57-g09-p01",
+     "text_hint": "4",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s14-sh57-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s14-sh57-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s14-sh57-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s14-sh57-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s14-sh57-g15-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s14-sh57-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s14-sh57-g09-p01"
+    }
+   ],
+   "kp": [
+    "P14-对数运算律-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "8 = ln8/ln4 = 3/2。"
+  },
+  {
+   "slide": 14,
+   "text": "三角函数常用值。记住的是点，不是表：横坐标 cos，纵坐标 sin。sin / cos / tan 对照。sin。(1/2, √3/2)。π/2。角。sin。cos。tan。π/3。π/4。0。0。1。0。π/6。(√3/2, 1/2)。π/6。1/2。√3/2。√3/3。(1, 0)。cos。π/4。√2/2。√2/2。1。π/3。√3/2。1/2。√3。π/2。1。0。不存在。π/2 处 tan 分母 cos = 0。",
+   "anchors": [
+    {
+     "element_id": "s15-sh03-g02-p01",
+     "text_hint": "三角函数常用值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh03-g03-p01",
+     "text_hint": "记住的是点，不是表：横坐标 cos，纵坐标 si",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g02-p01",
+     "text_hint": "sin / cos / tan 对照",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g07-g06-p01",
+     "text_hint": "sin",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g08-g02-p01",
+     "text_hint": "(1/2, √3/2)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g07-g04-p01",
+     "text_hint": "π/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g04-g01-p01",
+     "text_hint": "角",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g04-g02-p01",
+     "text_hint": "sin",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g04-g03-p01",
+     "text_hint": "cos",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g04-g04-p01",
+     "text_hint": "tan",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g07-g03-p01",
+     "text_hint": "π/3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g07-g02-p01",
+     "text_hint": "π/4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g01-p01",
+     "text_hint": "0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g02-p01",
+     "text_hint": "0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g03-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g04-p01",
+     "text_hint": "0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g07-g01-p01",
+     "text_hint": "π/6",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g08-g01-p01",
+     "text_hint": "(√3/2, 1/2)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g05-p01",
+     "text_hint": "π/6",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g06-p01",
+     "text_hint": "1/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g07-p01",
+     "text_hint": "√3/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g08-p01",
+     "text_hint": "√3/3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g06-p01",
+     "text_hint": "(1, 0)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh07-g07-g05-p01",
+     "text_hint": "cos",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g09-p01",
+     "text_hint": "π/4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g10-p01",
+     "text_hint": "√2/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g11-p01",
+     "text_hint": "√2/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g12-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g13-p01",
+     "text_hint": "π/3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g14-p01",
+     "text_hint": "√3/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g15-p01",
+     "text_hint": "1/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g16-p01",
+     "text_hint": "√3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g17-p01",
+     "text_hint": "π/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g18-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g05-g19-p01",
+     "text_hint": "0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g06-p01",
+     "text_hint": "不存在",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s15-sh36-g07-p01",
+     "text_hint": "π/2 处 tan 分母 cos = 0",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s15-sh03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s15-sh36-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s15-sh07-g07-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s15-sh07-g08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s15-sh07-g07-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s15-sh36-g04-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s15-sh36-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s15-sh36-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s15-sh36-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s15-sh07-g07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s15-sh07-g07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s15-sh36-g05-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s15-sh36-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s15-sh36-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s15-sh36-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s15-sh07-g07-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s15-sh07-g08-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s15-sh36-g05-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s15-sh36-g05-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s15-sh36-g05-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s15-sh36-g05-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s15-sh07-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s15-sh07-g07-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s15-sh36-g05-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s15-sh36-g05-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s15-sh36-g05-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s15-sh36-g05-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s15-sh36-g05-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s15-sh36-g05-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s15-sh36-g05-g15-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s15-sh36-g05-g16-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s15-sh36-g05-g17-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s15-sh36-g05-g18-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s15-sh36-g05-g19-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s15-sh36-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 17,
+     "target": "s15-sh36-g07-p01"
+    }
+   ],
+   "kp": [
+    "P15-三角函数常用值"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "三角函数常用值。"
+  },
+  {
+   "slide": 14,
+   "text": "记不住就回单位圆：横坐标 cos，纵坐标 sin，五个点一次记全。",
+   "anchors": [
+    {
+     "element_id": "s15-sh73-g02-p01",
+     "text_hint": "记不住就回单位圆：横坐标 cos，纵坐标 sin",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s15-sh73-g02-p01"
+    }
+   ],
+   "kp": [
+    "P15-三角函数常用值-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "记不住就回单位圆：横坐标 cos，纵坐标 sin，五个点一…"
+  },
+  {
+   "slide": 15,
+   "text": "反三角函数取值范围。实心端 = 取到 · 空心端 = 取不到。结果必须落在规定区间内，写答案前先检查。arcsin x。[−π/2, π/2]。结果范围。对照例。arcsin(1/2)。= π/6。−π/2。π/2。5π/6 超出范围，不能写。arccos x。[0, π]。结果范围。arctan 1。= π/4。0。π。π/4 在区间内，成立。arctan x。(−π/2, π/2)。",
+   "anchors": [
+    {
+     "element_id": "s16-sh01-g02-p01",
+     "text_hint": "反三角函数取值范围",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh05-g01-p01",
+     "text_hint": "实心端 = 取到 · 空心端 = 取不到",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh01-g03-p01",
+     "text_hint": "结果必须落在规定区间内，写答案前先检查",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh07-g01-p01",
+     "text_hint": "arcsin x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh07-g11-p01",
+     "text_hint": "[−π/2, π/2]",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh07-g02-p01",
+     "text_hint": "结果范围",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh43-g02-p01",
+     "text_hint": "对照例",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh43-g03-p01",
+     "text_hint": "arcsin(1/2)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh43-g04-p01",
+     "text_hint": "= π/6",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh07-g09-p01",
+     "text_hint": "−π/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh07-g10-p01",
+     "text_hint": "π/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh43-g05-p01",
+     "text_hint": "5π/6 超出范围，不能写",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh19-g01-p01",
+     "text_hint": "arccos x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh19-g11-p01",
+     "text_hint": "[0, π]",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh19-g02-p01",
+     "text_hint": "结果范围",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh43-g07-p01",
+     "text_hint": "arctan 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh43-g08-p01",
+     "text_hint": "= π/4",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh19-g09-p01",
+     "text_hint": "0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh19-g10-p01",
+     "text_hint": "π",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh43-g09-p01",
+     "text_hint": "π/4 在区间内，成立",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh31-g01-p01",
+     "text_hint": "arctan x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh31-g11-p01",
+     "text_hint": "(−π/2, π/2)",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh05-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s16-sh07-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s16-sh07-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s16-sh07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s16-sh43-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s16-sh43-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s16-sh43-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s16-sh07-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s16-sh07-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s16-sh43-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s16-sh19-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s16-sh19-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s16-sh19-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s16-sh43-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s16-sh43-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s16-sh19-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s16-sh19-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s16-sh43-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s16-sh31-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s16-sh31-g11-p01"
+    }
+   ],
+   "kp": [
+    "P16-反三角函数取值范围"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "反三角函数取值范围。"
+  },
+  {
+   "slide": 15,
+   "text": "结果范围（两端取不到）。操作顺序。看名称 → 查区间 → 写答案。−π/2。π/2。答案先过区间这一关，再落笔。",
+   "anchors": [
+    {
+     "element_id": "s16-sh31-g02-p01",
+     "text_hint": "结果范围（两端取不到）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh53-g02-p01",
+     "text_hint": "操作顺序",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh53-g03-p01",
+     "text_hint": "看名称 → 查区间 → 写答案",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh31-g09-p01",
+     "text_hint": "−π/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh31-g10-p01",
+     "text_hint": "π/2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s16-sh57-g03-p01",
+     "text_hint": "答案先过区间这一关，再落笔",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh31-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh53-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s16-sh53-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh31-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s16-sh31-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s16-sh57-g03-p01"
+    }
+   ],
+   "kp": [
+    "P16-反三角函数取值范围-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "结果范围（两端取不到）。"
+  },
+  {
+   "slide": 15,
+   "text": "16 / 22。",
+   "anchors": [
+    {
+     "element_id": "s16-sh57-g04-p01",
+     "text_hint": "16 / 22",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s16-sh57-g04-p01"
+    }
+   ],
+   "kp": [
+    "P16-反三角函数取值范围-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "16 / 22。"
+  },
+  {
+   "slide": 16,
+   "text": "复合函数的内外层。先认内层 u = g(x)，再认外层 y = f(u)。拆的原则：从里往外认，\n不要把整个式子当一层看。1。x。u。内层。u = g(x)。输入。中间量。例：y = √(ln x)。2。内层 u = ln x，外层 y = √u。外层。y。y = f(u)。为什么要拆：定义域分两层看。盒子套盒子：一层算完，结果再进下一层。3。x → u → y，顺序不能颠倒。",
+   "anchors": [
+    {
+     "element_id": "s17-sh01-g02-p01",
+     "text_hint": "复合函数的内外层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh01-g03-p01",
+     "text_hint": "先认内层 u = g(x)，再认外层 y = f",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh05-g01-g03-p01",
+     "text_hint": "拆的原则：从里往外认，\n不要把整个式子当一层看。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh05-g01-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g02-g01-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g08-g01-p01",
+     "text_hint": "u",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g05-g02-p01",
+     "text_hint": "内层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g05-g03-p01",
+     "text_hint": "u = g(x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g02-g02-p01",
+     "text_hint": "输入",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g08-g02-p01",
+     "text_hint": "中间量",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh05-g03-g03-p01",
+     "text_hint": "例：y = √(ln x)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh05-g03-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh05-g03-g04-p01",
+     "text_hint": "内层 u = ln x，外层 y = √u",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g11-g02-p01",
+     "text_hint": "外层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g14-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g11-g03-p01",
+     "text_hint": "y = f(u)",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh05-g05-g03-p01",
+     "text_hint": "为什么要拆：定义域分两层看。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g16-p01",
+     "text_hint": "盒子套盒子：一层算完，结果再进下一层。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh05-g05-g02-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh22-g17-p01",
+     "text_hint": "x → u → y，顺序不能颠倒。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s17-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s17-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s17-sh05-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s17-sh05-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s17-sh22-g02-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s17-sh22-g08-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s17-sh22-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s17-sh22-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s17-sh22-g02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s17-sh22-g08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s17-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s17-sh05-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s17-sh05-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s17-sh22-g11-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s17-sh22-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s17-sh22-g11-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s17-sh05-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s17-sh22-g16-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s17-sh05-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s17-sh22-g17-p01"
+    }
+   ],
+   "kp": [
+    "P17-复合函数的内外层"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "复合函数的内外层。"
+  },
+  {
+   "slide": 16,
+   "text": "内层要有意义，算出的 u 还要被外层接收。下一节：极限从这里出发——先看清内外层，再谈变化趋势。17。",
+   "anchors": [
+    {
+     "element_id": "s17-sh05-g05-g04-p01",
+     "text_hint": "内层要有意义，算出的 u 还要被外层接收。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh50-g03-p01",
+     "text_hint": "下一节：极限从这里出发——先看清内外层，再谈变化",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s17-sh50-g04-p01",
+     "text_hint": "17",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s17-sh05-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s17-sh50-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s17-sh50-g04-p01"
+    }
+   ],
+   "kp": [
+    "P17-复合函数的内外层-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "内层要有意义，算出的 u 还要被外层接收。"
+  },
+  {
+   "slide": 17,
+   "text": "来，看这道例题。求 y 等于 ln x 再开根号的定义域。这题是复合函数，一看到复合，脑子里就得有两个念头：内层要有意义，内层的值还得落进外层的定义域里。这两件事缺一不可，很多同学就栽在只做了其中一件。",
+   "anchors": [
+    {
+     "element_id": "s18-sh01-g02-p01",
+     "text_hint": "例题：复合函数定义域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh01-g03-p01",
+     "text_hint": "内层有意义 + 内层值落进外层定义域",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "composite-domain"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "复合函数定义域的两个条件"
+  },
+  {
+   "slide": 17,
+   "text": "我们先把它拆开看。令 u = ln x，这是内层；y = √u，这是外层。箭头从内层指向外层，意思就是内层算出来的 u，要交给外层去用。所以定义域不是只看一边，得两头都管住。",
+   "anchors": [
+    {
+     "element_id": "s18-sh12-g06-p01",
+     "text_hint": "u = ln x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh12-g10-p01",
+     "text_hint": "y = √u",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh12-g11-p01",
+     "text_hint": "外层 ← 内层",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "令 u = ln x，这是内层",
+     "target": "s18-sh12-g06-p01"
+    }
+   ],
+   "kp": [
+    "composite-domain"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "拆成内层 u=ln x 与外层 y=√u"
+  },
+  {
+   "slide": 17,
+   "text": "那就有两个条件。先看外层：根号里面的东西必须非负，所以要求 u 大于等于零。换算回 x，就是 ln x ≥ 0，解得 x ≥ 1。这一步大家都很熟，考试里也基本都能写出来。",
+   "anchors": [
+    {
+     "element_id": "s18-sh33-g03-p01",
+     "text_hint": "外层：根号内非负",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh33-g04-p01",
+     "text_hint": "ln x ≥ 0 → x ≥ 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh24-g08-p01",
+     "text_hint": "x ≥ 1",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "unfocus",
+     "at_sentence": 1,
+     "at_text": "那就有两个条件",
+     "target": "s18-sh12-g06-p01"
+    },
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "解得 x ≥ 1",
+     "target": "s18-sh33-g04-p01"
+    }
+   ],
+   "kp": [
+    "outer-domain"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "外层条件：根号内非负得 x≥1"
+  },
+  {
+   "slide": 17,
+   "text": "但是别忘了第二个条件：内层自己也要有意义。ln x 的真数必须为正，所以 x > 0。这个条件跟上头那个不一样，它是内层本身的要求，不是外面根号提出来的。",
+   "anchors": [
+    {
+     "element_id": "s18-sh33-g05-p01",
+     "text_hint": "内层：真数为正",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh33-g06-p01",
+     "text_hint": "x > 0",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "所以 x > 0",
+     "target": "s18-sh33-g06-p01"
+    }
+   ],
+   "kp": [
+    "inner-domain"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "内层条件：真数为正得 x>0"
+  },
+  {
+   "slide": 17,
+   "text": "两个条件都摆出来，最后一步是取交集。x ≥ 1 和 x > 0 要同时成立，公共部分就是 x ≥ 1，写成区间是左闭右开的……不对，是闭区间 [1, +∞)。这里 1 是能取到的，ln 1 等于 0，根号零没毛病。",
+   "anchors": [
+    {
+     "element_id": "s18-sh33-g07-p01",
+     "text_hint": "取交集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh24-g07-p01",
+     "text_hint": "[1,+∞)",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "闭区间 [1, +∞)",
+     "target": "s18-sh24-g07-p01"
+    }
+   ],
+   "kp": [
+    "intersection"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "取交集得定义域 [1,+∞)"
+  },
+  {
+   "slide": 17,
+   "text": "最后回头核对一下，是个好习惯。u = ln x 的值域是零到正无穷，全落在根号允许的范围内，说明我们算的这个定义域是自洽的，没有漏也没有多。",
+   "anchors": [
+    {
+     "element_id": "s18-sh12-g06-p01",
+     "text_hint": "u = ln x",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "check-self-consistent"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用 u 的值域核对自洽"
+  },
+  {
+   "slide": 17,
+   "text": "最容易错的地方我再强调一遍：只令 ln x ≥ 0，解出 x ≥ 1 就收工。这样就把内层的真数为正给丢了。虽然这题碰巧 x ≥ 1 包含了 x > 0，但换个题，比如内层是 ln(1 − x)，你只做一个条件，答案立刻就错了。记住：两个条件，取交集。",
+   "anchors": [
+    {
+     "element_id": "s18-sh01-g03-p01",
+     "text_hint": "内层有意义 + 内层值落进外层定义域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s18-sh33-g02-p01",
+     "text_hint": "两个条件",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "最容易错的地方",
+     "target": "s18-sh33-g02-p01"
+    }
+   ],
+   "kp": [
+    "common-mistake"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "易错点：漏掉内层真数为正"
+  },
+  {
+   "slide": 18,
+   "text": "分段函数是一个函数。例：y = |x|。y。不同区间用不同表达式，本质仍是同一个函数。x ≥ 0。x < 0。几段式子，仍是同一个函数。01。只是把 x 分区，各用各的表达式。y = −x。y = x。先看 x 落在哪个区间。02。落在哪一段，就代哪一段的式子。分界点归哪边，按题目开闭。03。不能凭印象，实心点取到，空心点不取。别当成「两个函数」。04。O。x。也别漏掉分界点。",
+   "anchors": [
+    {
+     "element_id": "s19-sh05-g02-p01",
+     "text_hint": "分段函数是一个函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g02-p01",
+     "text_hint": "例：y = |x|",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g08-p01",
+     "text_hint": "y",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g01-p01",
+     "text_hint": "不同区间用不同表达式，本质仍是同一个函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g17-p01",
+     "text_hint": "x ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g16-p01",
+     "text_hint": "x < 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g03-g02-p01",
+     "text_hint": "几段式子，仍是同一个函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g03-g01-p01",
+     "text_hint": "01",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g03-g03-p01",
+     "text_hint": "只是把 x 分区，各用各的表达式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g14-p01",
+     "text_hint": "y = −x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g15-p01",
+     "text_hint": "y = x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g05-g02-p01",
+     "text_hint": "先看 x 落在哪个区间",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g05-g01-p01",
+     "text_hint": "02",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g05-g03-p01",
+     "text_hint": "落在哪一段，就代哪一段的式子",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g07-g02-p01",
+     "text_hint": "分界点归哪边，按题目开闭",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g07-g01-p01",
+     "text_hint": "03",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g07-g03-p01",
+     "text_hint": "不能凭印象，实心点取到，空心点不取",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g09-g02-p01",
+     "text_hint": "别当成「两个函数」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g09-g01-p01",
+     "text_hint": "04",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g13-p01",
+     "text_hint": "O",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g07-p01",
+     "text_hint": "x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh08-g09-g03-p01",
+     "text_hint": "也别漏掉分界点",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s19-sh31-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s19-sh31-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s19-sh08-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s19-sh31-g17-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s19-sh31-g16-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s19-sh08-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s19-sh08-g03-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s19-sh08-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s19-sh31-g14-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s19-sh31-g15-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s19-sh08-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s19-sh08-g05-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s19-sh08-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s19-sh08-g07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s19-sh08-g07-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s19-sh08-g07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s19-sh08-g09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s19-sh08-g09-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s19-sh31-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s19-sh31-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s19-sh08-g09-g03-p01"
+    }
+   ],
+   "kp": [
+    "P19-分段函数是一个函数"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "分段函数是一个函数。"
+  },
+  {
+   "slide": 18,
+   "text": "图像上接不接得上，由条件决定。两段在原点拼成 V 形，接上了。下一节：练习与研究极限。",
+   "anchors": [
+    {
+     "element_id": "s19-sh08-g09-g04-p01",
+     "text_hint": "图像上接不接得上，由条件决定",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh31-g19-p01",
+     "text_hint": "两段在原点拼成 V 形，接上了",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s19-sh51-g02-p01",
+     "text_hint": "下一节：练习与研究极限",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh08-g09-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s19-sh31-g19-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s19-sh51-g02-p01"
+    }
+   ],
+   "kp": [
+    "P19-分段函数是一个函数-2"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "图像上接不接得上，由条件决定。"
+  },
+  {
+   "slide": 18,
+   "text": "19。",
+   "anchors": [
+    {
+     "element_id": "s19-sh51-g03-p01",
+     "text_hint": "19",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s19-sh51-g03-p01"
+    }
+   ],
+   "kp": [
+    "P19-分段函数是一个函数-3"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "19。"
+  },
+  {
+   "slide": 19,
+   "text": "练习：分段函数求值。先定段，再代入，最后核对分界点归属。01 定段。02 代入。03 核对。x 落在哪一段？。只代该段表达式。分界点归哪段？。先看区间，再动笔。别的段一眼都不看。回题目确认开闭。图像辅助。常见错误。错在段选错，不在算错。分界点。分界点代入了旁边那一段。y = x − 1。y = 1 − x。记一句话。先在 x 轴上找位置，再看落到哪条线。先定段，再代入，答案不跑偏。",
+   "anchors": [
+    {
+     "element_id": "s20-sh01-g02-p01",
+     "text_hint": "练习：分段函数求值",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh01-g03-p01",
+     "text_hint": "先定段，再代入，最后核对分界点归属",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g01-g03-p01",
+     "text_hint": "01 定段",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g02-g03-p01",
+     "text_hint": "02 代入",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g03-g03-p01",
+     "text_hint": "03 核对",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g01-g04-p01",
+     "text_hint": "x 落在哪一段？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g02-g04-p01",
+     "text_hint": "只代该段表达式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g03-g04-p01",
+     "text_hint": "分界点归哪段？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g01-g05-p01",
+     "text_hint": "先看区间，再动笔",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g02-g05-p01",
+     "text_hint": "别的段一眼都不看",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh05-g03-g05-p01",
+     "text_hint": "回题目确认开闭",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh28-g02-p01",
+     "text_hint": "图像辅助",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh42-g02-p01",
+     "text_hint": "常见错误",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh42-g03-p01",
+     "text_hint": "错在段选错，不在算错",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh28-g10-p01",
+     "text_hint": "分界点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh42-g04-p01",
+     "text_hint": "分界点代入了旁边那一段",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh28-g12-p01",
+     "text_hint": "y = x − 1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh28-g11-p01",
+     "text_hint": "y = 1 − x",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh42-g07-p01",
+     "text_hint": "记一句话",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh28-g13-p01",
+     "text_hint": "先在 x 轴上找位置，再看落到哪条线",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh42-g08-p01",
+     "text_hint": "先定段，再代入，答案不跑偏",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s20-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s20-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s20-sh05-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s20-sh05-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s20-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s20-sh05-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s20-sh05-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s20-sh05-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s20-sh05-g01-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s20-sh05-g02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s20-sh05-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s20-sh28-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s20-sh42-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s20-sh42-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s20-sh28-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s20-sh42-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s20-sh28-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s20-sh28-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s20-sh42-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s20-sh28-g13-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 16,
+     "target": "s20-sh42-g08-p01"
+    }
+   ],
+   "kp": [
+    "P20-练习分段函数求值"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "练习：分段函数求值。"
+  },
+  {
+   "slide": 19,
+   "text": "函数复习 · 分段函数。20 / 22。",
+   "anchors": [
+    {
+     "element_id": "s20-sh51-g02-p01",
+     "text_hint": "函数复习 · 分段函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s20-sh51-g03-p01",
+     "text_hint": "20 / 22",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s20-sh51-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s20-sh51-g03-p01"
+    }
+   ],
+   "kp": [
+    "P20-练习分段函数求值-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "函数复习 · 分段函数。"
+  },
+  {
+   "slide": 20,
+   "text": "这些地方容易丢分。交卷前逐条打勾：六处高频错误，一处不漏。错误做法。正确做法。定义域：漏条件、不取交集。逐条列全，最后取交集。出现频率最高。对数：只写 x > 0。真数整体大于零：x − 1 > 0。反三角：结果写超范围。先定区间：arcsin(1/2) = π/6。换底公式：分子分母写反。底在下面：ln b / ln a。复合：直接令内层 ≥ 0。先保内层有意义，再看外层定义域。",
+   "anchors": [
+    {
+     "element_id": "s21-sh07-g02-p01",
+     "text_hint": "这些地方容易丢分",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh07-g03-p01",
+     "text_hint": "交卷前逐条打勾：六处高频错误，一处不漏",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g02-p01",
+     "text_hint": "错误做法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g03-p01",
+     "text_hint": "正确做法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g05-g02-p01",
+     "text_hint": "定义域：漏条件、不取交集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g05-g03-p01",
+     "text_hint": "逐条列全，最后取交集",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g05-g04-p01",
+     "text_hint": "出现频率最高",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g06-g02-p01",
+     "text_hint": "对数：只写 x > 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g06-g03-p01",
+     "text_hint": "真数整体大于零：x − 1 > 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g07-g02-p01",
+     "text_hint": "反三角：结果写超范围",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g07-g03-p01",
+     "text_hint": "先定区间：arcsin(1/2) = π/6",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g08-g02-p01",
+     "text_hint": "换底公式：分子分母写反",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g08-g03-p01",
+     "text_hint": "底在下面：ln b / ln a",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g09-g02-p01",
+     "text_hint": "复合：直接令内层 ≥ 0",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh11-g09-g03-p01",
+     "text_hint": "先保内层有意义，再看外层定义域",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s21-sh07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s21-sh07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s21-sh11-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s21-sh11-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s21-sh11-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s21-sh11-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s21-sh11-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s21-sh11-g06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s21-sh11-g06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s21-sh11-g07-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s21-sh11-g07-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s21-sh11-g08-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s21-sh11-g08-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s21-sh11-g09-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s21-sh11-g09-g03-p01"
+    }
+   ],
+   "kp": [
+    "P21-这些地方容易丢分"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "这些地方容易丢分。"
+  },
+  {
+   "slide": 20,
+   "text": "第六处：分段函数分界点归属——不在本段就别代进来。21 / 22。",
+   "anchors": [
+    {
+     "element_id": "s21-sh42-g02-p01",
+     "text_hint": "第六处：分段函数分界点归属——不在本段就别代进来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s21-sh42-g03-p01",
+     "text_hint": "21 / 22",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s21-sh42-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s21-sh42-g03-p01"
+    }
+   ],
+   "kp": [
+    "P21-这些地方容易丢分-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "第六处：分段函数分界点归属——不在本段就别代进来。"
+  },
+  {
+   "slide": 21,
+   "text": "好，第22页，也是最后一页。我们花两分钟，把整节课用一张图串起来。你看这张图，从上到下是四层：语言、求域、图像、运算，一层套一层，底下的东西都挂在最中间那个「函数」上。",
+   "anchors": [
+    {
+     "element_id": "s22-sh01-g02-p01",
+     "text_hint": "回顾：一张图串起来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh01-g03-p01",
+     "text_hint": "语言 · 求域 · 图像 · 运算，四层一层套一",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh27-g03-p01",
+     "text_hint": "函数",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "zoom",
+     "at_sentence": 1,
+     "at_text": "从上到下是四层",
+     "target": "s22-sh01-g03-p01"
+    }
+   ],
+   "kp": [
+    "function-overview"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用一张图串起四层知识"
+  },
+  {
+   "slide": 21,
+   "text": "先看第一层，语言层。核心就一句：三要素判断两个函数是不是同一个函数——定义域、对应关系、值域，三个都对上才算同一个。写完还要用区间记号把答案写规范，别写成不等式就交上去。",
+   "anchors": [
+    {
+     "element_id": "s22-sh05-g02-g01-p01",
+     "text_hint": "01 语言层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g02-g02-p01",
+     "text_hint": "三要素判同一函数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g02-g03-p01",
+     "text_hint": "区间记号把答案写规范",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh27-g05-g02-p01",
+     "text_hint": "三要素",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "三要素判断两个函数",
+     "target": "s22-sh05-g02-g02-p01"
+    }
+   ],
+   "kp": [
+    "function-same",
+    "interval-notation"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "语言层：三要素与区间记号"
+  },
+  {
+   "slide": 21,
+   "text": "第二层，求域层。定义域靠四大限制去卡，值域有四种方法去求。这里最容易被扣分的是最后一步：结果一定写成区间，区间两个端点，逐端查开闭——能取到就是闭，取不到就是开。",
+   "anchors": [
+    {
+     "element_id": "s22-sh05-g04-g01-p01",
+     "text_hint": "02 求域层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g04-g02-p01",
+     "text_hint": "四大限制求定义域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g04-g03-p01",
+     "text_hint": "四种方法求值域",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g04-g04-p01",
+     "text_hint": "结果写成区间，逐端查开闭",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "逐端查开闭",
+     "target": "s22-sh05-g04-g04-p01"
+    }
+   ],
+   "kp": [
+    "domain-range"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "求域层：四大限制与逐端查开闭"
+  },
+  {
+   "slide": 21,
+   "text": "第三层，图像层。五类基本初等函数：幂、指、对、三角、反三角，这五类都得能默画出来。画的时候抓四点：定点、单调性、特殊值、还有范围。默画不是凭感觉，是这四样心里都有数。",
+   "anchors": [
+    {
+     "element_id": "s22-sh05-g06-g01-p01",
+     "text_hint": "03 图像层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g06-g02-p01",
+     "text_hint": "幂、指、对、三角、反三角",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g06-g03-p01",
+     "text_hint": "五类要能默画：定点、单调、特殊值、范围",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh27-g05-g08-p01",
+     "text_hint": "五类图像",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "抓四点",
+     "target": "s22-sh05-g06-g03-p01"
+    }
+   ],
+   "kp": [
+    "elementary-graphs"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "图像层：五类图像默画四要素"
+  },
+  {
+   "slide": 21,
+   "text": "最后一层，运算层。复合函数先分内外层，从里往外一层一层剥；分段函数呢，先定段再代入，分界点到底归哪一段，看清楚再动手。这两条是我们前面反复练过的。",
+   "anchors": [
+    {
+     "element_id": "s22-sh05-g08-g01-p01",
+     "text_hint": "04 运算层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g08-g02-p01",
+     "text_hint": "复合先分内外层",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g08-g03-p01",
+     "text_hint": "分段先定段再代入",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "unfocus",
+     "at_sentence": 1,
+     "at_text": "最后一层，运算层",
+     "target": "s22-sh05-g06-g03-p01"
+    }
+   ],
+   "kp": [
+    "composite-piecewise"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "运算层：复合与分段两条规矩"
+  },
+  {
+   "slide": 21,
+   "text": "那这一单元就到这儿。下一课我们进极限，会用函数去刻画「逼近」这件事，先讲直观概念，再讲左右极限。今天这四层没弄明白的，回去照着这张图再理一遍，尤其区间和图像两块。下课。",
+   "anchors": [
+    {
+     "element_id": "s22-sh01-g02-p01",
+     "text_hint": "回顾：一张图串起来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s22-sh05-g06-g03-p01",
+     "text_hint": "五类要能默画：定点、单调、特殊值、范围",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "reset_zoom",
+     "at_sentence": 1,
+     "at_text": "那这一单元就到这儿",
+     "target": "s22-sh01-g03-p01"
+    }
+   ],
+   "kp": [
+    "function-overview"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "预告下一课极限并布置复习"
+  }
+ ],
+ "warnings": [
+  "❌ 第 2 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 2 页第 1 次尝试无有效单元",
+  "❌ 第 2 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 2 页第 2 次尝试无有效单元",
+  "⚠️ 第 2 页已回退为规则兜底",
+  "❌ 第 3 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 3 页第 1 次尝试无有效单元",
+  "❌ 第 3 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 3 页第 2 次尝试无有效单元",
+  "⚠️ 第 3 页已回退为规则兜底",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 1 次尝试无有效单元",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 2 次尝试无有效单元",
+  "⚠️ 第 4 页已回退为规则兜底",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 5 页第 1 次尝试无有效单元",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 5 页第 2 次尝试无有效单元",
+  "⚠️ 第 5 页已回退为规则兜底",
+  "❌ 第 6 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 6 页第 1 次尝试无有效单元",
+  "❌ 第 6 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 6 页第 2 次尝试无有效单元",
+  "⚠️ 第 6 页已回退为规则兜底",
+  "❌ 第 7 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 657 (char 656)）",
+  "⚠️ 第 7 页第 1 次尝试无有效单元",
+  "❌ 第 7 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 7 页第 2 次尝试无有效单元",
+  "⚠️ 第 7 页已回退为规则兜底",
+  "❌ 第 8 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 8 页第 1 次尝试无有效单元",
+  "❌ 第 8 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 8 页第 2 次尝试无有效单元",
+  "⚠️ 第 8 页已回退为规则兜底",
+  "❌ 第 9 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 9 页第 1 次尝试无有效单元",
+  "❌ 第 9 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 9 页第 2 次尝试无有效单元",
+  "⚠️ 第 9 页已回退为规则兜底",
+  "❌ 第 10 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 19 (char 18)）",
+  "⚠️ 第 10 页第 1 次尝试无有效单元",
+  "❌ 第 10 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 10 页第 2 次尝试无有效单元",
+  "⚠️ 第 10 页已回退为规则兜底",
+  "❌ 第 11 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 11 页第 1 次尝试无有效单元",
+  "❌ 第 11 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 11 页第 2 次尝试无有效单元",
+  "⚠️ 第 11 页已回退为规则兜底",
+  "❌ 第 12 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 12 页第 1 次尝试无有效单元",
+  "❌ 第 13 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 190 (char 189)）",
+  "⚠️ 第 13 页第 1 次尝试无有效单元",
+  "❌ 第 13 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 13 页第 2 次尝试无有效单元",
+  "⚠️ 第 13 页已回退为规则兜底",
+  "❌ 第 14 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 14 页第 1 次尝试无有效单元",
+  "❌ 第 14 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 14 页第 2 次尝试无有效单元",
+  "⚠️ 第 14 页已回退为规则兜底",
+  "❌ 第 15 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 19 (char 18)）",
+  "⚠️ 第 15 页第 1 次尝试无有效单元",
+  "❌ 第 15 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 15 页第 2 次尝试无有效单元",
+  "⚠️ 第 15 页已回退为规则兜底",
+  "❌ 第 16 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 16 页第 1 次尝试无有效单元",
+  "❌ 第 16 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 16 页第 2 次尝试无有效单元",
+  "⚠️ 第 16 页已回退为规则兜底",
+  "❌ 第 17 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 17 页第 1 次尝试无有效单元",
+  "❌ 第 17 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 17 页第 2 次尝试无有效单元",
+  "⚠️ 第 17 页已回退为规则兜底",
+  "❌ 第 18 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 18 页第 1 次尝试无有效单元",
+  "❌ 第 19 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 19 页第 1 次尝试无有效单元",
+  "❌ 第 19 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 19 页第 2 次尝试无有效单元",
+  "⚠️ 第 19 页已回退为规则兜底",
+  "❌ 第 20 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 20 页第 1 次尝试无有效单元",
+  "❌ 第 20 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 20 页第 2 次尝试无有效单元",
+  "⚠️ 第 20 页已回退为规则兜底",
+  "❌ 第 21 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 21 页第 1 次尝试无有效单元",
+  "❌ 第 21 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 193 (char 192)）",
+  "⚠️ 第 21 页第 2 次尝试无有效单元",
+  "⚠️ 第 21 页已回退为规则兜底",
+  "❌ 第 22 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 22 页第 1 次尝试无有效单元"
+ ],
+ "created_at": "2026-10-29T18:25:25",
+ "coverage": {
+  "slides": 22,
+  "units": 58,
+  "chars": 6295,
+  "est_sec": 1259.0,
+  "longest_unit_sec": 43.8,
+  "units_over_hard_max": 0,
+  "units_with_anchor": 58,
+  "anchors": 528,
+  "anchor_hit": 528,
+  "anchor_hit_rate": 1.0,
+  "para_level_anchors": 528,
+  "low_confidence_anchors": 0,
+  "ops": 479,
+  "ops_invalid": 0
+ },
+ "routes": [
+  {
+   "route_id": "p-r-skip-0-3",
+   "kind": "skip",
+   "fork_node": 0,
+   "merge_node": 3,
+   "steps": [],
+   "est_sec": -31.0,
+   "reason": "开头几格反复铺同一件事，学生一听就懂，略过不伤后续。",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-skip-23-3",
+   "kind": "skip",
+   "fork_node": 23,
+   "merge_node": 26,
+   "steps": [],
+   "est_sec": -40.6,
+   "reason": "这几格讲的是同一个要点，前面已讲透，整段跳过正好省时间。",
+   "when": {
+    "comprehension": {
+     "==": "confirmed"
+    },
+    "consecutive_confused": {
+     "<=": 0
+    }
+   }
+  },
+  {
+   "route_id": "p-r-revisit-33",
+   "kind": "revisit",
+   "fork_node": 33,
+   "merge_node": 34,
+   "steps": [
+    {
+     "unit_id": "S16-U01",
+     "variant_id": "",
+     "label": "取值范围检查",
+     "text": "来，这一格我们再看一遍。反三角函数的答案不是随便写的，它必须落在规定的取值范围里。记住两个记号：实心端表示取得到，空心端表示取不到。所以写完答案别急着翻页，先回头看一眼——我写的这个值，在不在区间里？端点该取还是不该取，我标对了没有？比如 arcsin x，它的结果有固定的范围限制，超出就不算对。养成习惯：先算，再检查区间，最后落笔。",
+     "est_sec": 33.6
+    }
+   ],
+   "est_sec": 33.6,
+   "reason": "这一格最长、端点取不取容易混，学生常在这里掉队。",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  },
+  {
+   "route_id": "p-r-revisit-45",
+   "kind": "revisit",
+   "fork_node": 45,
+   "merge_node": 46,
+   "steps": [
+    {
+     "unit_id": "S19-U01",
+     "variant_id": "",
+     "label": "分段函数本质",
+     "text": "停一下，这一格我们再讲一遍。分段函数，说到底是一个函数，不是几个函数。像 y 等于 x 的绝对值，x 大于等于 0 时是一段，x 小于 0 时是另一段，看起来是两个式子，但它们合起来只描述同一个函数。所以要盯住两件事：定义域是整个范围，各段不能重叠也不能漏；每一段只管自己那部分 x。判断时问自己一句：这个 x 落在哪一段？代进对应的式子就行。",
+     "est_sec": 34.4
+    }
+   ],
+   "est_sec": 34.4,
+   "reason": "分段函数写成几段式子，学生易当成几个函数，这里最容易迷。",
+   "when": {
+    "comprehension": {
+     "in": [
+      "vague",
+      "confused"
+     ]
+    }
+   }
+  }
+ ]
+}

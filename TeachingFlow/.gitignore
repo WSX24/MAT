@@ -1,0 +1,31 @@
+# TeachingFlow/ 自己的产物规则。
+#
+# 两条硬约束（都是踩过的坑，改之前先看完）：
+#   1) `#` 只能整行注释，**不能写在规则后面**。以前这里写的是
+#      `dist/        # 打包产物…`，git 会把整行当成"带空格和井号的目录名"，
+#      规则静默失效——看起来排掉了，其实没有。注释一律单独占行。
+#   2) 每条都锚定到 TeachingFlow 根（前导斜杠），不用裸 `state/`。
+#      裸模式命中任意深度：classroom/webapp/src/state/{app,toast}.ts 是前端源码
+#      （main.ts 直接 import），被 `state/` 当流水线状态排掉后，新 clone 前端构建失败。
+# 排查方法：`git check-ignore -v <路径>` 看命中的是哪一条。
+
+# 每次运行的 prompt / result / pptx
+/runs/
+
+# tools/package_release.py 的打包产物
+/dist/
+
+# S5 短路径构建目录（成功后归档进对应 run，失败残留可直接删）
+/.work/
+
+# sqlite 库（classroom.sqlite）与导入的源 pptx（单份实测 29MB）
+/state/
+
+# 失败 run 的回收站
+/recovered/
+
+# 下面三条是"任意深度"的通用模式，与仓库根 .gitignore 重复；
+# 留在这里是为了单独拷走 TeachingFlow/ 使用时也成立。
+__pycache__/
+*.pyc
+.env

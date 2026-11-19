@@ -1,0 +1,158 @@
+# ============================================================================
+# MAT · 多智能体教育系统 —— 入库范围规则
+#
+# 原则只有一条：**产物、密钥、缓存、本机状态不入库；代码、模板、文档、教具入库。**
+# 每条规则下面写清"为什么"，因为下一个改这里的人需要知道代价：
+#   漏排一条 → 把 1MB 级派生数据或真 Key 提交上去；
+#   误排一条 → 新 clone 起不来，而且改完还以为是环境问题。
+# 第 10 节是反向清单（故意入库、不要加规则），改之前先读那一节。
+#
+# 写规则的两条硬约束（都是踩过的坑）：
+#   1) `#` 只能整行注释，**不能写在规则后面**。`dist/  # 打包产物` 这种写法会被
+#      git 当成"名字里带空格和井号的目录"，规则静默失效——TeachingFlow/.gitignore
+#      里就这么死过两条。看起来排掉了，其实一条没生效。
+#   2) 除全局模式外，一律锚定到具体路径。不带斜杠的 `state/` 命中任意深度，
+#      会把 classroom/webapp/src/state/*.ts（前端源码）一起排掉。
+# ============================================================================
+
+# ── 1. 密钥（任意深度）──────────────────────────────────────────────────────
+# .env 无前导斜杠 = 任意层级匹配：根 .env / PPT-Agent/.env / classroom/.env 一并排除。
+# Key 的唯一出处是 PPT-Agent/.env（见 README「配置」）；classroom/.env 由 setup.ps1
+# 生成、只写本机参数。两者都不该入库。
+.env
+# 变体同样只对本机成立（.env.local / .env.production / .env.test.local …）。
+.env.*
+# 模板必须入库：只有装了真 Key 的文件才排除。这两条否定规则是防呆——
+# 若将来有人把上面写成 .env*，模板会被一起吞掉，新用户就无从知道要填哪些变量。
+# `!*.env.example` 带通配前缀，覆盖任意子目录里的模板（classroom/、集成路由V1.0/）。
+!.env.example
+!*.env.example
+
+# ── 2. Python / 测试缓存与虚拟环境 ──────────────────────────────────────────
+__pycache__/
+*.py[cod]
+# 根目录与 TeachingFlow/ 下各有一份。pytest 会在里面自建 .gitignore 把它藏起来，
+# 但那是运行时产物——一旦被清掉 git status 立刻变脏，所以自己排掉。
+.pytest_cache/
+# 虚拟环境装着整棵依赖树、还绑死本机解释器版本：几百 MB，换机即失效。
+.venv/
+venv/
+# pip install -e / 打包生成的元数据目录。
+*.egg-info/
+
+# ── 3. 流水线运行产物 ───────────────────────────────────────────────────────
+# TeachingFlow/.gitignore 已声明同名规则；这里保留仓库级兜底，
+# 防止子目录那份被误删后，几十 MB 的 run 静默进入提交。
+TeachingFlow/runs/
+TeachingFlow/.work/
+TeachingFlow/state/
+TeachingFlow/dist/
+TeachingFlow/recovered/
+# 仓库根的 .work/ 不是上面那个：它是交互式排查的临时现场（chrome-profile、
+# 渲染草稿、诊断截图、旧 dist 备份），光 chrome-profile 就上千个文件。
+/.work/
+
+# ── 4. 课堂运行时产物与二进制 ───────────────────────────────────────────────
+# .env 与 __pycache__/ 已由第 1、2 节在任意深度覆盖，此处不重复。
+TeachingFlow/classroom/.cache/
+# 从 pptx 抽出的图片（导入课件实测单份 12.9MB）。代价写在 README「已知边界」：
+# 入库的两份测试课件因此媒体数为 0；要图就把源 pptx 丢进 classroom/pptx/ 重跑预处理。
+TeachingFlow/classroom/decks/*/media/
+# 源 pptx 是二进制教具且体积大；运行时真正读的是解析结果 deck.json。
+# classroom/pptx/ 是"投放处"，只排 *.pptx；README.md 与 .gitkeep 必须留。
+TeachingFlow/classroom/pptx/*.pptx
+*.log
+# 这两个是运行期生成物：run.py 每次起服务都按本机 host:port 与解释器重写一遍。
+# 入库的后果是"任何人跑一次服务 git status 就脏"，而提交里那份路径/端口只对作者
+# 那台机器有效——新用户拿去用只会指向不存在的解释器。
+TeachingFlow/classroom/mcp-access-prompt.md
+TeachingFlow/classroom/mcp-config.json
+# 首次本地备课写出的中间产物：内含机器绝对路径，同样不该入库。
+TeachingFlow/classroom/decks/*/source.txt
+TeachingFlow/classroom/decks/*/plan.bak.json
+
+# ── 5. 课件解析与备课产物 ───────────────────────────────────────────────────
+# decks/<deck_id>/ 是"一份 pptx 解析 + 一次备课"的产物：单份 deck.json 实测 1.3MB、
+# plan.json 0.14MB，和源 pptx 的内容重复。目录名有两种来源：
+#   · 学生上传 → import_<hash>（所以得先排 import*）
+#   · 手工把 pptx 丢进 classroom/pptx/ 再预处理 → 直接用课程名
+# 所以只排 import* 是不够的：按文件类型排，才不会又攒出一堆
+# `decks/第1单元_xxx/{deck.json,plan.json}` 被 `git add -A` 顺手带走
+# （历史上真的提交过 4 份，见第 10 节末条）。
+TeachingFlow/classroom/decks/import*/
+TeachingFlow/classroom/decks/*/deck.json
+TeachingFlow/classroom/decks/*/plan.json
+TeachingFlow/classroom/decks/*/plan_rule.json
+# 例外：tests/fixtures.py 的 REAL_DECK_PREFIXES 按固定前缀选两份真实课件，
+# 缺了用例就 skip（README「已知边界」写明了这个代价）。只放这两份，别扩——
+# 用文件级否定而不是 `!目录/`，否则会把同目录的 media/、source.txt 一起放回来。
+!TeachingFlow/classroom/decks/Unit_2_Sweet_Home*/deck.json
+!TeachingFlow/classroom/decks/Unit_2_Sweet_Home*/plan.json
+!TeachingFlow/classroom/decks/Unit_2_Sweet_Home*/plan_rule.json
+!TeachingFlow/classroom/decks/高一物理第一课*/deck.json
+!TeachingFlow/classroom/decks/高一物理第一课*/plan.json
+
+# ── 6. 出片引擎与路由层运行产物 ─────────────────────────────────────────────
+# pipeline.py 每次运行写 report_*.json / last_report.json，内含本机路径与错误栈。
+PPT-Agent/runs/
+PPT-Agent/last_report.json
+# 仓库根的 outputs/ 是出片工作目录：单份成片 pptx 到 48MB，旁边还挂着历史备份、
+# 确认 UI 的 session.json、导出图片。换机后没有历史是正常的，别为了"看起来干净"删规则。
+/outputs/
+# 集成路由V1.0 的产出：templates/ 是「发给 LLM 的提示词副本」按日期归类，
+# ppt/ 是一次产片目录（PPTX + 讲稿 + 每册的 ppt-master skill 项目文件夹，单册几十 MB）。
+# 路径写全而不写 templates/：模板源在 PromptTemplate/templates/ 必须入库，
+# 只写 templates/ 会把它一起吞掉，新 clone 直接渲染不出提示词。
+集成路由V1.0/templates/
+集成路由V1.0/ppt/
+
+# ── 7. 第三方与依赖 ─────────────────────────────────────────────────────────
+# ppt-master 是外部 skill，由 setup.ps1 git clone 拉取，不是本仓库代码。
+ppt-master/
+# node_modules 任意深度都排：现在只有 webapp 一个前端，将来多一个不用再补规则。
+node_modules/
+
+# ── 8. 系统、编辑器与办公文件 ───────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+# Office 打开文档时生成的锁文件（~$xxx.docx）。
+~$*
+# IDE 的本机索引/工作区。仓库里目前没有，先排掉：review 里不该出现 .idea 的索引文件。
+# 真要让团队共享运行配置，再单独加 `!.vscode/launch.json` 这类例外。
+.idea/
+.vscode/
+
+# ── 9. 外部来件（不是本仓库的源文档）────────────────────────────────────────
+# 钟琪同步过来的文档包：183KB 的 pptx、364KB 的架构图、docx，外加一批被取代的旧稿。
+# 正式文档的落点是 docs/ 与 TeachingFlow/classroom/docs/；要收就用 .md 挑进去，
+# 别整包入库（二进制大，而且会和 docs/ 里的版本分叉）。
+docs_from_to_ZhongQi/
+
+# ── 10. 故意入库，不要加规则 ────────────────────────────────────────────────
+# 反向清单：以下内容看起来像产物，但按设计应当入库。加规则前先跑
+# `git ls-files | Select-String <路径>` —— 已入库的文件不受 .gitignore 影响，
+# 你的规则会"看起来生效"，等有人删了再重建时才炸。
+#   · TeachingFlow/classroom/webapp/dist/      构建产物，但 README 约定入库，
+#                                             新 clone 免构建即可起服务（7 个文件在库）
+#   · TeachingFlow/classroom/webapp/src/state/ 前端源码（app.ts / toast.ts），
+#                                             main.ts 直接 import —— 曾被裸 `state/` 整个排掉
+#   · TeachingFlow/classroom/decks/Unit_2_Sweet_Home…/  测试按固定前缀选的真实课件
+#   · TeachingFlow/classroom/decks/高一物理第一课…/       同上；这两份缺了用例就 skip
+#   · TeachingFlow/classroom/docs/             课堂设计文档（状态机 / 交互 / 分支 / MCP / 预处理）
+#   · docs/                                    通道路由说明
+#   · .env.example / *.env.example             配置模板，见第 1 节否定规则
+#   · TeachingFlow/fixtures/                   --mock 用的假 LLM 回复，自检依赖它们
+#   · TeachingFlow/classroom/pptx/             README.md 与 .gitkeep（占位，目录必须存在）
+#   · PPT-Agent/assets/local/                  14 张教具图（jpg，按文件名被流水线引用）
+#   · PromptTemplate/templates/                提示词源模板（与 集成路由V1.0/templates/ 不是一回事）
+#   · 任意位置的 .pptx                         没有全局 *.pptx 规则：教具该由人判断是否入库，
+#                                             运行产物由第 3/5/6 节的目录规则挡住
+#
+# ⚠ 待清理（历史上"误入库"，规则已补但文件还在库里）：
+#   TeachingFlow/classroom/decks/第1单元_导数与微分及其应用_重点_概念与表示/  8 个文件、约 4.7MB，
+#   TeachingFlow/classroom/decks/第1单元_函数复习与基本初等函数/            只有 import_* 与
+#   TeachingFlow/classroom/decks/第1单元_离散的核心含义与表示/              这两份是测试 fixture；
+#   TeachingFlow/classroom/decks/第1单元_连通度_κ_λ_δ_与_Menger_定理/       上面 4 份没有任何代码引用。
+#   现在它们被第 5 节排掉，但已入库的文件不受 .gitignore 影响。要清掉：
+#     git rm -r --cached "TeachingFlow/classroom/decks/第1单元_导数与微分及其应用_重点_概念与表示" ...
+#   （--cached：只出索引，磁盘文件保留）

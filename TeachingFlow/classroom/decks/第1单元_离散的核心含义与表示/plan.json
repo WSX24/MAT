@@ -1,0 +1,2768 @@
+{
+ "deck_id": "第1单元_离散的核心含义与表示",
+ "source": "llm",
+ "model": "deepseek · deepseek-flash · https://api.deepseek.com/v1 · key:已设置 · 思考:off",
+ "session_goals": [
+  "离散的核心含义（1/2）：能一个一个分开看",
+  "离散的核心含义（2/2）：和「连续」比一比",
+  "表示之前先抓三要素：元素、规则、顺序或对应",
+  "列举法（1/2）：少而写得清，就全写出来",
+  "列举法（2/2）：不重复，也不讲先后"
+ ],
+ "units": [
+  {
+   "slide": 0,
+   "text": "同学们，我们开始第一单元——集合初步。这一单元要解决两件事：一是懂「离散」，二是会「表示」。这两个词听起来抽象，但其实就是两个动作：能不能把东西一个一个分开看，以及分开之后怎么把它写清楚。",
+   "anchors": [
+    {
+     "element_id": "s01-sh03-g01-p01",
+     "text_hint": "数学 · 第一单元 · 集合初步",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g02-p01",
+     "text_hint": "两件事：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh08-g03-p01",
+     "text_hint": "懂「离散」，会「表示」",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "discrete-meaning",
+    "set-notation"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "单元目标：懂离散、会表示"
+  },
+  {
+   "slide": 0,
+   "text": "先看任务一：判断「能不能分开看」。给你一个对象，你要能分清它到底是离散的，还是连续的，先分清离散与连续，再动手做题。这一步判断错了，后面写什么都白搭。",
+   "anchors": [
+    {
+     "element_id": "s01-sh25-g01-p01",
+     "text_hint": "任务一",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh25-g02-p01",
+     "text_hint": "判断「能不能分开看」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh25-g03-p01",
+     "text_hint": "先分清离散与连续，再动手",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "discrete-vs-continuous"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "任务一：分清离散与连续"
+  },
+  {
+   "slide": 0,
+   "text": "任务二：把对象与对应写清楚。分清了以后，你得用某种方式把它记下来——列举、描述、表格，或者有序对，都可以。选哪种形式不重要，重要的是写出来别人能看懂。",
+   "anchors": [
+    {
+     "element_id": "s01-sh30-g01-p01",
+     "text_hint": "任务二",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh30-g02-p01",
+     "text_hint": "把对象与对应写清楚",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh30-g03-p01",
+     "text_hint": "列举、描述、表格或有序对",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-notation"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "任务二：用列举描述表格有序对写清"
+  },
+  {
+   "slide": 0,
+   "text": "整个学习路线就是这样：先理解「能分开看」，再学习「怎么写清楚」。我要强调的是，这一单元不背定义，我们就在一个个例子里做选择——给你情境，你来判断该用哪种说法。",
+   "anchors": [
+    {
+     "element_id": "s01-sh35-g02-p01",
+     "text_hint": "学习路线：先理解「能分开看」，再学习「怎么写清楚",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh05-g01-p01",
+     "text_hint": "离散的核心含义",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "discrete-meaning"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "学习路线：不背定义在例子里做选择"
+  },
+  {
+   "slide": 0,
+   "text": "我们这门课一共三个单元，现在在单元1「离散的含义与表示」，单元2 和单元3 都还是待学。所以这一单元是整个课的起点，把这里的判断打牢，后面才有得谈。好，我们进入导入。",
+   "anchors": [
+    {
+     "element_id": "s01-sh12-g04-g02-p01",
+     "text_hint": "单元1 离散的含义与表示",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh12-g04-g05-p01",
+     "text_hint": "单元2 待学",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh12-g04-g08-p01",
+     "text_hint": "单元3 待学",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s01-sh38-g02-p01",
+     "text_hint": "第一单元　导入",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "course-map"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "三单元进度与本单元定位"
+  },
+  {
+   "slide": 1,
+   "text": "离散的核心含义（1/2）：能一个一个分开看。对象是独立单位，边界清楚，可以逐个点名处理。分开：能一个一个看。逐个：能一个一个处理。对象不糊成一片，可以单独挑出来。边界清楚，能逐个对应，不重不漏。特征一。特征二。原因：每个对象都是独立单位——点一个是一个。没有「半个对象」这种说法，点名点到的就是一整个。例：班级学生人数是离散的。可以点名张三、李四、王五，。1。2。3。",
+   "anchors": [
+    {
+     "element_id": "s02-sh02-g02-p01",
+     "text_hint": "离散的核心含义（1/2）：能一个一个分开看",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh02-g03-p01",
+     "text_hint": "对象是独立单位，边界清楚，可以逐个点名处理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh06-g03-p01",
+     "text_hint": "分开：能一个一个看",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh12-g03-p01",
+     "text_hint": "逐个：能一个一个处理",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh06-g04-p01",
+     "text_hint": "对象不糊成一片，可以单独挑出来。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh12-g04-p01",
+     "text_hint": "边界清楚，能逐个对应，不重不漏。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh06-g05-p01",
+     "text_hint": "特征一",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh12-g05-p01",
+     "text_hint": "特征二",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh18-g02-p01",
+     "text_hint": "原因：每个对象都是独立单位——点一个是一个。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh18-g03-p01",
+     "text_hint": "没有「半个对象」这种说法，点名点到的就是一整个。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g01-p01",
+     "text_hint": "例：班级学生人数是离散的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g06-p01",
+     "text_hint": "可以点名张三、李四、王五，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g03-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g03-g05-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g03-g08-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh02-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh12-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s02-sh06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s02-sh12-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh06-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s02-sh12-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s02-sh18-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s02-sh18-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s02-sh22-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s02-sh22-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s02-sh22-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s02-sh22-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s02-sh22-g03-g08-p01"
+    }
+   ],
+   "kp": [
+    "P02-离散的核心含义12能一个"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "离散的核心含义（1/2）：能一个一个分开看。"
+  },
+  {
+   "slide": 1,
+   "text": "人数与人对得上——不多不少。张三。李四。王五。本页记两个词：。分开。逐个。——下一层「连续」正好相反。",
+   "anchors": [
+    {
+     "element_id": "s02-sh22-g07-p01",
+     "text_hint": "人数与人对得上——不多不少。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g04-g01-p01",
+     "text_hint": "张三",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g04-g02-p01",
+     "text_hint": "李四",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh22-g04-g03-p01",
+     "text_hint": "王五",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh41-g02-p01",
+     "text_hint": "本页记两个词：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh41-g04-p01",
+     "text_hint": "分开",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh41-g06-p01",
+     "text_hint": "逐个",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s02-sh41-g07-p01",
+     "text_hint": "——下一层「连续」正好相反。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s02-sh22-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh22-g04-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh22-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s02-sh22-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s02-sh41-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh41-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh41-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s02-sh41-g07-p01"
+    }
+   ],
+   "kp": [
+    "P02-离散的核心含义12能一个-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "人数与人对得上——不多不少。"
+  },
+  {
+   "slide": 2,
+   "text": "离散的核心含义（2/2）：和「连续」比一比。身高。离散。能一个一个分开看。楼梯：一级一级，可以逐级数。连续。平滑变化，中间有无数多状态。斜坡：一路滑下去，无法逐个数完。例：身高在一段时间内连续变化。时间。每一时刻都有值，取值连成一片。判断口诀：能不能逐个列出？能不能按清楚规则判定？。能 → 偏向离散，可以列出来；不能 → 就是连续，不能硬当离散来数。",
+   "anchors": [
+    {
+     "element_id": "s03-sh01-g02-p01",
+     "text_hint": "离散的核心含义（2/2）：和「连续」比一比",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh15-g07-p01",
+     "text_hint": "身高",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g02-p01",
+     "text_hint": "离散",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g03-p01",
+     "text_hint": "能一个一个分开看",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g04-p01",
+     "text_hint": "楼梯：一级一级，可以逐级数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g06-p01",
+     "text_hint": "连续",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g07-p01",
+     "text_hint": "平滑变化，中间有无数多状态",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g08-p01",
+     "text_hint": "斜坡：一路滑下去，无法逐个数完",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh05-g09-p01",
+     "text_hint": "例：身高在一段时间内连续变化",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh15-g06-p01",
+     "text_hint": "时间",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh15-g08-p01",
+     "text_hint": "每一时刻都有值，取值连成一片",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh24-g02-p01",
+     "text_hint": "判断口诀：能不能逐个列出？能不能按清楚规则判定？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s03-sh24-g04-p01",
+     "text_hint": "能 → 偏向离散，可以列出来；不能 → 就是连续",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s03-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh15-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s03-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s03-sh05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s03-sh05-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s03-sh05-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s03-sh05-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s03-sh05-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s03-sh15-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s03-sh15-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s03-sh24-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s03-sh24-g04-p01"
+    }
+   ],
+   "kp": [
+    "P03-离散的核心含义22和连续"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "离散的核心含义（2/2）：和「连续」比一比。"
+  },
+  {
+   "slide": 3,
+   "text": "表示之前先抓三要素：元素、规则、顺序或对应。01。02。03。元素。规则。顺序或对应。到底有哪些对象。对象满足什么条件。位置有没有意义，。缺它，就不知道集合。缺它，就判断不了别的。谁和谁相连。里装了什么。东西在不在。缺它，就丢掉关系。顺序有意义。顺序无意义。排队号码 1号 → 2号 → 3号。几本书看成一个集合。换了位次，就是另一件事。书与书之间不讲先后。",
+   "anchors": [
+    {
+     "element_id": "s04-sh01-g02-p01",
+     "text_hint": "表示之前先抓三要素：元素、规则、顺序或对应",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g01-g03-p01",
+     "text_hint": "01",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g02-g03-p01",
+     "text_hint": "02",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g03-g03-p01",
+     "text_hint": "03",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g01-g04-p01",
+     "text_hint": "元素",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g02-g04-p01",
+     "text_hint": "规则",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g03-g04-p01",
+     "text_hint": "顺序或对应",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g01-g05-p01",
+     "text_hint": "到底有哪些对象。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g02-g05-p01",
+     "text_hint": "对象满足什么条件。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g03-g05-p01",
+     "text_hint": "位置有没有意义，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g01-g06-p01",
+     "text_hint": "缺它，就不知道集合",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g02-g06-p01",
+     "text_hint": "缺它，就判断不了别的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g03-g06-p01",
+     "text_hint": "谁和谁相连。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g01-g07-p01",
+     "text_hint": "里装了什么。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g02-g07-p01",
+     "text_hint": "东西在不在。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh05-g03-g07-p01",
+     "text_hint": "缺它，就丢掉关系。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g03-g01-p01",
+     "text_hint": "顺序有意义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g04-g01-p01",
+     "text_hint": "顺序无意义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g03-g02-p01",
+     "text_hint": "排队号码 1号 → 2号 → 3号",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g04-g02-p01",
+     "text_hint": "几本书看成一个集合",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g03-g03-p01",
+     "text_hint": "换了位次，就是另一件事",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s04-sh30-g04-g03-p01",
+     "text_hint": "书与书之间不讲先后",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh05-g01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh05-g02-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s04-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh05-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh05-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s04-sh05-g03-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s04-sh05-g01-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s04-sh05-g02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s04-sh05-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s04-sh05-g01-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s04-sh05-g02-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s04-sh05-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s04-sh05-g01-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s04-sh05-g02-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s04-sh05-g03-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s04-sh30-g03-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s04-sh30-g04-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s04-sh30-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s04-sh30-g04-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s04-sh30-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s04-sh30-g04-g03-p01"
+    }
+   ],
+   "kp": [
+    "P04-表示之前先抓三要素元素规"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "表示之前先抓三要素：元素、规则、顺序或对应。"
+  },
+  {
+   "slide": 3,
+   "text": "三要素想清了，再看表示：元素少又写得清 → 先上列举法。",
+   "anchors": [
+    {
+     "element_id": "s04-sh41-g03-p01",
+     "text_hint": "三要素想清了，再看表示：元素少又写得清 → 先上",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s04-sh41-g03-p01"
+    }
+   ],
+   "kp": [
+    "P04-表示之前先抓三要素元素规-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "三要素想清了，再看表示：元素少又写得清 → 先上列举法。"
+  },
+  {
+   "slide": 4,
+   "text": "列举法（1/2）：少而写得清，就全写出来。什么时候用。写法三件事。元素不多，能一个个写出来。用大括号包起来。1。边界不含糊，写下来没有争议。中间用逗号分隔。2。数量少 + 边界清楚 → 才适合列举。每个元素写完整。3。例：一周上学日。{星期一, 星期二, 星期三, 星期四, 星期五}。数量少、边界清楚，逐个写出来最直接，一眼看到全部。",
+   "anchors": [
+    {
+     "element_id": "s05-sh01-g02-p01",
+     "text_hint": "列举法（1/2）：少而写得清，就全写出来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh05-g03-p01",
+     "text_hint": "什么时候用",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh12-g02-p01",
+     "text_hint": "写法三件事",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh05-g04-p01",
+     "text_hint": "元素不多，能一个个写出来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh12-g03-g03-p01",
+     "text_hint": "用大括号包起来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh12-g03-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh05-g05-p01",
+     "text_hint": "边界不含糊，写下来没有争议",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh12-g03-g06-p01",
+     "text_hint": "中间用逗号分隔",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh12-g03-g05-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh05-g06-p01",
+     "text_hint": "数量少 + 边界清楚 → 才适合列举",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh12-g03-g09-p01",
+     "text_hint": "每个元素写完整",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh12-g03-g08-p01",
+     "text_hint": "3",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g02-p01",
+     "text_hint": "例：一周上学日",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g03-p01",
+     "text_hint": "{星期一, 星期二, 星期三, 星期四, 星期五",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s05-sh25-g04-p01",
+     "text_hint": "数量少、边界清楚，逐个写出来最直接，一眼看到全部",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s05-sh12-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s05-sh05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s05-sh12-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh12-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s05-sh05-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s05-sh12-g03-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh12-g03-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s05-sh05-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s05-sh12-g03-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s05-sh12-g03-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s05-sh25-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s05-sh25-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s05-sh25-g04-p01"
+    }
+   ],
+   "kp": [
+    "P05-列举法12少而写得清就全"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "列举法（1/2）：少而写得清，就全写出来。"
+  },
+  {
+   "slide": 4,
+   "text": "提醒：这只是「写好」，接着还要查有没有重复，以及书写先后会不会影响结果。",
+   "anchors": [
+    {
+     "element_id": "s05-sh30-g02-p01",
+     "text_hint": "提醒：这只是「写好」，接着还要查有没有重复，以及",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s05-sh30-g02-p01"
+    }
+   ],
+   "kp": [
+    "P05-列举法12少而写得清就全-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "提醒：这只是「写好」，接着还要查有没有重复，以及书写先后会…"
+  },
+  {
+   "slide": 5,
+   "text": "列举法（2/2）：不重复，也不讲先后。集合只看「有哪些元素」。元素不重复。书写先后不算。1。2。{星期一, 星期一, 星期二}。{1, 2} 与 {2, 1}。多余的「星期一」要划掉。是同一个集合。→ {星期一, 星期二}。元素相同，顺序无关紧要。原因：集合只回答「有哪些元素」，不回答「谁排第几」。顺序本身有意义？。元素多，又有共同规则？。那就不该用集合，改用有序对表示。",
+   "anchors": [
+    {
+     "element_id": "s06-sh01-g02-p01",
+     "text_hint": "列举法（2/2）：不重复，也不讲先后",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh01-g03-p01",
+     "text_hint": "集合只看「有哪些元素」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g05-p01",
+     "text_hint": "元素不重复",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g05-p01",
+     "text_hint": "书写先后不算",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g04-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g04-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g06-p01",
+     "text_hint": "{星期一, 星期一, 星期二}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g06-p01",
+     "text_hint": "{1, 2} 与 {2, 1}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g08-p01",
+     "text_hint": "多余的「星期一」要划掉",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g07-p01",
+     "text_hint": "是同一个集合",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g01-g09-p01",
+     "text_hint": "→ {星期一, 星期二}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh06-g02-g08-p01",
+     "text_hint": "元素相同，顺序无关紧要",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh26-g02-p01",
+     "text_hint": "原因：集合只回答「有哪些元素」，不回答「谁排第几",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh29-g01-g02-p01",
+     "text_hint": "顺序本身有意义？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh29-g03-g02-p01",
+     "text_hint": "元素多，又有共同规则？",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s06-sh29-g01-g03-p01",
+     "text_hint": "那就不该用集合，改用有序对表示",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s06-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh06-g01-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s06-sh06-g02-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh06-g01-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh06-g02-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s06-sh06-g01-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s06-sh06-g02-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s06-sh06-g01-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s06-sh06-g02-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s06-sh06-g01-g09-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s06-sh06-g02-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s06-sh26-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s06-sh29-g01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s06-sh29-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s06-sh29-g01-g03-p01"
+    }
+   ],
+   "kp": [
+    "P06-列举法22不重复也不讲先"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "列举法（2/2）：不重复，也不讲先后。"
+  },
+  {
+   "slide": 5,
+   "text": "全列出来不方便，下一页看描述法。",
+   "anchors": [
+    {
+     "element_id": "s06-sh29-g03-g03-p01",
+     "text_hint": "全列出来不方便，下一页看描述法",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s06-sh29-g03-g03-p01"
+    }
+   ],
+   "kp": [
+    "P06-列举法22不重复也不讲先-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "全列出来不方便，下一页看描述法。"
+  },
+  {
+   "slide": 6,
+   "text": "前面列举法是把元素一个个写出来，可要是元素很多，写到手酸也写不完。这时候就得换个思路：只要这些元素有一个说得清的共同规则，我们就先写规则，再写集合。这就是描述法。",
+   "anchors": [
+    {
+     "element_id": "s07-sh01-g02-p01",
+     "text_hint": "描述法（1/2）：用规则代替一长串元素",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh01-g03-p01",
+     "text_hint": "元素多、但有共同规则时，先写规则，再写集合",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "元素太多时改用规则描述"
+  },
+  {
+   "slide": 6,
+   "text": "看它的基本格式：先写一对大括号，中间先写代表元素 x，然后一条竖线，竖线后头写 x 满足的规则。所以读起来就是，x 竖线 x 满足的规则。前面那个 x 是代表，后面那句才是条件。",
+   "anchors": [
+    {
+     "element_id": "s07-sh06-g03-p01",
+     "text_hint": "基本格式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh06-g04-p01",
+     "text_hint": "{x | x 满足的规则}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh06-g06-p01",
+     "text_hint": "先写代表元素 x，竖线后写规则",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "先写一对大括号",
+     "target": "s07-sh06-g04-p01"
+    },
+    {
+     "op": "unfocus",
+     "at_sentence": 1,
+     "at_text": "后面那句才是条件",
+     "target": "s07-sh06-g04-p01"
+    }
+   ],
+   "kp": [
+    "set-builder"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "描述法的基本格式与读法"
+  },
+  {
+   "slide": 6,
+   "text": "举个例子。大括号里写 x，竖线，x 是 1 到 5 的整数。这个集合到底是谁呢？规则说得很清楚，就是 1、2、3、4、5，正好跟左边列举法的写法对上了。",
+   "anchors": [
+    {
+     "element_id": "s07-sh14-g04-p01",
+     "text_hint": "{x | x 是1到5的整数}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh14-g06-p01",
+     "text_hint": "{1, 2, 3, 4, 5}",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "就是 1、2、3、4、5",
+     "target": "s07-sh14-g06-p01"
+    }
+   ],
+   "kp": [
+    "set-builder"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用 1 到 5 的整数对照列举法"
+  },
+  {
+   "slide": 6,
+   "text": "那什么时候用它？元素比较多，但你有一个说得清的共同规则，就适合。规则足够清楚的时候，不用一个个列完，集合也照样确定下来，这正是描述法的用处。",
+   "anchors": [
+    {
+     "element_id": "s07-sh06-g07-p01",
+     "text_hint": "适用：元素较多，但有一个说得清的共同规则",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s07-sh21-g03-p01",
+     "text_hint": "规则足够清楚时，不列完也能确定集合——这正是它的",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "描述法的适用场合"
+  },
+  {
+   "slide": 6,
+   "text": "最后提醒一句：关键不是把规则写得多复杂多花哨，而是这条规则得能判断每一个对象在不在里头。拿一个数来，能干脆地说在或者不在，这规则才算合格。",
+   "anchors": [
+    {
+     "element_id": "s07-sh25-g03-p01",
+     "text_hint": "关键不是写得复杂，而是规则要能判断每个对象在不在",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "规则要能判断对象是否属于集合"
+  },
+  {
+   "slide": 7,
+   "text": "好，上节课我们说规则得能判断每一个对象在不在。这一页就专门来看这个标准。描述法写得好不好，关键不在长短，而在于这条规则能不能对每个对象给出确定的「是」或者「否」。能，就是合格规则；不能，写得再漂亮也没用。",
+   "anchors": [
+    {
+     "element_id": "s08-sh01-g02-p01",
+     "text_hint": "描述法（2/2）：规则要能判定「在不在」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh05-g03-p01",
+     "text_hint": "合格规则：每个对象都有确定的「是/否」",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder-rule"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "描述法好坏看判定是否确定"
+  },
+  {
+   "slide": 7,
+   "text": "先看正例。这个集合写成 {x | x 是 1 到 5 的整数}。这里规则清清楚楚，你拿任何一个对象进来，答案只有一个：不靠猜，也不靠几个人商量。4 满足，在里面；6 不满足，在外面，一点也不含糊。",
+   "anchors": [
+    {
+     "element_id": "s08-sh24-g04-p01",
+     "text_hint": "{x | x 是 1 到 5 的整数}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh24-g05-p01",
+     "text_hint": "4 满足，在里面",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh24-g06-p01",
+     "text_hint": "6 不满足，在外面",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh24-g03-p01",
+     "text_hint": "正例",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder-rule"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "正例：1 到 5 的整数集合"
+  },
+  {
+   "slide": 7,
+   "text": "再对比看反例。{x | x 是比较大的数}，这句话听着挺像人话，问题出在「比较大」没有边界。多大算大？十算大，一百也算大，每个人心里的尺子不一样。不同人不同答，这个集合就不清楚了。所以规则要有判定力，不能靠感觉。",
+   "anchors": [
+    {
+     "element_id": "s08-sh24-g10-p01",
+     "text_hint": "{x | x 是比较大的数}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh24-g11-p01",
+     "text_hint": "「比较大」没有边界",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh24-g12-p01",
+     "text_hint": "不同人不同答，集合就不清楚",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh24-g09-p01",
+     "text_hint": "反例",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder-rule"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "反例：比较大没有边界"
+  },
+  {
+   "slide": 7,
+   "text": "那具体怎么检查一条规则合不合格？走三步。第一步，取一个对象；第二步，代入规则算一算；第三步，满足就在内，不满足就在外。这三步最关键的是第三步和第一步的配合：换任何对象，都走同一条路，结果都是确定的。",
+   "anchors": [
+    {
+     "element_id": "s08-sh10-g04-p01",
+     "text_hint": "取一个对象",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g08-p01",
+     "text_hint": "代入规则算一算",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g12-p01",
+     "text_hint": "满足在内，不满足在外",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s08-sh10-g13-p01",
+     "text_hint": "换任何对象，走同一条路",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder-rule"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "检查规则的三步流程"
+  },
+  {
+   "slide": 7,
+   "text": "所以最后记住这句话：描述法不是越短越好，而是判定要稳定。你能把规则写得短是本事，但短到别人没法判断在不在，那这个集合就没法用了。下次你自己写描述法，先在心里过一遍这套检查流程，再落笔。",
+   "anchors": [
+    {
+     "element_id": "s08-sh37-g03-p01",
+     "text_hint": "描述法不是越短越好，而是判定要稳定",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-builder-rule"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "描述法重在判定稳定"
+  },
+  {
+   "slide": 8,
+   "text": "表格与有序对（1/2）：把属性与对应关系摆出来。表格：多属性，分行分列。有序对：按位置配对。姓名。成绩。科目。（小明, 90）。小明。90。数学。小红。86。数学。第一位放姓名，第二位放分数。位置有含义：交换后就是另一回事。一行一个对象，一列一种属性。（小明, 90）≠（90, 小明）：位置一换，意思就变。下一页：它和集合有什么区别，以及怎样按问题选表示方式。",
+   "anchors": [
+    {
+     "element_id": "s09-sh01-g02-p01",
+     "text_hint": "表格与有序对（1/2）：把属性与对应关系摆出来",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g03-p01",
+     "text_hint": "表格：多属性，分行分列",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g03-p01",
+     "text_hint": "有序对：按位置配对",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g03-p01",
+     "text_hint": "姓名",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g04-p01",
+     "text_hint": "成绩",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g05-p01",
+     "text_hint": "科目",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g05-p01",
+     "text_hint": "（小明, 90）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g10-p01",
+     "text_hint": "小明",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g11-p01",
+     "text_hint": "90",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g12-p01",
+     "text_hint": "数学",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g15-p01",
+     "text_hint": "小红",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g16-p01",
+     "text_hint": "86",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g04-g17-p01",
+     "text_hint": "数学",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g06-p01",
+     "text_hint": "第一位放姓名，第二位放分数",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh28-g07-p01",
+     "text_hint": "位置有含义：交换后就是另一回事",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh05-g05-p01",
+     "text_hint": "一行一个对象，一列一种属性",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh36-g03-p01",
+     "text_hint": "（小明, 90）≠（90, 小明）：位置一换，意",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s09-sh40-g02-p01",
+     "text_hint": "下一页：它和集合有什么区别，以及怎样按问题选表示",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s09-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s09-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s09-sh28-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh05-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh05-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s09-sh05-g04-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s09-sh28-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh05-g04-g10-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh05-g04-g11-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s09-sh05-g04-g12-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh05-g04-g15-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh05-g04-g16-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s09-sh05-g04-g17-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s09-sh28-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s09-sh28-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s09-sh05-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s09-sh36-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s09-sh40-g02-p01"
+    }
+   ],
+   "kp": [
+    "P09-表格与有序对12把属性与"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "表格与有序对（1/2）：把属性与对应关系摆出来。"
+  },
+  {
+   "slide": 9,
+   "text": "表格与有序对（2/2）：按问题选表示方式。有序对的位置不能交换：第一位与第二位各有含义。（小明, 篮球）表示小明选了篮球；（篮球, 小明）意思就变了。少而明确：列举法。要对人：有序对。候选社团一共四个。三名学生各自选了谁。{篮球, 足球,。（小明, 篮球）。书法, 合唱}。（小红, 书法）。（小刚, 合唱）。只回答：有哪些社团。谁对谁，一看便知。",
+   "anchors": [
+    {
+     "element_id": "s10-sh01-g02-p01",
+     "text_hint": "表格与有序对（2/2）：按问题选表示方式",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh05-g03-p01",
+     "text_hint": "有序对的位置不能交换：第一位与第二位各有含义",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh05-g04-p01",
+     "text_hint": "（小明, 篮球）表示小明选了篮球；（篮球, 小明",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh10-g03-p01",
+     "text_hint": "少而明确：列举法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g03-p01",
+     "text_hint": "要对人：有序对",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh10-g04-p01",
+     "text_hint": "候选社团一共四个",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g04-p01",
+     "text_hint": "三名学生各自选了谁",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh10-g05-p01",
+     "text_hint": "{篮球, 足球,",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g05-p01",
+     "text_hint": "（小明, 篮球）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh10-g06-p01",
+     "text_hint": "书法, 合唱}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g06-p01",
+     "text_hint": "（小红, 书法）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g07-p01",
+     "text_hint": "（小刚, 合唱）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh10-g07-p01",
+     "text_hint": "只回答：有哪些社团",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh18-g08-p01",
+     "text_hint": "谁对谁，一看便知",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s10-sh05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s10-sh10-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s10-sh18-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s10-sh10-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s10-sh18-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s10-sh10-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s10-sh18-g05-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s10-sh10-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s10-sh18-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s10-sh18-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 14,
+     "target": "s10-sh10-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 15,
+     "target": "s10-sh18-g08-p01"
+    }
+   ],
+   "kp": [
+    "P10-表格与有序对22按问题选"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "表格与有序对（2/2）：按问题选表示方式。"
+  },
+  {
+   "slide": 9,
+   "text": "列举只知道有哪些对象，有序对能保留对应关系。下一题：把列举、描述、有序对放在一起比一比。",
+   "anchors": [
+    {
+     "element_id": "s10-sh27-g03-p01",
+     "text_hint": "列举只知道有哪些对象，有序对能保留对应关系",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s10-sh31-g02-p01",
+     "text_hint": "下一题：把列举、描述、有序对放在一起比一比",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s10-sh27-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s10-sh31-g02-p01"
+    }
+   ],
+   "kp": [
+    "P10-表格与有序对22按问题选-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "列举只知道有哪些对象，有序对能保留对应关系。"
+  },
+  {
+   "slide": 10,
+   "text": "典型例题（1/2）：第(1)(2)问。先看题干，再分别用列举法与描述法作答。题干：候选社团为篮球、足球、书法、合唱；。另有编号 1 到 6 的整数，单独成一组。第(1)问　用列举法表示集合 A。第(2)问　用描述法表示集合 B。A = {篮球, 足球, 书法, 合唱}。B = {x | x 是 1 到 6 的整数}。元素都能明确列出。规则清楚：说得出在不在。没有重复项。",
+   "anchors": [
+    {
+     "element_id": "s11-sh01-g02-p01",
+     "text_hint": "典型例题（1/2）：第(1)(2)问",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh01-g03-p01",
+     "text_hint": "先看题干，再分别用列举法与描述法作答",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g03-p01",
+     "text_hint": "题干：候选社团为篮球、足球、书法、合唱；",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh06-g04-p01",
+     "text_hint": "另有编号 1 到 6 的整数，单独成一组。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh11-g03-p01",
+     "text_hint": "第(1)问　用列举法表示集合 A",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh20-g03-p01",
+     "text_hint": "第(2)问　用描述法表示集合 B",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh11-g04-p01",
+     "text_hint": "A = {篮球, 足球, 书法, 合唱}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh20-g04-p01",
+     "text_hint": "B = {x | x 是 1 到 6 的整数}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh11-g06-p01",
+     "text_hint": "元素都能明确列出",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh20-g06-p01",
+     "text_hint": "规则清楚：说得出在不在",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh11-g07-p01",
+     "text_hint": "没有重复项",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh01-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s11-sh06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s11-sh06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s11-sh11-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s11-sh20-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s11-sh11-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s11-sh20-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s11-sh11-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s11-sh20-g06-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s11-sh11-g07-p01"
+    }
+   ],
+   "kp": [
+    "P11-典型例题12第12问"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "典型例题（1/2）：第(1)(2)问。"
+  },
+  {
+   "slide": 10,
+   "text": "不用逐个写出每个元素。书写先后不影响结果。元素多而有规律时更省力。补充：B 也可列出为 {1, 2, 3, 4, 5, 6}，。两种写法表示同一个集合，都合法。",
+   "anchors": [
+    {
+     "element_id": "s11-sh20-g07-p01",
+     "text_hint": "不用逐个写出每个元素",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh11-g08-p01",
+     "text_hint": "书写先后不影响结果",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh20-g08-p01",
+     "text_hint": "元素多而有规律时更省力",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh29-g02-p01",
+     "text_hint": "补充：B 也可列出为 {1, 2, 3, 4, ",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s11-sh29-g03-p01",
+     "text_hint": "两种写法表示同一个集合，都合法。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s11-sh20-g07-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s11-sh11-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s11-sh20-g08-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s11-sh29-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s11-sh29-g03-p01"
+    }
+   ],
+   "kp": [
+    "P11-典型例题12第12问-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "不用逐个写出每个元素。"
+  },
+  {
+   "slide": 11,
+   "text": "好，接着看第(3)问。三名同学参加社团：小明选了篮球，小红选了书法，小刚也选了篮球。注意，小刚和小明报的是同一个社团。题目要求我们，把「谁选了哪个社团」表示清楚。",
+   "anchors": [
+    {
+     "element_id": "s12-sh05-g02-p01",
+     "text_hint": "第(3)问　三名同学参加社团：小明→篮球，小红→",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh05-g03-p01",
+     "text_hint": "要求：把「谁选了哪个社团」表示清楚。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "ordered-pair"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "读题：三人选社团，两人同社团"
+  },
+  {
+   "slide": 11,
+   "text": "先别看答案，你自己想想怎么写。这里最关键的是「谁」和「哪个」，是一一对应起来的。所以答案用有序对表示：小明对篮球，小红对书法，小刚对篮球，三个有序对放进一个集合里。",
+   "anchors": [
+    {
+     "element_id": "s12-sh09-g03-p01",
+     "text_hint": "答　用有序对表示",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh09-g04-g01-p01",
+     "text_hint": "{（小明, 篮球）,",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh09-g04-g02-p01",
+     "text_hint": "　（小红, 书法）,",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "所以答案用有序对表示",
+     "target": "s12-sh09-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "小明对篮球",
+     "target": "s12-sh09-g04-g01-p01"
+    }
+   ],
+   "kp": [
+    "ordered-pair"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "用有序对表示三组对应"
+  },
+  {
+   "slide": 11,
+   "text": "再抠一个细节：第一位写学生，第二位写社团，位置不能交换。你要是写成（篮球, 小明），意思就变了。有序对嘛，「有序」两个字就是提醒你，顺序本身带着信息。",
+   "anchors": [
+    {
+     "element_id": "s12-sh09-g06-p01",
+     "text_hint": "第一位写学生，第二位写社团——位置不能交换。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "位置不能交换",
+     "target": "s12-sh09-g06-p01"
+    }
+   ],
+   "kp": [
+    "ordered-pair"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "有序对的位置不能交换"
+  },
+  {
+   "slide": 11,
+   "text": "那如果偷懒，只写学生集合{小明, 小红, 小刚}行不行？不行。你只知道有哪几名同学，丢掉了「小红选了什么」这个信息，谁选篮球谁选书法，对应关系会整个消失。",
+   "anchors": [
+    {
+     "element_id": "s12-sh19-g03-p01",
+     "text_hint": "反例　只写学生集合",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh19-g04-p01",
+     "text_hint": "{小明, 小红, 小刚}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh19-g06-p01",
+     "text_hint": "只知道有哪几名同学，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh19-g07-p01",
+     "text_hint": "丢掉了「小红选了什么」。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "at_text": "只写学生集合",
+     "target": "s12-sh19-g03-p01"
+    }
+   ],
+   "kp": [
+    "set-vs-correspondence"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "反例：只写学生集合会丢掉对应"
+  },
+  {
+   "slide": 11,
+   "text": "所以判断标准很清楚：只要题目里出现了「谁对应谁」，你就得用有序对或者表格，光一个集合是不够的。这个反例大家可以记下来，考试里很常见。",
+   "anchors": [
+    {
+     "element_id": "s12-sh19-g08-p01",
+     "text_hint": "对应关系会整个消失。",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh28-g03-g06-p01",
+     "text_hint": "涉及对应：用有序对或表格",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "set-vs-correspondence"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "涉及对应时不能只用集合"
+  },
+  {
+   "slide": 11,
+   "text": "最后我们把三种表示法横向比一比。少而明确，元素不多又写得清，那就用列举法，全部写出来。多而有规则，元素写不完但有规律，用描述法。涉及对应，那就用有序对或者表格。",
+   "anchors": [
+    {
+     "element_id": "s12-sh28-g03-g02-p01",
+     "text_hint": "少而明确：用列举法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh28-g03-g04-p01",
+     "text_hint": "多而有规则：用描述法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh28-g03-g06-p01",
+     "text_hint": "涉及对应：用有序对或表格",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "三种表示法横向比一比",
+     "target": "s12-sh28-g02-p01"
+    }
+   ],
+   "kp": [
+    "representation-choice"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "三法比较：按什么选表示法"
+  },
+  {
+   "slide": 11,
+   "text": "做题的次序也给你捋一下：先看对象偏离散还是连续，再挑表示法；写完自查三项——有没有重复、规则写没写清、位置对不对。这三项一过，表示基本就稳了。",
+   "anchors": [
+    {
+     "element_id": "s12-sh28-g05-g01-p01",
+     "text_hint": "先看对象偏离散还是连续，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh28-g05-g02-p01",
+     "text_hint": "再挑表示法；写完自查",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s12-sh28-g05-g03-p01",
+     "text_hint": "重复、规则、位置三项。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "representation-choice"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "解题次序与三项自查"
+  },
+  {
+   "slide": 12,
+   "text": "易错与小结（1/2）：两个易错点。易错点一：把连续对象当成可列举。1。反例：「0 到 1 之间的所有实数」。遇到「所有」「之间」的。不能加省略号假装已经列完。连续区间，改用描述法。写规则，不要硬列。正确：离散必须能逐个列出，。或能用清楚规则判定在不在。易错点二：混淆集合与有序对。2。同一集合：{1, 2} 与 {2, 1}。有序对含义不同：。元素顺序无关，写哪个都一样。",
+   "anchors": [
+    {
+     "element_id": "s13-sh01-g02-p01",
+     "text_hint": "易错与小结（1/2）：两个易错点",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g03-g03-p01",
+     "text_hint": "易错点一：把连续对象当成可列举",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g03-g02-p01",
+     "text_hint": "1",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g04-g03-p01",
+     "text_hint": "反例：「0 到 1 之间的所有实数」",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g06-g02-p01",
+     "text_hint": "遇到「所有」「之间」的",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g04-g04-p01",
+     "text_hint": "不能加省略号假装已经列完",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g06-g03-p01",
+     "text_hint": "连续区间，改用描述法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g06-g04-p01",
+     "text_hint": "写规则，不要硬列",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g05-g03-p01",
+     "text_hint": "正确：离散必须能逐个列出，",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh05-g05-g04-p01",
+     "text_hint": "或能用清楚规则判定在不在",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh27-g03-g03-p01",
+     "text_hint": "易错点二：混淆集合与有序对",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh27-g03-g02-p01",
+     "text_hint": "2",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh27-g04-g01-p01",
+     "text_hint": "同一集合：{1, 2} 与 {2, 1}",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh27-g05-g02-p01",
+     "text_hint": "有序对含义不同：",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh27-g04-g02-p01",
+     "text_hint": "元素顺序无关，写哪个都一样。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh01-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh05-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh05-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 3,
+     "target": "s13-sh05-g04-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 4,
+     "target": "s13-sh05-g06-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 5,
+     "target": "s13-sh05-g04-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 6,
+     "target": "s13-sh05-g06-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 7,
+     "target": "s13-sh05-g06-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 8,
+     "target": "s13-sh05-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 9,
+     "target": "s13-sh05-g05-g04-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 10,
+     "target": "s13-sh27-g03-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s13-sh27-g03-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 11,
+     "target": "s13-sh27-g04-g01-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 12,
+     "target": "s13-sh27-g05-g02-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 13,
+     "target": "s13-sh27-g04-g02-p01"
+    }
+   ],
+   "kp": [
+    "P13-易错与小结12两个易错点"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "规则兜底（照读课件）",
+   "summary": "易错与小结（1/2）：两个易错点。"
+  },
+  {
+   "slide": 12,
+   "text": "（小明, 篮球）与（篮球, 小明）。抓这两条，多数表示题就不会写错。",
+   "anchors": [
+    {
+     "element_id": "s13-sh27-g05-g03-p01",
+     "text_hint": "（小明, 篮球）与（篮球, 小明）",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s13-sh41-g03-p01",
+     "text_hint": "抓这两条，多数表示题就不会写错。",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "step",
+     "at_sentence": 1,
+     "target": "s13-sh27-g05-g03-p01"
+    },
+    {
+     "op": "step",
+     "at_sentence": 2,
+     "target": "s13-sh41-g03-p01"
+    }
+   ],
+   "kp": [
+    "P13-易错与小结12两个易错点-2"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "规则兜底（照读课件）",
+   "summary": "（小明, 篮球）与（篮球, 小明）。"
+  },
+  {
+   "slide": 13,
+   "text": "好，最后一页了。咱们把整节课收成一张图。以后拿到一道题，第一步不是急着写，是先问自己：这个东西能不能一个一个分开看？能分开看，就是离散，那就往下走；不能分开，说明你还没抓到离散的味道，得回头再想。所以判离散永远是第零步，先站在这条岔路口上。",
+   "anchors": [
+    {
+     "element_id": "s14-sh05-g01",
+     "text_hint": "选择路径：先判离散，再选表示",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g02-g02",
+     "text_hint": "第 0 步　能一个一个分开看，就是离散",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "discrete-judge"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "判离散是所有选择的第一步"
+  },
+  {
+   "slide": 13,
+   "text": "判完离散，接着看元素。如果元素少，而且每个都说得清楚，那就走路径一，用列举法，把它们一个一个全写出来，最省事也最不容易错。你想想，三个五个的东西，直接写出来比绕规则快多了。",
+   "anchors": [
+    {
+     "element_id": "s14-sh05-g05-g03",
+     "text_hint": "路径一",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g04",
+     "text_hint": "列举法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g05",
+     "text_hint": "元素少而明确",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "focus",
+     "at_sentence": 1,
+     "at_text": "那就走路径一，用列举法",
+     "target": "s14-sh05-g05-g04"
+    }
+   ],
+   "kp": [
+    "listing"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "元素少而明确走路径一列举法"
+  },
+  {
+   "slide": 13,
+   "text": "那要是元素很多呢？多到写不完，但彼此之间有共同规则，就走路径二，用描述法。比如大于零的偶数，你不用全列出来，一句话把规则说清，这个集合就定死了。记住，多但有共同规则，才配得上描述法。",
+   "anchors": [
+    {
+     "element_id": "s14-sh05-g05-g08",
+     "text_hint": "路径二",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g09",
+     "text_hint": "描述法",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g10",
+     "text_hint": "多但有共同规则",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "unfocus",
+     "at_sentence": 1,
+     "at_text": "就走路径二，用描述法",
+     "target": "s14-sh05-g05-g09"
+    }
+   ],
+   "kp": [
+    "description"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "多而有共同规则走路径二描述法"
+  },
+  {
+   "slide": 13,
+   "text": "第三种情况要特别小心：一旦涉及多个属性，或者讲的是对应关系，位置就有意义了，这时候走路径三，用表格或者有序对。注意，位置不能交换，小明和篮球换个位，意思就全变了。这就是上节课我们抓的那两条。",
+   "anchors": [
+    {
+     "element_id": "s14-sh05-g05-g13",
+     "text_hint": "路径三",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g14",
+     "text_hint": "表格或",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g05-g15",
+     "text_hint": "有序对",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g07",
+     "text_hint": "涉及多个属性或对应关系时，位置不能交换",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "位置就有意义了",
+     "target": "s14-sh05-g07-p01"
+    }
+   ],
+   "kp": [
+    "ordered-pair"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "多属性或对应关系用有序对"
+  },
+  {
+   "slide": 13,
+   "text": "最后，写完别急着交，三项必查。第一，元素有没有重复，重复了就删掉；第二，规则写清楚了没有，含糊的地方补上；第三，位置有没有意义，如果有意义，看看有没有写反。这三项过一遍，你的表示基本就稳了。",
+   "anchors": [
+    {
+     "element_id": "s14-sh30-g01",
+     "text_hint": "写完必查三项",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh30-g03-g03",
+     "text_hint": "元素是否重复",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh30-g03-g07",
+     "text_hint": "规则是否清楚",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh30-g03-g11",
+     "text_hint": "位置是否有意义",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [
+    {
+     "op": "highlight",
+     "at_sentence": 1,
+     "at_text": "三项必查",
+     "target": "s14-sh30-g01-p01"
+    }
+   ],
+   "kp": [
+    "check-three"
+   ],
+   "must_teach": true,
+   "is_page_end": false,
+   "note": "LLM",
+   "summary": "写完必查重复规则位置三项"
+  },
+  {
+   "slide": 13,
+   "text": "那这一单元就到这儿。总结成一句话：离散能逐个处理，表示就按「少、多、对应」来选，少用列举，多用描述，对应用表格或有序对，写完再查重复、规则和位置。记住这张图，以后判断和表示都不容易出错。",
+   "anchors": [
+    {
+     "element_id": "s14-sh01-g02",
+     "text_hint": "易错与小结（2/2）：一张图选对表示",
+     "confidence": 1.0
+    },
+    {
+     "element_id": "s14-sh05-g01",
+     "text_hint": "选择路径：先判离散，再选表示",
+     "confidence": 1.0
+    }
+   ],
+   "ops": [],
+   "kp": [
+    "summary"
+   ],
+   "must_teach": true,
+   "is_page_end": true,
+   "note": "LLM",
+   "summary": "全课收束：按少多对应选表示"
+  }
+ ],
+ "warnings": [
+  "❌ 第 1 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 722 (char 721)）",
+  "⚠️ 第 1 页第 1 次尝试无有效单元",
+  "❌ 第 2 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 2 页第 1 次尝试无有效单元",
+  "❌ 第 2 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 2 页第 2 次尝试无有效单元",
+  "⚠️ 第 2 页已回退为规则兜底",
+  "❌ 第 3 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 1030 (char 1029)）",
+  "⚠️ 第 3 页第 1 次尝试无有效单元",
+  "❌ 第 3 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 3 页第 2 次尝试无有效单元",
+  "⚠️ 第 3 页已回退为规则兜底",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 1 次尝试无有效单元",
+  "❌ 第 4 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 4 页第 2 次尝试无有效单元",
+  "⚠️ 第 4 页已回退为规则兜底",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 507 (char 506)）",
+  "⚠️ 第 5 页第 1 次尝试无有效单元",
+  "❌ 第 5 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 357 (char 356)）",
+  "⚠️ 第 5 页第 2 次尝试无有效单元",
+  "⚠️ 第 5 页已回退为规则兜底",
+  "❌ 第 6 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 6 页第 1 次尝试无有效单元",
+  "❌ 第 6 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 418 (char 417)）",
+  "⚠️ 第 6 页第 2 次尝试无有效单元",
+  "⚠️ 第 6 页已回退为规则兜底",
+  "❌ 第 9 页：模型输出不是合法 JSON（Unterminated string starting at: line 1 column 19 (char 18)）",
+  "⚠️ 第 9 页第 1 次尝试无有效单元",
+  "❌ 第 9 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 9 页第 2 次尝试无有效单元",
+  "⚠️ 第 9 页已回退为规则兜底",
+  "❌ 第 10 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 10 页第 1 次尝试无有效单元",
+  "❌ 第 10 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 10 页第 2 次尝试无有效单元",
+  "⚠️ 第 10 页已回退为规则兜底",
+  "❌ 第 11 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 335 (char 334)）",
+  "⚠️ 第 11 页第 1 次尝试无有效单元",
+  "❌ 第 11 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 11 页第 2 次尝试无有效单元",
+  "⚠️ 第 11 页已回退为规则兜底",
+  "❌ 第 13 页：模型输出不是合法 JSON（Expecting ',' delimiter: line 1 column 375 (char 374)）",
+  "⚠️ 第 13 页第 1 次尝试无有效单元",
+  "❌ 第 13 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 13 页第 2 次尝试无有效单元",
+  "⚠️ 第 13 页已回退为规则兜底",
+  "❌ 第 14 页：模型输出不是合法 JSON（Expecting value: line 1 column 1 (char 0)）",
+  "⚠️ 第 14 页第 1 次尝试无有效单元"
+ ],
+ "created_at": "2026-10-29T15:59:59",
+ "coverage": {
+  "slides": 14,
+  "units": 44,
+  "chars": 4310,
+  "est_sec": 862.0,
+  "longest_unit_sec": 37.4,
+  "units_over_hard_max": 0,
+  "units_with_anchor": 44,
+  "anchors": 235,
+  "anchor_hit": 235,
+  "anchor_hit_rate": 1.0,
+  "para_level_anchors": 217,
+  "low_confidence_anchors": 0,
+  "ops": 171,
+  "ops_invalid": 0
+ },
+ "routes": []
+}
